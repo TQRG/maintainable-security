@@ -1,0 +1,8 @@
+click
+pyyaml
+requests
+PyGithub
+contexttimer
+gitpython
+retry
+scipy
