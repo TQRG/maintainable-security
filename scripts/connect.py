@@ -16,4 +16,4 @@ def connect_to_db(cf_filename):
         return r
     except Exception as ex:
         print('Error:', ex)
-        exit('Failed to connect, terminating.')
+        exit('Failed to connect, Exiting...')
