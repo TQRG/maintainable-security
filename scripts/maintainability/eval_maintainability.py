@@ -12,12 +12,12 @@ import maintainability.better_code_hub as bch
 RETRY_ATTEMPTS = 10
 
 @click.command()
-@click.option('--dataset', prompt=True, default="./datasets/commits_patterns_sec.csv",
+@click.option('--dataset', prompt=True, default="../dataset/commits_patterns_sec.csv",
               help="Dataset with commits for comparison.")
 def tool(dataset):
     """CLI to evaluate maintainability."""
     log.info('Starting dataset analysis!')
-    logging.basicConfig()
+    logging.basicConfig(level='INFO')
     with open(dataset, 'r', newline='') as csvfile:
         csv_reader = csv.DictReader(csvfile)
         rows = list(csv_reader)

@@ -1,7 +1,9 @@
 """Module to read config file."""
 
 import json
-from energy_maintainability import log
+import os
+
+from maintainability import log
 
 SCRIPT_DIR = os.path.dirname(__file__)
 CONFIG_PATH = os.path.join(SCRIPT_DIR, './config.json')
