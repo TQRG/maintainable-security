@@ -12,7 +12,6 @@ def get_keys(conn, key):
     pip.keys(pattern=key)
     return pip.execute()
 
-
 def main(config, filepath):
     
     r = connect_to_db(config)
@@ -69,10 +68,8 @@ def main(config, filepath):
 
     print(count, ' vulnerabilities verified and reported.')
 
-
-
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Create a ArcHydro schema')
+    parser = argparse.ArgumentParser()
     parser.add_argument('--redis-config',metavar='config',required=True,help='the config to redis')
     parser.add_argument('--ofilepath',metavar='filepath',required=True,help='the path to save the dataset')
 
