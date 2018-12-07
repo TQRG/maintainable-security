@@ -12,3 +12,10 @@ cd scripts
 python -m maintainability.eval_maintainability
 ```
 
+How to collect maintainability results from BCH:
+
+```
+cd scripts
+python get_maintainability.py --bch-cache bch_cache.json --results-file ../results/sec-main-results.csv
+``` 
+
