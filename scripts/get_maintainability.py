@@ -13,8 +13,15 @@ def main(cache, results):
         writer.writeheader()
 
         neg = 0; pos = 0; nul = 0; keys = CACHE.data.keys()
-        for i in range(0, len(keys),2):
-            
+        
+        # fix problem of incomplete evaluation
+        if len(keys) % 2 == 0:
+            len_eval = len(keys)
+        else:
+            len_eval = len(keys) - 1
+
+        for i in range(0, len_eval,2):
+ 
             owner, proj, sha = list(keys)[i].split('/')
             owner_p, proj_p, sha_p = list(keys)[i+1].split('/')
 
