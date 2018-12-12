@@ -20,6 +20,9 @@ def main(cache, results):
 
             info_f = CACHE.get_stored_commit_analysis(owner, proj, sha)
             info_p = CACHE.get_stored_commit_analysis(owner_p, proj_p, sha_p)
+            
+            if info_f.get('error') or info_p.get('error'):
+                continue
             main = bch.compute_maintainability_score(info_f)
             main_p = bch.compute_maintainability_score(info_p)
             main_d = main - main_p
