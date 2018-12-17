@@ -16,6 +16,6 @@ How to collect maintainability results from BCH:
 
 ```
 cd scripts
-python get_maintainability.py --bch-cache bch_cache.json --results-file ../results/sec-main-results.csv
+python get_maintainability.py --bch-cache maintainability/bch_cache.json --results-file ../results/sec-main-results.csv --graphics-path ../results/ --dataset ../dataset/commits_patterns_sec.csv
 ``` 
 
