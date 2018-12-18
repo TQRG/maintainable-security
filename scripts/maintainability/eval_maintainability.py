@@ -29,6 +29,8 @@ def collect_maintainability(rows):
     for row in rows:
         user = row['owner']
         project = row['project']
+        if user == 'torvalds' and project == 'linux':
+            continue
         commit_sha = row['sha']
         parent_commit_sha = row['sha-p']
         try:
