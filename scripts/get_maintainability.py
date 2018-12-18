@@ -28,6 +28,13 @@ def pair_info(file):
 def clean_plot():
     plt.gcf().clear()
 
+# TODO: IMPROVE
+def count(t_id, id, total, lang, pattern, year, l, p, y):
+    total[t_id] += 1
+    lang[l][id] += 1
+    pattern[p][id] += 1
+    year[y][id] += 1
+
 def total_main_barchart(total, graphics):
     d = {'count' : pd.Series([total['neg'], total['pos'], total['nul']]),
         'type' : pd.Series(['neg', 'pos', 'nul'])}
@@ -81,7 +88,19 @@ def main(cache, results, graphics, dataset):
         lang = {}
         pattern = {}
         year = {}
-        
+
+        i = 0
+        while i < len_eval:
+            owner, proj, sha = get_key(keys,i).split('/')
+            owner_p, proj_p, sha_p = get_key(keys,i+1).split('/')
+
+            if owner != owner_p or proj != proj_p:
+                print(get_key(keys,i),'deleted...')
+                del CACHE.data[get_key(keys,i)]
+                len_eval-=1
+            else:
+                i+=2        
+
         for i in range(0, len_eval,2):
 
             owner, proj, sha = get_key(keys,i).split('/')
@@ -96,36 +115,29 @@ def main(cache, results, graphics, dataset):
             main = bch.compute_maintainability_score(info_f)
             main_p = bch.compute_maintainability_score(info_p)
             main_d = main - main_p
-            
+                
             writer.writerow({'owner' : owner, 'project': proj,
-                            'sha': sha, 'sha-p': sha_p,
-                            'main(sha)': main,
-                            'main(sha-p)': main_p,
-                            'main(diff)': main_d
-                            })
+                                'sha': sha, 'sha-p': sha_p,
+                                'main(sha)': main,
+                                'main(sha-p)': main_p,
+                                'main(diff)': main_d
+                                })
 
+            # TODO: IMPROVE
             key = set_key(owner, proj, sha, sha_p)
             l, p, y = data[key]
             lang = check_if_in(l, lang)
             pattern = check_if_in(p, pattern)
             year = check_if_in(y, year)
 
+            # TODO: IMPROVE
             if main_d < 0:
-                total['neg'] += 1
-                lang[l][0] += 1
-                pattern[p][0] += 1
-                year[y][0] += 1
+                count('neg', 0, total, lang, pattern, year, l, p, y)
             elif main_d > 0:
-                total['pos'] += 1
-                lang[l][1] += 1
-                pattern[p][1] += 1
-                year[y][1] += 1
+                count('pos', 1, total, lang, pattern, year, l, p, y)
             else:
-                total['nul'] += 1
-                lang[l][2] += 1
-                pattern[p][2] += 1
-                year[y][2] += 1
-        
+                count('nul', 2, total, lang, pattern, year, l, p, y)
+            
         total_main_barchart(total, graphics)
         clean_plot()
         dic_barchart(pattern, graphics, 'Maintainability per pattern', 'patterns.png')
@@ -134,6 +146,8 @@ def main(cache, results, graphics, dataset):
         clean_plot()
         year_ord = collections.OrderedDict(sorted(year.items()))
         dic_barchart(year_ord, graphics, 'Maintainability per year', 'year.png')
+
+        print(total, 'total=', sum([value for key,value in total.items()]))
 
 
 if __name__ == "__main__":
