@@ -74,81 +74,63 @@ def main(cache, results, graphics, dataset):
     data = pair_info(dataset)
 
     with open(results,'w') as out:
-    
+        
         fields = ['owner', 'project', 'sha', 'sha-p', 'main(sha)', 'main(sha-p)', 'main(diff)']
         writer = csv.DictWriter(out, fieldnames=fields)    
         writer.writeheader()
 
         total = {'neg': 0, 'pos': 0, 'nul': 0}
         keys = CACHE.data.keys()
-        
-        # fix problem of incomplete evaluation
-        len_eval = len(keys) if len(keys) % 2 == 0 else len(keys) - 1
 
-        lang = {}
-        pattern = {}
-        year = {}
+        langs = {}
+        patterns = {}
+        years = {}
 
-        i = 0
-        while i < len_eval:
-            owner, proj, sha = get_key(keys,i).split('/')
-            owner_p, proj_p, sha_p = get_key(keys,i+1).split('/')
-
-            if owner != owner_p or proj != proj_p:
-                print(get_key(keys,i),'deleted...')
-                del CACHE.data[get_key(keys,i)]
-                len_eval-=1
-            else:
-                i+=2        
-
-        for i in range(0, len_eval,2):
-
-            owner, proj, sha = get_key(keys,i).split('/')
-            owner_p, proj_p, sha_p = get_key(keys,i+1).split('/')
-
-            info_f = CACHE.get_stored_commit_analysis(owner, proj, sha)
-            info_p = CACHE.get_stored_commit_analysis(owner_p, proj_p, sha_p)
-
-            if info_f.get('error') or info_p.get('error'):
-                continue
-
-            main = bch.compute_maintainability_score(info_f)
-            main_p = bch.compute_maintainability_score(info_p)
-            main_d = main - main_p
-                
-            writer.writerow({'owner' : owner, 'project': proj,
-                                'sha': sha, 'sha-p': sha_p,
-                                'main(sha)': main,
-                                'main(sha-p)': main_p,
-                                'main(diff)': main_d
-                                })
-
-            # TODO: IMPROVE
-            key = set_key(owner, proj, sha, sha_p)
-            l, p, y = data[key]
-            lang = check_if_in(l, lang)
-            pattern = check_if_in(p, pattern)
-            year = check_if_in(y, year)
-
-            # TODO: IMPROVE
-            if main_d < 0:
-                count('neg', 0, total, lang, pattern, year, l, p, y)
-            elif main_d > 0:
-                count('pos', 1, total, lang, pattern, year, l, p, y)
-            else:
-                count('nul', 2, total, lang, pattern, year, l, p, y)
+        with open('../dataset/commits_patterns_sec.csv') as dataset:
+            lines = dataset.readlines()[1:]
+            for l in lines:
+                data = l.split(',')
+                owner, proj, sha, sha_p, lang, pattern, year = l.split(',')[0:7]
             
+                info_f = CACHE.get_stored_commit_analysis(owner, proj, sha)
+                info_p = CACHE.get_stored_commit_analysis(owner, proj, sha_p)
+
+                if info_f is None or info_p is None:
+                    continue
+                if info_f.get('error') or info_p.get('error'):
+                    continue
+         
+                main = bch.compute_maintainability_score(info_f)
+                main_p = bch.compute_maintainability_score(info_p)
+                main_d = main - main_p
+                    
+                writer.writerow({'owner' : owner, 'project': proj,
+                                    'sha': sha, 'sha-p': sha_p,
+                                    'main(sha)': main,
+                                    'main(sha-p)': main_p,
+                                    'main(diff)': main_d
+                                    })          
+                langs = check_if_in(lang, langs)
+                patterns = check_if_in(pattern, patterns)
+                years = check_if_in(year, years)
+
+                if main_d < 0:
+                    count('neg', 0, total, langs, patterns, years, lang, pattern, year)
+                elif main_d > 0:
+                    count('pos', 1, total, langs, patterns, years, lang, pattern, year)
+                else:
+                    count('nul', 2, total, langs, patterns, years, lang, pattern, year)
+
         total_main_barchart(total, graphics)
         clean_plot()
-        dic_barchart(pattern, graphics, 'Maintainability per pattern', 'patterns.png')
+        dic_barchart(patterns, graphics, 'Maintainability per pattern', 'patterns.png')
         clean_plot()
-        dic_barchart(lang, graphics, 'Maintainability per language', 'lang.png')
+        dic_barchart(langs, graphics, 'Maintainability per language', 'lang.png')
         clean_plot()
-        year_ord = collections.OrderedDict(sorted(year.items()))
+        year_ord = collections.OrderedDict(sorted(years.items()))
         dic_barchart(year_ord, graphics, 'Maintainability per year', 'year.png')
 
         print(total, 'total=', sum([value for key,value in total.items()]))
-
 
 if __name__ == "__main__":
     
