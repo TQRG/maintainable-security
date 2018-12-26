@@ -19,7 +19,7 @@ ERROR_REPORT = {
 }
 
 SCRIPT_DIR = os.path.dirname(__file__)
-CACHE = BCHCache(os.path.join(SCRIPT_DIR, "./bch_cache.bson"))
+CACHE = BCHCache(os.path.join(SCRIPT_DIR, "./bch_cache.zip"))
 
 RETRY_ATTEMPTS = 10
 
