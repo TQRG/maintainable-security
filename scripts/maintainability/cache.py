@@ -1,11 +1,18 @@
 """Module with a class utility for cache in JSON."""
 
 import json
+import bson
+from os.path import splitext
 
 class Cache():
     """Cache in json."""
     def __init__(self, storage_path):
         self.storage_path = storage_path
+        _, extension = splitext(storage_path)
+        if extension == '.bson':
+            self._json_lib = bson
+        else:
+            self._json_lib = json
         self._data = None
 
     @property
@@ -14,7 +21,7 @@ class Cache():
         if self._data is None:
             try:
                 with open(self.storage_path, 'r') as cache_file:
-                    self._data = json.load(cache_file)
+                    self._data = self._json_lib.load(cache_file)
             except FileNotFoundError:
                 self._data = {}
         return self._data
@@ -36,7 +43,7 @@ class Cache():
     def save_data(self):
         """Store data in designated json file."""
         with open(self.storage_path, 'w') as cache_file:
-            json.dump(self.data, cache_file)
+            self._json_lib.dump(self.data, cache_file)
 
 class BCHCache(Cache):
     """Cache for Better Code Hub results"""
