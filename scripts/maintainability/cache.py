@@ -1,11 +1,57 @@
 """Module with a class utility for cache in JSON."""
 
+from os.path import splitext
 import json
+from pathlib import Path
+from zipfile import ZipFile
+
+import bson
+
+class JsonLib:
+    def load(self, file_path):
+        with open(file_path, 'r') as cache_file:
+            return json.load(cache_file)
+
+    def dump(self, data, file_path):
+        with open(file_path, 'w') as cache_file:
+            json.dump(data, cache_file)
+
+class BsonLib:
+    def load(self, file_path):
+        with open(file_path, 'r') as cache_file:
+            return bson.loads(cache_file)
+
+    def dump(self, data, file_path):
+        with open(file_path, 'w') as cache_file:
+            cache_file.write(bson.dumps(data))
+
+def change_extension(file_path, extension):
+    return Path(file_path).stem + f".{extension}"
+
+class ZipLib:
+    def load(self, file_path):
+        json_filename = change_extension(file_path, '.json')
+        with ZipFile(file_path) as myzip:
+            with myzip.open(json_filename) as cache_file:
+                return json.load(cache_file)
+
+    def dump(self, data, file_path):
+        json_filename = change_extension(file_path, '.json')
+        with ZipFile(file_path) as myzip:
+            with myzip.open(json_filename) as cache_file:
+                json.dump(data, cache_file)
 
 class Cache():
     """Cache in json."""
     def __init__(self, storage_path):
         self.storage_path = storage_path
+        _, extension = splitext(storage_path)
+        if extension == '.zip':
+            self._json_lib = ZipLib()
+        if extension == '.bson':
+            self._json_lib = BsonLib()
+        else:
+            self._json_lib = JsonLib()
         self._data = None
 
     @property
@@ -13,8 +59,7 @@ class Cache():
         """Return dict with all cached data."""
         if self._data is None:
             try:
-                with open(self.storage_path, 'r') as cache_file:
-                    self._data = json.load(cache_file)
+                self._data = self._json_lib.load(self.storage_path)
             except FileNotFoundError:
                 self._data = {}
         return self._data
@@ -35,8 +80,7 @@ class Cache():
 
     def save_data(self):
         """Store data in designated json file."""
-        with open(self.storage_path, 'w') as cache_file:
-            json.dump(self.data, cache_file)
+        self._json_lib.dump(self.data, self.storage_path)
 
 class BCHCache(Cache):
     """Cache for Better Code Hub results"""
