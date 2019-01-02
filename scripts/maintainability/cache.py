@@ -26,19 +26,19 @@ class BsonLib:
             cache_file.write(bson.dumps(data))
 
 def change_extension(file_path, extension):
-    return Path(file_path).stem + f".{extension}"
+    return Path(file_path).stem + extension
 
 class ZipLib:
     def load(self, file_path):
         json_filename = change_extension(file_path, '.json')
-        with ZipFile(file_path) as myzip:
-            with myzip.open(json_filename) as cache_file:
+        with ZipFile(file_path, 'r') as myzip:
+            with myzip.open(json_filename, 'r') as cache_file:
                 return json.load(cache_file)
 
     def dump(self, data, file_path):
         json_filename = change_extension(file_path, '.json')
-        with ZipFile(file_path) as myzip:
-            with myzip.open(json_filename) as cache_file:
+        with ZipFile(file_path, 'w') as myzip:
+            with myzip.open(json_filename, 'w') as cache_file:
                 json.dump(data, cache_file)
 
 class Cache():
@@ -48,7 +48,7 @@ class Cache():
         _, extension = splitext(storage_path)
         if extension == '.zip':
             self._json_lib = ZipLib()
-        if extension == '.bson':
+        elif extension == '.bson':
             self._json_lib = BsonLib()
         else:
             self._json_lib = JsonLib()

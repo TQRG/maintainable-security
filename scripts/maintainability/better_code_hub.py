@@ -47,7 +47,7 @@ def robust_analyze_commit(user, project, commit_sha):
         raise error
     except WrongCommitReports:
         pass
-    except TypeError:
+    except TypeError as error:
         import pdb; pdb.set_trace()
     log.error(f"Skipping {user}/{project}.")
 
