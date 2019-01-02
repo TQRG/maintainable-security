@@ -6,3 +6,6 @@ contexttimer
 gitpython
 retry
 scipy
+bson
+pandas
+matplotlib

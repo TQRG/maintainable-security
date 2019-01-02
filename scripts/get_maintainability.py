@@ -85,7 +85,6 @@ def main(cache, results, graphics, dataset):
         langs = {}
         patterns = {}
         years = {}
-
         with open('../dataset/commits_patterns_sec.csv') as dataset:
             lines = dataset.readlines()[1:]
             for l in lines:
@@ -96,10 +95,12 @@ def main(cache, results, graphics, dataset):
                 info_p = CACHE.get_stored_commit_analysis(owner, proj, sha_p)
 
                 if info_f is None or info_p is None:
+                    print('{},{},{},{},None'.format(owner, proj, sha, sha_p))
                     continue
                 if info_f.get('error') or info_p.get('error'):
+                    print('{},{},{},{},Error'.format(owner, proj, sha, sha_p))
                     continue
-         
+
                 main = bch.compute_maintainability_score(info_f)
                 main_p = bch.compute_maintainability_score(info_p)
                 main_d = main - main_p
