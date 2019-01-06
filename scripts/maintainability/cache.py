@@ -27,7 +27,7 @@ class ZipLib:
     def dump(self, data, file_path):
         json_filename = change_extension(file_path, '.json')
         datas = json.dumps(data)
-        with ZipFile(file_path, 'w') as myzip:
+        with ZipFile(file_path, 'w', compression=zipfile.ZIP_DEFLATED) as myzip:
             myzip.writestr(json_filename, datas)
 
 class Cache():
