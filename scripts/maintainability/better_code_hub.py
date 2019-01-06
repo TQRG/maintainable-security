@@ -62,8 +62,12 @@ def external_analyze_commit_cached(user, project, commit_sha):
 
 def external_analyze_commit(user, project, commit_sha):
     """Analyze project commit without write privileges."""
-    forked_repo = ghutils.git_fork(user, project)
-    return analyze_commit(forked_repo.owner.login, project, commit_sha)
+    try:
+        forked_repo = ghutils.git_fork(user, project)
+        result = analyze_commit(forked_repo.owner.login, project, commit_sha)
+    except Exception as err:
+        import pdb; pdb.set_trace()
+    return result
 
 def analyze_commit(user, project, commit_sha):
     """Trigger a BCH scan for a specific commit of a GH project."""
