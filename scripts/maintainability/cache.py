@@ -5,8 +5,6 @@ import json
 from pathlib import Path
 from zipfile import ZipFile
 
-import bson
-
 class JsonLib:
     def load(self, file_path):
         with open(file_path, 'r') as cache_file:
@@ -15,15 +13,6 @@ class JsonLib:
     def dump(self, data, file_path):
         with open(file_path, 'w') as cache_file:
             json.dump(data, cache_file)
-
-class BsonLib:
-    def load(self, file_path):
-        with open(file_path, 'r') as cache_file:
-            return bson.loads(cache_file)
-
-    def dump(self, data, file_path):
-        with open(file_path, 'w') as cache_file:
-            cache_file.write(bson.dumps(data))
 
 def change_extension(file_path, extension):
     return Path(file_path).stem + extension
@@ -37,9 +26,9 @@ class ZipLib:
 
     def dump(self, data, file_path):
         json_filename = change_extension(file_path, '.json')
+        datas = json.dumps(data)
         with ZipFile(file_path, 'w') as myzip:
-            with myzip.open(json_filename, 'w') as cache_file:
-                json.dump(data, cache_file)
+            myzip.writestr(json_filename, datas)
 
 class Cache():
     """Cache in json."""
@@ -48,8 +37,6 @@ class Cache():
         _, extension = splitext(storage_path)
         if extension == '.zip':
             self._json_lib = ZipLib()
-        elif extension == '.bson':
-            self._json_lib = BsonLib()
         else:
             self._json_lib = JsonLib()
         self._data = None
@@ -97,3 +84,10 @@ class BCHCache(Cache):
     @staticmethod
     def _get_commit_analysis_storage_key(user, project, commit_sha):
         return '/'.join([user, project, commit_sha])
+
+if __name__ == "__main__":
+    # execute only if run as a script
+    cache = Cache('./cache_test.zip')
+    cache.set_value('key', 132)
+    assert cache.get_value('key') == 132
+
