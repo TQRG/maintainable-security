@@ -3,7 +3,7 @@
 from os.path import splitext
 import json
 from pathlib import Path
-from zipfile import ZipFile
+from zipfile import ZipFile, ZIP_DEFLATED
 
 class JsonLib:
     def load(self, file_path):
@@ -27,7 +27,7 @@ class ZipLib:
     def dump(self, data, file_path):
         json_filename = change_extension(file_path, '.json')
         datas = json.dumps(data)
-        with ZipFile(file_path, 'w', compression=zipfile.ZIP_DEFLATED) as myzip:
+        with ZipFile(file_path, 'w', compression=ZIP_DEFLATED) as myzip:
             myzip.writestr(json_filename, datas)
 
 class Cache():
