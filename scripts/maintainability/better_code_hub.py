@@ -36,8 +36,6 @@ def robust_analyze_commit(user, project, commit_sha):
         else:
             log.success(f'Maintainability: {compute_maintainability_score(report)}')
         return
-    except ProjectNotSupported:
-        log.error(f"Project {user}/{project} is not supported by BCH. Skipping.")
     except WrongSessionDetails as error:
         log.error("Your BCH credentials are outdated.")
         click.pause("Update your config file and press any key to continue...")
@@ -47,7 +45,8 @@ def robust_analyze_commit(user, project, commit_sha):
         raise error
     except WrongCommitReports:
         pass
-    except TypeError as error:
+    except Exception as err:
+        log.error(err)
         import pdb; pdb.set_trace()
     log.error(f"Skipping {user}/{project}.")
 
@@ -65,8 +64,9 @@ def external_analyze_commit(user, project, commit_sha):
     try:
         forked_repo = ghutils.git_fork(user, project)
         result = analyze_commit(forked_repo.owner.login, project, commit_sha)
-    except Exception as err:
-        import pdb; pdb.set_trace()
+    except ProjectNotSupported:
+        log.error(f"Project {user}/{project} is not supported by BCH. Skipping.")
+        result = ERROR_REPORT
     return result
 
 def analyze_commit(user, project, commit_sha):
