@@ -1,4 +1,11 @@
 config/*.json
+*.pdf
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
