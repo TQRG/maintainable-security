@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex icpc19"] 1548172906 "icpc19.aux" "icpc19.bbl" "icpc19" 1548172907
-  "icpc19.aux" 1548172906 1246 a5a27c58ffc14f08f5fecfe6a2986735 ""
-  "paper.bib" 0 -1 0 ""
+["bibtex icpc19"] 1548174546 "icpc19.aux" "icpc19.bbl" "icpc19" 1548174546
+  "/usr/local/texlive/2017/texmf-dist/bibtex/bst/IEEEtran/IEEEtran.bst" 1480098433 57748 7c8250ecf02814ce6ddc0cdbb63df1dd ""
+  "icpc19.aux" 1548174546 1408 2879d8d2bd4a97b8b39f6018ea2b3466 ""
+  "icpc19.bib" 1548174537 531 069b4d4df99a69c27ee53112508a45b6 ""
   (generated)
-  "icpc19.blg"
   "icpc19.bbl"
-["pdflatex"] 1548172906 "./icpc19.tex" "icpc19.pdf" "icpc19" 1548172907
-  "./icpc19.tex" 1548172905 4242 b0835d608539c9b8b754e44fd268174a ""
+  "icpc19.blg"
+["pdflatex"] 1548174546 "icpc19.tex" "icpc19.pdf" "icpc19" 1548174546
   "/usr/local/texlive/2017/texmf-dist/fonts/enc/dvips/base/8r.enc" 1480098666 4850 80dc9bab7f31fb78a000ccfed0e27cab ""
   "/usr/local/texlive/2017/texmf-dist/fonts/map/fontname/texfonts.map" 1480098670 3287 e6b82fe08f5336d4d5ebc73fb1152e87 ""
   "/usr/local/texlive/2017/texmf-dist/fonts/tfm/adobe/times/ptmb7t.tfm" 1480098689 2172 fd0c924230362ff848a33632ed45dc23 ""
@@ -86,11 +86,11 @@
   "/usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1495593472 2350277 a699055bee05bf8a40b0504752487295 ""
   "/usr/local/texlive/2017/texmf-var/web2c/pdftex/pdflatex.fmt" 1495593487 4129592 0e6cfee100d68e6d96b92c0258f2ff73 ""
   "/usr/local/texlive/2017/texmf.cnf" 1495593465 577 2b71d4d888f9e5560b2e99985915a9fa ""
-  "figures/maintainability.pdf" 1548172648 18652 217e9d56edb0443cc0de2043e731bdd3 ""
-  "icpc19.aux" 1548172906 1246 a5a27c58ffc14f08f5fecfe6a2986735 ""
-  "icpc19.bbl" 0 -1 0 "bibtex icpc19"
-  "icpc19.tex" 1548172905 4242 b0835d608539c9b8b754e44fd268174a ""
+  "figures/maintainability.pdf" 1548173434 18655 f6a23588d366096d499eb1f7f2dff547 ""
+  "icpc19.aux" 1548174546 1408 2879d8d2bd4a97b8b39f6018ea2b3466 ""
+  "icpc19.bbl" 1548174546 1187 68529afcd6b72413c2275a3da74a6878 "bibtex icpc19"
+  "icpc19.tex" 1548174448 4311 489ab7a5048c5a2afb842fd27a403838 ""
   (generated)
-  "icpc19.pdf"
   "icpc19.log"
+  "icpc19.pdf"
   "icpc19.aux"

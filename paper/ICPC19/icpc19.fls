@@ -2,7 +2,7 @@ PWD /Users/fifaz/ICPC19/security-maintainability/paper/ICPC19
 INPUT /usr/local/texlive/2017/texmf.cnf
 INPUT /usr/local/texlive/2017/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2017/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT ./icpc19.tex
+INPUT icpc19.tex
 OUTPUT icpc19.log
 INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/IEEEtran/IEEEtran.cls
 INPUT /usr/local/texlive/2017/texmf-dist/tex/latex/IEEEtran/IEEEtran.cls
@@ -151,6 +151,8 @@ INPUT figures/maintainability.pdf
 INPUT ./figures/maintainability.pdf
 OUTPUT icpc19.pdf
 INPUT ./figures/maintainability.pdf
+INPUT icpc19.bbl
+INPUT icpc19.bbl
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT /usr/local/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map
@@ -167,6 +169,8 @@ INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/adobe/times/ptmri7t.vf
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/adobe/times/ptmr7t.vf
+INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/adobe/times/ptmri7t.vf
+INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/adobe/times/ptmri8r.tfm
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/vf/adobe/times/ptmrc7t.vf
 INPUT /usr/local/texlive/2017/texmf-dist/fonts/tfm/adobe/times/ptmr8r.tfm
 INPUT icpc19.aux
