@@ -1,4 +1,14 @@
 config/*.json
+paper/ICPC19/*.aux
+paper/ICPC19/*.bbl
+paper/ICPC19/*.log
+paper/ICPC19/*.blg
+paper/ICPC19/*.dvi
+paper/ICPC19/icpc19.pdf
+paper/ICPC19/*.fdb_latexmk
+paper/ICPC19/*.fls
+paper/ICPC19/*.out
+paper/ICPC19/*.spl
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
