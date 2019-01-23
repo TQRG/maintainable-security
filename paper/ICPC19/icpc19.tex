@@ -1,4 +1,4 @@
-\documentclass[10pt,conference]{IEEEtran} 
+\documentclass[10pt,conference]{IEEEtran}
 \IEEEoverridecommandlockouts
 % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
 \usepackage{cite}
@@ -14,11 +14,11 @@
 
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
-	
+
 \begin{document}
 
-\title{Security vs. Maintainability: Fixing Vulnerabilities Obfuscates your Code\\
-\thanks{Identify applicable funding agency here. If none, delete this.}
+\title{Security vs. Maintainability: Fixing Vulnerabilities Obfuscates your Code%\\
+%\thanks{Identify applicable funding agency here. If none, delete this.}
 }
 
 \author{
@@ -45,18 +45,18 @@
 \maketitle
 
 \begin{abstract}
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
-when an unknown printer took a galley of type and scrambled it to make a type 
-specimen book. It has survived not only five centuries, but also the leap into 
-electronic typesetting, remaining essentially unchanged. It was popularised in 
-the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, 
-and more recently with desktop publishing software like Aldus PageMaker including 
-versions of Lorem Ipsum. It was popularised in the 1960s with the release of 
-Letraset sheets containing Lorem Ipsum passages, and more recently with desktop 
-publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
+  Security is a crucial non-functionality requirement for software applications.
+  However, building secure software is far from trivial as developers lack both
+  the knowledge and tools to effectively address this concern. In this paper, we
+  study the impact of changes to improve security on the maintainability of several
+  open source applications. Using a dataset containing XXX security-oriented
+  commits, we measure maintainability --- as computed by the Software Improvement
+  Group's web-based source code analysis service \emph{Better Code Hub} (BCH) ---
+  before and after the security refactoring. Results show that making software
+  more secure comes at a cost on  maintainability. This is particularly evident
+  in refactorings to deal with \emph{XXX} and \emph{YYY} attacks.
+  Furthermore, we have found evidence that security-related changes are more
+  likely to be modified in the future than regular code changes.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -85,7 +85,7 @@ and portability. This paper focuses solely on maintainability.
 
 \begin{table*}[h]
 \centering
-\caption{Descriptive statistics of the dataset projects\textcolor{mypink3}{@update}} \label{tab:dataset} 
+\caption{Descriptive statistics of the dataset projects\textcolor{mypink3}{@update}} \label{tab:dataset}
 \begin{tabular}{@{}ccccccccccc@{}}
 \toprule
      & forks   & stars   & watchers & contributors & commits  & branches & releases & size      & issues  & pull requests \\ \midrule
