@@ -5,6 +5,7 @@ paper/ICPC19/icpc19.pdf
 *.blg
 *.fdb_latexmk
 *.fls
+*.synctex.gz
 
 
 # Byte-compiled / optimized / DLL files
