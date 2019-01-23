@@ -55,8 +55,8 @@
   before and after the security refactoring. Results show that making software
   more secure comes at a cost on maintainability. This is particularly evident
   in refactorings to deal with \textit{Broken Authentication} and \textit{Cross-Site Request Forgery} attacks.
-  Furthermore, we have found evidence that security-related changes are more
-  likely to be modified in the future than regular code changes.
+  \textcolor{mypink3}{Furthermore, we have found evidence that security-related changes are more
+  likely to be modified in the future than regular code changes.}
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -92,10 +92,26 @@ and portability. This paper focuses solely on maintainability.
 
 \section{Methodology}
 
+In this chapter, the methodology used to measure the impact of security refactorings on the maintainability of open-source software is presented in depth in the following sections and illustrated in Figure \ref{fig:met}. Aiming to answer our research questions, we use a dataset containing more than 600 security refactorings collected in a previous study from open-source software publicly available on GitHub. 
+We use as the baseline a collection of randomly chosen regular commits from a list of projects retrieved from the main dataset. Then, we Better Code Hub to collect the maintainability reports for both security and regular commits. 
 
 
+%\footnote{SIG's website is available at https://www.softwareimprovementgroup.com/ (Accessed on January 23, 2019)}  
+
+
+
+\begin{figure}[h]
+ 	\centering
+ 	\includegraphics[width=0.5\textwidth]{figures/methodology.pdf}
+ 	\caption{Maintainability difference for security and baseline commits \textcolor{mypink3}{@update}}
+	\label{fig:met}
+\end{figure}
 
 \subsection{Dataset}
+
+To evaluate the impact of security refactorings on the maintainability of open-source software, we use a dataset of security flaws provided by a study conducted in 2017 \cite{Reis:2017:IJSSE} where the authors mined more than 248 GitHub repositories for several different patterns (e.g., injection, cross-site scripting, cross-site request forgery, memory leaks). Reis and Abreu (2017) mined open-source software aiming the extraction of real test cases - created by real developers on their daily basis development - to test and assess the performance of static analysis tools since using hand-seeded test cases or mutations could lead to misleading assessments of the tools' capabilities. The study yielded to a dataset of more than 600 test cases for 16 different patterns. Each test case of the dataset is a triplet of folders: the commit before the refactoring, the commit responsible for the refactoring and the snippets of code that differ from one version to another (usually, called \textit{diff}) - where one can easily identify the code used to fix the security flaw. In this study, we focus on computing the maintainability of the commits before and after the security refactoring to calculate if the impact was positive, negative or none.
+
+
 
 \begin{table*}[h]
 \centering
@@ -124,7 +140,6 @@ Total     & 180418  & 547349  & 41091    & 15858        & 2314813  & 4584     & 
 
 
 
-\cite{Wang:2008:DSJ:1330017.1330021}
 
 
 \section{Results}
