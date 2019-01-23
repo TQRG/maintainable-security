@@ -54,7 +54,7 @@
   Group's web-based source code analysis service \emph{Better Code Hub} (BCH) ---
   before and after the security refactoring. Results show that making software
   more secure comes at a cost on maintainability. This is particularly evident
-  in refactorings to deal with Broken Authentication and Cross-Site Request Forgery attacks.
+  in refactorings to deal with \textit{Broken Authentication} and \textit{Cross-Site Request Forgery} attacks.
   Furthermore, we have found evidence that security-related changes are more
   likely to be modified in the future than regular code changes.
 \end{abstract}
@@ -65,16 +65,21 @@ Security, Software Maintenance, Open-Source Software
 
 \section{Introduction}
 
+
+
 The international standard ISO/IEC 25010:2011 breaks down software quality into eight characteristics: maintainability,
 functional suitability, performance efficiency, compatibility, usability, reliability, security,
 and portability. This paper focuses solely on maintainability.
 
+
+
+\section{Motivation and Research Questions}
+
+\textcolor{mypink3}{Ver que exemplos existem na amostra da secbench que vamos utilizar para dar como exemplo de motivacao}
+
 \begin{framed}
 \textit{\textbf{RQ1} What is the impact of fixing vulnerabilities to improve security }
 \end{framed}
-
-\section{Related Work}
-
 
 
 \section{Methodology}
@@ -108,6 +113,13 @@ Total     & 180418  & 547349  & 41091    & 15858        & 2314813  & 4584     & 
 \subsection{Maintainability}
 
 
+
+
+\cite{Wang:2008:DSJ:1330017.1330021}
+
+
+\section{Results}
+
 \begin{figure}[h]
  	\centering
  	\includegraphics[width=0.4\textwidth]{figures/maintainability.pdf}
@@ -121,25 +133,22 @@ Total     & 180418  & 547349  & 41091    & 15858        & 2314813  & 4584     & 
 \end{figure}
 
 
-\cite{Wang:2008:DSJ:1330017.1330021}
-
-
-\section{Results}
-
-
-
 
 \section{Discussion}
 
 
 \section{Threats to Validity}
 
+\section{Related Work}
 
-\section{Conclusion}
+
+\section{Conclusion and Future Work}
 
 
 
 \section*{Acknowledgment}
+
+Better Code Hub?
 
 {
  \bibliographystyle{IEEEtran}
