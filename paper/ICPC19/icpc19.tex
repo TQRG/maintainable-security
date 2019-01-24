@@ -144,11 +144,7 @@ the final results because the limitations of the tool, such as the project size 
 end, we used the following categorization:
 
 \begin{itemize}
-	\item \textbf{Using Components with Known Vulnerabilities.} Updating the libraries, frameworks and other modules. 
-	
-	Components, such as libraries, frameworks, and other software modules, run with the same
-	privileges as the application. If a vulnerable component is exploited, such an attack can facilitate
-	serious data loss or server takeover.
+	\item \textbf{Using Components with Known Vulnerabilities.} 
 	 
 	\item \textbf{Resource Leak}
 	\item \textbf{Broken Authentication \& Session Management}
@@ -181,7 +177,8 @@ Total     & 180418  & 547349  & 41091    & 15858        & 2314813  & 4584     & 
 
 \subsection{Security vs. Baseline Commits}
 
-
+The baseline dataset uses the security commits dataset as input. For each security commit, one random commit is selected from the list of all commits of the belonging project. We originate the regular commits from the security commits to ensure that differences in maintainability are not consequence of characteristics 
+of different projects.
 
 
 \subsection{Maintainability Analysis}
@@ -255,7 +252,7 @@ where $T(l)$ is the threshold in percentage of the lines of code that are accept
 
 \subsection{Statistical Validation}\label{sec:statsval}
 
-To validate the maintainability differences in different groups of commits (e.g., baseline and energy commits) we use the Paired Wilcoxon signed-rank test with the significance level $\alpha = 0.05$. In other words, we test the null hypothesis that the maintainability difference between pairs of versions vE−1, vE (i.e., before and after an energy-commit) follows a symmetric distribution around 0. To understand the effect-size, as advocated by the Common-language effect sizes [X], we compute the mean difference, the median of the difference, and the percentage of cases that reduce maintainability.
+To validate the maintainability differences in different groups of commits (e.g., baseline and security commits) we use the Paired Wilcoxon signed-rank test with the significance level $\alpha = 0.05$. In other words, we test the null hypothesis that the maintainability difference between pairs of versions vE−1, vE (i.e., before and after an energy-commit) follows a symmetric distribution around 0. To understand the effect-size, as advocated by the Common-language effect sizes [X], we compute the mean difference, the median of the difference, and the percentage of cases that reduce maintainability.
 
 \textcolor{mypink3}{@todo: Discuss pratt improvement and accuracy}
 
