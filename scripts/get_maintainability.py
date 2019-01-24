@@ -9,9 +9,7 @@ from scipy.stats import wilcoxon
 
 def _print_hypothesis_test(differences):
     """Paired Wilcoxon signed-rank test (N should be > 20)"""
-    #diff = pd.DataFrame({'diff': differences})
     test, pvalue = _hypothesis_test(differences)
-    #print(diff.median())
     stats = {'test': [test], 'med':[pd.DataFrame({'diff': differences})['diff'].median()],'pvalue': [pvalue]}
     df = pd.DataFrame(stats)
     print("Wilcoxon signed-rank test {}, p-value: {}".format(test,pvalue))
@@ -136,21 +134,42 @@ def analysis(dataset, results, CACHE):
             for l in lines:
                 data = l.split(',')
                 owner, proj, sha, sha_p, lang, pattern, year = l.split(',')[0:7]
-                        
+                       
                 info_f = CACHE.get_stored_commit_analysis(owner, proj, sha)
                 info_p = CACHE.get_stored_commit_analysis(owner, proj, sha_p)
 
                 if info_f is None or info_p is None:
                     none+=1
+                    writer.writerow({'owner' : owner, 'project': proj,
+                                    'sha': sha, 'sha-p': sha_p,
+                                    'main(sha)': 'error',
+                                    'main(sha-p)': 'error',
+                                    'main(diff)': 'error'
+                                    })
                     continue
                 if info_f.get('error') or info_p.get('error'):
                     error+=1
+                    writer.writerow({'owner' : owner, 'project': proj,
+                                    'sha': sha, 'sha-p': sha_p,
+                                    'main(sha)': 'error',
+                                    'main(sha-p)': 'error',
+                                    'main(diff)': 'error'
+                                    })
                     continue
                 
-                #print(owner, proj, sha, sha_p)
-            
-                main = bch.compute_maintainability_score(info_f)
-                main_p = bch.compute_maintainability_score(info_p)
+                try:
+                    main = bch.compute_maintainability_score(info_f)
+                    main_p = bch.compute_maintainability_score(info_p)
+                except ZeroDivisionError as e:
+                    writer.writerow({'owner' : owner, 'project': proj,
+                                    'sha': sha, 'sha-p': sha_p,
+                                    'main(sha)': 'error',
+                                    'main(sha-p)': 'error',
+                                    'main(diff)': 'error'
+                                    })
+                    error+=1
+                    continue
+                
                 main_d = main - main_p
                 
                 writer.writerow({'owner' : owner, 'project': proj,
@@ -170,27 +189,54 @@ def analysis(dataset, results, CACHE):
                     count('pos', 1, total, langs, patterns, years, lang, pattern, year)
                 else:
                     count('nul', 2, total, langs, patterns, years, lang, pattern, year)
-            
-                differences.append(main_d)  
+
+                differences.append(main_d)
                 if pattern not in diff_by_pat:
                     diff_by_pat[pattern] = [main_d]
                 else:
                     diff_by_pat[pattern].append(main_d)
                     
-            return langs, patterns, years, none, error, total, differences, diff_by_pat 
+            return patterns, none, error, total, diff_by_pat 
 
 def sec_vs_rg_commits(CACHE, graphics, dataset):
     
-    langs, patterns, years, none, error, total_sec, differences, _ = analysis('../dataset/commits_patterns_sec.csv', '../results/sec-main-results.csv', CACHE)
-    stats1 = _print_hypothesis_test(differences)
-    print(total_sec, 'total=', sum([value for key,value in total_sec.items()]), ', none=', none, ', error=', error)
+    _, none_sec, error_sec, total_sec, _ = analysis('../dataset/commits_patterns_sec.csv', '../results/sec-main-results.csv', CACHE)
+    _, none_reg, error_reg, total_reg, _ = analysis('../dataset/commits_regular.csv', '../results/sec-reg-results.csv', CACHE)
     
-    langs, patterns, years, none, error, total_reg, differences, _ = analysis('../dataset/commits_regular_final.csv', '../results/sec-reg-results.csv', CACHE)
-    stats = _print_hypothesis_test(differences)
-    print(total_reg, 'total=', sum([value for key,value in total_reg.items()]), ', none=', none, ', error=', error)
+    df_sec = pd.read_csv('../results/sec-main-results.csv')
+    df_reg = pd.read_csv('../results/sec-reg-results.csv')
     
+    df = df_sec.join(df_reg,lsuffix='_sec',rsuffix='_reg')
+    
+    
+    fil = df[(df['main(diff)_reg'] != 'error') & (df['main(diff)_sec'] != 'error')]
+    
+    
+    stats1 = _print_hypothesis_test(fil['main(diff)_sec'].astype('float64'))
+    print(total_sec, 'total=', sum([value for key,value in total_sec.items()]), ', none=', none_sec, ', error=', error_sec)
+    stats = _print_hypothesis_test(fil['main(diff)_reg'].astype('float64'))
+    print(total_reg, 'total=', sum([value for key,value in total_reg.items()]), ', none=', none_reg, ', error=', error_reg)
+
     result = stats.append([stats1])
     result.to_csv('../results/statistical_test.csv')
+    
+    total_sec, total_reg = {'neg': 0, 'pos': 0, 'nul': 0}, {'neg': 0, 'pos': 0, 'nul': 0}
+    
+    for i in fil.iterrows():
+        print(i[1]['main(diff)_sec'], i[1]['main(diff)_reg'])
+        if float(i[1]['main(diff)_sec']) < 0:
+            total_sec['neg'] += 1
+        elif float(i[1]['main(diff)_sec']) > 0:
+            total_sec['pos'] += 1
+        else:
+            total_sec['nul'] += 1
+            
+        if float(i[1]['main(diff)_reg']) < 0:
+            total_reg['neg'] += 1
+        elif float(i[1]['main(diff)_reg']) > 0:
+            total_reg['pos'] += 1
+        else:
+            total_reg['nul'] += 1
     
     total_main_barchart(total_sec, total_reg, graphics, result)
     clean_plot()
@@ -223,7 +269,6 @@ def main_by_type_barchart(patterns, diff):
     nul = plt.barh(index + bar_width, df['nul'], bar_width, alpha=0.7, align='center', color='orange', label='None')
     neg = plt.barh(index + 2*bar_width, df['neg'], bar_width, alpha=0.7, align='center', color='red', label='Negative')
     
-
     plt.yticks(index + bar_width, df['type'], fontsize=6.5)
     plt.xticks(fontsize=7) 
     plt.gca().set_xticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_xticks()])
@@ -246,7 +291,7 @@ def main_by_type_barchart(patterns, diff):
 
 def sec_by_type(CACHE):
     
-    langs, patterns, years, none, error, total_sec, differences, diff_by_path = analysis('../dataset/commits_patterns_sec.csv', '../results/sec-main-results.csv', CACHE)
+    patterns, none, error, total_sec, diff_by_path = analysis('../dataset/commits_patterns_sec.csv', '../results/sec-main-results.csv', CACHE)
     
     assert len(diff_by_path['ml']) == sum(patterns['ml'])
     assert len(diff_by_path['xss']) == sum(patterns['xss'])
@@ -267,9 +312,7 @@ def sec_by_type(CACHE):
         del patterns[i]
         del diff_by_path[i]
 
-        
     main_by_type_barchart(patterns, diff_by_path)
-    
     
 
 def main(cache, results, graphics, dataset):
