@@ -181,11 +181,18 @@ Total     & 180418  & 547349  & 41091    & 15858        & 2314813  & 4584     & 
 
 
 \subsection{Security vs. Baseline Commits}
+%
+Although we want to assess the maintainability of security-related commits,
+there is no evidence in previous work on the impact of \textit{regular} commits
+in the maintainability of projects. Thus, we analyze the maintainability of
+regular commits and use them as a baseline.
 
-The baseline dataset uses the security commits dataset as input. For each security commit, one random commit is selected from the list of all commits of the belonging project. We originate the regular commits from the security commits to ensure that differences in maintainability are not consequence of characteristics
-of different projects.
-
-
+The baseline dataset uses the security commits dataset as input. For each
+security commit, one random commit is selected from the list of all commits of
+the belonging project. We originate the regular commits from the security
+commits to ensure that differences in maintainability are not consequence of
+characteristics of different projects.
+%
 \subsection{Maintainability Analysis}
 
 BCH is used to collect the maintanability reports of the commits of each project. The tool
