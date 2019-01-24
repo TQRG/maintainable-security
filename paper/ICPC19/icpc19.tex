@@ -92,25 +92,73 @@ and portability. This paper focuses solely on maintainability.
 
 \section{Methodology}
 
-In this chapter, the methodology used to measure the impact of security refactorings on the maintainability of open-source software is presented in depth in the following sections and illustrated in Figure \ref{fig:met}. Aiming to answer our research questions, we use a dataset containing more than 600 security refactorings collected in a previous study from open-source software publicly available on GitHub. 
-We use as the baseline a collection of randomly chosen regular commits from a list of projects retrieved from the main dataset. Then, we Better Code Hub to collect the maintainability reports for both security and regular commits. 
-
-
-%\footnote{SIG's website is available at https://www.softwareimprovementgroup.com/ (Accessed on January 23, 2019)}  
+In this section, the methodology used to measure the impact of security refactorings on the maintainability of open-source software is presented in depth in the following sections and illustrated in Figure \ref{fig:met}. Aiming to answer the research questions presented in this paper, we use a dataset containing more than 700 security refactorings collected from open-source software available on GitHub and where 648 were reported in a previous study conducted in 2017 \cite{Reis:2017:IJSSE}. In parallel, a baseline of regular commits was randomly collected from the list of projects of the main dataset to evaluate what is the impact of regular commits on the maintainability of open-source software. The Software Improvement Group's\footnote{SIG's website is available at https://www.softwareimprovementgroup.com/ (Accessed on January 23, 2019)} web-based source code analysis service Better Code Hub (BCH) \footnote{BCH's website is available at https://bettercodehub.com/ (Accessed on January 23, 2019)} was used to collect the maintainability reports for both security and regular commits.
 
 
 
 \begin{figure}[h]
  	\centering
  	\includegraphics[width=0.5\textwidth]{figures/methodology.pdf}
- 	\caption{Maintainability difference for security and baseline commits \textcolor{mypink3}{@update}}
+ 	\caption{Study Methodology}
 	\label{fig:met}
 \end{figure}
 
 \subsection{Dataset}
 
-To evaluate the impact of security refactorings on the maintainability of open-source software, we use a dataset of security flaws provided by a study conducted in 2017 \cite{Reis:2017:IJSSE} where the authors mined more than 248 GitHub repositories for several different patterns (e.g., injection, cross-site scripting, cross-site request forgery, memory leaks). Reis and Abreu (2017) mined open-source software aiming the extraction of real test cases - created by real developers on their daily basis development - to test and assess the performance of static analysis tools since using hand-seeded test cases or mutations could lead to misleading assessments of the tools' capabilities. The study yielded to a dataset of more than 600 test cases for 16 different patterns. Each test case of the dataset is a triplet of folders: the commit before the refactoring, the commit responsible for the refactoring and the snippets of code that differ from one version to another (usually, called \textit{diff}) - where one can easily identify the code used to fix the security flaw. In this study, we focus on computing the maintainability of the commits before and after the security refactoring to calculate if the impact was positive, negative or none.
+To evaluate the impact of security refactorings on the maintainability of open-source software, we use a dataset of security flaws which is the outcome of mining more than 248 GitHub\footnote{Github's website available at https://github.com/ (Accessed on January 23, 2019)} repositories. Reis and Abreu (2017) mined open-source software aiming the extraction of real test cases - created by real developers on their daily basis work - to test and assess the performance of static analysis tools since using hand-seeded test cases or mutations could lead to misleading assessments of the tools' capabilities. The study yielded to a dataset of more than 600 test cases for 16 different patterns. Each test case of the dataset is a triplet of folders: the commit before the refactoring, the commit responsible for the refactoring and the snippets of code that differ from one version to another (usually, called \textit{diff}) - where one can easily identify the code used to fix the security flaw. In this study, we focus on computing the maintainability of the commits before and after the security refactoring to evaluate if the impact was positive, negative or none. 
 
+\begin{table}[h]
+	\centering
+\caption{Current Dataset Patterns Distribution} \label{tab:patterns}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Pattern & \# Commits\\
+\midrule
+Injection & 101\\
+Broken Authentication and Session Management& 45\\
+Cross-Site Scripting& 142\\
+Broken Access Control& 2\\
+Security Misconfiguration& 9\\
+Sensitive Data Exposure& 24\\
+Insufficient Attack Protection& 18\\
+Cross-Site Request Forgery& 34\\
+Using Components With Known Vulnerabilities& 27\\
+Unprotected APIs& 7\\
+Memory Leak& 91\\
+Overflow& 19\\
+Denial-of-Service& 43\\
+Path Traversal& 19\\
+Resource Leak& 33\\
+SHA-1 Hash Function & 1\\
+Miscellaneous& 101\\\midrule
+Total& 716\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Reis and Abreu (2017) dataset commits were manually validated, flagged as security flaws and classified with one of 16 the following patterns: \textit{Injection}, \textit{Broken Authentication and Session Management}, \textit{Cross-Site Scripting}, \textit{Broken Access Control}, \textit{Security Misconfiguration}, \textit{Sensitive Data Exposure}, \textit{Insufficient Attack Protection}, \textit{Cross-Site Request Forgery}, \textit{Using Components With Known Vulnerabilities}, \textit{Unprotected APIs}, \textit{Memory Leak}, \textit{Overflow}, \textit{Denial-of-Service}, \textit{Path Traversal} and \textit{Miscellaneous}. However, the dataset evolved and now integrates new patterns, such as \textit{Resource Leak} and \textit{SHA-1 Hash Function}. 
+
+In total, the dataset contains 716 security refactorings, as shown in Table \ref{tab:patterns}. This is the dataset used
+by the BCH tool to compute the maintainability of security refactorings. However, some of the projects are not considered for
+the final results because the limitations of the tool, such as the project size and large time of computation. To calculate the significance of our results by pattern, we perform the wilcoxon statistical test - described in more depth in subsection \ref{sec:statsval} - which needs to comprise more than 20 commits to be effective. The patterns not comprising the number of necessary commits were reallocated to the \textit{Miscellaneous} pattern. Due to the tool limitations and the statistical test requirements, this study only distinguishes nine of the patterns presented in Table \ref{tab:patterns}. In the
+end, we used the following categorization:
+
+\begin{itemize}
+	\item \textbf{Using Components with Known Vulnerabilities.} Updating the libraries, frameworks and other modules. 
+	
+	Components, such as libraries, frameworks, and other software modules, run with the same
+	privileges as the application. If a vulnerable component is exploited, such an attack can facilitate
+	serious data loss or server takeover.
+	 
+	\item \textbf{Resource Leak}
+	\item \textbf{Broken Authentication \& Session Management}
+	\item \textbf{Cross-Site Request Forgery}
+	\item \textbf{Denial-of-Service}
+	\item \textbf{Miscellaneous}
+	\item \textbf{Cross-Site Scripting}
+	\item \textbf{Injection}
+	\item \textbf{Memory Leak}
+\end{itemize}
 
 
 \begin{table*}[h]
@@ -135,18 +183,87 @@ Total     & 180418  & 547349  & 41091    & 15858        & 2314813  & 4584     & 
 
 
 
-\subsection{Maintainability}
 
+\subsection{Maintainability Analysis}
 
+BCH is used to collect the maintanability reports of the commits of each project. The tool 
+evaluation is based on a model of 10 different guidelines \cite{Visser:2016:OREILLY}:
 
+\begin{itemize}
+	\item \textbf{Write short units of code.} Long units are hard to test, reuse, and understand.
+	\item \textbf{Write simple units of code.} Keeping the number of branch points low makes units easier to modify and test.
+	\item \textbf{Write code once.} When code is duplicated, bugs need to be fixed in multiple places, which is inefficient and
+prone to errors.
+	\item \textbf{Keep unit interfaces small.} Keeping the number of parameters low makes units easier to understand and reuse.
+	\item \textbf{Separate concerns in modules.} Changes in a loosely
+coupled codebase are much easier to oversee and execute
+than changes in a tightly coupled codebase.
+	\item \textbf{Couple architecture components loosely.} Independent
+components ease isolated maintenance.
+	\item \textbf{Keep architecture components balanced.} Balanced
+components ease locating code and foster isolation,
+improving maintenance activities.
+	\item \textbf{Keep your codebase small.} Small systems are easier to
+search through, analyze, and understand code.
+	\item \textbf{Automate tests.} Automated testing makes development
+predictable and less risky.
+	\item \textbf{Write clean code.} Code without code smells is less likely to bring maintainability issues.
+\end{itemize}
 
+For each guideline, BCH evaluates the compliance against a particular guideline by setting boundaries for the percentage of code allowed to fall in each of the four risk severity categories (low risk, medium risk, high risk, and very high risk). If the thresholds are not violated, the project is considered to be compliant with the guideline. According to BCH, the guideline thresholds are calibrated yearly based on a representative benchmark of closed and open-source software systems. Being compliant with a guideline means that the project under analysis is at least better than 65\% of the software systems in BCH’s benchmark.
 
+The BCH report of the $<INSERT\_EXEMPLO>$ for a non-compliant guideline can be seen in Fig. [X]. This was extracted from the report of the app $<INSERT\_EXEMPLO>$, used in the motivating example of Section II [MAYBE?]. The green bar represents the percentage of compliant lines of code. These lines of code are considered to be compliant with ISO 25010 standard for maintainability [21]. The yellow, orange and red bars represent non-compliant lines of code with medium, high, and very high severity levels, respectively. Along the bars, there are also marks that refer to the compliance thresholds for each severity level. The report is equivalent to the information reported in Table II: a set of thresholds, number of lines of code (LOC), and percentage of the project for each severity level. Nonetheless, thresholds provided by BCH do not sum to 100\%: non-compliant levels are provided in a cumulative way (e.g., the threshold for the medium level includes high and very high levels); the compliant-level threshold is the complement of the medium-level threshold.
+
+Since we want to analyze maintainability regression, we
+use BCH to compute maintainability in two different versions of the Android app: a) the version of the project before the energy commit ($v_{E−1}$) and b) the version immediately after the energy commit ($v_E$). This is illustrated in Fig. [X].
+Although BCH provides a detailed report of the maintainability of the project, it does not compute a final score that we can use to compare maintainability amongst different projects. Thus, based in previous work CITE?, we designed an equation to capture the distance between the current state of the project and the standard thresholds. We have adjusted the equation to meet the following requirements:
+
+\begin{itemize}
+	\item \textbf{The maintainability difference between two versions of the same project is not affected by its size.} In this work, we want to evaluate the identical energy patterns occurring in different projects. Thus, the metric cannot use normalization based on its size – we convert percentage data to the respective number of lines of code.
+	\item \textbf{Distance to the thresholds in high severity levels is more penalized than in low severity levels.} We use weights based on the severity level to count lines of code that violate maintainability guidelines.
+\end{itemize}
+
+We compute the mean average of the maintainability score $M(v)$ for all the selected guidelines, as follows:
+
+\begin{equation}
+    M(v) = \sum_{g \in G}^{} M_{g}(v)
+\end{equation}
+
+where $G$ is the group of selected maintainability guidelines from BCH (e.g., Write short units of code, etc.) and $v$ is the
+version of the software under evaluation. The maintenance $M$ based on the guideline $g$ for a given version of a project is computed with the following equation:
+
+\begin{equation}
+    M_{g} = \frac{1}{|L|} \sum_{l \in L}^{} C(l) , L = \{medium, high, veryHigh\}
+\end{equation}
+
+where $C$ is the compliance with the maintainability guideline for the given severity level (medium, high, and very high) and
+$L$ is the group of severity levels of maintainability infractions. The compliance $C$ for a given severity level $l$ is derived by:
+
+\begin{equation}\label{eq:3}
+    C(l) = LOC_{compliant}(l) - w(l) * LOC_{\neg compliant}(l)
+\end{equation}
+
+where $LOC_{compliant}(l)$ are the lines of code that comply with the guideline at the given severity level $l$, $LOC_{\neg compliant}(l)$ are the lines of code that do not comply with the guideline at the given
+severity level $l$ and $w(l)$ is the weight factor to boost the impact of
+non-compliant lines in comparison to compliant lines. Finally, the term $w(l)$ is calculated as follows:
+
+\begin{equation}
+    w(l) = \frac{1 - T(l)}{T(l)}
+\end{equation}
+
+where $T(l)$ is the threshold in percentage of the lines of code that are accepted to be non-compliant with the guideline for the severity level $l$. This is a standard value defined by BCH. In other words, the factor $w$ is used in Eq. \ref{eq:3} to highlight the lines of code that are not complying with the guideline. For instance, the threshold for the severity level veryHigh is defined in Table II as T(veryHigh) = 6.9\%, which derives to a weight of w(veryHigh) = 13.5. This means that, in this example, one non-compliant guideline is decreasing maintainability score by 13.5 points while a compliant guideline is increasing by 1.0 point. In addition, a version that is perfectly aligned with the standard thresholds has a maintainability score of zero. Then, we compute the difference of maintainability between the energy commit ($v_E$) and its parent commit ($v_{E−1}$), as illustrated in Fig. [X].
+
+\subsection{Statistical Validation}\label{sec:statsval}
+
+To validate the maintainability differences in different groups of commits (e.g., baseline and energy commits) we use the Paired Wilcoxon signed-rank test with the significance level $\alpha = 0.05$. In other words, we test the null hypothesis that the maintainability difference between pairs of versions vE−1, vE (i.e., before and after an energy-commit) follows a symmetric distribution around 0. To understand the effect-size, as advocated by the Common-language effect sizes [X], we compute the mean difference, the median of the difference, and the percentage of cases that reduce maintainability.
+
+\textcolor{mypink3}{@todo: Discuss pratt improvement and accuracy}
 
 \section{Results}
 
 \begin{figure}[h]
  	\centering
- 	\includegraphics[width=0.4\textwidth]{figures/maintainability.pdf}
+ 	\includegraphics[width=0.45\textwidth]{figures/maintainability.pdf}
  	\caption{Maintainability difference for security and baseline commits \textcolor{mypink3}{@update}}
 \end{figure}
 
