@@ -105,7 +105,7 @@ In this section, the methodology used to measure the impact of security refactor
 
 \subsection{Dataset}
 
-To evaluate the impact of security refactorings on the maintainability of open-source software, we use a dataset of security flaws which is the outcome of mining more than 248 GitHub\footnote{Github's website available at https://github.com/ (Accessed on January 23, 2019)} repositories. Reis and Abreu (2017) mined open-source software aiming the extraction of real test cases - created by real developers on their daily basis work - to test and assess the performance of static analysis tools since using hand-seeded test cases or mutations could lead to misleading assessments of the tools' capabilities. The study yielded to a dataset of more than 600 test cases for 16 different patterns. Each test case of the dataset is a triplet of folders: the commit before the refactoring, the commit responsible for the refactoring and the snippets of code that differ from one version to another (usually, called \textit{diff}) - where one can easily identify the code used to fix the security flaw. In this study, we focus on computing the maintainability of the commits before and after the security refactoring to evaluate if the impact was positive, negative or none. 
+To evaluate the impact of security refactorings on the maintainability of open-source software, we use a dataset of security flaws which is the outcome of mining more than 248 GitHub\footnote{Github's website available at https://github.com/ (Accessed on January 23, 2019)} repositories. Reis and Abreu (2017) mined open-source software aiming the extraction of real test cases - created by real developers on their daily basis work - to test and assess the performance of static analysis tools since using hand-seeded test cases or mutations could lead to misleading assessments of the tools' capabilities. The study yielded to a dataset of more than 600 test cases for 16 different patterns. Each test case of the dataset is a triplet of folders: the commit before the refactoring, the commit responsible for the refactoring and the snippets of code that differ from one version to another (usually, called \textit{diff}) - where one can easily identify the code used to fix the security flaw. In this study, we focus on computing the maintainability of the commits before and after the security refactoring to evaluate if the impact was positive, negative or none.
 
 \begin{table}[h]
 	\centering
@@ -136,7 +136,7 @@ Total& 716\\
 \end{tabular}
 \end{table}
 
-Reis and Abreu (2017) dataset commits were manually validated, flagged as security flaws and classified with one of 16 the following patterns: \textit{Injection}, \textit{Broken Authentication and Session Management}, \textit{Cross-Site Scripting}, \textit{Broken Access Control}, \textit{Security Misconfiguration}, \textit{Sensitive Data Exposure}, \textit{Insufficient Attack Protection}, \textit{Cross-Site Request Forgery}, \textit{Using Components With Known Vulnerabilities}, \textit{Unprotected APIs}, \textit{Memory Leak}, \textit{Overflow}, \textit{Denial-of-Service}, \textit{Path Traversal} and \textit{Miscellaneous}. However, the dataset evolved and now integrates new patterns, such as \textit{Resource Leak} and \textit{SHA-1 Hash Function}. 
+Reis and Abreu (2017) dataset commits were manually validated, flagged as security flaws and classified with one of 16 the following patterns: \textit{Injection}, \textit{Broken Authentication and Session Management}, \textit{Cross-Site Scripting}, \textit{Broken Access Control}, \textit{Security Misconfiguration}, \textit{Sensitive Data Exposure}, \textit{Insufficient Attack Protection}, \textit{Cross-Site Request Forgery}, \textit{Using Components With Known Vulnerabilities}, \textit{Unprotected APIs}, \textit{Memory Leak}, \textit{Overflow}, \textit{Denial-of-Service}, \textit{Path Traversal} and \textit{Miscellaneous}. However, the dataset evolved and now integrates new patterns, such as \textit{Resource Leak} and \textit{SHA-1 Hash Function}.
 
 In total, the dataset contains 716 security refactorings, as shown in Table \ref{tab:patterns}. This is the dataset used
 by the BCH tool to compute the maintainability of security refactorings. However, some of the projects are not considered for
@@ -144,8 +144,17 @@ the final results because the limitations of the tool, such as the project size 
 end, we used the following categorization:
 
 \begin{itemize}
+<<<<<<< HEAD
 	\item \textbf{Using Components with Known Vulnerabilities.} 
 	 
+=======
+	\item \textbf{Using Components with Known Vulnerabilities.} Updating the libraries, frameworks and other modules.
+
+	Components, such as libraries, frameworks, and other software modules, run with the same
+	privileges as the application. If a vulnerable component is exploited, such an attack can facilitate
+	serious data loss or server takeover.
+
+>>>>>>> f5da7df4f7a447bda2ca617bb02c538e28c8ba71
 	\item \textbf{Resource Leak}
 	\item \textbf{Broken Authentication \& Session Management}
 	\item \textbf{Cross-Site Request Forgery}
@@ -183,7 +192,7 @@ of different projects.
 
 \subsection{Maintainability Analysis}
 
-BCH is used to collect the maintanability reports of the commits of each project. The tool 
+BCH is used to collect the maintanability reports of the commits of each project. The tool
 evaluation is based on a model of 10 different guidelines \cite{Visser:2016:OREILLY}:
 
 \begin{itemize}
@@ -212,7 +221,7 @@ For each guideline, BCH evaluates the compliance against a particular guideline 
 The BCH report of the $<INSERT\_EXEMPLO>$ for a non-compliant guideline can be seen in Fig. [X]. This was extracted from the report of the app $<INSERT\_EXEMPLO>$, used in the motivating example of Section II [MAYBE?]. The green bar represents the percentage of compliant lines of code. These lines of code are considered to be compliant with ISO 25010 standard for maintainability [21]. The yellow, orange and red bars represent non-compliant lines of code with medium, high, and very high severity levels, respectively. Along the bars, there are also marks that refer to the compliance thresholds for each severity level. The report is equivalent to the information reported in Table II: a set of thresholds, number of lines of code (LOC), and percentage of the project for each severity level. Nonetheless, thresholds provided by BCH do not sum to 100\%: non-compliant levels are provided in a cumulative way (e.g., the threshold for the medium level includes high and very high levels); the compliant-level threshold is the complement of the medium-level threshold.
 
 Since we want to analyze maintainability regression, we
-use BCH to compute maintainability in two different versions of the Android app: a) the version of the project before the energy commit ($v_{E−1}$) and b) the version immediately after the energy commit ($v_E$). This is illustrated in Fig. [X].
+use BCH to compute maintainability in two different versions of the Android app: a) the version of the project before the energy commit ($v_{E-1}$) and b) the version immediately after the energy commit ($v_E$). This is illustrated in Fig. [X].
 Although BCH provides a detailed report of the maintainability of the project, it does not compute a final score that we can use to compare maintainability amongst different projects. Thus, based in previous work CITE?, we designed an equation to capture the distance between the current state of the project and the standard thresholds. We have adjusted the equation to meet the following requirements:
 
 \begin{itemize}
@@ -248,11 +257,15 @@ non-compliant lines in comparison to compliant lines. Finally, the term $w(l)$ i
     w(l) = \frac{1 - T(l)}{T(l)}
 \end{equation}
 
-where $T(l)$ is the threshold in percentage of the lines of code that are accepted to be non-compliant with the guideline for the severity level $l$. This is a standard value defined by BCH. In other words, the factor $w$ is used in Eq. \ref{eq:3} to highlight the lines of code that are not complying with the guideline. For instance, the threshold for the severity level veryHigh is defined in Table II as T(veryHigh) = 6.9\%, which derives to a weight of w(veryHigh) = 13.5. This means that, in this example, one non-compliant guideline is decreasing maintainability score by 13.5 points while a compliant guideline is increasing by 1.0 point. In addition, a version that is perfectly aligned with the standard thresholds has a maintainability score of zero. Then, we compute the difference of maintainability between the energy commit ($v_E$) and its parent commit ($v_{E−1}$), as illustrated in Fig. [X].
+where $T(l)$ is the threshold in percentage of the lines of code that are accepted to be non-compliant with the guideline for the severity level $l$. This is a standard value defined by BCH. In other words, the factor $w$ is used in Eq. \ref{eq:3} to highlight the lines of code that are not complying with the guideline. For instance, the threshold for the severity level veryHigh is defined in Table II as T(veryHigh) = 6.9\%, which derives to a weight of w(veryHigh) = 13.5. This means that, in this example, one non-compliant guideline is decreasing maintainability score by 13.5 points while a compliant guideline is increasing by 1.0 point. In addition, a version that is perfectly aligned with the standard thresholds has a maintainability score of zero. Then, we compute the difference of maintainability between the energy commit ($v_E$) and its parent commit ($v_{E-1}$), as illustrated in Fig. [X].
 
 \subsection{Statistical Validation}\label{sec:statsval}
 
+<<<<<<< HEAD
 To validate the maintainability differences in different groups of commits (e.g., baseline and security commits) we use the Paired Wilcoxon signed-rank test with the significance level $\alpha = 0.05$. In other words, we test the null hypothesis that the maintainability difference between pairs of versions vE−1, vE (i.e., before and after an energy-commit) follows a symmetric distribution around 0. To understand the effect-size, as advocated by the Common-language effect sizes [X], we compute the mean difference, the median of the difference, and the percentage of cases that reduce maintainability.
+=======
+To validate the maintainability differences in different groups of commits (e.g., baseline and energy commits) we use the Paired Wilcoxon signed-rank test with the significance level $\alpha = 0.05$. In other words, we test the null hypothesis that the maintainability difference between pairs of versions $v_{E-1}$, $v_E$ (i.e., before and after an energy-commit) follows a symmetric distribution around 0. To understand the effect-size, as advocated by the Common-language effect sizes [X], we compute the mean difference, the median of the difference, and the percentage of cases that reduce maintainability.
+>>>>>>> f5da7df4f7a447bda2ca617bb02c538e28c8ba71
 
 \textcolor{mypink3}{@todo: Discuss pratt improvement and accuracy}
 
