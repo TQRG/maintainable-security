@@ -36,7 +36,7 @@ def main(projects):
     
     lang = pd.DataFrame(dic_lang)
     
-    ax = lang['no'].plot(kind='bar', title ="Language Distribution", figsize=(10, 7), fontsize=11, color="#2541F0")
+    ax = lang['no'].plot(kind='bar', figsize=(10, 7), fontsize=11, color="#2541F0")
     ax.set_xlabel("Language", fontsize=11)
     ax.set_ylabel("", fontsize=11)
     vals = ax.get_yticks()
