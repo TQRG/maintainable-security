@@ -95,7 +95,6 @@ and portability. This paper focuses solely on maintainability.
 In this section, the methodology used to measure the impact of security refactorings on the maintainability of open-source software is presented in depth in the following sections and illustrated in Figure \ref{fig:met}. Aiming to answer the research questions presented in this paper, we use a dataset containing $716$ security refactorings collected from open-source software available on GitHub. $648$ of those refactorings were reported in a previous study conducted in 2017 \cite{Reis:2017:IJSSE}. In parallel, a baseline of regular commits was randomly collected from the list of projects of the main dataset to evaluate what is the impact of regular commits on the maintainability of open-source software. The Software Improvement Group's\footnote{SIG's website is available at https://www.softwareimprovementgroup.com/ (Accessed on January 23, 2019)} web-based source code analysis service Better Code Hub (BCH) \footnote{BCH's website is available at https://bettercodehub.com/ (Accessed on January 23, 2019)} was used to collect the maintainability reports for both security and regular commits.
 
 
-
 \begin{figure}[h]
  	\centering
  	\includegraphics[width=0.5\textwidth]{figures/methodology.pdf}
@@ -165,6 +164,7 @@ In total, the dataset contains 716 security refactorings. These refactorings wer
 	\item \textbf{Memory Leak.} Memory management issue found more frequently in programming languages that do not manage memory automatically (e.g., C/C++ and Objective-C), i.e., where instead developers are responsible for handling it. One of the main causes of DoS attacks.
 \end{itemize}
 
+The dataset 
 
 \begin{table*}[h]
 \centering
