@@ -12,6 +12,37 @@
 \usepackage{xcolor}
 \definecolor{mypink3}{cmyk}{0, 0.7808, 0.4429, 0.1412}
 
+\usepackage{listings}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{lightgreen}{rgb}{0.6,0.9,0.6}
+\definecolor{lightyellow}{rgb}{0.9,0.9,0.6}
+\definecolor{lightorange}{rgb}{0.9,0.8,0.6}
+\definecolor{lightred}{rgb}{0.9,0.7,0.7}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{lightgray}{rgb}{0.8,0.8,0.8}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+
+\usepackage{pifont}
+\newcommand{\lstbg}[3][0pt]{{\fboxsep#1\colorbox{#2}{\strut #3}}}
+\lstset{ %
+  language=Java,
+  backgroundcolor=\color{white},   % choose the background color
+  basicstyle=\ttfamily\scriptsize,        % size of fonts used for the code
+  breaklines=false,                 % automatic line breaking only at whitespace
+  captionpos=b,                    % sets the caption-position to bottom
+  commentstyle=\color{mygray}\bfseries,    % comment style
+  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+  keywordstyle=\color{blue},       % keyword style
+  stringstyle=\color{mymauve},     % string literal style
+  frame=single,
+  escapeinside={/*!}{!*/},
+  morekeywords={@Override,@TargetApi},
+  moredelim=**[l][\color{mygreen}]{+},
+  moredelim=*[l][\color{red}]{-}
+}
+
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
@@ -75,6 +106,10 @@ and portability. This paper focuses solely on maintainability.
 
 \section{Motivation and Research Questions}
 
+
+%\lstinputlisting[language=Python]{source_filename.py}
+
+
 \textcolor{mypink3}{Ver que exemplos existem na amostra da secbench que vamos utilizar para dar como exemplo de motivacao}
 
 \begin{framed}
@@ -92,7 +127,7 @@ and portability. This paper focuses solely on maintainability.
 
 \section{Methodology}
 
-In this section, the methodology used to measure the impact of security refactorings on the maintainability of open-source software is presented in depth in the following sections and illustrated in Figure \ref{fig:met}. Aiming to answer the research questions presented in this paper, we use a dataset containing $716$ security refactorings collected from open-source software available on GitHub. $648$ of those refactorings were reported in a previous study conducted in 2017 \cite{Reis:2017:IJSSE}. In parallel, a baseline of regular commits was randomly collected from the list of projects of the main dataset to evaluate what is the impact of regular commits on the maintainability of open-source software. The Software Improvement Group's\footnote{SIG's website is available at https://www.softwareimprovementgroup.com/ (Accessed on January 23, 2019)} web-based source code analysis service Better Code Hub (BCH) \footnote{BCH's website is available at https://bettercodehub.com/ (Accessed on January 23, 2019)} was used to collect the maintainability reports for both security and regular commits.
+In this section, the methodology used to measure the impact of security refactorings on the maintainability of open-source software is presented in depth in the following sections and illustrated in Figure \ref{fig:met}. Aiming to answer the research questions presented in this paper, we use a dataset containing $716$ security refactorings collected from open-source software available on GitHub. $648$ of those refactorings were reported in a previous study conducted in 2017 \cite{Reis:2017:IJSSE}. In parallel, a baseline of regular commits was randomly collected from the list of projects of the main dataset to evaluate what is the impact of regular commits on the maintainability of open-source software. The Software Improvement Group's\footnote{SIG's website is available at https://www.sig.eu/ (Accessed on January 23, 2019)} web-based source code analysis service Better Code Hub (BCH) \footnote{BCH's website is available at https://bettercodehub.com/ (Accessed on January 23, 2019)} was used to collect the maintainability reports for both security and regular commits.
 
 
 \begin{figure}[h]
