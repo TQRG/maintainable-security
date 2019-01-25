@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 
 
 def language_dist(commits):
+    
     df = pd.read_csv(commits)
     
     lang_trans = {'objc':'Objective-C', 'php':'PHP', 'ruby':'Ruby', 'c':'C', 'c++':'C++', 'groovy':'Groovy', 'javascript':'JavaScript',
@@ -43,6 +44,7 @@ def language_dist(commits):
     plt.savefig('../paper/ICPC19/figures/language_dist.pdf')
 
 def type_dist(projects):
+    
     df = pd.read_csv(projects)
     
     dic = {}
@@ -57,7 +59,7 @@ def type_dist(projects):
     for i in dic:
         dic_type['type'].append(i)
         dic_type['no'].append(dic[i]) 
-        
+                
     app_type = pd.DataFrame(dic_type)
     
     ax = app_type['no'].plot(kind='bar', figsize=(10, 7), fontsize=11, color="#48B963")
@@ -78,16 +80,13 @@ def main(projects, commits):
     
     type_dist(projects)
     
-    
-    
-    
 
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser()
     parser.add_argument('--projects-csv',metavar='projects-csv',required=True,help='the projects filename')
     parser.add_argument('--commits-csv',metavar='commits-csv',required=True,help='the commits filename')
+    #parser.add_argument('--paper-fig-folder',metavar='commits-csv',required=True,help='the figures folder')
     
-
     args = parser.parse_args()
     main(projects=args.projects_csv, commits=args.commits_csv)

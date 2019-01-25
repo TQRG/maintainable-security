@@ -49,7 +49,7 @@
   However, building secure software is far from trivial as developers lack both
   the knowledge and tools to effectively address this concern. In this paper, we
   study the impact of changes to improve security on the maintainability of several
-  open source applications. Using a dataset containing 643 security-oriented
+  open source applications. Using a dataset containing $607$ security-oriented
   commits, we measure maintainability --- as computed by the Software Improvement
   Group's web-based source code analysis service \emph{Better Code Hub} (BCH) ---
   before and after the security refactoring. Results show that making software
@@ -92,7 +92,7 @@ and portability. This paper focuses solely on maintainability.
 
 \section{Methodology}
 
-In this section, the methodology used to measure the impact of security refactorings on the maintainability of open-source software is presented in depth in the following sections and illustrated in Figure \ref{fig:met}. Aiming to answer the research questions presented in this paper, we use a dataset containing more than 700 security refactorings collected from open-source software available on GitHub and where 648 were reported in a previous study conducted in 2017 \cite{Reis:2017:IJSSE}. In parallel, a baseline of regular commits was randomly collected from the list of projects of the main dataset to evaluate what is the impact of regular commits on the maintainability of open-source software. The Software Improvement Group's\footnote{SIG's website is available at https://www.softwareimprovementgroup.com/ (Accessed on January 23, 2019)} web-based source code analysis service Better Code Hub (BCH) \footnote{BCH's website is available at https://bettercodehub.com/ (Accessed on January 23, 2019)} was used to collect the maintainability reports for both security and regular commits.
+In this section, the methodology used to measure the impact of security refactorings on the maintainability of open-source software is presented in depth in the following sections and illustrated in Figure \ref{fig:met}. Aiming to answer the research questions presented in this paper, we use a dataset containing $716$ security refactorings collected from open-source software available on GitHub. $648$ of those refactorings were reported in a previous study conducted in 2017 \cite{Reis:2017:IJSSE}. In parallel, a baseline of regular commits was randomly collected from the list of projects of the main dataset to evaluate what is the impact of regular commits on the maintainability of open-source software. The Software Improvement Group's\footnote{SIG's website is available at https://www.softwareimprovementgroup.com/ (Accessed on January 23, 2019)} web-based source code analysis service Better Code Hub (BCH) \footnote{BCH's website is available at https://bettercodehub.com/ (Accessed on January 23, 2019)} was used to collect the maintainability reports for both security and regular commits.
 
 
 
@@ -105,41 +105,41 @@ In this section, the methodology used to measure the impact of security refactor
 
 \subsection{Dataset}
 
-To evaluate the impact of security refactorings on the maintainability of open-source software, we use a dataset of security flaws which is the outcome of mining more than 248 GitHub\footnote{Github's website available at https://github.com/ (Accessed on January 23, 2019)} repositories. Reis and Abreu (2017) mined open-source software aiming the extraction of real test cases - created by real developers on their daily basis work - to test and assess the performance of static analysis tools since using hand-seeded test cases or mutations could lead to misleading assessments of the tools' capabilities. The study yielded to a dataset of more than 600 test cases for 16 different patterns. Each test case of the dataset is a triplet of folders: the commit before the refactoring, the commit responsible for the refactoring and the snippets of code that differ from one version to another (usually, called \textit{diff}) - where one can easily identify the code used to fix the security flaw. In this study, we focus on computing the maintainability of the commits before and after the security refactoring to evaluate if the impact was positive, negative or none.
+To evaluate the impact of security refactorings on the maintainability of open-source software, we use a dataset of security flaws which is the outcome of mining more than $248$ GitHub\footnote{Github's website available at https://github.com/ (Accessed on January 23, 2019)} projects. Reis and Abreu (2017) mined open-source software aiming the extraction of real test cases - created by real developers on their daily basis development - to test and assess the performance of static analysis tools since using hand-seeded test cases or mutations could lead to misleading assessments of the capabilities of the tools. The study yielded to a dataset of $648$ test cases for $16$ different patterns. Each test case of the dataset is a triplet of folders: the commit before the refactoring, the commit responsible for the refactoring and the snippets of code that differ from one version to another (usually, called \textit{diff}) - where one can easily identify the code used to fix the security flaw. In this study, we focus on computing the maintainability of the commits before and after the security refactoring to evaluate if the impact was positive, negative or none.
 
-\begin{table}[h]
-	\centering
-\caption{Current Dataset Patterns Distribution} \label{tab:patterns}
-\begin{tabular}{@{}ll@{}}
-\toprule
-Pattern & \# Commits\\
-\midrule
-Injection & 101\\
-Broken Authentication and Session Management& 45\\
-Cross-Site Scripting& 142\\
-Broken Access Control& 2\\
-Security Misconfiguration& 9\\
-Sensitive Data Exposure& 24\\
-Insufficient Attack Protection& 18\\
-Cross-Site Request Forgery& 34\\
-Using Components With Known Vulnerabilities& 27\\
-Unprotected APIs& 7\\
-Memory Leak& 91\\
-Overflow& 19\\
-Denial-of-Service& 43\\
-Path Traversal& 19\\
-Resource Leak& 33\\
-SHA-1 Hash Function & 1\\
-Miscellaneous& 101\\\midrule
-Total& 716\\
-\bottomrule
-\end{tabular}
-\end{table}
+% \begin{table}[h]
+% 	\centering
+% \caption{Current Dataset Patterns Distribution} \label{tab:patterns}
+% \begin{tabular}{@{}ll@{}}
+% \toprule
+% Pattern & \# Commits\\
+% \midrule
+% Injection & 89\\
+% Broken Authentication and Session Management& 45\\
+% Cross-Site Scripting& 142\\
+% Broken Access Control& 2\\
+% Security Misconfiguration& 9\\
+% Sensitive Data Exposure& 24\\
+% Insufficient Attack Protection& 18\\
+% Cross-Site Request Forgery& 34\\
+% Using Components With Known Vulnerabilities& 27\\
+% Unprotected APIs& 7\\
+% Memory Leak& 91\\
+% Overflow& 19\\
+% Denial-of-Service& 43\\
+% Path Traversal& 19\\
+% Resource Leak& 33\\
+% SHA-1 Hash Function & 1\\
+% Miscellaneous& 101\\\midrule
+% Total& 716\\
+% \bottomrule
+% \end{tabular}
+% \end{table}
 
 \begin{figure}[h]
  	\centering
  	\includegraphics[width=0.5\textwidth]{figures/language_dist.pdf}
- 	\caption{Language Distribution}
+ 	\caption{Security Refactorings Language Distribution}
 	\label{fig:lang}
 \end{figure}
 
@@ -150,23 +150,19 @@ Total& 716\\
 	\label{fig:type}
 \end{figure}
 
-Reis and Abreu (2017) dataset commits were manually validated, flagged as security flaws and classified with one of 16 the following patterns: \textit{Injection}, \textit{Broken Authentication and Session Management}, \textit{Cross-Site Scripting}, \textit{Broken Access Control}, \textit{Security Misconfiguration}, \textit{Sensitive Data Exposure}, \textit{Insufficient Attack Protection}, \textit{Cross-Site Request Forgery}, \textit{Using Components With Known Vulnerabilities}, \textit{Unprotected APIs}, \textit{Memory Leak}, \textit{Overflow}, \textit{Denial-of-Service}, \textit{Path Traversal} and \textit{Miscellaneous}. However, the dataset evolved and now integrates new patterns, such as \textit{Resource Leak} and \textit{SHA-1 Hash Function}.
+Reis and Abreu ($2017$) dataset commits were manually validated, flagged as security flaws and classified with one of the $16$ following patterns: \textit{Injection}, \textit{Broken Authentication and Session Management}, \textit{Cross-Site Scripting}, \textit{Broken Access Control}, \textit{Security Misconfiguration}, \textit{Sensitive Data Exposure}, \textit{Insufficient Attack Protection}, \textit{Cross-Site Request Forgery}, \textit{Using Components With Known Vulnerabilities}, \textit{Unprotected APIs}, \textit{Memory Leak}, \textit{Overflow}, \textit{Denial-of-Service}, \textit{Path Traversal} and \textit{Miscellaneous}. However, the dataset evolved and now integrates new patterns, such as \textit{Resource Leak} and \textit{SHA-1 Hash Function}. A considerable amount of these patterns are based in the OWASP Top 10 of 2013~\cite{oswap:2013} and OWASP Top 10 of 2017~\cite{oswap:2017}.
 
-In total, the dataset contains 716 security refactorings, as shown in Table \ref{tab:patterns}. This is the dataset used
-by the BCH tool to compute the maintainability of security refactorings. However, some of the projects are not considered for
-the final results because the limitations of the tool, such as the project size and large time of computation. To calculate the significance of our results by pattern, we perform the wilcoxon statistical test - described in more depth in subsection \ref{sec:statsval} - which needs to comprise more than 20 commits to be effective. The patterns not comprising the number of necessary commits were reallocated to the \textit{Miscellaneous} pattern. Due to the tool limitations and the statistical test requirements, this study only distinguishes nine of the patterns presented in Table \ref{tab:patterns}. In the
-end, we used the following categorization:
+In total, the dataset contains 716 security refactorings. These refactorings were computed by the BCH tool to calculate maintainability. However, some of the refactorings are not considered in the final results due to limitations of BCH: lack of language support and project size. The Wilcoxon statistical test - described more in-depth in subsection \ref{sec:statsval} - is performed to evaluate the significance of our results. Each type of security flaw is tested, Figure \ref{fig:pat}. One of the main requirements of this test is that the input sample needs to comprise more than 20 commits. Thus, the patterns not complying with this requirement were reallocated to the \textit{Miscellaneous} pattern. In the end, we highlight the following patterns:
 
 \begin{itemize}
-	\item \textbf{Using Components with Known Vulnerabilities.}
-	\item \textbf{Resource Leak}
-	\item \textbf{Broken Authentication \& Session Management}
-	\item \textbf{Cross-Site Request Forgery}
-	\item \textbf{Denial-of-Service}
-	\item \textbf{Miscellaneous}
-	\item \textbf{Cross-Site Scripting}
-	\item \textbf{Injection}
-	\item \textbf{Memory Leak}
+	\item \textbf{Using Components with Known Vulnerabilities.} The majority of software produced today integrates several components, such as libraries and frameworks, which may affect the software if developers use vulnerable versions - usually known and disclosed somewhere on the Internet. \textit{Based on the OWASP Top 10 of 2017.}
+	\item \textbf{Broken Authentication \& Session Management.} Uncorrectly implemented functionalities related to authentication and session management, allowing crackers to gain access to session tokens, passwords, keys and other sensitive data \textit{- Based on the OWASP Top 10 of 2013.}
+	\item \textbf{Cross-Site Request Forgery.} Poor session tokens generation and management usually allow crackers to send forged HTTP requests including authentication information from the victim to vulnerable web application \textit{- Based on the OWASP Top 10 of 2013.}
+	\item \textbf{Denial-of-Service} Security flaws that can allow a cracker to flood or crashing services. This attacks usually occur when the system receives much traffic causing it to slow down and eventually stop. For example, flaws allowing crackers to trigger memory allocations corresponding to large length values (CVE-2014-3506)\footnote{CVE-2014-3506 details available at https://nvd.nist.gov/vuln/detail/CVE-2014-3506 (Accessed on January 25, 2019)}. 
+	\item \textbf{Miscellaneous} This pattern comprises several others categories of security refactorings (e.g., \textit{path traversal and buffer overflow}). It contains several other security refactorings that do not have their own pattern yet. The patterns not satisfying the size requirement of more than 20 refactorings are contemplated here.	
+	\item \textbf{Cross-Site Scripting.} Lack of proper validation or escaping allow crackers to submit untrusted data to web browsers through malicious scripts that can hijack the user sessions or redirect the user to malicious sites \textit{- Based on the OWASP Top 10 of 2017.}
+	\item \textbf{Injection.} When developers do not keep untrusted data separate from commands and queries. If a cracker sends a string that exploits the syntax of the interpreter, then an injection attack is possible (e.g., SQL and LDAP injection)\textit{- Based on the OWASP Top 10 of 2017.}
+	\item \textbf{Memory Leak.} Memory management issue found more frequently in programming languages that do not manage memory automatically (e.g., C/C++ and Objective-C), i.e., where instead developers are responsible for handling it. One of the main causes of DoS attacks.
 \end{itemize}
 
 
@@ -276,17 +272,20 @@ To validate the maintainability differences in different groups of commits (e.g.
 \textcolor{mypink3}{@todo: Discuss pratt improvement and accuracy}
 
 \section{Results}
-a
+
+
 \begin{figure}[h]
  	\centering
  	\includegraphics[width=0.45\textwidth]{figures/maintainability.pdf}
- 	\caption{Maintainability difference for security and baseline commits \textcolor{mypink3}{@update}}
+ 	\caption{Maintainability difference for security and baseline refactorings}
+	\label{fig:secvsreg}
 \end{figure}
 
 \begin{figure}[h]
  	\centering
  	\includegraphics[width=0.55\textwidth]{figures/category.pdf}
- 	\caption{Maintainability difference by type of security commit \textcolor{mypink3}{@update}}
+ 	\caption{Maintainability difference by type after security refactorings}
+	\label{fig:pat}
 \end{figure}
 
 

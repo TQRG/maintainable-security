@@ -41,11 +41,8 @@ def clean_plot():
     plt.gcf().clear()
 
 # TODO: IMPROVE
-def count(t_id, id, total, lang, pattern, year, l, p, y):
-    total[t_id] += 1
-    lang[l][id] += 1
+def count(id, pattern, p):
     pattern[p][id] += 1
-    year[y][id] += 1
 
 def total_main_barchart(total_sec, total_reg, graphics, result):
     
@@ -124,7 +121,6 @@ def analysis(dataset, results, CACHE):
         fields = ['owner', 'project', 'sha', 'sha-p', 'main(sha)', 'main(sha-p)', 'main(diff)']
         writer = csv.DictWriter(out, fieldnames=fields)    
         writer.writeheader()
-        total = {'neg': 0, 'pos': 0, 'nul': 0}
 
         langs, patterns, years, differences, diff_by_pat = {}, {}, {}, [], {}
         none = 0; error = 0
@@ -179,16 +175,14 @@ def analysis(dataset, results, CACHE):
                                 'main(diff)': main_d
                                 })          
             
-                langs = check_if_in(lang, langs)
                 patterns = check_if_in(pattern, patterns)
-                years = check_if_in(year, years)
-
+                
                 if main_d < 0:
-                    count('neg', 0, total, langs, patterns, years, lang, pattern, year)
+                    count(0, patterns, pattern)
                 elif main_d > 0:
-                    count('pos', 1, total, langs, patterns, years, lang, pattern, year)
+                    count(1, patterns, pattern)
                 else:
-                    count('nul', 2, total, langs, patterns, years, lang, pattern, year)
+                    count(2, patterns, pattern)
 
                 differences.append(main_d)
                 if pattern not in diff_by_pat:
@@ -196,26 +190,26 @@ def analysis(dataset, results, CACHE):
                 else:
                     diff_by_pat[pattern].append(main_d)
                     
-            return patterns, none, error, total, diff_by_pat 
+            return patterns, none, error, diff_by_pat 
 
 def sec_vs_rg_commits(CACHE, graphics, dataset):
     
-    _, none_sec, error_sec, total_sec, _ = analysis('../dataset/commits_patterns_sec.csv', '../results/sec-main-results.csv', CACHE)
-    _, none_reg, error_reg, total_reg, _ = analysis('../dataset/commits_regular.csv', '../results/sec-reg-results.csv', CACHE)
+    _, none_sec, error_sec, _ = analysis('../dataset/commits_patterns_sec.csv', '../results/sec-main-results.csv', CACHE)
+    _, none_reg, error_reg, _ = analysis('../dataset/commits_regular.csv', '../results/sec-reg-results.csv', CACHE)
     
     df_sec = pd.read_csv('../results/sec-main-results.csv')
     df_reg = pd.read_csv('../results/sec-reg-results.csv')
+    df_aux = pd.read_csv('../dataset/commits_patterns_sec.csv')
+    df_pat = df_aux[['pattern','language']]
     
     df = df_sec.join(df_reg,lsuffix='_sec',rsuffix='_reg')
-    
-    
+    df = df.join(df_pat)
+        
     fil = df[(df['main(diff)_reg'] != 'error') & (df['main(diff)_sec'] != 'error')]
     
     
     stats1 = _print_hypothesis_test(fil['main(diff)_sec'].astype('float64'))
-    print(total_sec, 'total=', sum([value for key,value in total_sec.items()]), ', none=', none_sec, ', error=', error_sec)
     stats = _print_hypothesis_test(fil['main(diff)_reg'].astype('float64'))
-    print(total_reg, 'total=', sum([value for key,value in total_reg.items()]), ', none=', none_reg, ', error=', error_reg)
 
     result = stats.append([stats1])
     result.to_csv('../results/statistical_test.csv')
@@ -223,7 +217,6 @@ def sec_vs_rg_commits(CACHE, graphics, dataset):
     total_sec, total_reg = {'neg': 0, 'pos': 0, 'nul': 0}, {'neg': 0, 'pos': 0, 'nul': 0}
     
     for i in fil.iterrows():
-        print(i[1]['main(diff)_sec'], i[1]['main(diff)_reg'])
         if float(i[1]['main(diff)_sec']) < 0:
             total_sec['neg'] += 1
         elif float(i[1]['main(diff)_sec']) > 0:
@@ -240,6 +233,11 @@ def sec_vs_rg_commits(CACHE, graphics, dataset):
     
     total_main_barchart(total_sec, total_reg, graphics, result)
     clean_plot()
+    print(total_sec, 'total=', sum([value for key,value in total_sec.items()]), ', none=', none_sec, ', error=', error_sec)
+    print(total_reg, 'total=', sum([value for key,value in total_reg.items()]), ', none=', none_reg, ', error=', error_reg)
+    
+    return fil
+    
     
     
 def main_by_type_barchart(patterns, diff):
@@ -275,44 +273,69 @@ def main_by_type_barchart(patterns, diff):
     plt.subplots_adjust(left=0.25, right=0.9, top=0.9, bottom=0.06)
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.08), fancybox=True, ncol=3, fontsize=7)
 
-    y = 8
+    y = 7
     for l in df.iterrows():
         if float('{:.{}f}'.format(l[1]['p'], 3)) <= 0.000:
             p = '<0.001'
         else:
             p = '={:.{}f}'.format(l[1]['p'], 3)
         box_text = 'N='+str(l[1]['N'])+'\n$Z$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\n$\widetilde{x}$=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
-        ax.text(0.68, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=5)
+        ax.text(0.75, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=5)
         y -= 1.02
         
     plt.gca().xaxis.grid(True, linestyle='--')
 
     plt.savefig('../paper/ICPC19/figures/category.pdf')
 
-def sec_by_type(CACHE):
+def sec_by_type(CACHE, fil):
     
-    patterns, none, error, total_sec, diff_by_path = analysis('../dataset/commits_patterns_sec.csv', '../results/sec-main-results.csv', CACHE)
-    
-    assert len(diff_by_path['ml']) == sum(patterns['ml'])
-    assert len(diff_by_path['xss']) == sum(patterns['xss'])
-    assert len(diff_by_path['misc']) == sum(patterns['misc'])
-    
-    keys = patterns.keys()
-    to_del = []
-    
+    keys = fil['pattern'].unique()    
+    patterns, diff_by_pattern = {}, {}
+     
     for i in keys:
-        if sum(patterns[i]) < 21:
-            diff_by_path['misc'] += diff_by_path[i]
-            patterns['misc'][0] += patterns[i][0]
-            patterns['misc'][1] += patterns[i][1]
-            patterns['misc'][2] += patterns[i][2]
-            to_del.append(i)
-    
-    for i in to_del:
-        del patterns[i]
-        del diff_by_path[i]
+        res, diff = [0,0,0], []
 
-    main_by_type_barchart(patterns, diff_by_path)
+        df = fil[fil['pattern'] == i]
+        for i in df.iterrows():
+            if float(i[1]['main(diff)_sec']) < 0:
+                res[0] += 1
+            elif float(i[1]['main(diff)_sec']) > 0:
+                res[1] += 1
+            else:
+                res[2] += 1
+        
+        if len(df) < 21:
+            if 'misc' in patterns:
+                patterns['misc'][0] += res[0]
+                patterns['misc'][1] += res[1]
+                patterns['misc'][2] += res[2]
+            else:
+                patterns['misc'] = res
+                
+            if 'misc' in diff_by_pattern:
+                diff_by_pattern['misc'] += [float(i[1]['main(diff)_sec']) for i in df.iterrows()]
+            else:
+                diff_by_pattern['misc'] = [float(i[1]['main(diff)_sec']) for i in df.iterrows()]
+        else:
+            patterns[i[1]['pattern']] = res
+            
+            if i[1]['pattern'] in diff_by_pattern:
+                diff_by_pattern[i[1]['pattern']] += [float(i[1]['main(diff)_sec']) for i in df.iterrows()]
+            else:
+                diff_by_pattern[i[1]['pattern']] = [float(i[1]['main(diff)_sec']) for i in df.iterrows()]
+
+
+    count = 0
+    for i in diff_by_pattern:
+        count += len(diff_by_pattern[i])
+    print('Count=', count)
+        
+    count = 0
+    for i in patterns:
+        count += sum(patterns[i])
+    print('Count=', count)
+
+    main_by_type_barchart(patterns, diff_by_pattern)
     
 
 def main(cache, results, graphics, dataset):
@@ -320,10 +343,17 @@ def main(cache, results, graphics, dataset):
     CACHE = readBCHCache(cache)
     
     # Figure 1
-    sec_vs_rg_commits(CACHE, graphics, dataset)
-    
+    fil = sec_vs_rg_commits(CACHE, graphics, dataset)
+        
     # Figure 2
-    sec_by_type(CACHE)
+    sec_by_type(CACHE, fil)
+    
+    keys = fil['pattern'].unique()   
+    for i in keys:
+        print(i, len(fil[fil['pattern'] == i]))
+        
+    
+    fil.to_csv('final_results.csv')
 
 
 if __name__ == "__main__":
