@@ -9,8 +9,11 @@
 \usepackage{booktabs}
 \usepackage[table,xcdraw]{xcolor}
 \usepackage{framed}
+\usepackage{float}
 \usepackage{xcolor}
 \definecolor{mypink3}{cmyk}{0, 0.7808, 0.4429, 0.1412}
+
+
 
 \usepackage{listings}
 
@@ -24,32 +27,43 @@
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
 
 
+\usepackage{pifont}
 \newcommand{\lstbg}[3][0pt]{{\fboxsep#1\colorbox{#2}{\strut #3}}}
 \lstset{ %
   language=C,
   backgroundcolor=\color{white},   % choose the background color
   basicstyle=\ttfamily\scriptsize,        % size of fonts used for the code
-  breaklines=false,                 % automatic line breaking only at whitespace
+  breaklines=true,                 % automatic line breaking only at whitespace
   captionpos=b,                    % sets the caption-position to bottom
   commentstyle=\color{mygray}\bfseries,    % comment style
   escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
   keywordstyle=\color{blue},       % keyword style
   stringstyle=\color{mymauve},     % string literal style
   frame=single,
+  numbers=left,
+  stepnumber=1,
+  xleftmargin=2em,
   escapeinside={/*!}{!*/},
-  morekeywords={@Override,@TargetApi},
   moredelim=**[l][\color{mygreen}]{+},
   moredelim=*[l][\color{red}]{-}
 }
 
+
+\newcounter{lstannotation}
+\setcounter{lstannotation}{0}
+\renewcommand{\thelstannotation}{\ding{\number\numexpr181+\arabic{lstannotation}}}
+\newcommand{\annotation}[1]{\refstepcounter{lstannotation}\label{#1}\thelstannotation}
+
+
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
+\newcommand{\Sof}[1]{\textbf{[Sofia:[}{\color{cyan} #1}\textbf{]]}}
+
+
 \begin{document}
 
-\title{Security vs. Maintainability: Fixing Vulnerabilities Obfuscates your Code%\\
-%\thanks{Identify applicable funding agency here. If none, delete this.}
-}
+\title{Security vs. Maintainability: Fixing Vulnerabilities Obfuscates your Code}
 
 \author{
     Anonymou(s) Author(s)
@@ -102,66 +116,108 @@ functional suitability, performance efficiency, compatibility, usability, reliab
 and portability. This paper focuses solely on maintainability.
 
 
+\Sof{=============== READY START!}
 
-\section{Motivation and Research Questions}
+\section{Motivation and Research Questions}\label{sec:motivation}
 
 
+Under the rush of companies trying to outdo each other and due to the lack of expertise in
+the security field, security flaws are usually detected only when hackers exploit them which happens
+because developers create buggy software without knowing. Gladly, fixing these
+issues usually is as simple as changing the software codebase. However,
+these refactorings can sometimes have a negative impact on software maintenance, not
+only because developers are under the rush of "protecting" their software but also because 
+they tend to take the easiest path and not the most efficient one. Thus, we
+want to understand how security refactorings impact the maintainability of software.
+
+One example is the refactoring of the DTLS protocol implementation in OpenSSL after
+Adam Langley detect that remote attackers could cause a Denial-of-Service (DoS) attack
+when crafting DTLS handshake messages to trigger memory allocations corresponding to large length values. 
+This vulnerability is listed at the Common Vulnerabilities and Exposures dictionary as CVE-2014-3506\footnote{CVE-2014-3506 details available at http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3506 (Accessed on January 25, 2019)} and 
+it is one of the vulnerabilities under evaluation in this study. The impact of this refactoring
+on the OpenSSL maintainability was negative. The following snippet presents the codebase changes 
+performend on the \emph{ssl/d1\_both.c} file\footnote{CVE-2014-3506 fix available  at https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd7636} by the OpenSLL developers to fix the vulnerability.
 
 
-Improving energy efficiency of apps revolves around chang- ing their codebases. Previous work has studied existing energy patterns for mobile applications [18]. It cataloged typical coding practices developers adopt to address energy efficiency. An example of an energy pattern is the Power Save Mode: the app features a mode that can be activated upon low battery and uses fewer resources while providing the minimum
-+ functionality that is indispensable to the user.
-
-\begin{lstlisting}
-	
-+ static unsigned long dtls1_max_handshake_message_len(
-+ 	const SSL *s)
-+	{
-+	unsigned long max_len = DTLS1_HM_HEADER_LENGTH + 
-+ 			SSL3_RT_MAX_ENCRYPTED_LENGTH;
-+	if (max_len < (unsigned long)s->max_cert_list)
-+		return s->max_cert_list;
-+	return max_len;
-+	}
- 
-// [snip]
-
- 	pitem *item = NULL;
- 	int i = -1, is_complete;
- 	unsigned char seq64be[8];
--	unsigned long frag_len = msg_hdr->frag_len, max_len;
--
--	if ((msg_hdr->frag_off+frag_len) > msg_hdr->msg_len)
--		goto err;
--
--	/* Determine maximum allowed message size. Depends on (user set)
--	 * maximum certificate length, but 16k is minimum.
--	 */
--	if (DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH < s->max_cert_list)
--		max_len = s->max_cert_list;
--	else
--		max_len = DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH;
-+	unsigned long frag_len = msg_hdr->frag_len;
- 
--	if ((msg_hdr->frag_off+frag_len) > max_len)
-+	if ((msg_hdr->frag_off+frag_len) > msg_hdr->msg_len ||
-+	    msg_hdr->msg_len > dtls1_max_handshake_message_len(s))
- 		goto err;
- 
-// [snip]
-
- 		if (frag_len && frag_len < msg_hdr->msg_len)
- 			return dtls1_reassemble_fragment(s, msg_hdr, ok);
- 
-+		if (frag_len > dtls1_max_handshake_message_len(s))
-+			goto err;
+\setcounter{lstannotation}{0}
+\begin{lstlisting}[caption={Fix provided by OpenSSL developers to the CVE-2014-3506 vulnerability},label={lst:vuln}]
++static unsigned long dtls1_max_handshake_message_len(const SSL *s){ /*!\annotation{lst:func1}!*/
 +
- 		frag = dtls1_hm_fragment_new(frag_len, 0);
- 		if ( frag == NULL)
- 			goto err;
++ unsigned long max_len = DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH;
++ if(max_len < (unsigned long)s->max_cert_list) /*!\annotation{lst:func2}!*/
++    return s->max_cert_list;
++ return max_len;
++} 
+
+static int dtls1_reassemble_fragment(SSL *s, struct hm_header_st* msg_hdr, int *ok){
+    
+// [snip]
+
+- unsigned long frag_len = msg_hdr->frag_len, max_len; /*!\annotation{lst:func3}!*/
+-
+- if((msg_hdr->frag_off+frag_len) > msg_hdr->msg_len) 
+-    goto err; 
+
+- if(DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH < s->max_cert_list)
+-    max_len = s->max_cert_list;
+- else
+-    max_len = DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH;
+
++ unsigned long frag_len = msg_hdr->frag_len;
+ 
+- if((msg_hdr->frag_off+frag_len) > max_len)
+
++ if((msg_hdr->frag_off+frag_len) > msg_hdr->msg_len ||
++ msg_hdr->msg_len > dtls1_max_handshake_message_len(s))
+     goto err; /*!\annotation{lst:func5}!*/
+	 
+  memset(seq64be,0,sizeof(seq64be));
+  seq64be[6] = (unsigned char) (msg_hdr->seq>>8);
+  seq64be[7] = (unsigned char) msg_hdr->seq;
+  item = pqueue_find(s->d1->buffered_messages, seq64be);
+  if(item == NULL)
+  {
+    frag = dtls1_hm_fragment_new(msg_hdr->msg_len, 1);
+		
+// [snip]
+ 
+ static int
+ dtls1_process_out_of_seq_message(SSL *s, struct hm_header_st* msg_hdr, int *ok)
+ {
+ 
+// [snip]
+
+  if(frag_len && frag_len < msg_hdr->msg_len)
+     return dtls1_reassemble_fragment(s, msg_hdr, ok);
+ 
++ if(frag_len > dtls1_max_handshake_message_len(s))
++    goto err; /*!\annotation{lst:func4}!*/
++
+  frag = dtls1_hm_fragment_new(frag_len, 0);
 
 \end{lstlisting}
 
-\textcolor{mypink3}{Ver que exemplos existem na amostra da secbench que vamos utilizar para dar como exemplo de motivacao}
+In the \emph{dtls1\_reassemble\_fragment} function the value of \emph{msg\_hdr-$>$frag\_off+frag\_len} was checked against the
+maximum hadshake message size but \emph{msg\_len} is allocated to the fragment buffer in line 37. Thus, if the fragment was within
+the allowed size, the pending handshake message could consume $16MB$+$2MB$. According with the message commit, 10 handshake messages
+are allowed, so the attacker could consume approximately $180MB$ per DTLS connection.
+
+The code changes performed to fix the vulnerability were the following:
+
+\ref{lst:func1} $dtls1\_max\_handshake\_message\_len$ function was inserted to limit the number of bytes allowed in a DTLS handshake message for \emph{s}. This function replaces the lines 18-21.
+
+\ref{lst:func2} Checks if the maximum certificate list size (\emph{s-$>$max\_cert\_list}) requires more length than the maximum length (\emph{max\_len}). If yes, it return the certificate list size, if not it return the maximum length.
+
+\ref{lst:func3} Replaced by attribution in line 23.
+
+\ref{lst:func5} and \ref{lst:func4} add the check to ensure that the message length in never higher than the maxiumum allowed by the DTSL protocol in different functions.
+
+Although limiting the size of a handshake message seems an easy problem to fix, it is possible to see that there was a considerable amount of changes performed
+in the codebase which led to a decrease in the project maintainability. 
+
+
+\Sof{=============== READY FINISH!}
+
 
 \begin{framed}
 \textit{\textbf{RQ1} What is the impact of security refactorings on the maintainability of open-source software?}
@@ -174,6 +230,9 @@ Improving energy efficiency of apps revolves around chang- ing their codebases. 
 \begin{framed}
 \textit{\textbf{RQ3} }
 \end{framed}
+
+
+\Sof{=============== READY START!}
 
 
 \section{Methodology}
@@ -230,8 +289,8 @@ To evaluate the impact of security refactorings on the maintainability of open-s
 \begin{figure}[h]
  	\centering
  	\includegraphics[width=0.5\textwidth]{figures/type_dist.pdf}
- 	\caption{Type Distribution}
-	\label{fig:type}
+ 	\caption{Projects Domain Distribution}
+	\label{fig:domain}
 \end{figure}
 
 Reis and Abreu ($2017$) dataset commits were manually validated, flagged as security flaws and classified with one of the $16$ following patterns: \textit{Injection}, \textit{Broken Authentication and Session Management}, \textit{Cross-Site Scripting}, \textit{Broken Access Control}, \textit{Security Misconfiguration}, \textit{Sensitive Data Exposure}, \textit{Insufficient Attack Protection}, \textit{Cross-Site Request Forgery}, \textit{Using Components With Known Vulnerabilities}, \textit{Unprotected APIs}, \textit{Memory Leak}, \textit{Overflow}, \textit{Denial-of-Service}, \textit{Path Traversal} and \textit{Miscellaneous}. However, the dataset evolved and now integrates new patterns, such as \textit{Resource Leak} and \textit{SHA-1 Hash Function}. A considerable amount of these patterns are based in the OWASP Top 10 of 2013~\cite{oswap:2013} and OWASP Top 10 of 2017~\cite{oswap:2017}.
@@ -242,14 +301,15 @@ In total, the dataset contains 716 security refactorings. These refactorings wer
 	\item \textbf{Using Components with Known Vulnerabilities.} The majority of software produced today integrates several components, such as libraries and frameworks, which may affect the software if developers use vulnerable versions - usually known and disclosed somewhere on the Internet. \textit{Based on the OWASP Top 10 of 2017.}
 	\item \textbf{Broken Authentication \& Session Management.} Uncorrectly implemented functionalities related to authentication and session management, allowing crackers to gain access to session tokens, passwords, keys and other sensitive data \textit{- Based on the OWASP Top 10 of 2013.}
 	\item \textbf{Cross-Site Request Forgery.} Poor session tokens generation and management usually allow crackers to send forged HTTP requests including authentication information from the victim to vulnerable web application \textit{- Based on the OWASP Top 10 of 2013.}
-	\item \textbf{Denial-of-Service} Security flaws that can allow a cracker to flood or crashing services. This attacks usually occur when the system receives much traffic causing it to slow down and eventually stop. For example, flaws allowing crackers to trigger memory allocations corresponding to large length values (CVE-2014-3506)\footnote{CVE-2014-3506 details available at https://nvd.nist.gov/vuln/detail/CVE-2014-3506 (Accessed on January 25, 2019)}.
+	\item \textbf{Denial-of-Service} Security flaws that can allow a cracker to flood or crashing services. This attacks usually occur when the system receives much traffic causing it to slow down and eventually stop. For example, flaws allowing crackers to trigger memory allocations corresponding to large length values (Listing \ref{lst:vuln}).
 	\item \textbf{Miscellaneous} This pattern comprises several others categories of security refactorings (e.g., \textit{path traversal and buffer overflow}). It contains several other security refactorings that do not have their own pattern yet. The patterns not satisfying the size requirement of more than 20 refactorings are contemplated here.
 	\item \textbf{Cross-Site Scripting.} Lack of proper validation or escaping allow crackers to submit untrusted data to web browsers through malicious scripts that can hijack the user sessions or redirect the user to malicious sites \textit{- Based on the OWASP Top 10 of 2017.}
 	\item \textbf{Injection.} When developers do not keep untrusted data separate from commands and queries. If a cracker sends a string that exploits the syntax of the interpreter, then an injection attack is possible (e.g., SQL and LDAP injection)\textit{- Based on the OWASP Top 10 of 2017.}
 	\item \textbf{Memory Leak.} Memory management issue found more frequently in programming languages that do not manage memory automatically (e.g., C/C++ and Objective-C), i.e., where instead developers are responsible for handling it. One of the main causes of DoS attacks.
 \end{itemize}
 
-The dataset contemplates security flaws for more than 13 different languages being PHP the most prevalent one, Figure \ref{fig:lang}. This may be due to the abundance of web software (e.g., Library, Frameworks, Platform, Server), Figure \ref{fig:type}.
+The dataset contemplates security flaws for more than 13 different languages being PHP (39\%) and C (24\%) the most prevalent ones, Figure \ref{fig:lang}.  To classify the software of the dataset, we use a taxonomy for open-source software published in an older study~\cite{7816479}. Figure \ref{fig:domain} presents the projects domain distribution: \textit{Aplication Software} ($25$), software that provides end-users with functional systems; \textit{Web libraries and frameworks} ($20$); \textit{System Software} ($18$), software that provides services and infrustructures (e.g., operating systems, servers and databases); \textit{Software Tool} ($13$), software that supports development (e.g., programming languages, compilers, package managers, IDEs); and, \textit{Non-web libraries and frameworks} ($18$), for desktop and mobile software.
+
 
 \begin{table*}[h]
 	\centering
@@ -269,14 +329,12 @@ Total & 165771  & 512182  & 37729    & 14413        & 1394412  & 4246     & 1216
 \label{tab:dataset}
 \end{table*}
 
-Table \ref{tab:dataset} presents the final dataset projects statistics. Refactorings from 94 projects were evaluated by BCH. According to the statistics, the projects of this dataset are \textcolor{mypink3}{popular and the developers are active}.
+Table \ref{tab:dataset} presents the descriptive statistics of the 94 open-source projects involved in this study. 
+
 
 \subsection{Security vs. Baseline Commits}
 %
-Although we want to assess the maintainability of security-related commits,
-\textcolor{mypink3}{there is no evidence in previous work on the impact of \textit{regular} commits
-in the maintainability of projects}. Thus, we analyze the maintainability of
-regular commits and use them as a baseline.
+Previous studies tried to measure the impact of refactorings on open-source software maintainability~\cite{HEGEDUS2018313} before. But to the best of our knowledge, none of them used the BCH model and tried to evaluate the impact of security refactorings compared with regular refactorings as we do. Thus, we analyze the maintainability of regular commits and use them as a baseline.
 
 The baseline dataset uses the security commits dataset as input. For each
 security commit, one random commit is selected from the list of all commits of
@@ -286,29 +344,21 @@ characteristics of different projects.
 %
 \subsection{Maintainability Analysis}
 
-BCH is used to collect the maintanability reports of the commits of each project. The tool
-evaluation is based on a model of 10 different guidelines \cite{Visser:2016:OREILLY}:
+Better Code Hub is used to collect the maintanability reports of the refactorings of each project. Figure \ref{fig:guidelines} presents the 10 different guidelines proposed by BCH authors for delivering software that is easy to maintain \cite{Visser:2016:OREILLY}. The reports provided by the tool are based on the following guidelines:
 
-\begin{itemize}
-	\item \textbf{Write short units of code.} Long units are hard to test, reuse, and understand.
-	\item \textbf{Write simple units of code.} Keeping the number of branch points low makes units easier to modify and test.
-	\item \textbf{Write code once.} When code is duplicated, bugs need to be fixed in multiple places, which is inefficient and
-prone to errors.
-	\item \textbf{Keep unit interfaces small.} Keeping the number of parameters low makes units easier to understand and reuse.
-	\item \textbf{Separate concerns in modules.} Changes in a loosely
-coupled codebase are much easier to oversee and execute
-than changes in a tightly coupled codebase.
-	\item \textbf{Couple architecture components loosely.} Independent
-components ease isolated maintenance.
-	\item \textbf{Keep architecture components balanced.} Balanced
-components ease locating code and foster isolation,
-improving maintenance activities.
-	\item \textbf{Keep your codebase small.} Small systems are easier to
-search through, analyze, and understand code.
-	\item \textbf{Automate tests.} Automated testing makes development
-predictable and less risky.
-	\item \textbf{Write clean code.} Code without code smells is less likely to bring maintainability issues.
-\end{itemize}
+\begin{figure}[h]
+ 	\centering
+ 	\includegraphics[width=0.5\textwidth]{figures/guidelines.pdf}
+ 	\caption{10 guidelines to produce maintainable code}
+	\label{fig:guidelines}
+\end{figure}
+
+
+\Sof{=============== READY FINISH!}
+
+
+The tool calculates the compliance against each particular guideline. 
+
 
 For each guideline, BCH evaluates the compliance against a particular guideline by setting boundaries for the percentage of code allowed to fall in each of the four risk severity categories (low risk, medium risk, high risk, and very high risk). If the thresholds are not violated, the project is considered to be compliant with the guideline. According to BCH, the guideline thresholds are calibrated yearly based on a representative benchmark of closed and open-source software systems. Being compliant with a guideline means that the project under analysis is at least better than 65\% of the software systems in BCH’s benchmark.
 
