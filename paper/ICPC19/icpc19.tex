@@ -286,6 +286,7 @@ version of the software under evaluation. The maintenance $M$ based on the guide
     M_{g} = \frac{1}{|L|} \sum_{l \in L}^{} C(l) , L = \{medium, high, veryHigh\}
 \end{equation}
 
+\noindent
 where $C$ is the compliance with the maintainability guideline for the given severity level (medium, high, and very high) and
 $L$ is the group of severity levels of maintainability infractions. The compliance $C$ for a given severity level $l$ is derived by:
 
@@ -293,6 +294,7 @@ $L$ is the group of severity levels of maintainability infractions. The complian
     C(l) = LOC_{compliant}(l) - w(l) * LOC_{\neg compliant}(l)
 \end{equation}
 
+\noindent
 where $LOC_{compliant}(l)$ are the lines of code that comply with the guideline at the given severity level $l$, $LOC_{\neg compliant}(l)$ are the lines of code that do not comply with the guideline at the given
 severity level $l$ and $w(l)$ is the weight factor to boost the impact of
 non-compliant lines in comparison to compliant lines. Finally, the term $w(l)$ is calculated as follows:
@@ -301,6 +303,7 @@ non-compliant lines in comparison to compliant lines. Finally, the term $w(l)$ i
     w(l) = \frac{1 - T(l)}{T(l)}
 \end{equation}
 
+\noindent
 where $T(l)$ is the threshold in percentage of the lines of code that are accepted to be non-compliant with the guideline for the severity level $l$. This is a standard value defined by BCH. In other words, the factor $w$ is used in Eq. \ref{eq:3} to highlight the lines of code that are not complying with the guideline. For instance, the threshold for the severity level veryHigh is defined in Table II as T(veryHigh) = 6.9\%, which derives to a weight of w(veryHigh) = 13.5. This means that, in this example, one non-compliant guideline is decreasing maintainability score by 13.5 points while a compliant guideline is increasing by 1.0 point. In addition, a version that is perfectly aligned with the standard thresholds has a maintainability score of zero. Then, we compute the difference of maintainability between the security commit ($v_E$) and its parent commit ($v_{E-1}$), as illustrated in Fig. [X].
 
 \subsection{Statistical Validation}\label{sec:statsval}
