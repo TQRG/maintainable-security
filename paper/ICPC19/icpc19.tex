@@ -191,14 +191,14 @@ In total, the dataset contains 716 security refactorings. These refactorings wer
 	\item \textbf{Using Components with Known Vulnerabilities.} The majority of software produced today integrates several components, such as libraries and frameworks, which may affect the software if developers use vulnerable versions - usually known and disclosed somewhere on the Internet. \textit{Based on the OWASP Top 10 of 2017.}
 	\item \textbf{Broken Authentication \& Session Management.} Uncorrectly implemented functionalities related to authentication and session management, allowing crackers to gain access to session tokens, passwords, keys and other sensitive data \textit{- Based on the OWASP Top 10 of 2013.}
 	\item \textbf{Cross-Site Request Forgery.} Poor session tokens generation and management usually allow crackers to send forged HTTP requests including authentication information from the victim to vulnerable web application \textit{- Based on the OWASP Top 10 of 2013.}
-	\item \textbf{Denial-of-Service} Security flaws that can allow a cracker to flood or crashing services. This attacks usually occur when the system receives much traffic causing it to slow down and eventually stop. For example, flaws allowing crackers to trigger memory allocations corresponding to large length values (CVE-2014-3506)\footnote{CVE-2014-3506 details available at https://nvd.nist.gov/vuln/detail/CVE-2014-3506 (Accessed on January 25, 2019)}. 
-	\item \textbf{Miscellaneous} This pattern comprises several others categories of security refactorings (e.g., \textit{path traversal and buffer overflow}). It contains several other security refactorings that do not have their own pattern yet. The patterns not satisfying the size requirement of more than 20 refactorings are contemplated here.	
+	\item \textbf{Denial-of-Service} Security flaws that can allow a cracker to flood or crashing services. This attacks usually occur when the system receives much traffic causing it to slow down and eventually stop. For example, flaws allowing crackers to trigger memory allocations corresponding to large length values (CVE-2014-3506)\footnote{CVE-2014-3506 details available at https://nvd.nist.gov/vuln/detail/CVE-2014-3506 (Accessed on January 25, 2019)}.
+	\item \textbf{Miscellaneous} This pattern comprises several others categories of security refactorings (e.g., \textit{path traversal and buffer overflow}). It contains several other security refactorings that do not have their own pattern yet. The patterns not satisfying the size requirement of more than 20 refactorings are contemplated here.
 	\item \textbf{Cross-Site Scripting.} Lack of proper validation or escaping allow crackers to submit untrusted data to web browsers through malicious scripts that can hijack the user sessions or redirect the user to malicious sites \textit{- Based on the OWASP Top 10 of 2017.}
 	\item \textbf{Injection.} When developers do not keep untrusted data separate from commands and queries. If a cracker sends a string that exploits the syntax of the interpreter, then an injection attack is possible (e.g., SQL and LDAP injection)\textit{- Based on the OWASP Top 10 of 2017.}
 	\item \textbf{Memory Leak.} Memory management issue found more frequently in programming languages that do not manage memory automatically (e.g., C/C++ and Objective-C), i.e., where instead developers are responsible for handling it. One of the main causes of DoS attacks.
 \end{itemize}
 
-The dataset contemplates security flaws for more than 13 different languages being PHP the most prevalent one, Figure \ref{fig:lang}. This may be due to the abundance of web software (e.g., Library, Frameworks, Platform, Server), Figure \ref{fig:type}. 
+The dataset contemplates security flaws for more than 13 different languages being PHP the most prevalent one, Figure \ref{fig:lang}. This may be due to the abundance of web software (e.g., Library, Frameworks, Platform, Server), Figure \ref{fig:type}.
 
 \begin{table*}[h]
 	\centering
@@ -218,7 +218,7 @@ Total & 165771  & 512182  & 37729    & 14413        & 1394412  & 4246     & 1216
 \label{tab:dataset}
 \end{table*}
 
-Table \ref{tab:dataset} presents the final dataset projects statistics. Refactorings from 94 projects were evaluated by BCH. According to the statistics, the projects of this dataset are \textcolor{mypink3}{popular and the developers are active}. 
+Table \ref{tab:dataset} presents the final dataset projects statistics. Refactorings from 94 projects were evaluated by BCH. According to the statistics, the projects of this dataset are \textcolor{mypink3}{popular and the developers are active}.
 
 \subsection{Security vs. Baseline Commits}
 %
@@ -278,6 +278,7 @@ We compute the mean average of the maintainability score $M(v)$ for all the sele
     M(v) = \sum_{g \in G}^{} M_{g}(v)
 \end{equation}
 
+\noindent
 where $G$ is the group of selected maintainability guidelines from BCH (e.g., Write short units of code, etc.) and $v$ is the
 version of the software under evaluation. The maintenance $M$ based on the guideline $g$ for a given version of a project is computed with the following equation:
 
