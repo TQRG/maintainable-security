@@ -24,10 +24,9 @@
 \definecolor{mymauve}{rgb}{0.58,0,0.82}
 
 
-\usepackage{pifont}
 \newcommand{\lstbg}[3][0pt]{{\fboxsep#1\colorbox{#2}{\strut #3}}}
 \lstset{ %
-  language=Java,
+  language=C,
   backgroundcolor=\color{white},   % choose the background color
   basicstyle=\ttfamily\scriptsize,        % size of fonts used for the code
   breaklines=false,                 % automatic line breaking only at whitespace
@@ -107,8 +106,60 @@ and portability. This paper focuses solely on maintainability.
 \section{Motivation and Research Questions}
 
 
-%\lstinputlisting[language=Python]{source_filename.py}
 
+
+Improving energy efficiency of apps revolves around chang- ing their codebases. Previous work has studied existing energy patterns for mobile applications [18]. It cataloged typical coding practices developers adopt to address energy efficiency. An example of an energy pattern is the Power Save Mode: the app features a mode that can be activated upon low battery and uses fewer resources while providing the minimum
++ functionality that is indispensable to the user.
+
+\begin{lstlisting}
+	
++ static unsigned long dtls1_max_handshake_message_len(
++ 	const SSL *s)
++	{
++	unsigned long max_len = DTLS1_HM_HEADER_LENGTH + 
++ 			SSL3_RT_MAX_ENCRYPTED_LENGTH;
++	if (max_len < (unsigned long)s->max_cert_list)
++		return s->max_cert_list;
++	return max_len;
++	}
+ 
+// [snip]
+
+ 	pitem *item = NULL;
+ 	int i = -1, is_complete;
+ 	unsigned char seq64be[8];
+-	unsigned long frag_len = msg_hdr->frag_len, max_len;
+-
+-	if ((msg_hdr->frag_off+frag_len) > msg_hdr->msg_len)
+-		goto err;
+-
+-	/* Determine maximum allowed message size. Depends on (user set)
+-	 * maximum certificate length, but 16k is minimum.
+-	 */
+-	if (DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH < s->max_cert_list)
+-		max_len = s->max_cert_list;
+-	else
+-		max_len = DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH;
++	unsigned long frag_len = msg_hdr->frag_len;
+ 
+-	if ((msg_hdr->frag_off+frag_len) > max_len)
++	if ((msg_hdr->frag_off+frag_len) > msg_hdr->msg_len ||
++	    msg_hdr->msg_len > dtls1_max_handshake_message_len(s))
+ 		goto err;
+ 
+// [snip]
+
+ 		if (frag_len && frag_len < msg_hdr->msg_len)
+ 			return dtls1_reassemble_fragment(s, msg_hdr, ok);
+ 
++		if (frag_len > dtls1_max_handshake_message_len(s))
++			goto err;
++
+ 		frag = dtls1_hm_fragment_new(frag_len, 0);
+ 		if ( frag == NULL)
+ 			goto err;
+
+\end{lstlisting}
 
 \textcolor{mypink3}{Ver que exemplos existem na amostra da secbench que vamos utilizar para dar como exemplo de motivacao}
 
