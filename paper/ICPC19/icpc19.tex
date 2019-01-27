@@ -115,8 +115,18 @@ The international standard ISO/IEC 25010:2011 breaks down software quality into 
 functional suitability, performance efficiency, compatibility, usability, reliability, security,
 and portability. This paper focuses solely on maintainability.
 
+Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+
+Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
 \Sof{=============== READY START!}
+
+This paper is structured as follows: section \ref{sec:motivation} introduces an example of a security refactoring of a known vulnerability found in OpenSSL\footnote{Repository details available at https://github.com/openssl/openssl (Accessed on January 27, 2019)} software; section \ref{sec:methodology} describes the methodology used to answer the research questions; section \ref{sec:results} presents the results and section \ref{sec:discussion} discusses their implications; section \ref{sec:threats}, threats to the validity of the study are enumerated; section \ref{sec:rw} describres the different work and existing literature in the field of study; and, finally section \ref{sec:conclusions} concludes the main findings and elaborates on future work.
+
 
 \section{Motivation and Research Questions}\label{sec:motivation}
 
@@ -133,10 +143,11 @@ want to understand how security refactorings impact the maintainability of softw
 One example is the refactoring of the DTLS protocol implementation in OpenSSL after
 Adam Langley detect that remote attackers could cause a Denial-of-Service (DoS) attack
 when crafting DTLS handshake messages to trigger memory allocations corresponding to large length values. 
-This vulnerability is listed at the Common Vulnerabilities and Exposures dictionary as CVE-2014-3506\footnote{CVE-2014-3506 details available at http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3506 (Accessed on January 25, 2019)} and 
+This vulnerability is listed at the Common Vulnerabilities and Exposures dictionary as CVE-2014-3506\footnote{CVE-2014-3506 details available at http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3506 (Accessed on January 27, 2019)} and 
 it is one of the vulnerabilities under evaluation in this study. The impact of this refactoring
 on the OpenSSL maintainability was negative. The following snippet presents the codebase changes 
-performend on the \emph{ssl/d1\_both.c} file\footnote{CVE-2014-3506 fix available  at https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd7636} by the OpenSLL developers to fix the vulnerability.
+performend on the \emph{ssl/d1\_both.c} file\footnote{CVE-2014-3506 fix available  at https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd7636 (Accessed on January 27, 2019)} by the 
+OpenSLL developers to fix the vulnerability.
 
 
 \setcounter{lstannotation}{0}
@@ -197,45 +208,40 @@ static int dtls1_reassemble_fragment(SSL *s, struct hm_header_st* msg_hdr, int *
 
 \end{lstlisting}
 
-In the \emph{dtls1\_reassemble\_fragment} function the value of \emph{msg\_hdr-$>$frag\_off+frag\_len} was checked against the
-maximum hadshake message size but \emph{msg\_len} is allocated to the fragment buffer in line 37. Thus, if the fragment was within
+In the \texttt{dtls1\_reassemble\_fragment} function the value of \texttt{msg\_hdr-$>$frag\_off+frag\_len} was checked against the
+maximum hadshake message size but \texttt{msg\_len} is allocated to the fragment buffer in line 37. Thus, if the fragment was within
 the allowed size, the pending handshake message could consume $16MB$+$2MB$. According with the message commit, 10 handshake messages
 are allowed, so the attacker could consume approximately $180MB$ per DTLS connection.
 
 The code changes performed to fix the vulnerability were the following:
 
-\ref{lst:func1} $dtls1\_max\_handshake\_message\_len$ function was inserted to limit the number of bytes allowed in a DTLS handshake message for \emph{s}. This function replaces the lines 18-21.
+\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was inserted to limit the number of bytes allowed in a DTLS handshake message for \texttt{s}. This function replaces the lines 18-21.
 
-\ref{lst:func2} Checks if the maximum certificate list size (\emph{s-$>$max\_cert\_list}) requires more length than the maximum length (\emph{max\_len}). If yes, it return the certificate list size, if not it return the maximum length.
+\ref{lst:func2} Checks if the maximum certificate list size (\texttt{s-$>$max\_cert\_list}) requires more length than the maximum length (\texttt{max\_len}). If yes, it return the certificate list size, if not it return the maximum length.
 
 \ref{lst:func3} Replaced by attribution in line 23.
 
 \ref{lst:func5} and \ref{lst:func4} add the check to ensure that the message length in never higher than the maxiumum allowed by the DTSL protocol in different functions.
 
-Although limiting the size of a handshake message seems an easy problem to fix, it is possible to see that there was a considerable amount of changes performed
-in the codebase which led to a decrease in the project maintainability. 
+Although limiting the size of a handshake message seems an elementary problem to repair, the example shows that there was a significant amount of changes performed in the codebase which produced a negative impact in the project maintainability. Even though the developer tries to simplify the codebase with the creation of a smaller unit \texttt{dtls1\_max\_handshake\_message\_len}, it also disrupts 2 of the guidelines proposed by the Software Improvement Group (SIG) for building maintainable software~\cite{Visser:2016:OREILLY}. It adds a new branch point to the \texttt{dtls1\_process\_out\_of\_seq\_message} unit (\ref{lst:func5}) increasing the cyclomatic complexity and breaking the \emph{Write Simple Units of Code} guideline. And, it increases the codebase size in 4 LOCs (13 lines added, 9 lines deleted) which infringes the \emph{Keep Your Codebase Small} guideline. 
 
-
-\Sof{=============== READY FINISH!}
+In this study, our concern is if while improving software security, developers are also inserting a negative impact on the maintainability of their software which may increase technical debt when choosing the easiest solution instead of the using the best approach. To answer the following two research questions, we use a dataset of security refactorings to measure the impact of the changes in the maintainability of open-source software.
 
 
 \begin{framed}
 \textit{\textbf{RQ1} What is the impact of security refactorings on the maintainability of open-source software?}
 \end{framed}
 
+Often security flaws require refactoring code to make software more secure. However, there is no evidence yet of how security refactorings impact the maintainability of open-source software. Our suspicion is that developers tend to introduce technical debt in their software when refactoring the codebose to address a security flaw because they tend to choose the easiest path to solve it. To address it, we compute the maintainability value of $607$ commits using \emph{Better Code Hub}. The same approach is applied to a randomly generated dataset of regular commits - baseline - that we use to understand how maintainability evolves when security refactorings are performed versus when they are not.
+
 \begin{framed}
 \textit{\textbf{RQ2} Which patterns of security refactorings are more likely to affect open-source software maintainability?}
 \end{framed}
 
-\begin{framed}
-\textit{\textbf{RQ3} }
-\end{framed}
+There are security flaws that are more difficult to refactor than others. For instance, introducing a mechanism to secure authentication is not so easy to implement as fixing a cross-site scripting vulnerability with a \texttt{escape} function. Knowing which patterns are more likely to increase maintainability issues is one step forward to bring awareness to security engineers of what patterns need more attention. The taxonomy of security patterns used to answer this question is the same as the one provided by the authors of the dataset. Maintainability is measured separately for each pattern.
 
 
-\Sof{=============== READY START!}
-
-
-\section{Methodology}
+\section{Methodology}\label{sec:methodology}
 
 In this section, the methodology used to measure the impact of security refactorings on the maintainability of open-source software is presented in depth in the following sections and illustrated in Figure \ref{fig:met}. Aiming to answer the research questions presented in this paper, we use a dataset containing $716$ security refactorings collected from open-source software available on GitHub. $648$ of those refactorings were reported in a previous study conducted in 2017 \cite{Reis:2017:IJSSE}. In parallel, a baseline of regular commits was randomly collected from the list of projects of the main dataset to evaluate what is the impact of regular commits on the maintainability of open-source software. The Software Improvement Group's\footnote{SIG's website is available at https://www.sig.eu/ (Accessed on January 23, 2019)} web-based source code analysis service Better Code Hub (BCH) \footnote{BCH's website is available at https://bettercodehub.com/ (Accessed on January 23, 2019)} was used to collect the maintainability reports for both security and regular commits.
 
@@ -295,7 +301,7 @@ To evaluate the impact of security refactorings on the maintainability of open-s
 
 Reis and Abreu ($2017$) dataset commits were manually validated, flagged as security flaws and classified with one of the $16$ following patterns: \textit{Injection}, \textit{Broken Authentication and Session Management}, \textit{Cross-Site Scripting}, \textit{Broken Access Control}, \textit{Security Misconfiguration}, \textit{Sensitive Data Exposure}, \textit{Insufficient Attack Protection}, \textit{Cross-Site Request Forgery}, \textit{Using Components With Known Vulnerabilities}, \textit{Unprotected APIs}, \textit{Memory Leak}, \textit{Overflow}, \textit{Denial-of-Service}, \textit{Path Traversal} and \textit{Miscellaneous}. However, the dataset evolved and now integrates new patterns, such as \textit{Resource Leak} and \textit{SHA-1 Hash Function}. A considerable amount of these patterns are based in the OWASP Top 10 of 2013~\cite{oswap:2013} and OWASP Top 10 of 2017~\cite{oswap:2017}.
 
-In total, the dataset contains 716 security refactorings. These refactorings were computed by the BCH tool to calculate maintainability. However, some of the refactorings are not considered in the final results due to limitations of BCH: lack of language support and project size. The Wilcoxon statistical test - described more in-depth in subsection \ref{sec:statsval} - is performed to evaluate the significance of our results. Each type of security flaw is tested, Figure \ref{fig:pat}. One of the main requirements of this test is that the input sample needs to comprise more than 20 commits. Thus, the patterns not complying with this requirement were reallocated to the \textit{Miscellaneous} pattern. In the end, we highlight the following patterns:
+In total, the dataset contains 716 security refactorings. These refactorings were computed by the BCH tool to calculate maintainability. However, some of the refactorings are not considered in the final results due to limitations of BCH: lack of language support and project size. The final dataset contains $607$ security refactorings. The Wilcoxon statistical test - described more in-depth in subsection \ref{sec:statsval} - is performed to evaluate the significance of our results. Each type of security flaw is tested, Figure \ref{fig:pat}. One of the main requirements of this test is that the input sample needs to comprise more than 20 commits. Thus, the patterns not complying with this requirement were reallocated to the \textit{Miscellaneous} pattern. In the end, we highlight the following patterns:
 
 \begin{itemize}
 	\item \textbf{Using Components with Known Vulnerabilities.} The majority of software produced today integrates several components, such as libraries and frameworks, which may affect the software if developers use vulnerable versions - usually known and disclosed somewhere on the Internet. \textit{Based on the OWASP Top 10 of 2017.}
@@ -411,10 +417,23 @@ where $T(l)$ is the threshold in percentage of the lines of code that are accept
 
 To validate the maintainability differences in different groups of commits (e.g., baseline and security commits) we use the Paired Wilcoxon signed-rank test with the significance level $\alpha = 0.05$. In other words, we test the null hypothesis that the maintainability difference between pairs of versions $v_{E-1}$, $v_E$ (i.e., before and after an security-commit) follows a symmetric distribution around 0. To understand the effect-size, as advocated by the Common-language effect sizes [X], we compute the mean difference, the median of the difference, and the percentage of cases that reduce maintainability.
 
-\textcolor{mypink3}{@todo: Discuss pratt improvement and accuracy}
+\textcolor{mypink3}{@todo: Discuss pratt improvement and accuracy} Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
 
-\section{Results}
+\section{Results}\label{sec:results}
 
+Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+
+\begin{framed}
+\textit{\textbf{RQ1} What is the impact of security refactorings on the maintainability of open-source software?}
+\end{framed}
+
+Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+
+\begin{framed}
+\textit{\textbf{RQ2} Which patterns of security refactorings are more likely to affect open-source software maintainability?}
+\end{framed}
+
+Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
 
 \begin{figure}[h]
  	\centering
@@ -431,30 +450,42 @@ To validate the maintainability differences in different groups of commits (e.g.
 \end{figure}
 
 
+\section{Discussion}\label{sec:discussion}
+
 
 \begin{framed}
 \textit{\textbf{RQ1} What is the impact of security refactorings on the maintainability of open-source software?}
 \end{framed}
 
+Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+
 \begin{framed}
 \textit{\textbf{RQ2} Which patterns of security refactorings are more likely to affect open-source software maintainability?}
 \end{framed}
 
-\section{Discussion}
+Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
 
 
-\section{Threats to Validity}
+\section{Threats to Validity}\label{sec:threats}
 
-\section{Related Work}
-
-
-\section{Conclusion and Future Work}
+Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
 
 
+\section{Related Work}\label{sec:rw}
 
-\section*{Acknowledgment}
 
-Better Code Hub?
+Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+
+
+\section{Conclusion and Future Work}\label{sec:conclusions}
+
+It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. 
+
+
+\section*{Acknowledgment}\label{sec:ack}
+
+
+We thank to the Software Improvement Group (SIG) team for all the support and help in validating our methodology.
 
 {
  \bibliographystyle{IEEEtran}
