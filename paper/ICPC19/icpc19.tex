@@ -44,8 +44,8 @@
   stepnumber=1,
   xleftmargin=2em,
   escapeinside={/*!}{!*/},
-  moredelim=**[l][\color{mygreen}]{+},
-  moredelim=*[l][\color{red}]{-}
+  moredelim=**[l][\color{mygreen}]{+\ },
+  moredelim=*[l][\color{red}]{-\ }
 }
 
 
@@ -154,27 +154,29 @@ https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd
 
 \setcounter{lstannotation}{0}
 \begin{lstlisting}[caption={Fix provided by OpenSSL developers to the CVE-2014-3506 vulnerability \Sof{@todo: Fix the regex issue}},label={lst:vuln}]
-+static unsigned long dtls1_max_handshake_message_len(const SSL *s){ /*!\annotation{lst:func1}!*/
-+
-+ unsigned long max_len = DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH;
-+ if(max_len < (unsigned long)s->max_cert_list) /*!\annotation{lst:func2}!*/
-+    return s->max_cert_list;
-+ return max_len;
-+}
++ static unsigned long dtls1_max_handshake_message_len(const SSL *s){ /*!\annotation{lst:func1}!*/
++  unsigned long max_len = DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH;
++  if(max_len < (unsigned long)s->max_cert_list) /*!\annotation{lst:func2}!*/
++     return s->max_cert_list;
++  return max_len;
++ }
 
-static int dtls1_reassemble_fragment(SSL *s, struct hm_header_st* msg_hdr, int *ok){
+  static int dtls1_reassemble_fragment(SSL *s, struct hm_header_st* msg_hdr, int *ok){
 
 // [snip]
 
 - unsigned long frag_len = msg_hdr->frag_len, max_len; /*!\annotation{lst:func3}!*/
--
+            
+			
 - if((msg_hdr->frag_off+frag_len) > msg_hdr->msg_len)
 -    goto err;
 
-- if(DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH < s->max_cert_list)
+- if(DTLS1_HM_HEADER_LENGTH +
+-    	SSL3_RT_MAX_ENCRYPTED_LENGTH < s->max_cert_list)
 -    max_len = s->max_cert_list;
 - else
--    max_len = DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH;
+-    max_len = DTLS1_HM_HEADER_LENGTH +
+-   		SSL3_RT_MAX_ENCRYPTED_LENGTH;
 
 + unsigned long frag_len = msg_hdr->frag_len;
 
@@ -601,6 +603,8 @@ difference is zero \cite{10.2307/2282543}. To understand the effect-size, as
 advocated by the Common-language effect sizes \cite{graw:1992}, we compute the
 mean difference, the median of the difference, and the percentage of cases that
 reduce maintainability.
+
+
 %
 \section{Results}\label{sec:results}
 
@@ -610,7 +614,7 @@ In total, this study evaluates $607$ security and baseline commits from 94 diffe
 \textit{\textbf{RQ1} What is the impact of security refactorings on the maintainability of open-source software?}
 \end{framed}
 
-The impact of security and baseline commits in the maintainability of open-source software is presented in Figure \ref{fig:secvsreg}. 
+The impact of security and baseline commits in the maintainability of open-source software is presented in Figure \ref{fig:secvsreg}. For each type of change, three types of impact of refactorings in the software maintainability are presented: \emph{negative}, i.e., maintainability decreased (\emph{red}); \emph{none}, i.e., the maintainability did not suffer any changes (\emph{yellow}); and, \emph{positive}, i.e., the maintainability increased (\emph{negative}). 
 
 \begin{figure}[h]
  	\centering 	\includegraphics[width=0.5\textwidth]{figures/maintainability.pdf}
@@ -618,12 +622,6 @@ The impact of security and baseline commits in the maintainability of open-sourc
 	\label{fig:secvsreg}
 \end{figure}
 
-
-
-
-% The results on the impact of different categories of commits in software maintainability are present in the plot bar of Fig. 6. The plot presents the results for two groups of software changes: energy commits, and baseline commits. For each group, the figure provides three bars with the percentage of commits which 1) decrease maintainability (on top, colored in red), 2) do not change maintainability (in the middle, colored in yellow), and 3) increase maintainability (in the bottom, colored in green). In addition, the figure provides, for each group, the mean (x ̄) and the median (Md) of the maintainability difference, and the p-value of the Wilcoxon signed-rank test (p).
-% In the case of the regular commits, used as a baseline, 33.0% decrease maintainability (183 cases), 38.7% do not change maintainability (215 cases), and 28.3% improve maintainabil- ity (157 cases). Since the p-value of the Wilcoxon signed-rank test (p = 0.139) is not below the significance level (α = 0.05), there is no statistical significance of the impact of regular commits on maintainability.
-% On contrary, we observe clear changes for energy commits: 57.1% (310 cases) decrease software maintainability, 10.7% do not change maintainability (61 cases), and 31.2% improve maintainability (168 cases). The results for the Wilcoxon signed-rank test show statistical significance that energy com- mits decrease the maintainability of Android applications (p < 0.001).
 
 
 
