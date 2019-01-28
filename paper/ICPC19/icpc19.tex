@@ -387,18 +387,29 @@ In total, this study evaluates $607$ security and baseline commits from 94 diffe
 \textit{\textbf{RQ1} What is the impact of security refactorings on the maintainability of open-source software?}
 \end{framed}
 
+The impact of security and baseline commits in the maintainability of open-source software is presented in Figure \ref{fig:secvsreg}. 
+
+\begin{figure}[h]
+ 	\centering 	\includegraphics[width=0.5\textwidth]{figures/maintainability.pdf}
+ 	\caption{Maintainability difference for security and baseline refactorings}
+	\label{fig:secvsreg}
+\end{figure}
+
+
+
+
+% The results on the impact of different categories of commits in software maintainability are present in the plot bar of Fig. 6. The plot presents the results for two groups of software changes: energy commits, and baseline commits. For each group, the figure provides three bars with the percentage of commits which 1) decrease maintainability (on top, colored in red), 2) do not change maintainability (in the middle, colored in yellow), and 3) increase maintainability (in the bottom, colored in green). In addition, the figure provides, for each group, the mean (x ̄) and the median (Md) of the maintainability difference, and the p-value of the Wilcoxon signed-rank test (p).
+% In the case of the regular commits, used as a baseline, 33.0% decrease maintainability (183 cases), 38.7% do not change maintainability (215 cases), and 28.3% improve maintainabil- ity (157 cases). Since the p-value of the Wilcoxon signed-rank test (p = 0.139) is not below the significance level (α = 0.05), there is no statistical significance of the impact of regular commits on maintainability.
+% On contrary, we observe clear changes for energy commits: 57.1% (310 cases) decrease software maintainability, 10.7% do not change maintainability (61 cases), and 31.2% improve maintainability (168 cases). The results for the Wilcoxon signed-rank test show statistical significance that energy com- mits decrease the maintainability of Android applications (p < 0.001).
+
+
+
 
 \begin{framed}
 \textit{\textbf{RQ2} Which patterns of security refactorings are more likely to affect open-source software maintainability?}
 \end{framed}
 
 
-\begin{figure}[h]
- 	\centering
- 	\includegraphics[width=0.45\textwidth]{figures/maintainability.pdf}
- 	\caption{Maintainability difference for security and baseline refactorings}
-	\label{fig:secvsreg}
-\end{figure}
 
 \begin{figure}[h]
  	\centering
