@@ -153,7 +153,7 @@ https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd
 
 
 \setcounter{lstannotation}{0}
-\begin{lstlisting}[caption={Fix provided by OpenSSL developers to the CVE-2014-3506 vulnerability \Sof{@todo: Fix the regex issue}},label={lst:vuln}]
+\begin{lstlisting}[caption={Fix provided by OpenSSL developers to the CVE-2014-3506 vulnerability},label={lst:vuln}]
 + static unsigned long dtls1_max_handshake_message_len(const SSL *s){ /*!\annotation{lst:func1}!*/
 +  unsigned long max_len = DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH;
 +  if(max_len < (unsigned long)s->max_cert_list) /*!\annotation{lst:func2}!*/
@@ -614,16 +614,17 @@ In total, this study evaluates $607$ security and baseline commits from 94 diffe
 \textit{\textbf{RQ1} What is the impact of security refactorings on the maintainability of open-source software?}
 \end{framed}
 
-The impact of security and baseline commits in the maintainability of open-source software is presented in Figure \ref{fig:secvsreg}. For each type of change, three types of impact of refactorings in the software maintainability are presented: \emph{negative}, i.e., maintainability decreased (\emph{red}); \emph{none}, i.e., the maintainability did not suffer any changes (\emph{yellow}); and, \emph{positive}, i.e., the maintainability increased (\emph{negative}). 
+The impact of security and baseline commits in the maintainability of open-source software is presented in Figure \ref{fig:secvsreg}. For each type of change, three types of impact of refactorings in the software maintainability are presented: \emph{negative}, maintainability decreases (\emph{red}); \emph{none}, maintainability stays the same (\emph{yellow}); and, \emph{positive}, maintainability increases (\emph{green}). In front of each group, it is presented the mean ($\overline{x}$) and median ({$\widetilde{x}$) of the maintainability difference and the p-value resulting from the Wilcoxon signed-rank test.
 
 \begin{figure}[h]
  	\centering 	\includegraphics[width=0.5\textwidth]{figures/maintainability.pdf}
  	\caption{Maintainability difference for security and baseline refactorings}
 	\label{fig:secvsreg}
 \end{figure}
+ 
+Regarding security commits results, we observe that maintainability decreases in 40.20\% (244), increases in 29.33\% (178) and stays the same in 30.5\% (185) of the cases after security refactorings being applyed. The resulting p-value of the Wilcoxon signed-rank test is $1.21$x$10^{-10}$. Since the p-value is below the significance level of $0.05$, it is fair to state that \emph{security refactorings have a negative impact in the maintainability of open-source software}.
 
-
-
+For regular commits, we also observe that maintainability decreases in 41.35\% (251) of the cases after regular refactorings being applyed. But in contrast to security commits, it increases in 58.16\% (353) and stays the same in 0.5\% (3). The resulting p-value of the Wilcoxon signed-rank test is $1.54$x$10^{-6}$. Since the p-value is below the significance level of $0.05$, it is fair to state that \emph{regular refactorings have a positive impact in the maintainability of open-source software}.
 
 
 \begin{framed}
