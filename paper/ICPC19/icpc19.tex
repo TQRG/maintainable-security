@@ -63,7 +63,7 @@
 
 \begin{document}
 
-\title{Security vs. Maintainability: Fixing Vulnerabilities Obfuscates your Code}
+\title{Security vs. Maintainability: \\ Fixing Vulnerabilities Obfuscates your Code}
 
 \author{
     Anonymou(s) Author(s)
@@ -115,9 +115,18 @@ and portability. This paper focuses solely on maintainability.
 
 \Sof{=============== READY START!}
 
-This paper is structured as follows: section \ref{sec:motivation} introduces an example of a security refactoring of a known vulnerability found in OpenSSL\footnote{Repository details available at https://github.com/openssl/openssl (Accessed on January 27, 2019)} software; section \ref{sec:methodology} describes the methodology used to answer the research questions; section \ref{sec:results} presents the results and section \ref{sec:discussion} discusses their implications; section \ref{sec:threats}, threats to the validity of the study are enumerated; section \ref{sec:rw} describres the different work and existing literature in the field of study; and, finally section \ref{sec:conclusions} concludes the main findings and elaborates on future work.
-
-
+This paper is structured as follows: section \ref{sec:motivation} introduces an
+example of a security refactoring of a known vulnerability found in
+OpenSSL\footnote{Repository available at
+https://github.com/openssl/openssl (Accessed on \today{})} software;
+section \ref{sec:methodology} describes the methodology used to answer the
+research questions; section \ref{sec:results} presents the results and section
+\ref{sec:discussion} discusses their implications; section \ref{sec:threats},
+threats to the validity of the study are enumerated; section \ref{sec:rw}
+describres the different work and existing literature in the field of study;
+and, finally section \ref{sec:conclusions} concludes the main findings and
+elaborates on future work.
+%
 \section{Motivation and Research Questions}\label{sec:motivation}
 %
 Due to time-to-market pressure and the lack of security expertise, code-related
@@ -125,17 +134,22 @@ security flaws are generally detected \textit{after the fact}, i.e., when
 hackers exploit them. It turns out that fixing these issues is as simple as
 modifying the software codebase. However, these refactorings may have a negative
 impact on software maintenance, mostly because developers follow the quickest
-solution to fix the problem and not necessarily the most elegant one. Thus, we
-want to understand how security refactorings impact the maintainability of
-software.
+solution to fix the problem and not necessarily the most elegant and performant
+one. Thus, we want to understand how security refactorings impact the
+maintainability of software.
 
-One example is the refactoring of the DTLS protocol implementation in OpenSSL after
-Adam Langley detect that remote attackers could cause a Denial-of-Service (DoS) attack
-when crafting DTLS handshake messages to trigger memory allocations corresponding to large length values.
-This vulnerability is listed at the Common Vulnerabilities and Exposures dictionary as CVE-2014-3506\footnote{CVE-2014-3506 details available at http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3506 (Accessed on January 27, 2019)} and
-it is one of the vulnerabilities under evaluation in this study. The impact of this refactoring
-on the OpenSSL maintainability was negative. The following snippet presents the codebase changes
-performend on the \emph{ssl/d1\_both.c} file\footnote{CVE-2014-3506 fix available  at https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd7636 (Accessed on January 27, 2019)} by the OpenSLL developers to fix the vulnerability.
+As an example, consider the refactoring of the Datagram Transport Layer Security
+(DTLS) protocol implementation in OpenSSL to address the fact that hackers could
+cause a Denial-of-Service (DoS) attack by crafting DTLS
+handshake messages to trigger memory allocations corresponding to large length
+values. This vulnerability is listed at the Common Vulnerabilities and Exposures
+dictionary as CVE-2014-3506\footnote{CVE-2014-3506 details available at
+http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3506 (Accessed on
+\today{})}. It is amongst the vulnerabilities studied in our evaluation.
+The following snippet presents the changes performend on the
+\emph{ssl/d1\_both.c} file\footnote{CVE-2014-3506 fix available  at
+https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd7636
+(Accessed on \today{})} by the OpenSLL developers to fix the vulnerability.
 
 
 \setcounter{lstannotation}{0}
@@ -196,47 +210,103 @@ static int dtls1_reassemble_fragment(SSL *s, struct hm_header_st* msg_hdr, int *
 
 \end{lstlisting}
 
-In the \texttt{dtls1\_reassemble\_fragment} function the value of \texttt{msg\_hdr-$>$frag\_off+frag\_len} was checked against the
-maximum handshake message size but \texttt{msg\_len} is allocated to the fragment buffer in line 37. Thus, if the fragment was within
-the allowed size, the pending handshake message could consume $16MB$+$2MB$. According with the message commit, 10 handshake messages
-are allowed, so the attacker could consume approximately $180MB$ per DTLS connection.
+In the \texttt{dtls1\_reassemble\_fragment} function the value of
+\texttt{msg\_hdr-$>$frag\_off+frag\_len} is checked against the maximum
+handshake message size, but \texttt{msg\_len} is allocated to the fragment
+buffer in line $37$. Thus, if the fragment was within the allowed size, the
+pending handshake message could consume $18MB$ ($16MB$+$2MB$). According to the
+message commit, $10$ handshake messages are allowed, so the attacker could
+consume approximately $180MB$ per DTLS connection.
 
 The code changes performed to fix the vulnerability were the following:
 
-\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was inserted to limit the number of bytes allowed in a DTLS handshake message for \texttt{s}. This function replaces the lines 18-21.
+\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was
+inserted to limit the number of bytes allowed in a DTLS handshake message for
+\texttt{s}. This function replaces lines $18$---$21$.
 
-\ref{lst:func2} Checks if the maximum certificate list size (\texttt{s-$>$max\_cert\_list}) requires more length than the maximum length (\texttt{max\_len}). If yes, it return the certificate list size, if not it return the maximum length.
+\ref{lst:func2} Checks if the maximum certificate list size
+(\texttt{s-$>$max\_cert\_list}) requires more length than the maximum length
+(\texttt{max\_len}). If yes, it return the certificate list size, if not it
+return the maximum length.
 
-\ref{lst:func3} Replaced by attribution in line 23.
+\ref{lst:func3} Replaced by attribution in line $23$.
 
-\ref{lst:func5} and \ref{lst:func4} add the check to ensure that the message length in never higher than the maxiumum allowed by the DTSL protocol in different functions.
+\ref{lst:func5} and \ref{lst:func4} add the check to ensure that the message
+length in never higher than the maxiumum allowed by the DTSL protocol in
+different functions.
 
-Although limiting the size of a handshake message seems an elementary problem to repair, the example shows that there was a significant amount of changes performed in the codebase which produced a negative impact in the project maintainability. Even though the developer tries to simplify the codebase with the creation of a smaller unit \texttt{dtls1\_max\_handshake\_message\_len}, it also disrupts 2 of the guidelines proposed by the Software Improvement Group (SIG) for building maintainable software~\cite{Visser:2016:OREILLY}. It adds a new branch point to the \texttt{dtls1\_process\_out\_of\_seq\_message} unit (\ref{lst:func5}) increasing the cyclomatic complexity and breaking the \emph{Write Simple Units of Code} guideline. And, it increases the codebase size in $4$ lines of code ($13$ lines added, $9$ lines deleted) which infringes the \emph{Keep Your Codebase Small} guideline.
+Although limiting the size of a handshake message seems an elementary problem to
+repair, the example shows that there was a significant amount of changes
+performed in the codebase which produced a negative impact in the project
+maintainability. Even though the developer tries to simplify the codebase with
+the creation of a smaller unit \texttt{dtls1\_max\_handshake\_message\_len}, it
+also disrupts $2$ of the guidelines proposed by the Software Improvement Group
+(SIG) for building maintainable software~\cite{Visser:2016:OREILLY}. It adds a
+new branch point to the \texttt{dtls1\_process\_out\_of\_seq\_message} unit
+(\ref{lst:func5}) increasing the cyclomatic complexity and breaking the
+\emph{Write Simple Units of Code} guideline. And, it increases the codebase size
+in $4$ lines of code ($13$ lines added, $9$ lines deleted) which infringes the
+\emph{Keep Your Codebase Small} guideline. Hence, we have observed that the
+impact of this refactoring on the OpenSSL maintainability was negative.
 
-In this study, our concern is if while improving software security, developers are also inserting a negative impact on the maintainability of their software which may increase technical debt when choosing the easiest solution instead of the using the best approach. To answer the following two research questions, we use a dataset of security refactorings to measure the impact of the changes in the maintainability of open-source software.
-
+In this study, our concern is to study whether while improving software
+security, developers are also inserting a negative impact on the maintainability
+of their software which may increase technical debt when choosing the easiest
+solution instead of the using the best approach. To answer the following two
+research questions, we use a dataset of security refactorings to measure the
+impact of the changes in the maintainability of open-source software.
 
 \begin{framed}
-\textit{\textbf{RQ1} What is the impact of security refactorings on the maintainability of open-source software?}
+\textit{\textbf{RQ1} What is the impact of security refactorings on the
+maintainability of open-source software?}
 \end{framed}
 
-Often security flaws require refactoring code to make software more secure. However, there is no evidence yet of how security refactorings impact the maintainability of open-source software. Our suspicion is that developers tend to introduce technical debt in their software when refactoring the codebose to address a security flaw because they tend to choose the easiest path to solve it. To address it, we compute the maintainability value of $607$ commits using \emph{Better Code Hub}. The same approach is applied to a randomly generated dataset of regular commits - baseline - that we use to understand how maintainability evolves when security refactorings are performed versus when they are not.
+Often security flaws require refactoring code to make software more secure.
+However, there is no evidence yet of how security refactorings impact the
+maintainability of open-source software. Our suspicion is that developers tend
+to introduce technical debt in their software when refactoring the codebose to
+address a security flaw because they tend to choose the easiest path to solve
+it. To address it, we compute the maintainability value of $607$ commits using
+\emph{Better Code Hub}. The same approach is applied to a randomly generated
+dataset of regular commits - baseline - that we use to understand how
+maintainability evolves when security refactorings are performed versus when
+they are not.
 
 \begin{framed}
-\textit{\textbf{RQ2} Which patterns of security refactorings are more likely to affect open-source software maintainability?}
+\textit{\textbf{RQ2} Which patterns of security refactorings are more likely to
+affect open-source software maintainability?}
 \end{framed}
 
-There are security flaws that are more difficult to refactor than others. For instance, introducing a mechanism to secure authentication is not so easy to implement as fixing a cross-site scripting vulnerability with a \texttt{escape} function. Knowing which patterns are more likely to increase maintainability issues is one step forward to bring awareness to security engineers of what patterns need more attention. The taxonomy of security patterns used to answer this question is the same as the one provided by the authors of the dataset. Maintainability is measured separately for each pattern.
-
-
+There are security flaws that are more difficult to refactor than others. For
+instance, introducing a mechanism to secure authentication is not so easy to
+implement as fixing a cross-site scripting vulnerability with a \texttt{escape}
+function. Knowing which patterns are more likely to increase maintainability
+issues is one step forward to bring awareness to security engineers of what
+patterns need more attention. The taxonomy of security patterns used to answer
+this question is the same as the one provided by the authors of the dataset.
+Maintainability is measured separately for each pattern.
+%
 \section{Methodology}\label{sec:methodology}
-
-In this section, the methodology used to measure the impact of security refactorings on the maintainability of open-source software is presented in depth in the following sections and illustrated in Figure \ref{fig:met}. Aiming to answer the research questions presented in this paper, we use a dataset containing $716$ security refactorings collected from open-source software available on GitHub. $648$ of those refactorings were reported in a previous study conducted in 2017 \cite{Reis:2017:IJSSE}. In parallel, a baseline of regular commits was randomly collected from the list of projects of the main dataset to evaluate what is the impact of regular commits on the maintainability of open-source software. The Software Improvement Group's\footnote{SIG's website is available at https://www.sig.eu/ (Accessed on January 23, 2019)} web-based source code analysis service Better Code Hub (BCH) \footnote{BCH's website is available at https://bettercodehub.com/ (Accessed on January 23, 2019)} was used to collect the maintainability reports for both security and regular commits.
+%
+The methodology used to measure the impact of security refactorings on the
+maintainability of open-source software is discussed in the following sections
+and illustrated in Figure \ref{fig:met}. Aiming to answer the research questions
+outlined in the previous section, in this paper, we use a dataset containing
+$716$ security refactorings collected from open-source software available on
+GitHub. $648$ of those refactorings were reported in a previous study conducted
+in 2017 \cite{Reis:2017:IJSSE}. Moreover, a baseline of regular commits was
+randomly collected from the list of projects of the main dataset to evaluate
+what is the impact of regular commits on the maintainability of open-source
+software. The Software Improvement Group's\footnote{SIG's website is available
+at https://www.sig.eu/ (Accessed on \today{})} web-based source code
+analysis service Better Code Hub (BCH)\footnote{BCH's website is available at
+https://bettercodehub.com/ (Accessed on \today{})} was used to quantify
+maintainability for both security and regular commits.
 
 
 \begin{figure}[h]
  	\centering 	\includegraphics[width=0.5\textwidth]{figures/methodology.pdf}
- 	\caption{Study Methodology \Sof{@todo: Improve it!}}
+ 	\caption{Study Methodology}
 	\label{fig:met}
 \end{figure}
 
