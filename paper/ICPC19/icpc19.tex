@@ -646,9 +646,56 @@ In total, this study evaluates $607$ security and baseline commits from 94 diffe
 
 
 \section{Threats to Validity}\label{sec:threats}
+%
+In this section, we discuss potential threats to the validity of our work.
+%
+\subsection{Construct}
+%
+We use a metric derived from the reports provided by BCH as a construct of
+software maintainability. Different projects and contexts may require different
+maintainability standards. However, BCH uses a representative benchmark of
+closed and open source software systems to compute the thresholds used in each
+maintainability guideline\cite{Visser:2016:OREILLY,baggen2012standardized}.
+In addition, the benchmark is updated every year~\cite{Visser:2016:OREILLY}.
 
+The lifespan of a given energy commit is an approximation based on a single
+change in one of the lines of code submitted by that commit. Although changes in
+whitespace are not considered, we did not perform any evaluation on the type of
+change that is performed. Some changes may be trivial while others may have
+required more efforts from developers. Related work has proposed approaches to
+automatically classify changes (e.g., bug fixes\cite{da2017framework}, and
+refactorings~\cite{pascarella2018self}), but we have not explored them.
+Nevertheless, we understand that the differences in the lifespan between our
+dataset of energy changes and the baseline provide interesting leads for
+discussion and new research directions.
 
+\subsection{Internal}
 
+We resort to a set of security changes that were collected from previous
+work~\cite{Reis:2017:IJSSE}. These dataset was collected using the commit
+message provided by developers to classify a given commit as a security change.
+We understand that this approach discards security changes that did not have an
+explicit commit message describing them as such.
+
+In the case of baseline commits, they were collected by randomly select a commit
+in the same project that a given security change occurs. We use this approach to
+control differences incurred by the specificities of each project. Still,
+maintainability may be affected by different coding styles and experience level
+from developers of the same project. We do not evaluate differences at that
+level. Moreover, we do not evaluate the maintainbility difference for all
+regular commits in a project. We assume that the size of the dataset is enough
+to mitigate random variations in the maintainability differences of the baseline.
+
+\subsection{External}
+
+The dataset used in this work comprises code changes of free and open
+source applications. Our methodology requires access to data that is not
+publicly available for commercial apps. The extent to which this findings
+generalize to commercial applications with non-open source licenses remains
+a question to be answered in future work.
+
+Moreover, all the security commits in this work are described in English.
+%
 \section{Related Work}\label{sec:rw}
 
 
