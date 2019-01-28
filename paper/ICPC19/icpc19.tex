@@ -379,10 +379,6 @@ where $T(l)$ is the threshold in percentage of the lines of code that are accept
 
 To validate the maintainability differences in different groups of commits (e.g., baseline and security commits), we use the Paired Wilcoxon signed-rank test \cite{10.2307/3001968} with the significance level $\alpha = 0.05$. In other words, we test the null hypothesis that the maintainability difference between pairs of versions $v_{v-1}$, $v_v$ (i.e., before and after a security-commit) follows a symmetric distribution around $0$. However, when the difference between groups is zero, the observations are discarded. Thus, we use a more robust approach of the wilcoxon test, the Wilcoxon test by Pratt which provides an alternative that incorporates the cases where the maintainability difference is zero \cite{10.2307/2282543}. To understand the effect-size, as advocated by the Common-language effect sizes \cite{graw:1992}, we compute the mean difference, the median of the difference, and the percentage of cases that reduce maintainability. 
 
-
-
- when the difference between the groups is zero, the observations are discarded. This is of particular concern if the samples are taken from a discrete distribution. In these scenarios the modification to the Wilcoxon test by Pratt 1959, provides an alternative which incorporates the zero differences.[4][5] This modification is more robust for data on an ordinal scale.[5]
-
 \section{Results}\label{sec:results}
 
 
