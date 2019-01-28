@@ -13,7 +13,7 @@
 \usepackage{xcolor}
 \definecolor{mypink3}{cmyk}{0, 0.7808, 0.4429, 0.1412}
 
-
+\usepackage{xfrac}
 
 \usepackage{listings}
 
@@ -153,7 +153,12 @@ https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd
 
 
 \setcounter{lstannotation}{0}
+<<<<<<< HEAD
 \begin{lstlisting}[caption={Fix provided by OpenSSL developers to the CVE-2014-3506 vulnerability},label={lst:vuln}]
+=======
+\begin{lstlisting}[caption={Fix provided by OpenSSL developers to the
+CVE-2014-3506 vulnerability},label={lst:vuln}]
+>>>>>>> cb75a0dcbe16bb9c51f7b5f3056248b2682a8fe6
 + static unsigned long dtls1_max_handshake_message_len(const SSL *s){ /*!\annotation{lst:func1}!*/
 +  unsigned long max_len = DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH;
 +  if(max_len < (unsigned long)s->max_cert_list) /*!\annotation{lst:func2}!*/
@@ -166,8 +171,8 @@ https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd
 // [snip]
 
 - unsigned long frag_len = msg_hdr->frag_len, max_len; /*!\annotation{lst:func3}!*/
-            
-			
+
+
 - if((msg_hdr->frag_off+frag_len) > msg_hdr->msg_len)
 -    goto err;
 
@@ -493,7 +498,7 @@ Clean Code} guideline.
 refactoring for the guideline \emph{Write Simple Units of Code} provided by
 \emph{Better Code Hub}. This version of OpenSSL does not comply with the
 guideline in the example since the bars do not reach the threshold points. This
-example only complies with 1/10 guidelines (\emph{Write Clean Code}).}
+example only complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean Code}).}
 	\label{fig:bchrep}
 \end{figure}
 
