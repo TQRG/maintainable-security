@@ -5,12 +5,17 @@ import collections
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.stats import wilcoxon
+from scipy.stats import wilcoxon, shapiro
+from statistics import mean, stdev
+from math import sqrt
 
 def _print_hypothesis_test(differences):
     """Paired Wilcoxon signed-rank test (N should be > 20)"""
+    _, pvalue = shapiro(differences)
+    print("Shapiro-Wilk test for normality: {}".format(pvalue))
     test, pvalue = _hypothesis_test(differences)
-    stats = {'test': [test], 'med':[pd.DataFrame({'diff': differences})['diff'].median()],'pvalue': [pvalue]}
+    stats = {'test': [test], 'med':[pd.DataFrame({'diff': differences})['diff'].median()],'pvalue': [pvalue], 
+                'mean':[pd.DataFrame({'diff': differences})['diff'].mean()]}
     df = pd.DataFrame(stats)
     print("Wilcoxon signed-rank test {}, p-value: {}".format(test,pvalue))
     return df
@@ -47,21 +52,17 @@ def count(id, pattern, p):
 def total_main_barchart(total_sec, total_reg, graphics, result):
     
     sec = sum([value for key,value in total_sec.items()])
-    reg = sum([value for key,value in total_reg.items()]) 
+    reg = sum([value for key,value in total_reg.items()])
     
     d = {'neg' : pd.Series([total_reg['neg']/reg, total_sec['neg']/sec]),
         'pos' : pd.Series([total_reg['pos']/reg, total_sec['pos']/sec]),
         'none' : pd.Series([total_reg['nul']/reg, total_sec['nul']/sec]),
         'type' : pd.Series(['Regular Change','Security Change'])}
-
-    # d = {'neg' : pd.Series([total_reg['neg'], total_sec['neg']]),
-    #     'pos' : pd.Series([total_reg['pos'], total_sec['pos']]),
-    #     'none' : pd.Series([total_reg['nul'], total_sec['nul']]),
-    #     'type' : pd.Series(['Regular Change','Security Change'])}
     
     index = np.arange(len(d['type']))
     
     df = pd.DataFrame(d)
+    print(df[['neg','pos','none']])
     
     fig = plt.figure()
     ax = fig.add_subplot(111)
@@ -75,14 +76,14 @@ def total_main_barchart(total_sec, total_reg, graphics, result):
     plt.gca().set_xticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_xticks()]) 
     plt.subplots_adjust(left=0.2, right=0.85, top=0.9, bottom=0.1)
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.1), fancybox=True, ncol=3, fontsize=9)
-    
+
     y = 1.3
-    for l in result.iterrows():
+    for l in result[::-1].iterrows():
         if float('{:.{}f}'.format(l[1]['pvalue'], 3)) <= 0.000:
             p = '<0.001'
         else:
             p = '={:.{}f}'.format(l[1]['pvalue'], 3)
-        box_text = '$Z$='+ '{:.{}f}'.format(l[1]['test'], 2) + '\n$\widetilde{x}$=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
+        box_text = '$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\n$\widetilde{x}$=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
         ax.text(0.46, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':4}, fontsize=9)
         y -= 1.1
     
@@ -207,11 +208,14 @@ def sec_vs_rg_commits(CACHE, graphics, dataset):
         
     fil = df[(df['main(diff)_reg'] != 'error') & (df['main(diff)_sec'] != 'error')]
     
+    cohens_d = (fil['main(diff)_reg'].astype('float64').mean() - fil['main(diff)_sec'].astype('float64').mean()) / (sqrt((stdev(fil['main(diff)_reg'].astype('float64')) ** 2 + stdev(fil['main(diff)_sec'].astype('float64')) ** 2) / 2))
+    print('coehns', cohens_d)
     
     stats1 = _print_hypothesis_test(fil['main(diff)_sec'].astype('float64'))
     stats = _print_hypothesis_test(fil['main(diff)_reg'].astype('float64'))
 
     result = stats.append([stats1])
+    print(result)
     result.to_csv('../results/statistical_test.csv')
     
     total_sec, total_reg = {'neg': 0, 'pos': 0, 'nul': 0}, {'neg': 0, 'pos': 0, 'nul': 0}
@@ -254,8 +258,16 @@ def main_by_type_barchart(patterns, diff):
         'med': pd.Series([_print_hypothesis_test(diff[i])['med'][0] for i in patterns]),
         'p': pd.Series([_print_hypothesis_test(diff[i])['pvalue'][0] for i in patterns]),
         'type': pd.Series([keys[i] for i in patterns])}
+        
+    e = {'neg': pd.Series([patterns[i][0] for i in patterns]),
+        'pos': pd.Series([patterns[i][1] for i in patterns]),
+        'nul': pd.Series([patterns[i][2] for i in patterns])}
+    
+    ef = pd.DataFrame(e)
+    print(ef)
 
     df = pd.DataFrame(d)
+    print(df[['neg','pos','nul']])
 
     index = np.arange(len(d['type']))
 
@@ -270,16 +282,17 @@ def main_by_type_barchart(patterns, diff):
     plt.yticks(index + bar_width, df['type'], fontsize=6.5)
     plt.xticks(fontsize=7) 
     plt.gca().set_xticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_xticks()])
-    plt.subplots_adjust(left=0.25, right=0.9, top=0.9, bottom=0.06)
+    plt.subplots_adjust(left=0.25, right=0.85, top=0.9, bottom=0.06)
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.08), fancybox=True, ncol=3, fontsize=7)
 
     y = 7
-    for l in df.iterrows():
+    for l in df[::-1].iterrows():
+        print(l[1]['p'])
         if float('{:.{}f}'.format(l[1]['p'], 3)) <= 0.000:
             p = '<0.001'
         else:
             p = '={:.{}f}'.format(l[1]['p'], 3)
-        box_text = 'N='+str(l[1]['N'])+'\n$Z$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\n$\widetilde{x}$=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
+        box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\n$\widetilde{x}$=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
         ax.text(0.75, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=5)
         y -= 1.02
         
@@ -344,15 +357,10 @@ def main(cache, results, graphics, dataset):
     
     # Figure 1
     fil = sec_vs_rg_commits(CACHE, graphics, dataset)
-        
+    plt.clf()
     # Figure 2
     sec_by_type(CACHE, fil)
-    
-    keys = fil['pattern'].unique()   
-    for i in keys:
-        print(i, len(fil[fil['pattern'] == i]))
-        
-    
+
     fil.to_csv('final_results.csv')
 
 

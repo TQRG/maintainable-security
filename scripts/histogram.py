@@ -22,24 +22,27 @@ def language_dist(commits):
             dic[i] += 1
     
     dic_lang = {'lang':[], 'no':[]}
-    for i in dic:
-        if i == 'others':
-            no = dic['others']
-        else:
-            dic_lang['lang'].append(lang_trans[i])
-            dic_lang['no'].append(dic[i]/len(df['language']))
     
     dic_lang['lang'].append('Others')
     dic_lang['no'].append(dic['others']/len(df['language']))
     
-    lang = pd.DataFrame(dic_lang)
+    for i in dic:
+        if i != 'others':
+        #     no = dic['others']
+        # else:
+            dic_lang['lang'].append(lang_trans[i])
+            dic_lang['no'].append(dic[i]/len(df['language']))
     
-    ax = lang['no'].plot(kind='bar', figsize=(10, 7), fontsize=11, color="#2541F0")
-    vals = ax.get_yticks()
-    ax.set_yticklabels(['{:,.0%}'.format(x) for x in vals])
-    ax.set_xticklabels(dic_lang['lang'], minor=False)
-    plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.3)
-    plt.gca().yaxis.grid(True, linestyle='--')
+    
+    lang = pd.DataFrame(dic_lang)
+    print(lang)
+    
+    ax = lang['no'].plot(kind='barh', figsize=(10, 11), fontsize=12, color="#3F86DB")
+    vals = ax.get_xticks()
+    ax.set_xticklabels(['{:,.0%}'.format(x) for x in vals])
+    ax.set_yticklabels(dic_lang['lang'], minor=False)
+    plt.subplots_adjust(left=0.2, right=0.95, top=0.9, bottom=0.05)
+    plt.gca().xaxis.grid(True, linestyle='--')
     
     plt.savefig('../paper/ICPC19/figures/language_dist.pdf')
 
@@ -48,7 +51,7 @@ def type_dist(projects):
     df = pd.read_csv(projects)
     
     dic = {}
-    for i in df['type']:
+    for i in df['domain']:
         if i not in dic:
             dic[i] = 1
         else:
@@ -61,21 +64,26 @@ def type_dist(projects):
         dic_type['no'].append(dic[i]) 
                 
     app_type = pd.DataFrame(dic_type)
+    print(app_type)
     
-    ax = app_type['no'].plot(kind='bar', figsize=(10, 7), fontsize=11, color="#48B963")
-    ax.set_ylabel("Count", fontsize=11)
-    vals = ax.get_yticks()
-    ax.set_yticklabels(['{}'.format(x) for x in vals])
-    ax.set_xticklabels(app_type['type'], minor=False)
-    plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.3)
-    plt.gca().yaxis.grid(True, linestyle='--')
+    ax = app_type['no'].plot(kind='barh', figsize=(10, 7), fontsize=12, color="#3F86DB")
+    #ax.set_xlabel("Count", fontsize=11)
+    vals = ax.get_xticks()
+    ax.set_xticklabels(['{}'.format(int(x)) for x in vals])
+    ax.set_yticklabels(app_type['type'], minor=False)
+    plt.subplots_adjust(left=0.3, right=0.9, top=0.9, bottom=0.05)
+    plt.gca().xaxis.grid(True, linestyle='--')
     
     plt.savefig('../paper/ICPC19/figures/type_dist.pdf')
 
 def main(projects, commits):    
     
     language_dist(commits)
-    
+    #
+    # c = pd.read_csv(commits)
+    # df = pd.read_csv(projects)
+    # fil = df[df['owner'].isin(c['owner_sec']) & df['project'].isin(c['project_sec'])]
+    # fil.to_csv('final_projects.csv')
     plt.clf()
     
     type_dist(projects)
