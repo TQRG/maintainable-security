@@ -153,12 +153,8 @@ https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd
 
 
 \setcounter{lstannotation}{0}
-<<<<<<< HEAD
-\begin{lstlisting}[caption={Fix provided by OpenSSL developers to the CVE-2014-3506 vulnerability},label={lst:vuln}]
-=======
 \begin{lstlisting}[caption={Fix provided by OpenSSL developers to the
 CVE-2014-3506 vulnerability},label={lst:vuln}]
->>>>>>> cb75a0dcbe16bb9c51f7b5f3056248b2682a8fe6
 + static unsigned long dtls1_max_handshake_message_len(const SSL *s){ /*!\annotation{lst:func1}!*/
 +  unsigned long max_len = DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH;
 +  if(max_len < (unsigned long)s->max_cert_list) /*!\annotation{lst:func2}!*/
@@ -549,6 +545,8 @@ the standard thresholds based on previous work \cite{Olivari:2018}.
 We compute the mean average of the maintainability score $M(v)$ for all the
 selected guidelines, as follows:
 
+
+
 \begin{equation}
     M(v) = \sum_{g \in G}^{} M_{g}(v)
 \end{equation}
@@ -627,15 +625,40 @@ The impact of security and baseline commits in the maintainability of open-sourc
 	\label{fig:secvsreg}
 \end{figure}
  
-Regarding security commits results, we observe that maintainability decreases in 40.20\% (244), increases in 29.33\% (178) and stays the same in 30.5\% (185) of the cases after security refactorings being applyed. The resulting p-value of the Wilcoxon signed-rank test is $1.21$x$10^{-10}$. Since the p-value is below the significance level of $0.05$, it is fair to state that \emph{security refactorings have a negative impact in the maintainability of open-source software}.
+Regarding security commits results, we observe that maintainability decreases in 40.20\% (244), increases in 29.33\% (178) and stays the same in 30.5\% (185) of the cases after security refactorings being applied. The resulting p-value of the Wilcoxon signed-rank test is $1.21$x$10^{-10}$. Since the p-value is below the significance level of $0.05$, it is fair to state that \emph{security refactorings have a negative impact in the maintainability of open-source software}.
 
 For regular commits, we also observe that maintainability decreases in 41.35\% (251) of the cases after regular refactorings being applyed. But in contrast to security commits, it increases in 58.16\% (353) and stays the same in 0.5\% (3). The resulting p-value of the Wilcoxon signed-rank test is $1.54$x$10^{-6}$. Since the p-value is below the significance level of $0.05$, it is fair to state that \emph{regular refactorings have a positive impact in the maintainability of open-source software}.
 
+\Sof{@todo: effect size}
 
 \begin{framed}
 \textit{\textbf{RQ2} Which patterns of security refactorings are more likely to affect open-source software maintainability?}
 \end{framed}
 
+The impact of security refactorings on the maintainability of open-source software per group of security flaws is presented in Figure \ref{fig:pat}. The results of the Wilcoxon signed-rank test by pattern returned statistical evidence which supports the maintainability of open-source software decreases for 4 different patterns: Broken Autentication (p = 0.018), Denial-of-Service (p = 0.029), Memory Leak (p = 0.009) and Miscellaneous (p = $3.07$x$10^{-4}$). The results also returned statistical significance that evidence that maintainability is more likely to not suffer differences for open-source software after removing Components with Known Vulnerabilities (p = $7.96$x$10^{-4}$) and fixing Cross-Site Scripting Vulnerabilities (p = 0.001). Injection and Cross-Site Request Forgery produced more cases where the refactorings had a negative impact in the maintainability. However, the results obtained for these patterns are not statistically significant. 
+
+For the Broken Authentication pattern, 55.3\% of the refactorings (21) had a negative impact in the maintainability, 28.95\% (11) improved maintainability and 15.8\% (6) of the changes did not add any impact in the maintainability of open-source software.
+
+
+%    neg  pos  nul
+% ml   41   28   11
+% injec   32   31   26
+% xss   27   24   63
+% misc   84   62   49
+% dos   19   12    9
+% csrf   17    9    4
+% auth   21   11    6
+% ucwkv    3    1   17
+
+%        neg       pos       nul
+% ml  0.512500  0.350000  0.137500
+% injec  0.359551  0.348315  0.292135
+% xss  0.236842  0.210526  0.552632
+% misc  0.430769  0.317949  0.251282
+% dos  0.475000  0.300000  0.225000
+% csrf  0.566667  0.300000  0.133333
+% auth  0.552632  0.289474  0.157895
+% ucwkv  0.142857  0.047619  0.809524
 
 
 \begin{figure}[h]
