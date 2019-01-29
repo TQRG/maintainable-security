@@ -98,7 +98,7 @@
   Group's web-based source code analysis service \emph{Better Code Hub} (BCH) ---
   before and after the security refactoring. Results show that making software
   more secure comes at a cost on maintainability. This is particularly evident
-  in refactorings to deal with \textit{Broken Authentication} and \textit{Cross-Site Request Forgery} attacks.
+  in refactorings to deal with \emph{Broken Authentication and Session Management}, \emph{Denial-of-Service} attacks and \emph{Memory Leaks}.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -635,31 +635,11 @@ For regular commits, we also observe that maintainability decreases in 41.35\% (
 \textit{\textbf{RQ2} Which patterns of security refactorings are more likely to affect open-source software maintainability?}
 \end{framed}
 
-The impact of security refactorings on the maintainability of open-source software per group of security flaws is presented in Figure \ref{fig:pat}. The results of the Wilcoxon signed-rank test by pattern returned statistical evidence which supports the maintainability of open-source software decreases for 4 different patterns: Broken Autentication (p = 0.018), Denial-of-Service (p = 0.029), Memory Leak (p = 0.009) and Miscellaneous (p = $3.07$x$10^{-4}$). The results also returned statistical significance that evidence that maintainability is more likely to not suffer differences for open-source software after removing Components with Known Vulnerabilities (p = $7.96$x$10^{-4}$) and fixing Cross-Site Scripting Vulnerabilities (p = 0.001). Injection and Cross-Site Request Forgery produced more cases where the refactorings had a negative impact in the maintainability. However, the results obtained for these patterns are not statistically significant. 
+The impact of each type of security refactoring on the maintainability of open-source software is presented in Figure \ref{fig:pat}. The results of the Wilcoxon signed-rank test by pattern returned statistical evidence which supports that the maintainability of open-source software decreases for 4 different patterns: Broken Autentication (p = 0.018), Denial-of-Service (p = 0.029), Memory Leak (p = 0.009) and Miscellaneous (p = $3.07$x$10^{-4}$). The results also returned statistical significance that evidence that maintainability is more likely to not suffer differences for open-source software after removing Components with Known Vulnerabilities (p = $7.96$x$10^{-4}$) and fixing Cross-Site Scripting Vulnerabilities (p = 0.001). Injection and Cross-Site Request Forgery produced more cases where the refactorings had a negative impact in the maintainability. However, the results obtained for these patterns are not statistically significant. 
 
-For the Broken Authentication pattern, 55.3\% of the refactorings (21) had a negative impact in the maintainability, 28.95\% (11) improved maintainability and 15.8\% (6) of the changes did not add any impact in the maintainability of open-source software.
+Projects with Broken Authentication flaws are the most affected ones by security refactorings. 55.3\% (21) of the refactorings had a negative impact in the maintainability while 35\% (11) had a positive impact and only 13.8\% (6) did not suffer any change. The results also show that fixing memory leaks affects the maintainability of 51.3\% (41) of the cases and leaves only 13.8\% (11) of the cases unaffected. 35\% (28) are affected positively. Refactoring vulnerabilities that allow denial-of-service attacks (e.g., CVE-2014-3506) has a negative impact of 47.5\% (19) in the maintainability of open-source software. 30.0\% (12) of the cases exhibit maintainability improvement while 22.5\% (9) show that overall maintainability does not suffer any change. Miscellaneous refactorings pattern integrates several types of security flaws whose impact is of 43.1\% (84 cases) negative in the maintainability of open-source sofware. 31.8\% (62) of the cases do not exhibit any change in maintainability and 25.1\% (49) of cases have a positive impact on the maintainability of open-source software.
 
-
-%    neg  pos  nul
-% ml   41   28   11
-% injec   32   31   26
-% xss   27   24   63
-% misc   84   62   49
-% dos   19   12    9
-% csrf   17    9    4
-% auth   21   11    6
-% ucwkv    3    1   17
-
-%        neg       pos       nul
-% ml  0.512500  0.350000  0.137500
-% injec  0.359551  0.348315  0.292135
-% xss  0.236842  0.210526  0.552632
-% misc  0.430769  0.317949  0.251282
-% dos  0.475000  0.300000  0.225000
-% csrf  0.566667  0.300000  0.133333
-% auth  0.552632  0.289474  0.157895
-% ucwkv  0.142857  0.047619  0.809524
-
+It is also important to notice that overall the maintainability of open-source software is not affected by Cross-Site Scripting vulnerabilities and by Using Components with Know Vulnerabilities. Cross-Site Scripting does not suffer any decrease in the maintainability of 55.3\% (63) of cases and 21.1\% (24) have a positive effect on it. Only 23.7\% (27) of the cases hinder the software maintainability. From 21 cases evaluated for Using Componentes with Known Vulnerabilities, only 4.8\% (1) has a positive effect in the maintainability of software. 14.3\% (3) harms maintainability software and 81\% has no effect in the maintainability.
 
 \begin{figure}[h]
  	\centering
@@ -671,68 +651,45 @@ For the Broken Authentication pattern, 55.3\% of the refactorings (21) had a neg
 
 \section{Discussion}\label{sec:discussion}
 
+In this section, we discuss the results and answer the proposed research questions.
 
 \begin{framed}
 \textit{\textbf{RQ1} What is the impact of security refactorings on the maintainability of open-source software?}
 \end{framed}
 
+\textbf{\textit{Security refactorings harm the maintainability of open-source software.}}
 
 \begin{framed}
 \textit{\textbf{RQ2} Which patterns of security refactorings are more likely to affect open-source software maintainability?}
 \end{framed}
 
+\textbf{\textit{Broken Authentication \& Session Management, Denial-of-Service attacks and Memory Leaks and Miscellaneous patterns are more likely to affect open-source software maintainability.}}
 
 
 \section{Threats to Validity}\label{sec:threats}
 %
-In this section, we discuss potential threats to the validity of our work.
+The following section presents the potential threats to validity of this study.
 %
 \subsection{Construct}
 %
-We use a metric derived from the reports provided by BCH as a construct of
-software maintainability. Different projects and contexts may require different
-maintainability standards. However, BCH uses a representative benchmark of
-closed and open source software systems to compute the thresholds used in each
-maintainability guideline\cite{Visser:2016:OREILLY,baggen2012standardized}.
-In addition, the benchmark is updated every year~\cite{Visser:2016:OREILLY}.
-
-The lifespan of a given energy commit is an approximation based on a single
-change in one of the lines of code submitted by that commit. Although changes in
-whitespace are not considered, we did not perform any evaluation on the type of
-change that is performed. Some changes may be trivial while others may have
-required more efforts from developers. Related work has proposed approaches to
-automatically classify changes (e.g., bug fixes\cite{da2017framework}, and
-refactorings~\cite{pascarella2018self}), but we have not explored them.
-Nevertheless, we understand that the differences in the lifespan between our
-dataset of energy changes and the baseline provide interesting leads for
-discussion and new research directions.
+The maintainability formula was inferred based on the reports of the Better Code Hub. 
+Since the dataset has a broad group of open-source projects with different backgrounds, this metric may not be suitable for all of them. However, BCH does have a representative benchmark of
+closed and open-source software projects that is under the calculation of the thresholds used in the computation of each maintainability guideline~\cite{Visser:2016:OREILLY, Baggen2012} (Figure \ref{fig:guidelines}).
 
 \subsection{Internal}
 
-We resort to a set of security changes that were collected from previous
-work~\cite{Reis:2017:IJSSE}. These dataset was collected using the commit
-message provided by developers to classify a given commit as a security change.
-We understand that this approach discards security changes that did not have an
-explicit commit message describing them as such.
+The security refactorings dataset provided by the previous
+work~\cite{Reis:2017:IJSSE} was collected based on the messages of GitHub commits produced by
+project developers to classify the changes perfomed by them to fix security flaws. This approach discards security refactorings that were not explicit in commits messages.
 
-In the case of baseline commits, they were collected by randomly select a commit
-in the same project that a given security change occurs. We use this approach to
-control differences incurred by the specificities of each project. Still,
-maintainability may be affected by different coding styles and experience level
-from developers of the same project. We do not evaluate differences at that
-level. Moreover, we do not evaluate the maintainbility difference for all
-regular commits in a project. We assume that the size of the dataset is enough
-to mitigate random variations in the maintainability differences of the baseline.
+Baseline commits are retrieved randomly by selecting one commit from the same project of a given security refactoring. This approach softens the differences that may result from the
+characteristics of each project. However, maintainability still may be affected by the developers experience, coding style and software contribution polices. But maintainability difference is not evaluated at this level.
 
 \subsection{External}
 
-The dataset used in this work comprises code changes of free and open
-source applications. Our methodology requires access to data that is not
-publicly available for commercial apps. The extent to which this findings
-generalize to commercial applications with non-open source licenses remains
-a question to be answered in future work.
+In contrast to the BCH benchmark, this study uses a dataset that only covers open-source software to perform the maintanibility evaluation. Thus, answering these questions to closed commercial applications may be a future work opportunity. 
 
-Moreover, all the security commits in this work are described in English.
+All the security commits are described in English.
 %
 \section{Related Work}\label{sec:rw}
 
