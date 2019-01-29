@@ -103,7 +103,8 @@
   Group's web-based source code analysis service \emph{Better Code Hub} (BCH) ---
   before and after the security refactoring. Results show that making software
   more secure comes at a cost on maintainability. This is particularly evident
-  in refactorings to deal with \emph{Broken Authentication and Session Management}, \emph{Denial-of-Service} attacks and \emph{Memory Leaks}.
+  in refactorings to deal with \emph{Broken Authentication and Session Management}, 
+  \emph{Denial-of-Service} attacks and \emph{Memory Leaks}.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -120,10 +121,7 @@ The international standard ISO/IEC 25010:2011 breaks down software quality into 
 
 
 
-
-
-
-
+In 2011, ISO isued an update for software product quality ISO/IEC 25010~\cite{iso:2011}.
 
 
 This paper is structured as follows: section \ref{sec:motivation} introduces an
@@ -515,7 +513,7 @@ motivation example discussed, previously, in section \ref{sec:motivation}. This
 version of OpenSSL only complies with 1 out of 10 guidelines, the \emph{Write
 Clean Code} guideline.
 
-\begin{figure}[H]
+\begin{figure}[h]
  	\centering 	\includegraphics[width=0.45\textwidth]{figures/bch_report.png}
  	\caption{Maintainability report of OpenSSL CVE-2014-3506 vulnerability
 refactoring for the guideline \emph{Write Simple Units of Code} provided by
@@ -536,8 +534,7 @@ branch points per unit (\emph{at most 5}), i.e., the units are compliant with
 ISO 25010 \cite{iso:2011}. Yellow, orange and red bars represent units that do
 not comply with medium (\emph{above 5}), high (\emph{above 10}) and very high
 (\emph{above 25}) severity levels. In the bar, there are marks that pinpoint the
-compliance thresholds for each severity level.
-\Sof{Adress thresholds confusion}
+compliance thresholds for each severity level. \Sof{@todo: Adress thresholds confusion}
 
 \begin{figure}[H]
  	\centering 	\includegraphics[width=0.49\textwidth]{figures/commit.pdf}
