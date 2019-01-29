@@ -11,11 +11,14 @@
 \usepackage{framed}
 \usepackage{float}
 \usepackage{xcolor}
-\definecolor{mypink3}{cmyk}{0, 0.7808, 0.4429, 0.1412}
 
 \usepackage{xfrac}
 
 \usepackage{balance}
+
+\usepackage{array}
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
 
 \usepackage{listings}
 
@@ -120,6 +123,9 @@ The international standard ISO/IEC 25010:2011 breaks down software quality into 
 
 
 
+
+
+
 This paper is structured as follows: section \ref{sec:motivation} introduces an
 example of a security refactoring of a known vulnerability found in
 OpenSSL\footnote{Repository available at
@@ -159,7 +165,7 @@ https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd
 
 \setcounter{lstannotation}{0}
 \begin{lstlisting}[caption={Fix provided by OpenSSL developers to the
-CVE-2014-3506 vulnerability},label={lst:vuln}]
+\\CVE-2014-3506 vulnerability},label={lst:vuln}]
 + static unsigned long dtls1_max_handshake_message_len(const SSL *s){ /*!\annotation{lst:func1}!*/
 +  unsigned long max_len = DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH;
 +  if(max_len < (unsigned long)s->max_cert_list) /*!\annotation{lst:func2}!*/
@@ -463,17 +469,33 @@ characteristics of different projects.
 %
 \subsection{Maintainability Analysis}
 
-As saids before, the web-based source code analysis service \emph{Better Code
+As said before, the web-based source code analysis service \emph{Better Code
 Hub} (BCH) is used to collect the maintanability reports of the refactorings of
-each project. Figure \ref{fig:guidelines} presents the 10 guidelines
+each project. Table \ref{tab:guidelines} presents the 10 guidelines
 proposed by BCH's authors for delivering software that is easy to maintain
 \cite{Visser:2016:OREILLY}.
 
-\begin{figure}[H]
- 	\centering 	\includegraphics[width=0.49\textwidth]{figures/guidelines.pdf}
- 	\caption{Guidelines to produce maintainable code}
-	\label{fig:guidelines}
-\end{figure}
+\begin{table}[H]
+	\caption{Guidelines to produce maintainable code}
+\begin{tabular}{L{2.5cm}L{5.5cm}}
+	
+\toprule
+\textbf{10 Guidelines} & \textbf{Description}\\
+\midrule
+\textbf{Write Short Units of Code} & Limit code units to 15 LOCs because smaller units are easier to understand, reuse and test them\\\midrule
+\textbf{Write Simple Units of Code} & Limit branch points to 4 per unit because it makes units easier to test and modify \\\midrule
+\textbf{Write Code Once} & Do not copy code because bugs tend to replicate at multiple places (inefficient and error-prone)\\\midrule
+\textbf{Keep Unit Interfaces Small} & Limit the number of parameters to at most 4 because it makes units easier to understand and reuse\\\midrule
+\textbf{Separate Concerns in Modules} & Avoid large modules because changes in loosely coupled databases are easier to oversee and execute\\\midrule
+\textbf{Couple Architecture Components Loosely} & Minimize the amount of code within modules that is exposed to modules in other components\\\midrule
+\textbf{Keep Architecture Components Balanced} & Balancing the number of components ease locating code and allow for isolated maintenance\\\midrule
+\textbf{Keep your Codebase Small} & Reduce and avoid the system size because small products are easier to manage and maintain\\\midrule
+\textbf{Automate Tests} & Test your codebase because it makes development predictable and less risky\\\midrule
+\textbf{Write Clean Code} & Avoid producing software with code smells because it is more likely to be maintainable in the future\\
+\bottomrule
+\end{tabular}
+\label{tab:guidelines}
+\end{table}
 
 All guidelines are computed in the same evaluation by BCH. During each guideline
 evaluation, the tool determines the compliance towards one guideline by
@@ -515,6 +537,7 @@ ISO 25010 \cite{iso:2011}. Yellow, orange and red bars represent units that do
 not comply with medium (\emph{above 5}), high (\emph{above 10}) and very high
 (\emph{above 25}) severity levels. In the bar, there are marks that pinpoint the
 compliance thresholds for each severity level.
+\Sof{Adress thresholds confusion}
 
 \begin{figure}[H]
  	\centering 	\includegraphics[width=0.49\textwidth]{figures/commit.pdf}
@@ -557,8 +580,8 @@ selected guidelines, as follows:
 \end{equation}
 
 \noindent
-where $G$ is the group of selected maintainability guidelines from BCH (Figure
-\ref{fig:guidelines}) and $v$ is the version of the software under evaluation.
+where $G$ is the group of selected maintainability guidelines from BCH (Table
+\ref{tab:guidelines}) and $v$ is the version of the software under evaluation.
 The maintenance $M$ based on the guideline $g$ for a given version of a project
 is computed with the following equation:
 
@@ -642,7 +665,7 @@ For regular commits, we also observe that maintainability decreases in 41.35\% (
 
 The impact of each type of security refactoring on the maintainability of open-source software is presented in Figure \ref{fig:pat}. The results of the Wilcoxon signed-rank test by pattern returned statistical evidence which supports that the maintainability of open-source software decreases for 4 different patterns: Broken Autentication (p = 0.018), Denial-of-Service (p = 0.029), Memory Leak (p = 0.009) and Miscellaneous (p = $3.07$x$10^{-4}$). The results also returned statistical significance that evidence that maintainability is more likely to not suffer differences for open-source software after removing Components with Known Vulnerabilities (p = $7.96$x$10^{-4}$) and fixing Cross-Site Scripting Vulnerabilities (p = 0.001). Injection and Cross-Site Request Forgery produced more cases where the refactorings had a negative impact in the maintainability. However, the results obtained for these patterns are not statistically significant.
 
-Projects with Broken Authentication flaws are the most affected ones by security refactorings. 55.3\% (21) of the refactorings had a negative impact in the maintainability while 35\% (11) had a positive impact and only 13.8\% (6) did not suffer any change. The results also show that fixing memory leaks affects the maintainability of 51.3\% (41) of the cases and leaves only 13.8\% (11) of the cases unaffected. 35\% (28) are affected positively. Refactoring vulnerabilities that allow denial-of-service attacks (e.g., CVE-2014-3506) has a negative impact of 47.5\% (19) in the maintainability of open-source software. 30.0\% (12) of the cases exhibit maintainability improvement while 22.5\% (9) show that overall maintainability does not suffer any change. Miscellaneous refactorings pattern integrates several types of security flaws whose impact is of 43.1\% (84 cases) negative in the maintainability of open-source sofware. 31.8\% (62) of the cases do not exhibit any change in maintainability and 25.1\% (49) of cases have a positive impact on the maintainability of open-source software.
+Projects with Broken Authentication flaws are the most affected ones by security refactorings. 55.3\% (21) of the refactorings had a negative impact in the maintainability while 35\% (11) had a positive impact and only 13.8\% (6) did not suffer any change. The results also show that fixing memory leaks affects the maintainability of 51.3\% (41) of the cases and leaves only 13.8\% (11) of the cases unaffected. 35\% (28) are affected positively. Refactoring vulnerabilities that allow denial-of-service attacks (e.g., CVE-2014-3506) has a negative impact of 47.5\% (19) in the maintainability of open-source software. 30.0\% (12) of the cases exhibit maintainability improvement while 22.5\% (9) show that overall maintainability does not suffer any change. Miscellaneous refactorings pattern integrates several types of security flaws whose impact is of 43.1\% (84) negative in the maintainability of open-source sofware. 31.8\% (62) of the cases do not exhibit any change in maintainability and 25.1\% (49) of cases have a positive impact on the maintainability of open-source software.
 
 It is also important to notice that overall the maintainability of open-source software is not affected by Cross-Site Scripting vulnerabilities and by Using Components with Know Vulnerabilities. Cross-Site Scripting does not suffer any decrease in the maintainability of 55.3\% (63) of cases and 21.1\% (24) have a positive effect on it. Only 23.7\% (27) of the cases hinder the software maintainability. From 21 cases evaluated for Using Componentes with Known Vulnerabilities, only 4.8\% (1) has a positive effect in the maintainability of software. 14.3\% (3) harms maintainability software and 81\% has no effect in the maintainability.
 
@@ -681,7 +704,7 @@ The following section presents the potential threats to validity of this study.
 %
 The maintainability formula was inferred based on the reports of the Better Code Hub.
 Since the dataset has a broad group of open-source projects with different backgrounds, this metric may not be suitable for all of them. However, BCH does have a representative benchmark of
-closed and open-source software projects that is under the calculation of the thresholds used in the computation of each maintainability guideline~\cite{Visser:2016:OREILLY, Baggen2012} (Figure \ref{fig:guidelines}).
+closed and open-source software projects that is under the calculation of the thresholds used in the computation of each maintainability guideline~\cite{Visser:2016:OREILLY, Baggen2012} (Table \ref{tab:guidelines}).
 
 \subsection{Internal}
 
