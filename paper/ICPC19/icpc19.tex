@@ -15,6 +15,8 @@
 
 \usepackage{xfrac}
 
+\usepackage{balance}
+
 \usepackage{listings}
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
@@ -624,7 +626,7 @@ The impact of security and baseline commits in the maintainability of open-sourc
  	\caption{Maintainability difference for security and baseline refactorings}
 	\label{fig:secvsreg}
 \end{figure}
- 
+
 Regarding security commits results, we observe that maintainability decreases in 40.20\% (244), increases in 29.33\% (178) and stays the same in 30.5\% (185) of the cases after security refactorings being applied. The resulting p-value of the Wilcoxon signed-rank test is $1.21$x$10^{-10}$. Since the p-value is below the significance level of $0.05$, it is fair to state that \emph{security refactorings have a negative impact in the maintainability of open-source software}.
 
 For regular commits, we also observe that maintainability decreases in 41.35\% (251) of the cases after regular refactorings being applyed. But in contrast to security commits, it increases in 58.16\% (353) and stays the same in 0.5\% (3). The resulting p-value of the Wilcoxon signed-rank test is $1.54$x$10^{-6}$. Since the p-value is below the significance level of $0.05$, it is fair to state that \emph{regular refactorings have a positive impact in the maintainability of open-source software}.
@@ -635,7 +637,7 @@ For regular commits, we also observe that maintainability decreases in 41.35\% (
 \textit{\textbf{RQ2} Which patterns of security refactorings are more likely to affect open-source software maintainability?}
 \end{framed}
 
-The impact of each type of security refactoring on the maintainability of open-source software is presented in Figure \ref{fig:pat}. The results of the Wilcoxon signed-rank test by pattern returned statistical evidence which supports that the maintainability of open-source software decreases for 4 different patterns: Broken Autentication (p = 0.018), Denial-of-Service (p = 0.029), Memory Leak (p = 0.009) and Miscellaneous (p = $3.07$x$10^{-4}$). The results also returned statistical significance that evidence that maintainability is more likely to not suffer differences for open-source software after removing Components with Known Vulnerabilities (p = $7.96$x$10^{-4}$) and fixing Cross-Site Scripting Vulnerabilities (p = 0.001). Injection and Cross-Site Request Forgery produced more cases where the refactorings had a negative impact in the maintainability. However, the results obtained for these patterns are not statistically significant. 
+The impact of each type of security refactoring on the maintainability of open-source software is presented in Figure \ref{fig:pat}. The results of the Wilcoxon signed-rank test by pattern returned statistical evidence which supports that the maintainability of open-source software decreases for 4 different patterns: Broken Autentication (p = 0.018), Denial-of-Service (p = 0.029), Memory Leak (p = 0.009) and Miscellaneous (p = $3.07$x$10^{-4}$). The results also returned statistical significance that evidence that maintainability is more likely to not suffer differences for open-source software after removing Components with Known Vulnerabilities (p = $7.96$x$10^{-4}$) and fixing Cross-Site Scripting Vulnerabilities (p = 0.001). Injection and Cross-Site Request Forgery produced more cases where the refactorings had a negative impact in the maintainability. However, the results obtained for these patterns are not statistically significant.
 
 Projects with Broken Authentication flaws are the most affected ones by security refactorings. 55.3\% (21) of the refactorings had a negative impact in the maintainability while 35\% (11) had a positive impact and only 13.8\% (6) did not suffer any change. The results also show that fixing memory leaks affects the maintainability of 51.3\% (41) of the cases and leaves only 13.8\% (11) of the cases unaffected. 35\% (28) are affected positively. Refactoring vulnerabilities that allow denial-of-service attacks (e.g., CVE-2014-3506) has a negative impact of 47.5\% (19) in the maintainability of open-source software. 30.0\% (12) of the cases exhibit maintainability improvement while 22.5\% (9) show that overall maintainability does not suffer any change. Miscellaneous refactorings pattern integrates several types of security flaws whose impact is of 43.1\% (84 cases) negative in the maintainability of open-source sofware. 31.8\% (62) of the cases do not exhibit any change in maintainability and 25.1\% (49) of cases have a positive impact on the maintainability of open-source software.
 
@@ -672,7 +674,7 @@ The following section presents the potential threats to validity of this study.
 %
 \subsection{Construct}
 %
-The maintainability formula was inferred based on the reports of the Better Code Hub. 
+The maintainability formula was inferred based on the reports of the Better Code Hub.
 Since the dataset has a broad group of open-source projects with different backgrounds, this metric may not be suitable for all of them. However, BCH does have a representative benchmark of
 closed and open-source software projects that is under the calculation of the thresholds used in the computation of each maintainability guideline~\cite{Visser:2016:OREILLY, Baggen2012} (Figure \ref{fig:guidelines}).
 
@@ -687,7 +689,7 @@ characteristics of each project. However, maintainability still may be affected 
 
 \subsection{External}
 
-In contrast to the BCH benchmark, this study uses a dataset that only covers open-source software to perform the maintanibility evaluation. Thus, answering these questions to closed commercial applications may be a future work opportunity. 
+In contrast to the BCH benchmark, this study uses a dataset that only covers open-source software to perform the maintanibility evaluation. Thus, answering these questions to closed commercial applications may be a future work opportunity.
 
 All the security commits are described in English.
 %
@@ -705,6 +707,8 @@ All the security commits are described in English.
 \noindent
 We thank to the Software Improvement Group (SIG) team for all the support and
 help in validating our methodology.
+
+\balance
 
 {
  \bibliographystyle{IEEEtran}
