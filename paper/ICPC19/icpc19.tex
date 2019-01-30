@@ -105,10 +105,9 @@ measured based on the \emph{Better Code Hub}'s model of 10 guidelines using a
 dataset including $607$ security commits. Results show that fixing software
 vulnerabilities hinders the maintainability of open-source software. This is
 particularly the case for refactorings that address \emph{Broken Authentication
-and Session Management}, \emph{Memory Leaks} and \emph{Denial-of-Service}
-attacks. Therefore, it is necessary to bring awareness for coding practices and
-for the use of automated tools that have the potential to help developers with
-this issue.
+and Session Management} issues, \emph{Memory Leaks} and \emph{Denial-of-Service}
+attacks. Within the implications of our project, we highlight the need for tools 
+and documentation to help developers adopt security best practices.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -117,18 +116,16 @@ Security, Software Maintenance, Open-Source Software
 
 \section{Introduction}
 
-Unmaintainable code is hard to test, analyse and re-use.
+Unmaintainable code is hard to test, analyse and re-use. It is hard to find bugs and vulnerabilities in high complex code, this some developers then to forget maintainability. Therefore, we want to bring awareness for the fact that developers need to write maintainable code to prevent the introduction of new vulnerabilities in the code or other defects.
 
-It is hard to find bugs and vulnerabilities in high complex code, this some developers then to forget maintainability. Therefore, we want to bring awareness for the fact that developers need to write maintainable code to prevent the introduction of vulnerabilities in the code.
+Vulnerabilities in open-source software are similar to exploits found in closed products. These are portions of code that were developed with problems or features that attackers can take advantage to carry out harmful actions. In some cases, these issues are the advantage that hackers need to take services down or even get remote access to others systems. However, whereas closed software is written by developers who are following the same organization rules, open-source is less restrictive and more diverse since it depends on the community who writes, fixes, and generally maintains the codebase.
 
-The international standard ISO/IEC 25010:2011 breaks down software quality into eight characteristics: maintainability, functional suitability, performance efficiency, compatibility, usability, reliability, security, and portability. This paper focuses solely on maintainability.
+In 2011, the International Organization for Standardization (ISO) issued an update for software product quality ISO/IEC 25010~\cite{iso:2011} considering \emph{Security} as one of the main software product quality characteristics. In this work, we are concerned about the impact that fixing vulnerabilities may have in the maintainability of open-source software. Are developers affecting software maintainability when trying to improve software safety? We suspect that some of those fixes may have a negative impact in the software maintainability and possibly even be the cause of the introduction of new vulnerabilities. 
 
+ISO describes software maintainability as “the degree of effectiveness and efficiency with which a software product or system can be modified to improve it, correct it or adapt it to changes in environment, and in requirements” on software quality ISO/IEC 25010. ISO does not provide any specific guidelines or formula to calculate maintainability. Thus, we resort on Software Improvement Group’s web-based source code analysis service Better Code Hub (BCH)~\cite{Visser:2016:OREILLY} to compute the maintainability of a given project. BCH compiles the ISO/IEC 25010 into a set of 10 guidelines that are the base of BCH's evaluation. Two examples of guidelines used by BCH are the \emph{Write Simple Units of Code} based on the McCabe Complexity~\cite{1702388} and \emph{Keep your Codebase Small} based on the idea that smaller codebases are easier to maintain and less sensitive to defects~\cite{Visser:2016:OREILLY}.
 
-
-In 2011, ISO isued an update for software product quality ISO/IEC 25010~\cite{iso:2011}.
-
-% Our empirical study finds evidence that energy efficiency- oriented code changes have a negative impact on code main- tainability. In particular, careful thinking is required to im- plement the energy patterns Power Save Mode and Wakelock Addition. Furthermore, we show that energy patterns are more likely to require maintenance than regular code changes.
-
+In this paper, we present the results of our analysis on the maintainability of 607 security changes collected from open-source software. The main contributions of the present work is an empirical study on the impact of security changes on software maintainability and what patterns need more attention. This empirical study exhibits proof that changes applied in the codebase to fix vulnerabilities affect code maintainability. Especially, for refactorings that address \emph{Broken Authentication and Session Management} issues, \emph{Memory Leaks} and \emph{Denial-of-Service} attacks. With this study, we intend to highlight the need for tools and documentation to help developers 
+adopt security best practices.
 
 This paper is structured as follows: section \ref{sec:motivation} introduces an example of a security refactoring of a known vulnerability found in
 OpenSSL\footnote{Repository available at
@@ -176,8 +173,6 @@ https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd
 // [snip]
 
 - unsigned long frag_len = msg_hdr->frag_len, max_len; /*!\annotation{lst:func3}!*/
-
-
 - if((msg_hdr->frag_off+frag_len) > msg_hdr->msg_len)
 -    goto err;
 
@@ -244,7 +239,7 @@ return the maximum length.
 \ref{lst:func3} Replaced by attribution in line $23$.
 
 \ref{lst:func5} and \ref{lst:func4} add the check to ensure that the message
-length in never higher than the maxiumum allowed by the DTSL protocol in
+length is never higher than the maxiumum allowed by the DTSL protocol in
 different functions.
 
 Although limiting the size of a handshake message seems an elementary problem to
@@ -413,6 +408,24 @@ the dataset containing less than $20$ instances):
 	One of the main causes of DoS attacks.
 \end{itemize}
 
+\begin{table*}[h]
+	\centering
+	\caption{Descriptive statistics of the dataset projects}
+\begin{tabular}{@{}lllllllllll@{}}
+\toprule
+      & Forks   & Stars   & Watchers & Contributors & Commits  & Branches & Releases & Size      & Issues & Pull Requests  \\ \midrule
+mean  & 1763.52 & 5448.74 & 401.37   & 153.33       & 14834.17 & 45.17    & 129.45   & 122973.24 & 3768.97   & 1941.61 \\
+std   & 2434.03 & 6215.09 & 486.60   & 123.68       & 22234.46 & 150.15   & 189.93   & 209732.51 & 5933.16   & 3603.31 \\
+min   & 1       & 3       & 1        & 0            & 103      & 1        & 0        & 108       & 0         & 0       \\
+25\%  & 391.50  & 1581    & 117.25   & 49           & 1440.50  & 4        & 19       & 8466.75   & 313.75    & 143.25  \\
+median  & 838.50  & 2836.50 & 248      & 99           & 5504.50  & 9        & 59       & 37372.50  & 1792.50   & 650     \\
+75\%  & 2155    & 6828.50 & 459.50   & 261          & 18579.25 & 20       & 142.75   & 117699.50 & 4087.75   & 1907.25 \\
+max   & 16366   & 31841   & 3446     & 413          & 114378   & 1227     & 1114     & 995790    & 33970     & 19329   \\
+Total & 165771  & 512182  & 37729    & 14413        & 1394412  & 4246     & 12168    & 11559485  & 354283    & 182511  \\ \bottomrule
+\end{tabular}
+\label{tab:dataset}
+\end{table*}
+
 The dataset contemplates security flaws for more than 13 different languages
 being PHP (39\%) and C (24\%) the most prevalent ones; see Figure \ref{fig:lang}.
 To classify the applications in the dataset, we use a taxonomy for open-source
@@ -432,23 +445,7 @@ branches, number of releases,  size (cf. GitHub it is the size of the whole
 repository, including all of its history, in kilobytes), number of issues and pull
 requests.
 
-\begin{table*}[h]
-	\centering
-	\caption{Descriptive statistics of the dataset projects}
-\begin{tabular}{@{}lllllllllll@{}}
-\toprule
-      & Forks   & Stars   & Watchers & Contributors & Commits  & Branches & Releases & Size      & Issues & Pull Requests  \\ \midrule
-mean  & 1763.52 & 5448.74 & 401.37   & 153.33       & 14834.17 & 45.17    & 129.45   & 122973.24 & 3768.97   & 1941.61 \\
-std   & 2434.03 & 6215.09 & 486.60   & 123.68       & 22234.46 & 150.15   & 189.93   & 209732.51 & 5933.16   & 3603.31 \\
-min   & 1       & 3       & 1        & 0            & 103      & 1        & 0        & 108       & 0         & 0       \\
-25\%  & 391.50  & 1581    & 117.25   & 49           & 1440.50  & 4        & 19       & 8466.75   & 313.75    & 143.25  \\
-median  & 838.50  & 2836.50 & 248      & 99           & 5504.50  & 9        & 59       & 37372.50  & 1792.50   & 650     \\
-75\%  & 2155    & 6828.50 & 459.50   & 261          & 18579.25 & 20       & 142.75   & 117699.50 & 4087.75   & 1907.25 \\
-max   & 16366   & 31841   & 3446     & 413          & 114378   & 1227     & 1114     & 995790    & 33970     & 19329   \\
-Total & 165771  & 512182  & 37729    & 14413        & 1394412  & 4246     & 12168    & 11559485  & 354283    & 182511  \\ \bottomrule
-\end{tabular}
-\label{tab:dataset}
-\end{table*}
+
 %
 \subsection{Security vs. Baseline Commits}
 %
@@ -473,7 +470,26 @@ each project. Table \ref{tab:guidelines} presents the 10 guidelines
 proposed by BCH's authors for delivering software that is easy to maintain
 \cite{Visser:2016:OREILLY}.
 
-\begin{table}[H]
+All guidelines are computed in the same evaluation by BCH. During each guideline
+evaluation, the tool determines the compliance towards one guideline by
+establishing limits for the percentage of code allowed to be in each of the $4$
+risk severity levels (\emph{low risk}, \emph{medium risk}, \emph{high risk} and
+\emph{very high risk}). If the project does not violate the thresholds, then it
+is compliant with the guideline. These thresholds are calibrated by BCH using
+their own data/experience --- open-source and closed software systems. If a
+project is compliant with a guideline, it means that it is at least $65\%$
+better than the software used by BCH to calculate the thresholds\footnote{Check
+the answer to \emph{How can I adjust the threshold for passing/not passing a
+guideline?} at https://bettercodehub.com/docs/faq (Accessed on \today{})}. 
+
+Figure \ref{fig:bchrep} shows an example of the  guidelines report
+provided by BCH for a project after finishing its evaluation. These are the
+results after performing the OpenSSL CVE-2014-3506 vulnerability refactoring -
+motivation example discussed, previously, in section \ref{sec:motivation}. This
+version of OpenSSL only complies with 1 out of 10 guidelines, the \emph{Write
+Clean Code} guideline.
+
+\begin{table}[h]
 	\caption{Guidelines to produce maintainable code}
 \begin{tabular}{L{2.5cm}L{5.5cm}}
 
@@ -495,25 +511,8 @@ proposed by BCH's authors for delivering software that is easy to maintain
 \label{tab:guidelines}
 \end{table}
 
-All guidelines are computed in the same evaluation by BCH. During each guideline
-evaluation, the tool determines the compliance towards one guideline by
-establishing limits for the percentage of code allowed to be in each of the $4$
-risk severity levels (\emph{low risk}, \emph{medium risk}, \emph{high risk} and
-\emph{very high risk}). If the project does not violate the thresholds, then it
-is compliant with the guideline. These thresholds are calibrated by BCH using
-their own data/experience --- open-source and closed software systems. If a
-project is compliant with a guideline, it means that it is at least $65\%$
-better than the software used by BCH to calculate the thresholds\footnote{Check
-the answer to \emph{How can I adjust the threshold for passing/not passing a
-guideline?} at https://bettercodehub.com/docs/faq (Accessed on \today{})}.
-Figure \ref{fig:bchrep} shows an example of the  guidelines report
-provided by BCH for a project after finishing its evaluation. These are the
-results after performing the OpenSSL CVE-2014-3506 vulnerability refactoring -
-motivation example discussed, previously, in section \ref{sec:motivation}. This
-version of OpenSSL only complies with 1 out of 10 guidelines, the \emph{Write
-Clean Code} guideline.
 
-\begin{figure}[]
+\begin{figure}[h]
  	\centering 	\includegraphics[width=0.45\textwidth]{figures/bch_report.png}
  	\caption{Maintainability report of OpenSSL CVE-2014-3506 vulnerability
 refactoring for the guideline \emph{Write Simple Units of Code} provided by
@@ -536,7 +535,7 @@ not comply with medium (\emph{above 5}), high (\emph{above 10}) and very high
 (\emph{above 25}) severity levels. In the bar, there are marks that pinpoint the
 compliance thresholds for each severity level. \Sof{@todo: Adress thresholds confusion}
 
-\begin{figure}[H]
+\begin{figure}[h]
  	\centering 	\includegraphics[width=0.49\textwidth]{figures/commit.pdf}
  	\caption{Maintainability difference for security commits}
 	\label{fig:commit}
