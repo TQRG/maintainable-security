@@ -139,29 +139,80 @@ penetrate systems and exploit their resources.
 
 % High complex code is hard to test, thus being more difficult to find bugs and vulnerabilities. Therefore, writing maitainable code prevent the introduction of vulnerabilities in the code.
 
+In 2011, the International Organization for Standardization (ISO) issued an
+update for software product quality ISO/IEC 25010~\cite{iso:2011} considering
+\emph{Security} as one of the main software product quality characteristics.
+Unmaintainable code is hard to test, analyse and re-use, and thus more difficult
+to find vulnerabilities and defects. Therefore, writing maitainable code
+prevents the introduction of vulnerabilities in the code. In this work, we are
+concerned about the impact that fixing vulnerabilities may have in the
+maintainability of open-source software. Are developers affecting software
+maintainability when trying to improve software safety? We suspect that some of
+those fixes may have a negative impact in the software maintainability and
+possibly even be the cause of the introduction of new vulnerabilities.
 
+ISO describes software maintainability as ``the degree of effectiveness and
+efficiency with which a software product or system can be modified to improve
+it, correct it or adapt it to changes in environment, and in requirements'' on
+software quality ISO/IEC 25010. As ISO does not provide any specific guidelines or
+formula to calculate maintainability, we resort on Software Improvement
+Group (SIG)’s web-based source code analysis service Better Code Hub
+(BCH)~\cite{Visser:2016:OREILLY} to compute the maintainability of a given
+project. BCH compiles the ISO/IEC 25010 into a set of 10 guidelines that are the
+base of BCH's evaluation. Two examples of guidelines used by BCH are the
+\emph{Write Simple Units of Code} based on the McCabe Complexity~\cite{1702388}
+and \emph{Keep your Codebase Small} based on the idea that smaller codebases are
+easier to maintain and less sensitive to defects~\cite{Visser:2016:OREILLY}.
+Compliance to the guidelines is derived from the SIG's
+industry benchmark which, according to official sources, consists of over 8
+billion lines of code in more than 180 different technologies. SIG analyzes
+around 15 million lines of code, per week.
 
+The particular subject of this paper is to explore whether there is a trade-off
+between refactoring source code to fix identified vulnerabilities while keeping
+(or even improving) the maintainability of the software system. In other words,
+we are interested in answering the following overarching question
 
-In 2011, the International Organization for Standardization (ISO) issued an update for software product quality ISO/IEC 25010~\cite{iso:2011} considering \emph{Security} as one of the main software product quality characteristics. Unmaintainable code is hard to test, analyse and re-use, and thus more difficult to find vulnerabilities and defects. Therefore, writing maitainable code prevents the introduction of vulnerabilities in the code. In this work, we are concerned about the impact that fixing vulnerabilities may have in the maintainability of open-source software. Are developers affecting software maintainability when trying to improve software safety? We suspect that some of those fixes may have a negative impact in the software maintainability and possibly even be the cause of the introduction of new vulnerabilities.
+\begin{framed}
+\noindent
+Does improving security have a negative impact on code
+maintainability?
+\end{framed}
 
-ISO describes software maintainability as “the degree of effectiveness and efficiency with which a software product or system can be modified to improve it, correct it or adapt it to changes in environment, and in requirements” on software quality ISO/IEC 25010. ISO does not provide any specific guidelines or formula to calculate maintainability. Thus, we resort on Software Improvement Group’s web-based source code analysis service Better Code Hub (BCH)~\cite{Visser:2016:OREILLY} to compute the maintainability of a given project. BCH compiles the ISO/IEC 25010 into a set of 10 guidelines that are the base of BCH's evaluation. Two examples of guidelines used by BCH are the \emph{Write Simple Units of Code} based on the McCabe Complexity~\cite{1702388} and \emph{Keep your Codebase Small} based on the idea that smaller codebases are easier to maintain and less sensitive to defects~\cite{Visser:2016:OREILLY}.
-
-In this paper, we present the results of our analysis on the maintainability of 607 security changes collected from open-source software.
+\noindent
+In this paper, we present the results of our analysis on the maintainability of
+607 security changes collected from open-source software.
 
 The main contributions of the present work is:
 \begin{itemize}
-	\item An empirical study on the impact of security changes on software maintainability and what patterns need more attention.
-	\item A software package with all scripts and data created to perform the empirical evaluation, for reproducibility. Available here: $<url>$.
+	\item An empirical study on the impact of security changes on software
+	maintainability and what patterns need more attention.
+
+  \item An analysis of how likely security-related changes need to be
+  maintained, in comparison to regular commits.
+
+	\item A replication package with all scripts and data created to perform the
+	empirical evaluation, for reproducibility. Available here: $<url>$.
 
 \end{itemize}
 
-This empirical study exhibits proof that changes applied in the codebase to fix vulnerabilities affect code maintainability. Especially, for refactorings that address \emph{Broken Authentication and Session Management} issues, \emph{Memory Leaks} and \emph{Denial-of-Service} attacks. With this study, we intend to highlight the need for tools and documentation to help developers
-adopt security best practices.
+This empirical study exhibits proof that changes applied in the codebase to fix
+vulnerabilities affect code maintainability. Especially, for refactorings that
+address \emph{Broken Authentication and Session Management} issues, \emph{Memory
+Leaks} and \emph{Denial-of-Service} attacks. With this study, we intend to
+highlight the need for tools and documentation to help developers adopt security
+best practices.
 
-This paper is structured as follows: section \ref{sec:motivation} introduces an example of a security refactoring of a known vulnerability found in
-OpenSSL\footnote{Repository available at
-https://github.com/openssl/openssl (Accessed on \today{})} software;
-section \ref{sec:methodology} describes the methodology used to answer the research questions; section \ref{sec:results} presents the results and section \ref{sec:discussion} discusses their implications; section \ref{sec:threats}, threats to the validity of the study are enumerated; section \ref{sec:rw} describres the different work and existing literature in the field of study; and, finally section \ref{sec:conclusions} concludes the main findings and elaborates on future work.
+This paper is structured as follows: section \ref{sec:motivation} introduces an
+example of a security refactoring of a known vulnerability found in
+OpenSSL\footnote{Repository available at https://github.com/openssl/openssl
+(Accessed on \today{})} software; section \ref{sec:methodology} describes the
+methodology used to answer the research questions; section \ref{sec:results}
+presents the results and section \ref{sec:discussion} discusses their
+implications; section \ref{sec:threats}, threats to the validity of the study
+are enumerated; section \ref{sec:rw} describres the different work and existing
+literature in the field of study; and, finally section \ref{sec:conclusions}
+concludes the main findings and elaborates on future work.
 %
 \section{Motivation and Research Questions}\label{sec:motivation}
 %
