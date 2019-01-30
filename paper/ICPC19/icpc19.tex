@@ -151,18 +151,22 @@ maintainability when trying to improve software safety? We suspect that some of
 those fixes may have a negative impact in the software maintainability and
 possibly even be the cause of the introduction of new vulnerabilities.
 
-ISO describes software maintainability as “the degree of effectiveness and
+ISO describes software maintainability as ``the degree of effectiveness and
 efficiency with which a software product or system can be modified to improve
-it, correct it or adapt it to changes in environment, and in requirements” on
-software quality ISO/IEC 25010. ISO does not provide any specific guidelines or
-formula to calculate maintainability. Thus, we resort on Software Improvement
-Group’s web-based source code analysis service Better Code Hub
+it, correct it or adapt it to changes in environment, and in requirements'' on
+software quality ISO/IEC 25010. As ISO does not provide any specific guidelines or
+formula to calculate maintainability, we resort on Software Improvement
+Group (SIG)’s web-based source code analysis service Better Code Hub
 (BCH)~\cite{Visser:2016:OREILLY} to compute the maintainability of a given
 project. BCH compiles the ISO/IEC 25010 into a set of 10 guidelines that are the
 base of BCH's evaluation. Two examples of guidelines used by BCH are the
 \emph{Write Simple Units of Code} based on the McCabe Complexity~\cite{1702388}
 and \emph{Keep your Codebase Small} based on the idea that smaller codebases are
 easier to maintain and less sensitive to defects~\cite{Visser:2016:OREILLY}.
+Compliance to the guidelines is derived from the SIG's
+industry benchmark which, according to official sources, consists of over 8
+billion lines of code in more than 180 different technologies. SIG analyzes
+around 15 million lines of code, per week.
 
 The particular subject of this paper is to explore whether there is a trade-off
 between refactoring source code to fix identified vulnerabilities while keeping
