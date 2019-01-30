@@ -68,7 +68,7 @@
 
 \begin{document}
 
-\title{Security vs. Maintainability: \\ Fixing Vulnerabilities Obfuscates your Code}
+\title{Fixing Vulnerabilities Hinders Maintainability}
 
 \author{
     Anonymou(s) Author(s)
@@ -94,7 +94,21 @@
 \maketitle
 
 \begin{abstract}
-Nowadays, security is an absolutely necessary requirement for the production of quality software. However, there is still a considerable amount of zero-day vulnerabilities published and fixed almost every week. The authors suspect that when developers address these vulnerabilities on their codebases, they actually affect the maintainability of software and even introduce more vulnerabilities. This paper evaluates the impact of refactorings to improve security on the maintainability of open-source software. Maintainability is measured based on the \emph{Better Code Hub}'s model of 10 guidelines for both before and after security commits for a dataset including 607 security commits. Results show that fixing software vulnerabilities harms the maintainability of open-source software. Specially for refactorings that deal with \emph{Broken Authentication and Session Management}, \emph{Memory Leaks} and \emph{Denial-of-Service} attacks. Therefore, it is necessary to bring awareness for coding good practices and for the use of automated tools that have the potential to help developers with this issue.
+Security is a requirement of utmost importance to produce software with high
+quality. However, there is still a considerable amount of zero-day
+vulnerabilities being discovered, and fixed, almost weekly. We suspect that when
+developers address these vulnerabilities on their codebases, they actually
+affect the maintainability of software, potentially introducing other
+vulnerabilities. This paper evaluates the impact of refactorings to improve
+security on the maintainability of open-source software. Maintainability is
+measured based on the \emph{Better Code Hub}'s model of 10 guidelines using a
+dataset including $607$ security commits. Results show that fixing software
+vulnerabilities hinders the maintainability of open-source software. This is
+particularly the case for refactorings that address \emph{Broken Authentication
+and Session Management}, \emph{Memory Leaks} and \emph{Denial-of-Service}
+attacks. Therefore, it is necessary to bring awareness for coding practices and
+for the use of automated tools that have the potential to help developers with
+this issue.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -462,7 +476,7 @@ proposed by BCH's authors for delivering software that is easy to maintain
 \begin{table}[H]
 	\caption{Guidelines to produce maintainable code}
 \begin{tabular}{L{2.5cm}L{5.5cm}}
-	
+
 \toprule
 \textbf{10 Guidelines} & \textbf{Description}\\
 \midrule
