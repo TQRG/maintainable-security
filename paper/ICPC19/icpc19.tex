@@ -94,17 +94,7 @@
 \maketitle
 
 \begin{abstract}
-  Security is a crucial non-functionality requirement for software applications.
-  However, building secure software is far from trivial as developers lack both
-  the knowledge and tools to effectively address this concern. In this paper, we
-  study the impact of changes to improve security on the maintainability of several
-  open source applications. Using a dataset containing 607 security-oriented
-  commits, we measure maintainability --- as computed by the Software Improvement
-  Group's web-based source code analysis service \emph{Better Code Hub} (BCH) ---
-  before and after the security refactoring. Results show that making software
-  more secure comes at a cost on maintainability. This is particularly evident
-  in refactorings to deal with \emph{Broken Authentication and Session Management}, 
-  \emph{Denial-of-Service} attacks and \emph{Memory Leaks}.
+Nowadays, security is an absolutely necessary requirement for the production of quality software. However, there is still a considerable amount of zero-day vulnerabilities published and fixed almost every week. The authors suspect that when developers address these vulnerabilities on their codebases, they actually affect the maintainability of software and even introduce more vulnerabilities. This paper evaluates the impact of refactorings to improve security on the maintainability of open-source software. Maintainability is measured based on the \emph{Better Code Hub}'s model of 10 guidelines for both before and after security commits for a dataset including 607 security commits. Results show that fixing software vulnerabilities harms the maintainability of open-source software. Specially for refactorings that deal with \emph{Broken Authentication and Session Management}, \emph{Memory Leaks} and \emph{Denial-of-Service} attacks. Therefore, it is necessary to bring awareness for coding good practices and for the use of automated tools that have the potential to help developers with this issue.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -123,18 +113,14 @@ The international standard ISO/IEC 25010:2011 breaks down software quality into 
 
 In 2011, ISO isued an update for software product quality ISO/IEC 25010~\cite{iso:2011}.
 
+% Our empirical study finds evidence that energy efficiency- oriented code changes have a negative impact on code main- tainability. In particular, careful thinking is required to im- plement the energy patterns Power Save Mode and Wakelock Addition. Furthermore, we show that energy patterns are more likely to require maintenance than regular code changes.
 
-This paper is structured as follows: section \ref{sec:motivation} introduces an
-example of a security refactoring of a known vulnerability found in
+
+This paper is structured as follows: section \ref{sec:motivation} introduces an example of a security refactoring of a known vulnerability found in
 OpenSSL\footnote{Repository available at
 https://github.com/openssl/openssl (Accessed on \today{})} software;
 section \ref{sec:methodology} describes the methodology used to answer the
-research questions; section \ref{sec:results} presents the results and section
-\ref{sec:discussion} discusses their implications; section \ref{sec:threats},
-threats to the validity of the study are enumerated; section \ref{sec:rw}
-describres the different work and existing literature in the field of study;
-and, finally section \ref{sec:conclusions} concludes the main findings and
-elaborates on future work.
+research questions; section \ref{sec:results} presents the results and section \ref{sec:discussion} discusses their implications; section \ref{sec:threats}, threats to the validity of the study are enumerated; section \ref{sec:rw} describres the different work and existing literature in the field of study; and, finally section \ref{sec:conclusions} concludes the main findings and elaborates on future work.
 %
 \section{Motivation and Research Questions}\label{sec:motivation}
 %
@@ -513,7 +499,7 @@ motivation example discussed, previously, in section \ref{sec:motivation}. This
 version of OpenSSL only complies with 1 out of 10 guidelines, the \emph{Write
 Clean Code} guideline.
 
-\begin{figure}[h]
+\begin{figure}[]
  	\centering 	\includegraphics[width=0.45\textwidth]{figures/bch_report.png}
  	\caption{Maintainability report of OpenSSL CVE-2014-3506 vulnerability
 refactoring for the guideline \emph{Write Simple Units of Code} provided by
