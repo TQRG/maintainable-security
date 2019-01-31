@@ -131,6 +131,8 @@ revealed\footnote{https://thehackernews.com/2019/01/apple-facetime-privacy-hack.
 (Accessed on \today{})}. Callers could see and hear others without them picking up the call. These vulnerabilities are gateways for attackers to
 penetrate systems and exploit their resources. 
 
+Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. 
+
 
 In 2011, the International Organization for Standardization (ISO) issued an
 update for software product quality ISO/IEC 25010~\cite{iso:2011} considering
@@ -710,13 +712,24 @@ reduce maintainability.
 %
 \section{Results}\label{sec:results}
 
-In total, this study evaluates $607$ security and baseline commits from 94 different open-source projects distributed among 5 different main types of software, Figure \ref{fig:domain}. The following section presents the results obtained for each research question.
+In total, this study evaluates $607$ security and baseline commits from 94 
+different open-source projects distributed among 5 different main types of 
+software, Figure \ref{fig:domain}. The following section presents the results 
+obtained for each research question.
 
 \begin{framed}
-\textit{\textbf{RQ1} What is the impact of security refactorings on the maintainability of open-source software?}
+\textit{\textbf{RQ1} What is the impact of security refactorings on the 
+maintainability of open-source software?}
 \end{framed}
 
-The impact of security and baseline commits in the maintainability of open-source software is presented in Figure \ref{fig:secvsreg}. For each type of change, three types of impact of refactorings in the software maintainability are presented: \emph{negative}, maintainability decreases (\emph{red}); \emph{none}, maintainability stays the same (\emph{yellow}); and, \emph{positive}, maintainability increases (\emph{green}). In front of each group, it is presented the mean ($\overline{x}$) and median ({$\widetilde{x}$) of the maintainability difference and the p-value resulting from the Wilcoxon signed-rank test.
+The impact of security and baseline commits in the maintainability of 
+open-source software is presented in Figure \ref{fig:secvsreg}. For each type 
+of change, three types of impact of refactorings in the software maintainability 
+are presented: \emph{negative}, maintainability decreases (\emph{red}); \emph{none}, 
+maintainability stays the same (\emph{yellow}); and, \emph{positive}, maintainability 
+increases (\emph{green}). In front of each group, it is presented the mean ($\overline{x}$) 
+and median ({$\widetilde{x}$) of the maintainability difference and the p-value 
+resulting from the Wilcoxon signed-rank test.
 
 \begin{figure}[h]
  	\centering 	\includegraphics[width=0.5\textwidth]{figures/maintainability.pdf}
@@ -724,9 +737,20 @@ The impact of security and baseline commits in the maintainability of open-sourc
 	\label{fig:secvsreg}
 \end{figure}
 
-Regarding security commits results, we observe that maintainability decreases in 40.20\% (244), increases in 29.33\% (178) and stays the same in 30.5\% (185) of the cases after security refactorings being applied. The resulting p-value of the Wilcoxon signed-rank test is $1.21$x$10^{-10}$. Since the p-value is below the significance level of $0.05$, it is fair to state that \emph{security refactorings have a negative impact in the maintainability of open-source software}.
+Regarding security commits results, we observe that maintainability decreases 
+in 40.20\% (244), stays equal in 30.5\% (185) and increases in 29.33\% (178)  
+of the cases after security refactorings being applied. The resulting p-value 
+of the Wilcoxon signed-rank test is $1.21$x$10^{-10}$. Since the p-value is below 
+the significance level of $0.05$, it is reasonable to affirm that \emph{security 
+refactorings have a negative impact in the maintainability of open-source software}.
 
-For regular commits, we also observe that maintainability decreases in 41.35\% (251) of the cases after regular refactorings being applyed. But in contrast to security commits, it increases in 58.16\% (353) and stays the same in 0.5\% (3). The resulting p-value of the Wilcoxon signed-rank test is $1.54$x$10^{-6}$. Since the p-value is below the significance level of $0.05$, it is fair to state that \emph{regular refactorings have a positive impact in the maintainability of open-source software}.
+For regular commits, we also observe that maintainability decreases in 41.35\% 
+(251) of the cases after regular refactorings being applyed. But in contrast 
+to security commits, it increases in 58.16\% (353) and stays equal in 0.5\% 
+(3) of the cases. The resulting p-value of the Wilcoxon signed-rank test is 
+$1.54$x$10^{-6}$. Since the p-value is below the significance level of $0.05$, 
+it is reasonable to affirm that \emph{regular refactorings have a positive 
+impact in the maintainability of open-source software}.
 
 \begin{figure}[h]
  	\centering
@@ -734,6 +758,23 @@ For regular commits, we also observe that maintainability decreases in 41.35\% (
  	\caption{Maintainability difference by language after security refactorings}
 	\label{fig:lang}
 \end{figure}
+
+In this study, we also evaluated the impact of each programming language on the 
+maintainability of open-source software, Figure \ref{fig:lang}. Although the
+dataset contains security refactorings for more than $13$ languages, we only
+present the results for \emph{Java}, \emph{C}, \emph{Ruby} and \emph{PHP} because
+one of the requirements of the Wilcoxon signed-rank test is that the input sample
+has to have more than $20$ measurements. The other languages were integrated in the
+\emph{Others} set. The results of the Wilcoxon signed-rank test by pattern returned 
+statistical evidence which supports that the maintainability of open-source software 
+decreases for security refactorings in 3 different languages: \emph{C} 
+(p = $5.72$x$10^{-9}$), Ruby (p = 0.057) and PHP (p = $3.54$x$10^{-6}$). The results 
+also provide statistical significance for when security refactorings are performed
+in \emph{Java} (p = $3.61$x$10^{-2}$). \emph{Python} and the other languages 
+that integrate the \emph{Others} set contain more cases where the maintainability
+increases. However, the results obtained for these patterns are not statistically 
+significant.
+
 
 
 \begin{framed}
@@ -844,7 +885,6 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
 
 
 \section{Threats to Validity}\label{sec:threats}
