@@ -932,6 +932,30 @@ All the security commits are described in English. This approach discards securi
 
 \section{Conclusion and Future Work}\label{sec:conclusions}
 
+This work presents an empirical study on the impact of 607 security refactorings on
+the maintainability of 94 open-source projects. We leveraged Better Code Hub reports
+of each project version to calculate maintainability based on a model proposed in 
+previous work.
+
+Security refactorings significantly affect the software maintainability of open-source 
+software, i.e., developers hinder maintainability when fixing vulnerabilities. We found
+this evidence in 40.2\% of the studied cases. Regarding regular commits, it seems that
+overall maintainability increases (50.16\%). However, there is still a very considerable amout of
+cases that harm maintaniability (41.35\%). This study also exhibits evidence that some patterns
+need more attention than others. Broken Autentication issues, Denial-of-Service attacks 
+and Memory Leaks endure maintainability in 55.3\%, 51.3\% and 47.5\%, respectively.
+
+Following the implications of our work, we draw attention for the need of secure security frameworks,
+code best practices documentation to produce safe and maintainable code, proper authorization 
+mechanisms design and implementation, better tools to introduce in the CI/CD pipeline to help software
+maintenance and new or improved programming languages to allow developers to easily implement safety in
+their software without endangering maintainability.
+
+As future work, this study may be extended in many directions such as analyze which guidelines are
+more likely to affect security refactorings; evaluate the impact of programming languages of the
+maintainability of each refactoring pattern; investigate if there is any correlation between 
+software maintainability and projects popularity; expand our methodology with other software quality
+properties; and, validate these findings with closed or private software. 
 
 
 \section*{Acknowledgment}\label{sec:ack}
