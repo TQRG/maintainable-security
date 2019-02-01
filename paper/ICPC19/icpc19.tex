@@ -131,7 +131,7 @@ revealed\footnote{https://thehackernews.com/2019/01/apple-facetime-privacy-hack.
 (Accessed on \today{})}. Callers could see and hear others without them picking up the call. These vulnerabilities are gateways for attackers to
 penetrate systems and exploit their resources. 
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. 
+\Sof{Models} Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions. 
 
 
 In 2011, the International Organization for Standardization (ISO) issued an
@@ -573,16 +573,26 @@ Clean Code} guideline.
 \toprule
 \textbf{10 Guidelines} & \textbf{Description}\\
 \midrule
-\textbf{Write Short Units of Code} & Limit code units to 15 LOCs because smaller units are easier to understand, reuse and test them\\\midrule
-\textbf{Write Simple Units of Code} & Limit branch points to 4 per unit because it makes units easier to test and modify \\\midrule
-\textbf{Write Code Once} & Do not copy code because bugs tend to replicate at multiple places (inefficient and error-prone)\\\midrule
-\textbf{Keep Unit Interfaces Small} & Limit the number of parameters to at most 4 because it makes units easier to understand and reuse\\\midrule
-\textbf{Separate Concerns in Modules} & Avoid large modules because changes in loosely coupled databases are easier to oversee and execute\\\midrule
-\textbf{Couple Architecture Components Loosely} & Minimize the amount of code within modules that is exposed to modules in other components\\\midrule
-\textbf{Keep Architecture Components Balanced} & Balancing the number of components ease locating code and allow for isolated maintenance\\\midrule
-\textbf{Keep your Codebase Small} & Reduce and avoid the system size because small products are easier to manage and maintain\\\midrule
-\textbf{Automate Tests} & Test your codebase because it makes development predictable and less risky\\\midrule
-\textbf{Write Clean Code} & Avoid producing software with code smells because it is more likely to be maintainable in the future\\
+\textbf{Write Short Units of Code} & Limit code units to 15 LOCs because smaller
+ units are easier to understand, reuse and test them\\\midrule
+\textbf{Write Simple Units of Code} & Limit branch points to 4 per unit because 
+it makes units easier to test and modify \\\midrule
+\textbf{Write Code Once} & Do not copy code because bugs tend to replicate at 
+multiple places (inefficient and error-prone)\\\midrule
+\textbf{Keep Unit Interfaces Small} & Limit the number of parameters to at most 
+4 because it makes units easier to understand and reuse\\\midrule
+\textbf{Separate Concerns in Modules} & Avoid large modules because changes in 
+loosely coupled databases are easier to oversee and execute\\\midrule
+\textbf{Couple Architecture Components Loosely} & Minimize the amount of code 
+within modules that is exposed to modules in other components\\\midrule
+\textbf{Keep Architecture Components Balanced} & Balancing the number of 
+components ease locating code and allow for isolated maintenance\\\midrule
+\textbf{Keep your Codebase Small} & Reduce and avoid the system size because 
+small products are easier to manage and maintain\\\midrule
+\textbf{Automate Tests} & Test your codebase because it makes development 
+predictable and less risky\\\midrule
+\textbf{Write Clean Code} & Avoid producing software with code smells because 
+it is more likely to be maintainable in the future\\
 \bottomrule
 \end{tabular}
 \label{tab:guidelines}
@@ -595,7 +605,7 @@ Clean Code} guideline.
 refactoring for the guideline \emph{Write Simple Units of Code} provided by
 \emph{Better Code Hub}. This version of OpenSSL does not comply with the
 guideline in the example since the bars do not reach the threshold points. This
-example only complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean Code}).}
+example only complies with $\frac{1}{10}$ guidelines (\emph{Write Clean Code}).}
 	\label{fig:bchrep}
 \end{figure}
 
@@ -707,8 +717,6 @@ difference is zero \cite{10.2307/2282543}. To understand the effect-size, as
 advocated by the Common-language effect sizes \cite{graw:1992}, we compute the
 mean difference, the median of the difference, and the percentage of cases that
 reduce maintainability.
-
-
 %
 \section{Results}\label{sec:results}
 
@@ -721,6 +729,7 @@ obtained for each research question.
 \textit{\textbf{RQ1} What is the impact of security refactorings on the 
 maintainability of open-source software?}
 \end{framed}
+
 
 The impact of security and baseline commits in the maintainability of 
 open-source software is presented in Figure \ref{fig:secvsreg}. For each type 
@@ -756,11 +765,11 @@ impact in the maintainability of open-source software}.
  	\centering
  	\includegraphics[width=0.55\textwidth]{figures/language.pdf}
  	\caption{Maintainability difference by language after security refactorings}
-	\label{fig:lang}
+	\label{fig:lang_main}
 \end{figure}
 
 In this study, we also evaluated the impact of each programming language on the 
-maintainability of open-source software, Figure \ref{fig:lang}. Although the
+maintainability of open-source software, Figure \ref{fig:lang_main}. Although the
 dataset contains security refactorings for more than $13$ languages, we only
 present the results for \emph{Java}, \emph{C}, \emph{Ruby} and \emph{PHP} because
 one of the requirements of the Wilcoxon signed-rank test is that the input sample
@@ -778,17 +787,47 @@ significant.
 
 
 \begin{framed}
-\textit{\textbf{RQ2} Which patterns of security refactorings are more likely to affect open-source software maintainability?}
+\textit{\textbf{RQ2} Which patterns of security refactorings are more likely to 
+affect open-source software maintainability?}
 \end{framed}
 
-The impact of each type of security refactoring on the maintainability of open-source software is presented in Figure \ref{fig:pat}. The results of the Wilcoxon signed-rank test by pattern returned statistical evidence which supports that the maintainability of open-source software decreases for 4 different patterns: Broken Autentication (p = 0.018), Denial-of-Service (p = 0.029), Memory Leak (p = 0.009) and Miscellaneous (p = $3.07$x$10^{-4}$). The results also returned statistical significance that evidence that maintainability is more likely to not suffer differences for open-source software after removing Components with Known Vulnerabilities (p = $7.96$x$10^{-4}$) and fixing Cross-Site Scripting Vulnerabilities (p = 0.001). Injection and Cross-Site Request Forgery produced more cases where the refactorings had a negative impact in the maintainability. However, the results obtained for these patterns are not statistically significant.
+The impact of each type of security refactoring on the maintainability of 
+open-source software is presented in Figure \ref{fig:pat}. The results of the 
+Wilcoxon signed-rank test by pattern returned statistical evidence which 
+supports that the maintainability of open-source software decreases for 4 
+different patterns: Broken Autentication (p = 0.018), Denial-of-Service 
+(p = 0.029), Memory Leak (p = 0.009) and Miscellaneous (p = $3.07$x$10^{-4}$). 
+The results also returned statistical significance that evidence that maintainability
+is more likely to not suffer differences for open-source software after removing 
+Components with Known Vulnerabilities (p = $7.96$x$10^{-4}$) and fixing Cross-Site 
+Scripting Vulnerabilities (p = 0.001). Injection and Cross-Site Request Forgery 
+produced more cases where the refactorings had a negative impact in the maintainability. 
+However, the results obtained for these patterns are not statistically significant.
 
-Projects with Broken Authentication flaws are the most affected ones by security refactorings. 55.3\% (21) of the refactorings had a negative impact in the maintainability while 35\% (11) had a positive impact and only 13.8\% (6) did not suffer any change. The results also show that fixing memory leaks affects the maintainability of 51.3\% (41) of the cases and leaves only 13.8\% (11) of the cases unaffected. 35\% (28) are affected positively. Refactoring vulnerabilities that allow denial-of-service attacks (e.g., CVE-2014-3506) has a negative impact of 47.5\% (19) in the maintainability of open-source software. 30.0\% (12) of the cases exhibit maintainability improvement while 22.5\% (9) show that overall maintainability does not suffer any change. Miscellaneous refactorings pattern integrates several types of security flaws whose impact is of 43.1\% (84) negative in the maintainability of open-source sofware. 31.8\% (62) of the cases do not exhibit any change in maintainability and 25.1\% (49) of cases have a positive impact on the maintainability of open-source software.
+Projects with Broken Authentication flaws are the most affected ones by security 
+refactorings. 55.3\% (21) of the refactorings had a negative impact in the maintainability 
+while 35\% (11) had a positive impact and only 13.8\% (6) did not suffer any 
+change. The results also show that fixing memory leaks affects the maintainability
+of 51.3\% (41) of the cases and leaves only 13.8\% (11) of the cases unaffected. 
+In 35\% (28) of the cases, maintainability increased. Refactoring vulnerabilities 
+that allow denial-of-service attacks (e.g., CVE-2014-3506) has a negative impact 
+of 47.5\% (19) in the maintainability of open-source software. 30.0\% (12) of 
+the cases exhibit maintainability improvement while 22.5\% (9) show that overall 
+maintainability does not suffer any change. Miscellaneous refactorings pattern 
+integrates several types of security flaws whose impact is of 43.1\% (84) negative 
+in the maintainability of open-source sofware. 31.8\% (62) of the cases do not 
+exhibit any change in maintainability and 25.1\% (49) of cases have a positive 
+impact on the maintainability of open-source software.
 
-It is also important to notice that overall the maintainability of open-source software is not affected by Cross-Site Scripting vulnerabilities and by Using Components with Know Vulnerabilities. Cross-Site Scripting does not suffer any decrease in the maintainability of 55.3\% (63) of cases and 21.1\% (24) have a positive effect on it. Only 23.7\% (27) of the cases hinder the software maintainability. From 21 cases evaluated for Using Componentes with Known Vulnerabilities, only 4.8\% (1) has a positive effect in the maintainability of software. 14.3\% (3) harms maintainability software and 81\% has no effect in the maintainability.
-
-
-
+It is also important to notice that overall the maintainability of open-source 
+software is not affected by Cross-Site Scripting vulnerabilities and by Using 
+Components with Know Vulnerabilities. Cross-Site Scripting does not suffer any 
+decrease in the maintainability of 55.3\% (63) of cases and 21.1\% (24) have a 
+positive effect on it. Only 23.7\% (27) of the cases hinder the software 
+maintainability. From 21 cases evaluated for Using Componentes with Known 
+Vulnerabilities, only 4.8\% (1) has a positive effect in the maintainability 
+of software. 14.3\% (3) harms maintainability software and 81\% has no effect 
+in the maintainability.
 
 \begin{figure}[h]
  	\centering
@@ -797,94 +836,64 @@ It is also important to notice that overall the maintainability of open-source s
 	\label{fig:pat}
 \end{figure}
 
-
-
 \section{Discussion}\label{sec:discussion}
 
 In this section, we discuss the results and answer the proposed research questions.
 
 \begin{framed}
-\textit{\textbf{RQ1} What is the impact of security refactorings on the maintainability of open-source software?}
+\textit{\textbf{RQ1} What is the impact of security refactorings on the maintainability 
+of open-source software?}
 \end{framed}
 
 \textbf{\textit{Security refactorings harm the maintainability of open-source software.}}
 
-40.2\% of the security refactoring have a negative impact on the maintainability of open-source software, Figure \ref{fig:secvsreg}. 
-
-% find work about the struggle to make systems secure
-
-We believe developers should be able to create secure code without affecting 
-the maintainability of their projects. 
-
+40.2\% of the security refactoring have a negative impact on the maintainability 
+of open-source software, Figure \ref{fig:secvsreg}. This raises a new tradeoff when
+developers need to fix vulnerabilities on their projects because they might be affecting 
+the software maintainability or even introducing new vulnerabilities. This study exhibits
+proof that developers may have to reduce maintainability for the sake of safety. We understand 
+that developers should be able to produce secure code without affecting the maintainability of 
+their projects. But there are still some concerns that need to be addressed: 
 \begin{itemize}
-	\item \textbf{Security Frameworks.} The most popular languagues (e.g., Java and c\#) 
-used in the development of enterprise applications provide stable
-frameworks to implement the security requirements and easily prevent some of the
-OWASP TOP 10 vulnerabilities.
-	\item \textbf{Documentation}
-	\item \textbf{Programming Languages}
-	\item \textbf{Proper authorization mechanisms}
-	\item \textbf{Remove dead and duplicated code}
-	\item \textbf{Configurations in files}
-	\item \textbf{Framework manages the session}
+	\item \textbf{Security Frameworks} need to be secure. Unfortunately, there are several 
+	vulnerabilities that stay undisclosed. Thus, developers should not trust them blindly and 
+	check defaults.
+	\item \textbf{Documentation} of software should provide developers with the best practices to implement safe and maintainable software. Unmaintainable code is difficult to test, analyze and re-use.
+	\item \textbf{Proper Authorization Mechanisms} should be designed and implemented. This is
+	one of the most complex security features to implement. Some mechanisms might assist authorization maintenance in long run, such as the combination of \texttt{HTTP} filters with \texttt{Spring Security} annotations.
+	\item \textbf{Deprecated code} should be avoided by developers. They should integrate tools such as BCH on their projects CI/CD pipelines to help them be more aware of the maintainability of their code and issues (e.g., dead and duplicated code). 
+	\item\textbf{Programming Languages} should provide new mechanisms to easily implement security patterns without endangering maintainability.
 	
 \end{itemize}
 
+	
 
-% #1 Security frameworks are your new best friend
-% The most popular software stacks (e.g.: Java and C#) used in the development of enterprise applications provide very good and stable frameworks to implement the security requirements and easily prevent some of the OWASP TOP 10 vulnerabilities. For instance, through a very simple annotation such as @EnableWebSecurity, Spring Security automatically and out of the box, implements mitigations against some of the most common web application vulnerabilities (e.g.: CSRF, XSS, etc.). The essential HTTP headers to prevent certain types of vulnerabilities are added to the requests and validated in the responses (e.g.: same-origin policy for the synchronization token to prevent CSRF).
-%
-% Although these frameworks may require some time to understand and use (the learning curve might be quite steep, sometimes), they have been improving quite a lot in the past few years, facilitating the implementation and maintenance of the security requirements.
-%
-% Nevertheless, do not blindly trust all the defaults of the frameworks and libraries your application depends on. More than often frameworks rely on weak default encryption algorithms such as DES (encryption standard deprecated since 1998). Thus, always check all the frameworks and libraries defaults, before releasing the application.
-%
-% Besides, some of the least maintained frameworks contain vulnerabilities that never get to be reported. This is because some bugs (this is an interesting discussion about a systemd null pointer dereferencing bug) are not even considered security vulnerabilities in the first place. Notice that categorisation of bugs as security vulnerabilities, is based on the ability of the development team to evaluate the impact of that bug in the security of the application. That’s why updating the libraries and frameworks of your application to their latest version helps improving its overall security. So, stay up-to-date.
-%
-% #2 Deny first, authorize after
-% Broken access control is one of the OWASP TOP 10 vulnerabilities. This is because most applications fail to implement proper authorization mechanisms. Authorization design and implementation is probably one of the most complex security features that exists. Making it right and scalable is challenging and requires the effort of all the team members. Nevertheless, adoption of certain mechanisms and design strategies may facilitate authorization maintenance in the long run:
-%
-% 1. Authorise only afterwards: access must always be denied in the first place, i.e., access must only be granted if the user is actually authorized to perform a certain action. So, access control policies must be checked before processing the request and not when producing the response.
-%
-% 2. Use and abuse of filters: HTTP filters can be used to filter out all the requests before processing them (e.g.: if the user doing the request is authorized to perform the designated action, then the request can be processed). Certain frameworks (e.g.: Spring Security) even provide a very elegant way of binding the access control policies to certain system functions by means of code annotations in the methods that expose the desired functionalities. In combination with the HTTP filters these annotations provide a very clean and easy to change implementation of the access control mechanisms.
-%
-% 3. Always document what you’re doing: either using role-based access control or a more fine-grained access control model, the functionalities enabled in each roles must be clearly defined and documented. Although, the code should speak for itself, the lack of documentation brings risks for code portability and transferability, specially when considering access control management.
-%
-% #3 Make the IT infrastructure your number one software project
-% A securely developed application is defenseless against an attacker with administrative privileges in the production environment. For instance, the WannaCry ransomware attack was based on an OS level exploit that was fairly easy to protect, just by upgrading the OS version. Nonetheless, it was very problematic because a lot of IT departments tend to disregard the importance and impact of OS security updates.
-%
-% In general, the longer you wait to upgrade, the harder it gets and eventually a system can get ‘un-upgradable’, therefore, unmaintainable.
-% When deploying the application, it is necessary to make sure that all 3rd party components that are part of the production environment can be upgraded or recreated from backup (in case of ransomware) at any point in time. This includes databases and web servers, deployment frameworks, the identity manager, log manager application and alerting system, the operating system, etc.
-%
-% The ‘upgrading is hard’ problem is similar to the ‘releasing is hard’ problem and should be solved the same way: by doing it often.
-% The way to do this is to treat the environment in which your application runs as part of the application and not something separate. As such it should be treated as a software project in itself.
-%
-% #4 Validations should be done in the backend
-% More and more web applications follow a service oriented architecture model, where the backend provides a RESTful API and the front-end is purely implemented in JavaScript (with HTML). Some modern JavaScript frameworks provide out of the box escaping and sanitization functionalities (e.g.: Angular 2 or above). Some developers are led to mistakenly believe that this free-feature, together with type checking the REST parameters (done in the corresponding controller, for instance) is enough to prevent introduction of malicious input in the application. But unfortunately, it is not. As much as the web and security frameworks try to enable security mitigations by default, a lot of effort is still needed from the development team. Therefore, it’s very important to validate all the user input in the backend and filter-out unwanted/invalid inputs.
-%management of the web application.
-%
-% Notice that the fact that in modern frameworks crypto primitives can be defined in a configuration file, makes it much easier and less time consuming, to, for instance, update those primitives when a new attack is discovered. Plus, if the default session manager has a known vulnerability, it is easier to patch the application by updating the library, then doing quick (and perhaps dirty) fixes in custom implementations, that can lead to even more exploits.
-%
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
+We would expect that the negative impact of programming languages on maintainability 
+would be more intense due to the buzz of the last years surrounding the idea that 
+poor design of programming languages and lack of using the best practices lead to 
+more buggy and vulnerable code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. 
+However, Figure \ref{fig:lang_main} shows that only \emph{C} has a negative impact of more than 50\% on 
+software maintainability. We suspect that these values are the result of projects 
+contributions policies. 9 out of 10 projects --- the equivalent to 31.8\% of the commits --- 
+of the top-10 of dataset projects with more contributors have restrict contribution 
+policies regarding code standards. Some examples are the \texttt{laravel/framework}, 
+\texttt{php/php-src}, \texttt{openssl/openssl} and 
+\texttt{cakephp/cakephp}. For instance, \texttt{laravel/framework} requires the 
+\texttt{PSR-2 Standard}\footnote{PSR-2 Standard available at 
+https://www.php-fig.org/psr/psr-2/ (Accessed on \today{}}).
 
 
 \begin{framed}
 \textit{\textbf{RQ2} Which patterns of security refactorings are more likely to affect open-source software maintainability?}
 \end{framed}
 
-\textbf{\textit{Broken Authentication \& Session Management, Denial-of-Service attacks and Memory Leaks and Miscellaneous patterns are more likely to affect open-source software maintainability.}}
+\textbf{\textit{Broken Authentication \& Session Management, Denial-of-Service attacks and Memory Leaks and Miscellaneous patterns are more likely to affect open-source software maintainability.}} Although there are
+a few refactorings that harm software maintainability in the \emph{Cross-Site Scripting} and \emph{Using 
+Components with Know Vulnerabilities}, overall maintainability does not suffer any changes for these patterns.
+For the remaining patterns, \emph{Injection} and \emph{Cross-Site Request Forgery}, results are not statistically
+significant.
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+The impact of a refactoring depends on its complexity, i.e., if the refactoring adds complexity to the codebase it is probably affecting the software maintainability. One evidence of that is the fact of \emph{Cross-Site Scripting} and \emph{Using Components with Know Vulnerabilities} refactorings endure more cases without any impact in the maintainability. Typically, these type of vulnerabilities are one line fixes --- adding an \texttt{escape} function or changing the version of the component, respectively. Whereas, Broken Authentication and vulnerabilities such as the one presented in Section \ref{sec:motivation} responsible by DoS attacks are more difficult to fix (several code lines deleted and added). Another example is the Apple authentication flaw discovered in 2017 (CVE-2017-13872)\footnote{CVE-2017-13872 details available at https://support.apple.com/en-us/HT208315 (Accessed on \today{}}, where any user could login as root with an empty password. Patrick Wardle examined the cause of the issue\footnote{\emph{Why $<$blank$>$ Gets You Root} available at https://objective-see.com/blog/blog\_0x24.html (Accessed on \today{}} and conclude that the flaw was due to the introduction of high cyclomatic complexity in a method used to verify the password. In sum, \emph{Cross-Site Scripting} and \emph{Using Components with Known Vulnerabilities} should take part of the developers preocupations along with the other patterns that explicitly hinder maintainability because despite their low complexity these are patterns that still produce a considerable negative impact on the maintainability. Real efforts have been made in creating and incorporating coding standards and best practices in software production. However, security is still far from perfection and fixing vulnerabilities might hinder software maintainability. Thus, it is important to provide tool support to developers to help them applying these patterns without harming software maintainability.
 
 
 \section{Threats to Validity}\label{sec:threats}
@@ -918,32 +927,10 @@ All the security commits are described in English. This approach discards securi
 
 ~\cite{6616351,oswap:2009,common:2009}
 
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
 
 
 
 \section{Conclusion and Future Work}\label{sec:conclusions}
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
 
 
 
