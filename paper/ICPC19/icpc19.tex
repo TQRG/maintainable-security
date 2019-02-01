@@ -329,8 +329,9 @@ also disrupts $2$ of the guidelines proposed by the Software Improvement Group
 (SIG) for building maintainable software~\cite{Visser:2016:OREILLY}. It adds a
 new branch point to the \texttt{dtls1\_process\_out\_of\_seq\_message} unit
 (\ref{lst:func5}) increasing the cyclomatic complexity and breaking the
-\emph{Write Simple Units of Code} guideline. And, it increases the codebase size
-in $4$ lines of code ($13$ lines added, $9$ lines deleted) which infringes the
+\emph{Write Simple Units of Code} guideline. Moreover, it increases the codebase
+size in $4$ lines of code ($13$ lines added, $9$ lines deleted) which contributes
+to a potential violation of the
 \emph{Keep Your Codebase Small} guideline. Hence, we have observed that the
 impact of this refactoring on the OpenSSL maintainability was negative.
 
