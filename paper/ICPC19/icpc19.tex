@@ -129,9 +129,9 @@ As an example, in the last week of January 2019, a severe vulnerability in Apple
 FaceTime was
 revealed\footnote{https://thehackernews.com/2019/01/apple-facetime-privacy-hack.html
 (Accessed on \today{})}. Callers could see and hear others without them picking up the call. These vulnerabilities are gateways for attackers to
-penetrate systems and exploit their resources. 
+penetrate systems and exploit their resources.
 
-\Sof{Models} Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions. 
+\Sof{Models} Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions.
 
 
 In 2011, the International Organization for Standardization (ISO) issued an
@@ -202,7 +202,7 @@ best practices.
 This paper is structured as follows: section \ref{sec:motivation} introduces an
 example of a security refactoring of a known vulnerability found in
 OpenSSL\footnote{Repository available at https://github.com/openssl/openssl
-(Accessed on \today{})} software; section \ref{sec:methodology} describes the
+(Accessed on \today{})}; section \ref{sec:methodology} describes the
 methodology used to answer the research questions; section \ref{sec:results}
 presents the results and section \ref{sec:discussion} discusses their
 implications; section \ref{sec:threats}, threats to the validity of the study
@@ -222,14 +222,15 @@ one. Thus, we want to understand how security refactorings impact the
 maintainability of software.
 
 As an example, consider the refactoring of the Datagram Transport Layer Security
-(DTLS) protocol implementation in OpenSSL to address the fact that hackers could
-cause a Denial-of-Service (DoS) attack by crafting DTLS
-handshake messages to trigger memory allocations corresponding to large length
-values. This vulnerability is listed at the Common Vulnerabilities and Exposures
-dictionary as CVE-2014-3506\footnote{CVE-2014-3506 details available at
-http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3506 (Accessed on
-\today{})}. It is amongst the vulnerabilities studied in our evaluation.
-The following snippet presents the changes performend on the
+(DTLS) protocol implementation in OpenSSL\footnote{OpenSSL is a tookit that
+contains open-source implementations of the SSL and TLS cryptographic
+protocols.} to address the fact that hackers could cause a Denial-of-Service
+(DoS) attack by crafting DTLS handshake messages to trigger memory allocations
+corresponding to large length values. This vulnerability is listed at the Common
+Vulnerabilities and Exposures dictionary as CVE-2014-3506\footnote{CVE-2014-3506
+details available at http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3506
+(Accessed on \today{})}. It is amongst the vulnerabilities studied in our
+evaluation. The following snippet presents the changes performend on the
 \emph{ssl/d1\_both.c} file\footnote{CVE-2014-3506 fix available  at
 https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd7636
 (Accessed on \today{})} by the OpenSLL developers to fix the vulnerability.
@@ -575,23 +576,23 @@ Clean Code} guideline.
 \midrule
 \textbf{Write Short Units of Code} & Limit code units to 15 LOCs because smaller
  units are easier to understand, reuse and test them\\\midrule
-\textbf{Write Simple Units of Code} & Limit branch points to 4 per unit because 
+\textbf{Write Simple Units of Code} & Limit branch points to 4 per unit because
 it makes units easier to test and modify \\\midrule
-\textbf{Write Code Once} & Do not copy code because bugs tend to replicate at 
+\textbf{Write Code Once} & Do not copy code because bugs tend to replicate at
 multiple places (inefficient and error-prone)\\\midrule
-\textbf{Keep Unit Interfaces Small} & Limit the number of parameters to at most 
+\textbf{Keep Unit Interfaces Small} & Limit the number of parameters to at most
 4 because it makes units easier to understand and reuse\\\midrule
-\textbf{Separate Concerns in Modules} & Avoid large modules because changes in 
+\textbf{Separate Concerns in Modules} & Avoid large modules because changes in
 loosely coupled databases are easier to oversee and execute\\\midrule
-\textbf{Couple Architecture Components Loosely} & Minimize the amount of code 
+\textbf{Couple Architecture Components Loosely} & Minimize the amount of code
 within modules that is exposed to modules in other components\\\midrule
-\textbf{Keep Architecture Components Balanced} & Balancing the number of 
+\textbf{Keep Architecture Components Balanced} & Balancing the number of
 components ease locating code and allow for isolated maintenance\\\midrule
-\textbf{Keep your Codebase Small} & Reduce and avoid the system size because 
+\textbf{Keep your Codebase Small} & Reduce and avoid the system size because
 small products are easier to manage and maintain\\\midrule
-\textbf{Automate Tests} & Test your codebase because it makes development 
+\textbf{Automate Tests} & Test your codebase because it makes development
 predictable and less risky\\\midrule
-\textbf{Write Clean Code} & Avoid producing software with code smells because 
+\textbf{Write Clean Code} & Avoid producing software with code smells because
 it is more likely to be maintainable in the future\\
 \bottomrule
 \end{tabular}
@@ -720,24 +721,24 @@ reduce maintainability.
 %
 \section{Results}\label{sec:results}
 
-In total, this study evaluates $607$ security and baseline commits from 94 
-different open-source projects distributed among 5 different main types of 
-software, Figure \ref{fig:domain}. The following section presents the results 
+In total, this study evaluates $607$ security and baseline commits from 94
+different open-source projects distributed among 5 different main types of
+software, Figure \ref{fig:domain}. The following section presents the results
 obtained for each research question.
 
 \begin{framed}
-\textit{\textbf{RQ1} What is the impact of security refactorings on the 
+\textit{\textbf{RQ1} What is the impact of security refactorings on the
 maintainability of open-source software?}
 \end{framed}
 
 
-The impact of security and baseline commits in the maintainability of 
-open-source software is presented in Figure \ref{fig:secvsreg}. For each type 
-of change, three types of impact of refactorings in the software maintainability 
-are presented: \emph{negative}, maintainability decreases (\emph{red}); \emph{none}, 
-maintainability stays the same (\emph{yellow}); and, \emph{positive}, maintainability 
-increases (\emph{green}). In front of each group, it is presented the mean ($\overline{x}$) 
-and median ({$\widetilde{x}$) of the maintainability difference and the p-value 
+The impact of security and baseline commits in the maintainability of
+open-source software is presented in Figure \ref{fig:secvsreg}. For each type
+of change, three types of impact of refactorings in the software maintainability
+are presented: \emph{negative}, maintainability decreases (\emph{red}); \emph{none},
+maintainability stays the same (\emph{yellow}); and, \emph{positive}, maintainability
+increases (\emph{green}). In front of each group, it is presented the mean ($\overline{x}$)
+and median ({$\widetilde{x}$) of the maintainability difference and the p-value
 resulting from the Wilcoxon signed-rank test.
 
 \begin{figure}[h]
@@ -746,19 +747,19 @@ resulting from the Wilcoxon signed-rank test.
 	\label{fig:secvsreg}
 \end{figure}
 
-Regarding security commits results, we observe that maintainability decreases 
-in 40.20\% (244), stays equal in 30.5\% (185) and increases in 29.33\% (178)  
-of the cases after security refactorings being applied. The resulting p-value 
-of the Wilcoxon signed-rank test is $1.21$x$10^{-10}$. Since the p-value is below 
-the significance level of $0.05$, it is reasonable to affirm that \emph{security 
+Regarding security commits results, we observe that maintainability decreases
+in 40.20\% (244), stays equal in 30.5\% (185) and increases in 29.33\% (178)
+of the cases after security refactorings being applied. The resulting p-value
+of the Wilcoxon signed-rank test is $1.21$x$10^{-10}$. Since the p-value is below
+the significance level of $0.05$, it is reasonable to affirm that \emph{security
 refactorings have a negative impact in the maintainability of open-source software}.
 
-For regular commits, we also observe that maintainability decreases in 41.35\% 
-(251) of the cases after regular refactorings being applyed. But in contrast 
-to security commits, it increases in 58.16\% (353) and stays equal in 0.5\% 
-(3) of the cases. The resulting p-value of the Wilcoxon signed-rank test is 
-$1.54$x$10^{-6}$. Since the p-value is below the significance level of $0.05$, 
-it is reasonable to affirm that \emph{regular refactorings have a positive 
+For regular commits, we also observe that maintainability decreases in 41.35\%
+(251) of the cases after regular refactorings being applyed. But in contrast
+to security commits, it increases in 58.16\% (353) and stays equal in 0.5\%
+(3) of the cases. The resulting p-value of the Wilcoxon signed-rank test is
+$1.54$x$10^{-6}$. Since the p-value is below the significance level of $0.05$,
+it is reasonable to affirm that \emph{regular refactorings have a positive
 impact in the maintainability of open-source software}.
 
 \begin{figure}[h]
@@ -768,65 +769,65 @@ impact in the maintainability of open-source software}.
 	\label{fig:lang_main}
 \end{figure}
 
-In this study, we also evaluated the impact of each programming language on the 
+In this study, we also evaluated the impact of each programming language on the
 maintainability of open-source software, Figure \ref{fig:lang_main}. Although the
 dataset contains security refactorings for more than $13$ languages, we only
 present the results for \emph{Java}, \emph{C}, \emph{Ruby} and \emph{PHP} because
 one of the requirements of the Wilcoxon signed-rank test is that the input sample
 has to have more than $20$ measurements. The other languages were integrated in the
-\emph{Others} set. The results of the Wilcoxon signed-rank test by pattern returned 
-statistical evidence which supports that the maintainability of open-source software 
-decreases for security refactorings in 3 different languages: \emph{C} 
-(p = $5.72$x$10^{-9}$), Ruby (p = 0.057) and PHP (p = $3.54$x$10^{-6}$). The results 
+\emph{Others} set. The results of the Wilcoxon signed-rank test by pattern returned
+statistical evidence which supports that the maintainability of open-source software
+decreases for security refactorings in 3 different languages: \emph{C}
+(p = $5.72$x$10^{-9}$), Ruby (p = 0.057) and PHP (p = $3.54$x$10^{-6}$). The results
 also provide statistical significance for when security refactorings are performed
-in \emph{Java} (p = $3.61$x$10^{-2}$). \emph{Python} and the other languages 
+in \emph{Java} (p = $3.61$x$10^{-2}$). \emph{Python} and the other languages
 that integrate the \emph{Others} set contain more cases where the maintainability
-increases. However, the results obtained for these patterns are not statistically 
+increases. However, the results obtained for these patterns are not statistically
 significant.
 
 
 
 \begin{framed}
-\textit{\textbf{RQ2} Which patterns of security refactorings are more likely to 
+\textit{\textbf{RQ2} Which patterns of security refactorings are more likely to
 affect open-source software maintainability?}
 \end{framed}
 
-The impact of each type of security refactoring on the maintainability of 
-open-source software is presented in Figure \ref{fig:pat}. The results of the 
-Wilcoxon signed-rank test by pattern returned statistical evidence which 
-supports that the maintainability of open-source software decreases for 4 
-different patterns: Broken Autentication (p = 0.018), Denial-of-Service 
-(p = 0.029), Memory Leak (p = 0.009) and Miscellaneous (p = $3.07$x$10^{-4}$). 
+The impact of each type of security refactoring on the maintainability of
+open-source software is presented in Figure \ref{fig:pat}. The results of the
+Wilcoxon signed-rank test by pattern returned statistical evidence which
+supports that the maintainability of open-source software decreases for 4
+different patterns: Broken Autentication (p = 0.018), Denial-of-Service
+(p = 0.029), Memory Leak (p = 0.009) and Miscellaneous (p = $3.07$x$10^{-4}$).
 The results also returned statistical significance that evidence that maintainability
-is more likely to not suffer differences for open-source software after removing 
-Components with Known Vulnerabilities (p = $7.96$x$10^{-4}$) and fixing Cross-Site 
-Scripting Vulnerabilities (p = 0.001). Injection and Cross-Site Request Forgery 
-produced more cases where the refactorings had a negative impact in the maintainability. 
+is more likely to not suffer differences for open-source software after removing
+Components with Known Vulnerabilities (p = $7.96$x$10^{-4}$) and fixing Cross-Site
+Scripting Vulnerabilities (p = 0.001). Injection and Cross-Site Request Forgery
+produced more cases where the refactorings had a negative impact in the maintainability.
 However, the results obtained for these patterns are not statistically significant.
 
-Projects with Broken Authentication flaws are the most affected ones by security 
-refactorings. 55.3\% (21) of the refactorings had a negative impact in the maintainability 
-while 35\% (11) had a positive impact and only 13.8\% (6) did not suffer any 
+Projects with Broken Authentication flaws are the most affected ones by security
+refactorings. 55.3\% (21) of the refactorings had a negative impact in the maintainability
+while 35\% (11) had a positive impact and only 13.8\% (6) did not suffer any
 change. The results also show that fixing memory leaks affects the maintainability
-of 51.3\% (41) of the cases and leaves only 13.8\% (11) of the cases unaffected. 
-In 35\% (28) of the cases, maintainability increased. Refactoring vulnerabilities 
-that allow denial-of-service attacks (e.g., CVE-2014-3506) has a negative impact 
-of 47.5\% (19) in the maintainability of open-source software. 30.0\% (12) of 
-the cases exhibit maintainability improvement while 22.5\% (9) show that overall 
-maintainability does not suffer any change. Miscellaneous refactorings pattern 
-integrates several types of security flaws whose impact is of 43.1\% (84) negative 
-in the maintainability of open-source sofware. 31.8\% (62) of the cases do not 
-exhibit any change in maintainability and 25.1\% (49) of cases have a positive 
+of 51.3\% (41) of the cases and leaves only 13.8\% (11) of the cases unaffected.
+In 35\% (28) of the cases, maintainability increased. Refactoring vulnerabilities
+that allow denial-of-service attacks (e.g., CVE-2014-3506) has a negative impact
+of 47.5\% (19) in the maintainability of open-source software. 30.0\% (12) of
+the cases exhibit maintainability improvement while 22.5\% (9) show that overall
+maintainability does not suffer any change. Miscellaneous refactorings pattern
+integrates several types of security flaws whose impact is of 43.1\% (84) negative
+in the maintainability of open-source sofware. 31.8\% (62) of the cases do not
+exhibit any change in maintainability and 25.1\% (49) of cases have a positive
 impact on the maintainability of open-source software.
 
-It is also important to notice that overall the maintainability of open-source 
-software is not affected by Cross-Site Scripting vulnerabilities and by Using 
-Components with Know Vulnerabilities. Cross-Site Scripting does not suffer any 
-decrease in the maintainability of 55.3\% (63) of cases and 21.1\% (24) have a 
-positive effect on it. Only 23.7\% (27) of the cases hinder the software 
-maintainability. From 21 cases evaluated for Using Componentes with Known 
-Vulnerabilities, only 4.8\% (1) has a positive effect in the maintainability 
-of software. 14.3\% (3) harms maintainability software and 81\% has no effect 
+It is also important to notice that overall the maintainability of open-source
+software is not affected by Cross-Site Scripting vulnerabilities and by Using
+Components with Know Vulnerabilities. Cross-Site Scripting does not suffer any
+decrease in the maintainability of 55.3\% (63) of cases and 21.1\% (24) have a
+positive effect on it. Only 23.7\% (27) of the cases hinder the software
+maintainability. From 21 cases evaluated for Using Componentes with Known
+Vulnerabilities, only 4.8\% (1) has a positive effect in the maintainability
+of software. 14.3\% (3) harms maintainability software and 81\% has no effect
 in the maintainability.
 
 \begin{figure}[h]
@@ -841,45 +842,45 @@ in the maintainability.
 In this section, we discuss the results and answer the proposed research questions.
 
 \begin{framed}
-\textit{\textbf{RQ1} What is the impact of security refactorings on the maintainability 
+\textit{\textbf{RQ1} What is the impact of security refactorings on the maintainability
 of open-source software?}
 \end{framed}
 
 \textbf{\textit{Security refactorings harm the maintainability of open-source software.}}
 
-40.2\% of the security refactoring have a negative impact on the maintainability 
+40.2\% of the security refactoring have a negative impact on the maintainability
 of open-source software, Figure \ref{fig:secvsreg}. This raises a new tradeoff when
-developers need to fix vulnerabilities on their projects because they might be affecting 
+developers need to fix vulnerabilities on their projects because they might be affecting
 the software maintainability or even introducing new vulnerabilities. This study exhibits
-proof that developers may have to reduce maintainability for the sake of safety. We understand 
-that developers should be able to produce secure code without affecting the maintainability of 
-their projects. But there are still some concerns that need to be addressed: 
+proof that developers may have to reduce maintainability for the sake of safety. We understand
+that developers should be able to produce secure code without affecting the maintainability of
+their projects. But there are still some concerns that need to be addressed:
 \begin{itemize}
-	\item \textbf{Security Frameworks} need to be secure. Unfortunately, there are several 
-	vulnerabilities that stay undisclosed. Thus, developers should not trust them blindly and 
+	\item \textbf{Security Frameworks} need to be secure. Unfortunately, there are several
+	vulnerabilities that stay undisclosed. Thus, developers should not trust them blindly and
 	check defaults.
 	\item \textbf{Documentation} of software should provide developers with the best practices to implement safe and maintainable software. Unmaintainable code is difficult to test, analyze and re-use.
 	\item \textbf{Proper Authorization Mechanisms} should be designed and implemented. This is
 	one of the most complex security features to implement. Some mechanisms might assist authorization maintenance in long run, such as the combination of \texttt{HTTP} filters with \texttt{Spring Security} annotations.
-	\item \textbf{Deprecated code} should be avoided by developers. They should integrate tools such as BCH on their projects CI/CD pipelines to help them be more aware of the maintainability of their code and issues (e.g., dead and duplicated code). 
+	\item \textbf{Deprecated code} should be avoided by developers. They should integrate tools such as BCH on their projects CI/CD pipelines to help them be more aware of the maintainability of their code and issues (e.g., dead and duplicated code).
 	\item\textbf{Programming Languages} should provide new mechanisms to easily implement security patterns without endangering maintainability.
-	
+
 \end{itemize}
 
-	
 
-We would expect that the negative impact of programming languages on maintainability 
-would be more intense due to the buzz of the last years surrounding the idea that 
-poor design of programming languages and lack of using the best practices lead to 
-more buggy and vulnerable code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. 
-However, Figure \ref{fig:lang_main} shows that only \emph{C} has a negative impact of more than 50\% on 
-software maintainability. We suspect that these values are the result of projects 
-contributions policies. 9 out of 10 projects --- the equivalent to 31.8\% of the commits --- 
-of the top-10 of dataset projects with more contributors have restrict contribution 
-policies regarding code standards. Some examples are the \texttt{laravel/framework}, 
-\texttt{php/php-src}, \texttt{openssl/openssl} and 
-\texttt{cakephp/cakephp}. For instance, \texttt{laravel/framework} requires the 
-\texttt{PSR-2 Standard}\footnote{PSR-2 Standard available at 
+
+We would expect that the negative impact of programming languages on maintainability
+would be more intense due to the buzz of the last years surrounding the idea that
+poor design of programming languages and lack of using the best practices lead to
+more buggy and vulnerable code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}.
+However, Figure \ref{fig:lang_main} shows that only \emph{C} has a negative impact of more than 50\% on
+software maintainability. We suspect that these values are the result of projects
+contributions policies. 9 out of 10 projects --- the equivalent to 31.8\% of the commits ---
+of the top-10 of dataset projects with more contributors have restrict contribution
+policies regarding code standards. Some examples are the \texttt{laravel/framework},
+\texttt{php/php-src}, \texttt{openssl/openssl} and
+\texttt{cakephp/cakephp}. For instance, \texttt{laravel/framework} requires the
+\texttt{PSR-2 Standard}\footnote{PSR-2 Standard available at
 https://www.php-fig.org/psr/psr-2/ (Accessed on \today{}}).
 
 
@@ -888,7 +889,7 @@ https://www.php-fig.org/psr/psr-2/ (Accessed on \today{}}).
 \end{framed}
 
 \textbf{\textit{Broken Authentication \& Session Management, Denial-of-Service attacks and Memory Leaks and Miscellaneous patterns are more likely to affect open-source software maintainability.}} Although there are
-a few refactorings that harm software maintainability in the \emph{Cross-Site Scripting} and \emph{Using 
+a few refactorings that harm software maintainability in the \emph{Cross-Site Scripting} and \emph{Using
 Components with Know Vulnerabilities}, overall maintainability does not suffer any changes for these patterns.
 For the remaining patterns, \emph{Injection} and \emph{Cross-Site Request Forgery}, results are not statistically
 significant.
@@ -934,28 +935,28 @@ All the security commits are described in English. This approach discards securi
 
 This work presents an empirical study on the impact of 607 security refactorings on
 the maintainability of 94 open-source projects. We leveraged Better Code Hub reports
-of each project version to calculate maintainability based on a model proposed in 
+of each project version to calculate maintainability based on a model proposed in
 previous work.
 
-Security refactorings significantly affect the software maintainability of open-source 
+Security refactorings significantly affect the software maintainability of open-source
 software, i.e., developers hinder maintainability when fixing vulnerabilities. We found
 this evidence in 40.2\% of the studied cases. Regarding regular commits, it seems that
 overall maintainability increases (50.16\%). However, there is still a very considerable amout of
 cases that harm maintaniability (41.35\%). This study also exhibits evidence that some patterns
-need more attention than others. Broken Autentication issues, Denial-of-Service attacks 
+need more attention than others. Broken Autentication issues, Denial-of-Service attacks
 and Memory Leaks endure maintainability in 55.3\%, 51.3\% and 47.5\%, respectively.
 
 Following the implications of our work, we draw attention for the need of secure security frameworks,
-code best practices documentation to produce safe and maintainable code, proper authorization 
+code best practices documentation to produce safe and maintainable code, proper authorization
 mechanisms design and implementation, better tools to introduce in the CI/CD pipeline to help software
 maintenance and new or improved programming languages to allow developers to easily implement safety in
 their software without endangering maintainability.
 
 As future work, this study may be extended in many directions such as analyze which guidelines are
 more likely to affect security refactorings; evaluate the impact of programming languages of the
-maintainability of each refactoring pattern; investigate if there is any correlation between 
+maintainability of each refactoring pattern; investigate if there is any correlation between
 software maintainability and projects popularity; expand our methodology with other software quality
-properties; and, validate these findings with closed or private software. 
+properties; and, validate these findings with closed or private software.
 
 
 \section*{Acknowledgment}\label{sec:ack}
