@@ -72,7 +72,7 @@
 
 \author{
     Anonymou(s) Author(s)
-	
+
 %     \IEEEauthorblockN{1\textsuperscript{st} Given Name Surname}
 % \IEEEauthorblockA{\textit{dept. name of organization (of Aff.)} \\
 % \textit{name of organization (of Aff.)}\\
@@ -125,13 +125,13 @@ non-functional requirement during the development of software systems.  However,
 there is still a considerable amount of zero-day vulnerabilities being
 discovered, and fixed, almost weekly as disclosed by the Zero Day Initiative
 website\footnote{Zero Day Initiative website available  at
-https://www.zerodayinitiative.com/advisories/published/ (Accessed on \today{})}. 
-These vulnerabilities are gateways for attackers to penetrate 
-systems and exploit their resources. 
+https://www.zerodayinitiative.com/advisories/published/ (Accessed on \today{})}.
+These vulnerabilities are gateways for attackers to penetrate
+systems and exploit their resources.
 As an example, in the last week of January 2019, a severe vulnerability in Apple
 FaceTime was revealed\footnote{https://thehackernews.com/2019/01/apple-facetime-privacy-hack.html
 (Accessed on \today{})} --- the outcome of a design/logical flaw that allowed callers to see and
-hear others without them picking up the call. 
+hear others without them picking up the call.
 
 
 In 2011, the International Organization for Standardization (ISO) issued an
@@ -153,11 +153,11 @@ software quality ISO/IEC 25010. As ISO does not provide any specific guidelines 
 formula to calculate maintainability, we resort on Software Improvement
 Group (SIG)'s web-based source code analysis service Better Code Hub
 (BCH)~\cite{Visser:2016:OREILLY} to compute the maintainability of a given
-project. There are other well-known standards and models that have been proposed to increase software safety: 
+project. There are other well-known standards and models that have been proposed to increase software safety:
 Common Criteria~\cite{common:2009} which suffered a lot of criticism regarding the
-costs associated and poor technical evaluation; the OWASP 
+costs associated and poor technical evaluation; the OWASP
 Application Security Verification Criteria~\cite{oswap:2009} which is focused only
-on web applications, and a model proposed by Xu et al. (2013)~\cite{6616351} for 
+on web applications, and a model proposed by Xu et al. (2013)~\cite{6616351} for
 raiting software security which we believe it was one of the first steps taken
 by SIG to introduce security on their maintainability model.
 
@@ -172,11 +172,11 @@ around 15 million lines of code, per week.
 
 The particular subject of this paper is to explore whether there is a trade-off
 between refactoring source code to patch disclosed vulnerabilities while keeping
-(or even improving) the maintainability of software systems. Hedegus et al. (2018)~\cite{HEGEDUS2018313}, 
+(or even improving) the maintainability of software systems. Hedegus et al. (2018)~\cite{HEGEDUS2018313},
 analyzed the difference of maintainability between
 groups of refactored elements and non-refactored and conclude that the source
 code elements subjected to refactorings had significantly lower maintainability
-than the elements not affected. 
+than the elements not affected.
 
 In this paper, we present the results of our analysis on the maintainability of
 607 security changes collected from open-source software, from different
@@ -193,9 +193,9 @@ programming languages. The main contributions of the present work is:
 This empirical study exhibits proof that changes applied in the codebase to fix
 vulnerabilities affect code maintainability. Especially, for refactorings that
 address \emph{Broken Authentication and Session Management} issues, \emph{Memory
-Leaks} and \emph{Denial-of-Service} attacks. There are already several tools that 
-suggest security improvements using static analysis, dynamic analysis, and even 
-artificial intelligence. With this study, we intend to highlight the need for tools 
+Leaks} and \emph{Denial-of-Service} attacks. There are already several tools that
+suggest security improvements using static analysis, dynamic analysis, and even
+artificial intelligence. With this study, we intend to highlight the need for tools
 to predict the impact of patches on maintainability~\cite{4724577} and documentation
 to help developers adopt security best practices~\cite{6311252, 7927935, MESQUIDA201519}.
 
@@ -250,7 +250,7 @@ https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd
 
 // [snip]
 
-- unsigned long frag_len = msg_hdr->frag_len, max_len; 
+- unsigned long frag_len = msg_hdr->frag_len, max_len;
 - if((msg_hdr->frag_off+frag_len) > msg_hdr->msg_len)
 -    goto err;
 
@@ -371,7 +371,7 @@ Maintainability is measured separately for each pattern.
 \section{Methodology}\label{sec:methodology}
 %
 The methodology used to measure the impact of security refactorings on the
-maintainability of open-source software is discussed this section. The methodology 
+maintainability of open-source software is discussed this section. The methodology
 comprehends the following steps, as illustrated in Figure \ref{fig:met}:
 \begin{enumerate}
 	\item Extract relevant data from a dataset containing
@@ -413,13 +413,13 @@ evaluate if the impact was positive, negative or none.
 
 \begin{figure}[h]
  	\centering 	\includegraphics[width=0.5\textwidth]{figures/language_dist.pdf}
- 	\caption{Security Refactorings Language Distribution}
+ 	\caption{Distribution of Security Refactorings per Language}
 	\label{fig:lang}
 \end{figure}
 
 \begin{figure}[h]
  	\centering 	\includegraphics[width=0.5\textwidth]{figures/type_dist.pdf}
- 	\caption{Projects Domain Distribution}
+ 	\caption{Distribution of Projects Domain}
 	\label{fig:domain}
 \end{figure}
 
@@ -528,9 +528,9 @@ number of pull requests.
 \subsection{Security vs. Baseline Commits}
 %
 Previous studies attempted to measure the impact of regular refactorings on
-open-source software maintainability~\cite{HEGEDUS2018313}. However, 
-there is no previous work focused on comparing the impact of security 
-refactorings with regular refactorings on maintainability. 
+open-source software maintainability~\cite{HEGEDUS2018313}. However,
+there is no previous work focused on comparing the impact of security
+refactorings with regular refactorings on maintainability.
 We analyze the maintainability of regular commits
 (i.e., commits not related with security fixes) and use them as a baseline.
 
@@ -546,10 +546,10 @@ As said before, the web-based source code analysis service \emph{Better Code
 Hub} (BCH) is used to collect the maintanability reports of the refactorings of
 each project. Table \ref{tab:guidelines} presents the 10 guidelines
 proposed by BCH's authors for delivering software that is easy to maintain
-\cite{Visser:2016:OREILLY}. All guidelines are computed in the same evaluation by 
-BCH. During each guideline evaluation, the tool determines the compliance towards 
-one guideline by establishing limits for the percentage of code allowed to be in 
-each of the $4$ risk severity levels (\emph{low risk}, \emph{medium risk}, \emph{high risk} 
+\cite{Visser:2016:OREILLY}. All guidelines are computed in the same evaluation by
+BCH. During each guideline evaluation, the tool determines the compliance towards
+one guideline by establishing limits for the percentage of code allowed to be in
+each of the $4$ risk severity levels (\emph{low risk}, \emph{medium risk}, \emph{high risk}
 and \emph{very high risk}). If the project does not violate the thresholds, then it
 is compliant with the guideline. These thresholds are calibrated by BCH using
 their own data/experience --- open-source and closed software systems. If a
@@ -599,8 +599,8 @@ it is more likely to be maintainable in the future\\
 
 
 \begin{figure}[h]
- 	\centering 	\includegraphics[width=0.45\textwidth]{figures/bch_report.png}
- 	\caption{Maintainability report of OpenSSL CVE-2014-3506 vulnerability
+ 	\centering 	\includegraphics[width=0.5\textwidth]{figures/bch_report.png}
+ 	\caption{Maintainability report of OpenSSL's CVE-2014-3506 vulnerability
 refactoring for the guideline \emph{Write Simple Units of Code} provided by
 \emph{Better Code Hub}. This version of OpenSSL does not comply with the
 guideline in the example since the bars do not reach the threshold points. This
@@ -855,8 +855,8 @@ proof that developers may have to reduce maintainability for the sake of safety.
 that developers should be able to produce secure code without affecting the maintainability of
 their projects. But there are still some concerns that need to be addressed:
 \begin{itemize}
-	\item \textbf{Security Frameworks} need to be secure and user-friendly~\cite{5287006, 7676144}. Unfortunately, 
-	there are several vulnerabilities that stay undisclosed. Thus, developers should not 
+	\item \textbf{Security Frameworks} need to be secure and user-friendly~\cite{5287006, 7676144}. Unfortunately,
+	there are several vulnerabilities that stay undisclosed. Thus, developers should not
 	trust them blindly and check defaults.
 	\item \textbf{Documentation} of software should provide developers with the best practices to implement safe and maintainable software. Unmaintainable code is difficult to test, analyze and re-use.
 	\item \textbf{Proper Authorization Mechanisms} should be designed and implemented. This is
@@ -867,18 +867,18 @@ their projects. But there are still some concerns that need to be addressed:
 \end{itemize}
 
 
-We would expect that the negative impact of programming languages on maintainability 
-would be more intense due to the buzz of the last years surrounding the idea that 
-poor design of programming languages and lack of using the best practices lead to 
-more buggy and vulnerable code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. 
-However, Figure \ref{fig:lang_main} shows that only \emph{C} has a negative impact of more than 50\% on 
-software maintainability. We suspect that these values are the result of projects 
-contributions policies. 9 out of 10 projects --- the equivalent to 31.8\% of the commits --- 
-of the top-10 of dataset projects with more contributors have restrict contribution 
-policies regarding code standards. Some examples are the \texttt{laravel/framework}, 
-\texttt{php/php-src}, \texttt{openssl/openssl} and 
-\texttt{cakephp/cakephp}. For instance, \texttt{laravel/framework} requires the 
-\texttt{PSR-2 Standard}\footnote{PSR-2 Standard available at 
+We would expect that the negative impact of programming languages on maintainability
+would be more intense due to the buzz of the last years surrounding the idea that
+poor design of programming languages and lack of using the best practices lead to
+more buggy and vulnerable code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}.
+However, Figure \ref{fig:lang_main} shows that only \emph{C} has a negative impact of more than 50\% on
+software maintainability. We suspect that these values are the result of projects
+contributions policies. 9 out of 10 projects --- the equivalent to 31.8\% of the commits ---
+of the top-10 of dataset projects with more contributors have restrict contribution
+policies regarding code standards. Some examples are the \texttt{laravel/framework},
+\texttt{php/php-src}, \texttt{openssl/openssl} and
+\texttt{cakephp/cakephp}. For instance, \texttt{laravel/framework} requires the
+\texttt{PSR-2 Standard}\footnote{PSR-2 Standard available at
 https://www.php-fig.org/psr/psr-2/ (Accessed on \today{})}.
 
 \begin{framed}
@@ -901,25 +901,25 @@ The following section presents the potential threats to validity of this study.
 %
 The maintainability formula was inferred based on the reports of the Better Code Hub.
 The high amount of different projects and backgrounds may require different maintainablity
-standards. However, BCH does have a representative benchmark of closed and open-source 
-software projects that is under the calculation of the thresholds used in the computation 
+standards. However, BCH does have a representative benchmark of closed and open-source
+software projects that is under the calculation of the thresholds used in the computation
 of each maintainability guideline (Table \ref{tab:guidelines})~\cite{Visser:2016:OREILLY, Baggen2012}.
 
 \subsection{Internal}
 
-The security refactorings dataset provided by the previous work~\cite{Reis:2017:IJSSE} 
-was collected based on the messages of GitHub commits produced by project developers 
-to classify the changes perfomed by them to fix security flaws. This approach 
+The security refactorings dataset provided by the previous work~\cite{Reis:2017:IJSSE}
+was collected based on the messages of GitHub commits produced by project developers
+to classify the changes perfomed by them to fix security flaws. This approach
 discards security refactorings that were not explicit in commits messages.
 
 Baseline commits are retrieved randomly by selecting one commit from the same project of a given security refactoring. This approach softens the differences that may result from the
-characteristics of each project. However, maintainability still may be affected by the developers experience, coding style and software contribution polices which it is not evaluated in this study. Furthermore, this evaluation considers that 607 regular commits are enough to alleviate random irregularities in the maintainability differences of the baseline. 
+characteristics of each project. However, maintainability still may be affected by the developers experience, coding style and software contribution polices which it is not evaluated in this study. Furthermore, this evaluation considers that 607 regular commits are enough to alleviate random irregularities in the maintainability differences of the baseline.
 
 
 \subsection{External}
 
 In contrast to the BCH benchmark, this study uses a dataset that only covers open-source software to perform the maintanibility evaluation. However, BCH thresholds are calculated from a set of both open and closed sotfware. Different programming languages may require different coding practices to address software safety. The dataset
-comprises more commits in C and PHP, i.e., the dataset may not be properly representative of the population regarding to programming languages. 
+comprises more commits in C and PHP, i.e., the dataset may not be properly representative of the population regarding to programming languages.
 
 All the security commits are described in English. This approach discards security refactorings provided in other languages.
 
@@ -931,11 +931,11 @@ exhibited proof that quantifying effectively the impact of refactoring on mainta
 may help to choose the appropriate refactoring type~\cite{1167822}. In contrast to
 this work, Hegedus et al.~\cite{HEGEDUS2018313} did not select particular metrics to
 assess the effect of refactorings. Instead, statistical tests were used to find
-the metrics that have the potential to change significantly after refactorings. 
-The differences of maintainability between groups of refactored elements and 
+the metrics that have the potential to change significantly after refactorings.
+The differences of maintainability between groups of refactored elements and
 non-refactored were analyzed. And, the authors conclude that the source
 code elements subjected to refactorings had significantly lower maintainability
-than the elements not affected. Studying the evolution of maintaninability issues during the development of Android apps, Malavolta et al. (2018)~\cite{8530041} discovered that maintainability 
+than the elements not affected. Studying the evolution of maintaninability issues during the development of Android apps, Malavolta et al. (2018)~\cite{8530041} discovered that maintainability
 decreases over time. Palomba et al. (2018)\cite{Palomba:2018:DIM:3231288.3231337} exhibits
 proof that code smells should be carefully monitored by programmers, since there is
 a high correlation between maintainability aspects and proneness to changes and faults.
@@ -946,35 +946,35 @@ the impact of patching vulnerabilities on software maintainability.
 Researchers investigated the relationship between design patterns and
 software maintainability~\cite{10.1007/978-3-642-35267-6-18}. 300 revisions
 of \texttt{JHotDraw} were analyzed to conclude that every introduced pattern
-instance improved software maintainability. However, other studies show that the 
+instance improved software maintainability. However, other studies show that the
 use of design patterns may introduce maintainability issues into software~\cite{4493325}.
 The present work studies how security patterns influence maintainability
 for open-source software.
 
 Other studies investigated the effect of programming languages in software quality~\cite{Ray:2017:LSP:3144574.3126905,
-2019arXiv190110220B}. The first study shows that some programming languages are more buggy than others, i.e., 
+2019arXiv190110220B}. The first study shows that some programming languages are more buggy than others, i.e.,
 language design has impact on software quality. However, the authors of the second
-study were not able to reproduce the first one and did not obtain any evidence about the 
+study were not able to reproduce the first one and did not obtain any evidence about the
 impact of language design. Both have used the number of defects as an indicator of
 software quality. The present work studies how security refactorings affect software quality
-based on the code maintainability analysis. 
+based on the code maintainability analysis.
 
 \section{Conclusion and Future Work}\label{sec:conclusions}
 
 This work presents an empirical study on the impact of 607 security refactorings on
 the maintainability of 94 open-source projects. We leveraged Better Code Hub reports
-of each project version to calculate maintainability based on a model proposed in 
-previous work. Security refactorings significantly affect the software maintainability of open-source 
+of each project version to calculate maintainability based on a model proposed in
+previous work. Security refactorings significantly affect the software maintainability of open-source
 software, i.e., developers hinder maintainability when fixing vulnerabilities. We found
 this evidence in 40.2\% of the studied cases. Regarding regular commits, it seems that
 overall maintainability increases (50.16\%). However, there is still a very considerable amout of
-cases that harm maintaniability (41.35\%). 
+cases that harm maintaniability (41.35\%).
 
 This study also exhibits evidence that some patterns
-need more attention than others. Broken Autentication issues, Denial-of-Service attacks 
-and Memory Leaks endure maintainability in 55.3\%, 51.3\% and 47.5\%, respectively. Following 
+need more attention than others. Broken Autentication issues, Denial-of-Service attacks
+and Memory Leaks endure maintainability in 55.3\%, 51.3\% and 47.5\%, respectively. Following
 the implications of our work, we draw attention for the need of secure security frameworks,
-code best practices documentation to produce safe and maintainable code, proper authorization 
+code best practices documentation to produce safe and maintainable code, proper authorization
 mechanisms design and implementation, better tools to introduce in the CI/CD pipeline to help software
 maintenance and new or improved programming languages to allow developers to easily implement safety in their software without endangering maintainability.
 
@@ -983,15 +983,13 @@ more likely to affect security refactorings; evaluate the impact of programming 
 maintainability of each refactoring pattern; investigate if there is any correlation between
 software maintainability and projects popularity; expand our methodology with other software quality
 properties; validate these findings with closed or private software; and, expand this analysis
-to other quality standards. 
+to other quality standards.
 
 \section*{Acknowledgment}\label{sec:ack}
 
 \noindent
 We thank to the Software Improvement Group (SIG) team for all the support and
 help in validating the methodology.
-
-\pagebreak
 
 \balance
 
