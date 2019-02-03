@@ -202,7 +202,7 @@ BCH compiles the ISO/IEC 25010 into a set of 10 guidelines that are the
 base of BCH's evaluation. Two examples are the
 \emph{Write Simple Units of Code} based on the McCabe Complexity~\cite{1702388}
 and \emph{Keep your Codebase Small} based on the idea that smaller codebases are
-easier to maintain and less prone to defects~\cite{Visser:2016:OREILLY}. 
+easier to maintain and less prone to defects~\cite{Visser:2016:OREILLY}.
 % Compliance to the guidelines is derived from the SIG's
 % industry benchmark which, according to official sources, consists of over 8
 % billion lines of code in more than 180 different technologies. SIG analyzes
@@ -333,25 +333,25 @@ https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd
 
 \end{lstlisting}
 
-Every SSL/TLS connection begins with a handshake which is responsible by the negotiation between two parties. 
-DTLS provides a mechanism for fragmenting a handshake message over a number of packets, each of which can be 
+Every SSL/TLS connection begins with a handshake which is responsible by the negotiation between two parties.
+DTLS provides a mechanism for fragmenting a handshake message over a number of packets, each of which can be
 transmitted separately. In the example (Listing~\ref{lst:vuln}), all functions receive as input the
-SSL session, \texttt{s}. In the \texttt{dtls1\_reassemble\_fragment} function the size of the fragment \texttt{msg\_hdr-$>$frag\_off+frag\_len} is checked against the handshake message size \texttt{msg\_hdr->msg\_len} 
-(line 13) and then against the maximum handshake message size allowed by DTLS1 for \texttt{s} (line 16-21). 
+SSL session, \texttt{s}. In the \texttt{dtls1\_reassemble\_fragment} function the size of the fragment \texttt{msg\_hdr-$>$frag\_off+frag\_len} is checked against the handshake message size \texttt{msg\_hdr->msg\_len}
+(line 13) and then against the maximum handshake message size allowed by DTLS1 for \texttt{s} (line 16-21).
 However, it is not verified if \texttt{msg\_hdr->msg\_len} is lower than the allowed by DTLS. Thus, in line 37,
 when \texttt{msg\_len} is allocated to the fragment buffer, more memory than the allowed might be allocated. According to the message commit, $10$ handshake messages are allowed per DTLS connection. Hence, a remote attacker could leverage this issue to trigger
 memory allocations corresponding to large length values and lead the system to memory exhaustion that could end
 in a DoS attack. The code changes performed to fix the vulnerability were the following:
 
-~\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was inserted to return the number of 
-maximum number of bytes allowed in a DTLS handshake message for \texttt{s}. The mininum is $16$KB, but may be greater 
-if the maximum certificate list size requires it which is set by the user. More specifically, it checks if the 
+~\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was inserted to return the number of
+maximum number of bytes allowed in a DTLS handshake message for \texttt{s}. The mininum is $16$KB, but may be greater
+if the maximum certificate list size requires it which is set by the user. More specifically, it checks if the
 maximum certificate list size
 (\texttt{s-$>$max\_cert\_list}) requires more length than the maximum length
 (\texttt{max\_len}). If that condition holds, the function returns the size of
 the certificate list, otherwise it returns the maximum length. This function replaces lines $18$-$21$.
 
-~\ref{lst:func5} and~\ref{lst:func4} add the check to different functions to ensure that the message 
+~\ref{lst:func5} and~\ref{lst:func4} add the check to different functions to ensure that the message
 and the fragment length are never higher than the maximum allowed by DTSL. However, \ref{lst:func5} is
 the responsible for patching the vulnerability.
 
@@ -590,18 +590,19 @@ characteristics of different projects.
 
 As said before, the web-based source code analysis service \emph{Better Code
 Hub} (BCH) is used to collect the maintanability reports of the refactorings of
-each project. Table~\ref{tab:guidelines} presents the 10 guidelines
-proposed by BCH's authors for delivering software that is easy to maintain~\cite{Visser:2016:OREILLY}. All guidelines are computed in the same evaluation by
-BCH. During each guideline evaluation, the tool determines the compliance towards
-one guideline by establishing limits for the percentage of code allowed to be in
-each of the $4$ risk severity levels (\emph{low risk}, \emph{medium risk}, \emph{high risk}
-and \emph{very high risk}). If the project does not violate the thresholds, then it
-is compliant with the guideline. These thresholds are calibrated by BCH using
-their own data/experience --- open-source and closed software systems. If a
-project is compliant with a guideline, it means that it is at least $65\%$
-better than the software used by BCH to calculate the thresholds\footnote{Check
-the answer to \emph{How can I adjust the threshold for passing/not passing a
-guideline?} at https://bettercodehub.com/docs/faq (Accessed on \today{})}.
+each project. Table~\ref{tab:guidelines} presents the $10$ guidelines proposed
+by BCH's authors for delivering software that is not difficult to
+maintain~\cite{Visser:2016:OREILLY}. During each guideline evaluation, the tool
+determines the compliance towards one guideline by establishing limits for the
+percentage of code allowed to be in each of the $4$ risk severity levels
+(\emph{low risk}, \emph{medium risk}, \emph{high risk} and \emph{very high
+risk}). If the project does not violate the thresholds, then it is compliant
+with the guideline. These thresholds are calibrated by BCH using their own
+data/experience --- open-source and closed software systems. If a project is
+compliant with a guideline, it means that it is at least $65\%$ better than the
+software used by BCH to calculate the thresholds\footnote{Check the answer to
+\emph{How can I adjust the threshold for passing/not passing a guideline?} at
+https://bettercodehub.com/docs/faq (Accessed on \today{})}.
 
 Figure~\ref{fig:bchrep} shows an example of the report
 provided by BCH for a project after finishing its evaluation. The examples
@@ -657,9 +658,10 @@ example only complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean Code}).
 independently~\cite{Visser:2016:OREILLY}. McCabe~\cite{1702388} is a software
 metric that calculates the number of linearly independent paths of the source
 code. BCH uses this metric to measure the number of branch points in the
-\emph{Write Simple Units of Code} guideline. The bar represents the top 30 of
-units that violates the guideline, sorted by severity, which is indicated by the
-colors of the checkboxes. The green bar represents the number of compliant
+\emph{Write Simple Units of Code} guideline. The bar at the bottom of the figure
+represents the top $30$ units that violates the guideline, sorted by severity,
+The violation severities are indicated using colors, and there is a legend to
+help interpreting the colors. The green bar represents the number of compliant
 branch points per unit (\emph{at most 5}), i.e., the units are compliant with
 ISO 25010~\cite{iso:2011}. Yellow, orange and red bars represent units that do
 not comply with medium (\emph{above 5}), high (\emph{above 10}) and very high
