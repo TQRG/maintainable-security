@@ -86,7 +86,7 @@
 % Add comments in the text
 %
 \newboolean{showcomments}
-\setboolean{showcomments}{false}
+\setboolean{showcomments}{true}
 %\setboolean{showcomments}{false}
 
 \ifthenelse{\boolean{showcomments}}
@@ -398,14 +398,16 @@ affect open-source software maintainability?}
 \end{framed}
 
 There are security flaws that are more difficult to refactor than others. For
-instance, implementing secure authentication is not as easy as fixing a cross-site scripting vulnerability with simple function to sanitize data\footnote{More information about \texttt{htmlentities()} at http://php.net/manual/en/function.htmlentities.php (Accessed on \today{})}. Knowing which patterns are more likely to increase maintainability
+instance, implementing secure authentication is not as easy as fixing a cross-site scripting vulnerability
+since usually the last one is fixed within a line or two of code, as seen in Figure~\ref{lst:fix}. 
+Knowing which patterns are more likely to increase maintainability
 issues is one step forward to bring awareness to security engineers of what
 patterns need more attention. The taxonomy of security patterns used to answer
 this question is the same as the one provided by the authors of the dataset~\cite{Reis:2017:IJSSE}.
 Maintainability is measured separately for each pattern.
 
 \setcounter{lstannotation}{0}
-\begin{lstlisting}[style={PHPStyle}, caption={Fix provided by \texttt{nextcloud/server} developers to a \\Cross-Site Scripting vulnerability},label={lst:fix},language=php]
+\begin{lstlisting}[style={PHPStyle}, caption={Fix provided by \texttt{nextcloud/server} developers to a \\Cross-Site Scripting vulnerability},label={lst:fix}]
  <ul>
     <li class='error'>
        <?php echo $l->t('Cloud not found');?><br/>
