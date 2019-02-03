@@ -398,8 +398,7 @@ affect open-source software maintainability?}
 \end{framed}
 
 There are security flaws that are more difficult to refactor than others. For
-instance, implementing secure authentication is not as easy as fixing a cross-site scripting vulnerability
-since usually the last one is fixed within a line or two of code, as seen in Figure~\ref{lst:fix}. 
+instance, implementing secure authentication is not as easy as fixing a cross-site scripting vulnerability since usually the last one is can be fixed without adding new lines of code, as seen in Figure~\ref{lst:fix}. The developer added the function \emph{htmlentities} to escape the data inserted by the variable \emph{\$\_['file']}.
 Knowing which patterns are more likely to increase maintainability
 issues is one step forward to bring awareness to security engineers of what
 patterns need more attention. The taxonomy of security patterns used to answer
