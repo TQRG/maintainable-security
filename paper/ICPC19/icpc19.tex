@@ -203,15 +203,15 @@ artificial intelligence. With this study, we intend to highlight the need for to
 to predict the impact of patches on maintainability~\cite{4724577} and documentation
 to help developers adopt security best practices~\cite{6311252, 7927935, MESQUIDA201519}.
 
-This paper is structured as follows: section \ref{sec:motivation} introduces an
+This paper is structured as follows: section~\ref{sec:motivation} introduces an
 example of a security refactoring of a known vulnerability found in
 OpenSSL\footnote{Repository available at https://github.com/openssl/openssl
-(Accessed on \today{})}; section \ref{sec:methodology} describes the
-methodology used to answer the research questions; section \ref{sec:results}
-presents the results and section \ref{sec:discussion} discusses their
-implications; section \ref{sec:threats}, threats to the validity of the study
-are enumerated; section \ref{sec:rw} describres the different work and existing
-literature in the field of study; and, finally section \ref{sec:conclusions}
+(Accessed on \today{})}; section~\ref{sec:methodology} describes the
+methodology used to answer the research questions; section~\ref{sec:results}
+presents the results and section~\ref{sec:discussion} discusses their
+implications; section~\ref{sec:threats}, threats to the validity of the study
+are enumerated; section~\ref{sec:rw} describres the different work and existing
+literature in the field of study; and, finally section~\ref{sec:conclusions}
 concludes the main findings and elaborates on future work.
 %
 \section{Motivation and Research Questions}\label{sec:motivation}
@@ -311,16 +311,16 @@ consume approximately $180MB$ per DTLS connection.
 
 The code changes performed to fix the vulnerability were the following:
 
-\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was
+~\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was
 inserted to limit the number of bytes allowed in a DTLS handshake message for
 \texttt{s}. This function replaces lines $18$---$21$.
 
-\ref{lst:func2} Checks if the maximum certificate list size
+~\ref{lst:func2} Checks if the maximum certificate list size
 (\texttt{s-$>$max\_cert\_list}) requires more length than the maximum length
 (\texttt{max\_len}). If that condition holds, the function returns the size of
 the certificate list, otherwise it returns the maximum length.
 
-\ref{lst:func5} and \ref{lst:func4} add the check to ensure that the message
+~\ref{lst:func5} and~\ref{lst:func4} add the check to ensure that the message
 length is never higher than the maxiumum allowed by the DTSL protocol in
 different functions.
 
@@ -328,11 +328,11 @@ Although limiting the size of a handshake message seems an elementary problem to
 repair, the example shows that there was a significant amount of changes
 performed in the codebase which produced a negative impact in the project
 maintainability. Even though the developer tries to simplify the codebase with
-the creation of a smaller unit \texttt{dtls1\_max\_handshake\_message\_len} (\ref{lst:func1}), it
+the creation of a smaller unit \texttt{dtls1\_max\_handshake\_message\_len} (~\ref{lst:func1}), it
 also disrupts $2$ of the guidelines proposed by the Software Improvement Group
 (SIG) for building maintainable software~\cite{Visser:2016:OREILLY}. It adds a
 new branch point to the \texttt{dtls1\_process\_out\_of\_seq\_message} unit
-(\ref{lst:func5}) increasing the cyclomatic complexity and breaking the
+(~\ref{lst:func5}) increasing the cyclomatic complexity and breaking the
 \emph{Write Simple Units of Code} guideline. Moreover, it increases the codebase
 size in $4$ lines of code ($13$ lines added, $9$ lines deleted) which contributes
 to a potential violation of the
@@ -378,7 +378,7 @@ Maintainability is measured separately for each pattern.
 %
 The methodology used to measure the impact of security refactorings on the
 maintainability of open-source software is discussed this section. The methodology
-comprehends the following steps, as illustrated in Figure \ref{fig:met}:
+comprehends the following steps, as illustrated in Figure~\ref{fig:met}:
 \begin{enumerate}
 	\item Extract relevant data from a dataset containing
 $716$ security refactorings collected from open-source software available on
@@ -408,8 +408,10 @@ mining $94$ GitHub projects. Reis and Abreu (2017) mined open-source
 software aiming at the extraction of real examples --- created by real
 developers --- to test and assess the performance of static analysis tools since
 using hand-seeded test cases or mutations could lead to misleading assessments
-of the capabilities of the tools \cite{just2014mutants}. The study yielded a
-dataset with $716$ test cases for $16$ security patterns. Each test case of the
+of the capabilities of the tools~\cite{just2014mutants}. The study yielded a
+dataset with $716$ test cases for $16$ security patterns. Some of the patterns 
+are based in the OWASP Top 10 of 2013~\cite{oswap:2013} and OWASP Top 10 of 
+2017~\cite{oswap:2017}. Each test case of the
 dataset is a triplet: the commit before the refactoring, the commit responsible
 for the refactoring, and the snippets of code that differ from one version to
 another (typically, called \textit{diffs}) --- where one can easily review the
@@ -429,15 +431,7 @@ evaluate if the impact was positive, negative or none.
 	\label{fig:domain}
 \end{figure}
 
-The test cases in the dataset are classified with one of the $16$ following
-patterns: \textit{Injection}, \textit{Broken Authentication
-and Session Management}, \textit{Cross-Site Scripting}, \textit{Broken Access
-Control}, \textit{Security Misconfiguration}, \textit{Sensitive Data Exposure},
-\textit{Insufficient Attack Protection}, \textit{Cross-Site Request Forgery},
-\textit{Using Components With Known Vulnerabilities}, \textit{Unprotected APIs},
-\textit{Memory Leak}, \textit{Overflow}, \textit{Denial-of-Service},
-\textit{Path Traversal}, \textit{Miscellaneous}, \textit{Resource Leak} and
-\textit{SHA-1 Hash Function}. Some of the patterns are based in the OWASP Top 10 of 2013~\cite{oswap:2013} and OWASP Top 10 of 2017~\cite{oswap:2017}
+
 
 The $716$ refactorings in the dataset were run against the BCH toolset to
 calculate their maintainability reports. However, there are refactorings
@@ -468,13 +462,15 @@ the dataset containing less than $20$ instances):
 	flood or crashing services. This attacks usually occur when the system
 	receives much traffic causing it to slow down and eventually stop. For
 	example, flaws allowing crackers to trigger memory allocations corresponding
-	to large length values (Listing \ref{lst:vuln}).
+	to large length values (Listing~\ref{lst:vuln}).
 
 	\item \textbf{Miscellaneous} This pattern comprises several others categories
 	of security refactorings (e.g., \textit{path traversal and buffer overflow}).
 	It contains several other security refactorings that do not have their own
 	pattern yet. The patterns not satisfying the size requirement of more than 20
-	refactorings are contemplated here.
+	refactorings are contemplated here: \textit{Resource Leak},
+	\textit{SHA-1 Hash Function}, \textit{Broken Access Control}, \textit{Sensitive Data Exposure},
+	\textit{Insufficient Attack Protection}, \textit{Overflow}, \textit{Path Traversal}.
 
 	\item \textbf{Cross-Site Scripting.} Lack of proper validation or escaping
 	allow crackers to submit untrusted data to web browsers through malicious
@@ -511,9 +507,9 @@ Total & 165771.00  & 512182.00  & 37729.00    & 14413.00        & 1394412.00  & 
 \end{table*}
 
 The dataset contemplates security flaws for more than 13 different languages
-being PHP (39\%) and C (24\%) the most prevalent ones; see Figure \ref{fig:lang}.
+being PHP (39\%) and C (24\%) the most prevalent ones; see Figure~\ref{fig:lang}.
 To classify the applications in the dataset, we use a taxonomy for open-source
-software from previous work~\cite{7816479}. Figure \ref{fig:domain}
+software from previous work~\cite{7816479}. Figure~\ref{fig:domain}
 presents the projects domain distribution: \textit{Aplication Software} ($25$),
 software that provides end-users with functional systems; \textit{Web libraries
 and frameworks} ($20$); \textit{System Software} ($18$), software that provides
@@ -522,7 +518,7 @@ services and infrustructures (e.g., operating systems, servers and databases);
 programming languages, compilers, package managers, IDEs); and, \textit{Non-web
 libraries and frameworks} ($18$), for desktop and mobile software.
 %
-Table \ref{tab:dataset} presents the descriptive statistics of the $94$
+Table~\ref{tab:dataset} presents the descriptive statistics of the $94$
 open-source projects involved in this study, including the number of forks, the number of
 stars, the number of watchers, the number of contributors, the number of commits, the number of
 branches, the number of releases,  size (cf. GitHub it is the size of the whole
@@ -550,9 +546,8 @@ characteristics of different projects.
 
 As said before, the web-based source code analysis service \emph{Better Code
 Hub} (BCH) is used to collect the maintanability reports of the refactorings of
-each project. Table \ref{tab:guidelines} presents the 10 guidelines
-proposed by BCH's authors for delivering software that is easy to maintain
-\cite{Visser:2016:OREILLY}. All guidelines are computed in the same evaluation by
+each project. Table~\ref{tab:guidelines} presents the 10 guidelines
+proposed by BCH's authors for delivering software that is easy to maintain~\cite{Visser:2016:OREILLY}. All guidelines are computed in the same evaluation by
 BCH. During each guideline evaluation, the tool determines the compliance towards
 one guideline by establishing limits for the percentage of code allowed to be in
 each of the $4$ risk severity levels (\emph{low risk}, \emph{medium risk}, \emph{high risk}
@@ -564,10 +559,10 @@ better than the software used by BCH to calculate the thresholds\footnote{Check
 the answer to \emph{How can I adjust the threshold for passing/not passing a
 guideline?} at https://bettercodehub.com/docs/faq (Accessed on \today{})}.
 
-Figure \ref{fig:bchrep} shows an example of the report
+Figure~\ref{fig:bchrep} shows an example of the report
 provided by BCH for a project after finishing its evaluation. The examples
 refers to the OpenSSL CVE-2014-3506 vulnerability refactoring ---
-as described as motivating example in Section \ref{sec:motivation}. This
+as described as motivating example in Section~\ref{sec:motivation}. This
 version of OpenSSL only complies with 1 out of 10 guidelines: \emph{Write
 Clean Code}.
 
@@ -615,14 +610,14 @@ example only complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean Code}).
 \end{figure}
 
 \emph{Units} are the smallest groups of code that can be maintained and executed
-independently \cite{Visser:2016:OREILLY}. McCabe \cite{1702388} is a software
+independently~\cite{Visser:2016:OREILLY}. McCabe~\cite{1702388} is a software
 metric that calculates the number of linearly independent paths of the source
 code. BCH uses this metric to measure the number of branch points in the
 \emph{Write Simple Units of Code} guideline. The bar represents the top 30 of
 units that violates the guideline, sorted by severity, which is indicated by the
 colors of the checkboxes. The green bar represents the number of compliant
 branch points per unit (\emph{at most 5}), i.e., the units are compliant with
-ISO 25010 \cite{iso:2011}. Yellow, orange and red bars represent units that do
+ISO 25010~\cite{iso:2011}. Yellow, orange and red bars represent units that do
 not comply with medium (\emph{above 5}), high (\emph{above 10}) and very high
 (\emph{above 25}) severity levels. In the bar, there are marks that pinpoint the
 compliance thresholds for each severity level. If the green mark is somewhere
@@ -635,8 +630,7 @@ in the green bar it means it is compliant with a low level of severity.
 \end{figure}
 
 Aiming to analyze the impact of security refactorings, we use BCH to compute
-maintainability of two different versions of the project (Figure
-\ref{fig:commit}):
+maintainability of two different versions of the project (Figure~\ref{fig:commit}):
 \begin{itemize}
 	\item $v_{s-1}$, the version containing the security flaw, i.e., before the
 	refactoring;
@@ -647,7 +641,7 @@ maintainability of two different versions of the project (Figure
 The BCH tool does not compute the final score that our study needs to compare
 maintainability amongst different project versions. Thus, our work proposes an
 equation to capture the distance between the current state of the project and
-the standard thresholds based on previous work \cite{Olivari:2018}.
+the standard thresholds based on previous work\cite{Olivari:2018}.
 \begin{itemize}
 	\item \textbf{Size project changes do not affect the maintainability
 	difference between two versions, $\Delta M (v_{s-1},v_{s})$.} In this work, we
@@ -669,8 +663,7 @@ selected guidelines, as follows:
 \end{equation}
 
 \noindent
-where $G$ is the group of selected maintainability guidelines from BCH (Table
-\ref{tab:guidelines}) and $v$ is the version of the software under evaluation.
+where $G$ is the group of selected maintainability guidelines from BCH (Table~\ref{tab:guidelines}) and $v$ is the version of the software under evaluation.
 The maintenance $M$ based on the guideline $g$ for a given version of a project
 is computed with the following equation:
 
@@ -703,24 +696,24 @@ compliant lines. Finally, the term $w(l)$ is calculated as follows:
 where $T(l)$ is the threshold in percentage of the lines of code that are
 accepted to be non-compliant with the guideline for the severity level $l$. This
 is a standard value defined by BCH. In other words, the factor $w$ is used in
-Equation \ref{eq:3} to highlight the lines of code that are not complying with
+Equation~\ref{eq:3} to highlight the lines of code that are not complying with
 the guideline. Then, we compute the difference of maintainability between the
 security commit ($v_{s}$) and its parent commit ($v_{s-1}$), as illustrated in
-Figure \ref{fig:commit}.
+Figure~\ref{fig:commit}.
 
 \subsection{Statistical Validation}\label{sec:statsval}
 %
 To validate the maintainability differences in different groups of commits
 (e.g., baseline and security commits), we use the Paired Wilcoxon signed-rank
-test with the significance level $\alpha = 0.05$ \cite{10.2307/3001968} . In
+test with the significance level $\alpha = 0.05$~\cite{10.2307/3001968} . In
 other words, we test the null hypothesis that the maintainability difference
 between pairs of versions $v_{v-1}$, $v_v$ (i.e., before and after a
 security-commit) follows a symmetric distribution around $0$. However, when the
 difference between groups is zero, the observations are discarded. Thus, we use
 a more robust approach of the wilcoxon test, the Wilcoxon test by Pratt which
 provides an alternative that incorporates the cases where the maintainability
-difference is zero \cite{10.2307/2282543}. To understand the effect-size, as
-advocated by the Common-language effect sizes \cite{graw:1992}, we compute the
+difference is zero~\cite{10.2307/2282543}. To understand the effect-size, as
+advocated by the Common-language effect sizes\cite{graw:1992}, we compute the
 mean difference, the median of the difference, and the percentage of cases that
 reduce maintainability.
 %
@@ -728,7 +721,7 @@ reduce maintainability.
 
 In total, this study evaluates $607$ security and baseline commits from 94
 different open-source projects distributed among 5 different main types of
-software, Figure \ref{fig:domain}. The following section presents the results
+software, Figure~\ref{fig:domain}. The following section presents the results
 obtained for each research question.
 
 \begin{framed}
@@ -738,7 +731,7 @@ maintainability of open-source software?}
 
 
 The impact of security and baseline commits in the maintainability of
-open-source software is presented in Figure \ref{fig:secvsreg}. For each type
+open-source software is presented in Figure~\ref{fig:secvsreg}. For each type
 of change, three types of impact of refactorings in the software maintainability
 are presented: \emph{negative}, maintainability decreases (\emph{red}); \emph{none},
 maintainability stays the same (\emph{yellow}); and, \emph{positive}, maintainability
@@ -775,7 +768,7 @@ impact in the maintainability of open-source software}.
 \end{figure}
 
 In this study, we also evaluated the impact of each programming language on the
-maintainability of open-source software, Figure \ref{fig:lang_main}. Although the
+maintainability of open-source software, Figure~\ref{fig:lang_main}. Although the
 dataset contains security refactorings for more than $13$ languages, we only
 present the results for \emph{Java}, \emph{C}, \emph{Ruby} and \emph{PHP} because
 one of the requirements of the Wilcoxon signed-rank test is that the input sample
@@ -798,7 +791,7 @@ affect open-source software maintainability?}
 \end{framed}
 
 The impact of each type of security refactoring on the maintainability of
-open-source software is presented in Figure \ref{fig:pat}. The results of the
+open-source software is presented in Figure~\ref{fig:pat}. The results of the
 Wilcoxon signed-rank test by pattern returned statistical evidence which
 supports that the maintainability of open-source software decreases for 4
 different patterns: Broken Autentication (p = 0.018), Denial-of-Service
@@ -854,7 +847,7 @@ of open-source software?}
 \textbf{\textit{Security refactorings harm the maintainability of open-source software.}}
 
 40.2\% of the security refactoring have a negative impact on the maintainability
-of open-source software, Figure \ref{fig:secvsreg}. This raises a new tradeoff when
+of open-source software, Figure~\ref{fig:secvsreg}. This raises a new tradeoff when
 developers need to fix vulnerabilities on their projects because they might be affecting
 the software maintainability or even introducing new vulnerabilities. This study exhibits
 proof that developers may have to reduce maintainability for the sake of safety. We understand
@@ -877,7 +870,7 @@ We would expect that the negative impact of programming languages on maintainabi
 would be more intense due to the buzz of the last years surrounding the idea that
 poor design of programming languages and lack of using the best practices lead to
 more buggy and vulnerable code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}.
-However, Figure \ref{fig:lang_main} shows that only \emph{C} has a negative impact of more than 50\% on
+However, Figure~\ref{fig:lang_main} shows that only \emph{C} has a negative impact of more than 50\% on
 software maintainability. We suspect that these values are the result of projects
 contributions policies. 9 out of 10 projects --- the equivalent to 31.8\% of the commits ---
 of the top-10 of dataset projects with more contributors have restrict contribution
@@ -897,7 +890,7 @@ Components with Know Vulnerabilities}, overall maintainability does not suffer a
 For the remaining patterns, \emph{Injection} and \emph{Cross-Site Request Forgery}, results are not statistically
 significant.
 
-The impact of a refactoring depends on its complexity, i.e., if the refactoring adds complexity to the codebase it is probably affecting the software maintainability. One evidence of that is the fact of \emph{Cross-Site Scripting} and \emph{Using Components with Know Vulnerabilities} refactorings endure more cases without any impact in the maintainability. Typically, these type of vulnerabilities are one line fixes --- adding an \texttt{escape} function or changing the version of the component, respectively. Whereas, Broken Authentication and vulnerabilities such as the one presented in Section \ref{sec:motivation} responsible by DoS attacks are more difficult to fix (several code lines deleted and added). Another example is the Apple authentication flaw discovered in 2017 (CVE-2017-13872)\footnote{CVE-2017-13872 details available at https://support.apple.com/en-us/HT208315 (Accessed on \today{})}, where any user could login as root with an empty password. Patrick Wardle examined the cause of the issue\footnote{\emph{Why $<$blank$>$ Gets You Root} available at https://objective-see.com/blog/blog\_0x24.html (Accessed on \today{})} and conclude that the flaw was due to the introduction of high cyclomatic complexity in a method used to verify the password. In sum, \emph{Cross-Site Scripting} and \emph{Using Components with Known Vulnerabilities} should take part of the developers preocupations along with the other patterns that explicitly hinder maintainability because despite their low complexity these are patterns that still produce a considerable negative impact on the maintainability. Real efforts have been made in creating and incorporating coding standards and best practices in software production. However, security is still far from perfection and fixing vulnerabilities might hinder software maintainability. Thus, it is important to provide tool support to developers to help them applying these patterns without harming software maintainability.
+The impact of a refactoring depends on its complexity, i.e., if the refactoring adds complexity to the codebase it is probably affecting the software maintainability. One evidence of that is the fact of \emph{Cross-Site Scripting} and \emph{Using Components with Know Vulnerabilities} refactorings endure more cases without any impact in the maintainability. Typically, these type of vulnerabilities are one line fixes --- adding an \texttt{escape} function or changing the version of the component, respectively. Whereas, Broken Authentication and vulnerabilities such as the one presented in Section~\ref{sec:motivation} responsible by DoS attacks are more difficult to fix (several code lines deleted and added). Another example is the Apple authentication flaw discovered in 2017 (CVE-2017-13872)\footnote{CVE-2017-13872 details available at https://support.apple.com/en-us/HT208315 (Accessed on \today{})}, where any user could login as root with an empty password. Patrick Wardle examined the cause of the issue\footnote{\emph{Why $<$blank$>$ Gets You Root} available at https://objective-see.com/blog/blog\_0x24.html (Accessed on \today{})} and conclude that the flaw was due to the introduction of high cyclomatic complexity in a method used to verify the password. In sum, \emph{Cross-Site Scripting} and \emph{Using Components with Known Vulnerabilities} should take part of the developers preocupations along with the other patterns that explicitly hinder maintainability because despite their low complexity these are patterns that still produce a considerable negative impact on the maintainability. Real efforts have been made in creating and incorporating coding standards and best practices in software production. However, security is still far from perfection and fixing vulnerabilities might hinder software maintainability. Thus, it is important to provide tool support to developers to help them applying these patterns without harming software maintainability.
 
 \section{Threats to Validity}\label{sec:threats}
 %
@@ -909,7 +902,7 @@ The maintainability formula was inferred based on the reports of the Better Code
 The high amount of different projects and backgrounds may require different maintainablity
 standards. However, BCH does have a representative benchmark of closed and open-source
 software projects that is under the calculation of the thresholds used in the computation
-of each maintainability guideline (Table \ref{tab:guidelines})~\cite{Visser:2016:OREILLY,
+of each maintainability guideline (Table~\ref{tab:guidelines})~\cite{Visser:2016:OREILLY,
 Baggen2012}.
 
 \subsection{Internal}
@@ -943,7 +936,7 @@ The differences of maintainability between groups of refactored elements and
 non-refactored were analyzed. And, the authors conclude that the source
 code elements subjected to refactorings had significantly lower maintainability
 than the elements not affected. Studying the evolution of maintaninability issues during the development of Android apps, Malavolta et al. (2018)~\cite{8530041} discovered that maintainability
-decreases over time. Palomba et al. (2018)\cite{Palomba:2018:DIM:3231288.3231337} exhibits
+decreases over time. Palomba et al. (2018)~\cite{Palomba:2018:DIM:3231288.3231337} exhibits
 proof that code smells should be carefully monitored by programmers, since there is
 a high correlation between maintainability aspects and proneness to changes and faults.
 The present work is based on the 10 guidelines proposed
