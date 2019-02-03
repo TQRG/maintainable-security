@@ -870,7 +870,7 @@ of open-source software?}
 
 \textbf{\textit{Security refactorings harm the maintainability of open-source software.}}
 
-In particular, 40.2\% of the security refactoring have a negative impact on the
+We found that 40.2\% of the security refactoring have a negative impact on the
 maintainability of open-source software, Figure~\ref{fig:secvsreg}. This raises
 a new tradeoff when developers need to fix vulnerabilities on their projects
 because they might be affecting the software maintainability or even introducing
@@ -951,8 +951,7 @@ The following section presents the potential threats to validity of this study.
 \subsection{Construct}
 %
 
-\Luis{Better Code Hub -> BCH}
-The maintainability formula was inferred based on the reports of the Better Code Hub.
+The maintainability formula was inferred based on the BCH's reports.
 The high amount of different projects and backgrounds may require different maintainability
 standards. However, BCH does have a representative benchmark of closed and open-source
 software projects that is under the calculation of the thresholds used in the computation
@@ -969,35 +968,31 @@ discards security refactorings that were not explicit in commits messages.
 Baseline commits are retrieved randomly by selecting one commit from the same
 project of a given security refactoring. This approach softens the differences
 that may result from the characteristics of each project. However,
-maintainability still may be affected by the developers experience, coding
+maintainability may sitll be affected by the developers experience, coding
 style and software contribution polices which it is not evaluated in this
 study. Furthermore, this evaluation considers that 607 regular commits are
 enough to alleviate random irregularities in the maintainability differences of
 the baseline.
 
-\Luis{maintainability still may be affected -> maintainability may sitll be affected}
-
 \subsection{External}
 
-\Luis{A primeira threat que falas é que os resultados podem nao generalizar
-para software fechado. Eu acho que deviamos ser mais diretos. Para alem disso
-tirava o "In contrast to the BCH benchmark,"}
+% \Luis{A primeira threat que falas é que os resultados podem nao generalizar
+% para software fechado. Eu acho que deviamos ser mais diretos.}\Sof{Diretos como?}
 
-In contrast to the BCH benchmark, this study uses a dataset that only covers
+This study uses a dataset that only covers
 open-source software to perform the maintainability evaluation. However, BCH
 thresholds are calculated from a set of both open and closed software.
 Different programming languages may require different coding practices to
 address software safety. The dataset comprises more commits in C and PHP, i.e.,
-the dataset may not be properly representative of the population regarding to
-programming languages.
+the dataset may not be properly representative of the population regarding to programming languages.
 
 All the security commits are described in English. This approach discards
 security refactorings provided in other languages.
 
 \section{Related Work}\label{sec:rw}
 
-\Luis{pode ser uma cena só minha mas acho que fica melhor em vez de comecar
-fraseds com "And," usar outros conetores tipo "Besides," "In addition,", etc. œ}
+% \Luis{pode ser uma cena só minha mas acho que fica melhor em vez de comecar
+% fraseds com "And," usar outros conetores tipo "Besides," "In addition,", etc. œ}
 
 Many studies have investigated the relationship between refactorings and software quality.
 Previous work focused on coupling metrics has evaluated the impact of refactorings and
@@ -1017,9 +1012,9 @@ The present work is based on the 10 guidelines proposed
 by the Software Improvement Group (SIG) and focuses solely on evaluating
 the impact of patching vulnerabilities on software maintainability.
 
-\Luis{eu nao acho que usar 10 guidelines proposed by the Software Improvement
-Group (SIG) seja algo que nos esteja a diferenciar. Acho que o a prinicpal
-diferenca é que estamos a estudar maintainability issues noutro contexto.}
+% \Luis{eu nao acho que usar 10 guidelines proposed by the Software Improvement
+% Group (SIG) seja algo que nos esteja a diferenciar. Acho que o a prinicpal
+% diferenca é que estamos a estudar maintainability issues noutro contexto.}
 
 Researchers investigated the relationship between design patterns and
 software maintainability~\cite{10.1007/978-3-642-35267-6-18}. 300 revisions
@@ -1037,7 +1032,7 @@ impact of language design. Both have used the number of defects as an indicator 
 software quality. The present work studies how security refactorings affect software quality
 based on the code maintainability analysis.
 
-\Luis{ tambem fizemos analise por linguagem, nesta ultima citacao deviamos falar sobre isso tb.}
+% \Luis{ tambem fizemos analise por linguagem, nesta ultima citacao deviamos falar sobre isso tb.}
 
 \section{Conclusion and Future Work}\label{sec:conclusions}
 
@@ -1050,7 +1045,7 @@ this evidence in 40.2\% of the studied cases. Regarding regular commits, it seem
 overall maintainability increases (50.16\%). However, there is still a very considerable amout of
 cases that harm maintaniability (41.35\%).
 
-\Luis{secure security frameworks, nao percebi bem o que se quer dizer aí.}
+% \Luis{secure security frameworks, nao percebi bem o que se quer dizer aí.}
 
 This study also exhibits evidence that some patterns need more attention than
 others. Broken Autentication issues, Denial-of-Service attacks and Memory Leaks
@@ -1062,13 +1057,9 @@ to introduce in the CI/CD pipeline to help software maintenance and new or
 improved programming languages to allow developers to easily implement safety
 in their software without endangering maintainability.
 
-\Luis{many directions such as -> many directions:}
-\Luis{evaluate the impact of programming languages of the
-maintainability of each refactoring pattern; - > evaluate the impact of each refactoring pattern on the maintainbility of each  }
 
-As future work, this study may be extended in many directions such as analyze which guidelines are
-more likely to affect security refactorings; evaluate the impact of programming languages of the
-maintainability of each refactoring pattern; investigate if there is any correlation between
+As future work, this study may be extended in many directions: analyze which guidelines are
+more likely to affect security refactorings; evaluate the impact of each refactoring pattern on software maintainbility; investigate if there is any correlation between
 software maintainability and projects popularity; expand our methodology with other software quality
 properties; validate these findings with closed or private software; and, expand this analysis
 to other quality standards.
