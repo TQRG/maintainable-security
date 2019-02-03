@@ -990,11 +990,11 @@ the baseline.
 \subsection{External}
 
 \Luis{A primeira threat que falas é que os resultados podem nao generalizar
-para software fechado. Eu acho que deviamos ser mais diretos.}\Sof{Diretos como?}
+para software fechado. Eu acho que deviamos ser mais diretos.}
+\Sof{Melhor?}
 
-This study uses a dataset that only covers
-open-source software to perform the maintainability evaluation. However, BCH
-thresholds are calculated from a set of both open and closed software.
+We use a dataset that only comprises refactorings of open-source software. However, the methodology requires to access data that is not publicly available. Thus, our findings may not extent to non-open source software.
+
 Different programming languages may require different coding practices to
 address software safety. The dataset comprises more commits in C and PHP, i.e.,
 the dataset may not be properly representative of the population regarding to programming languages.
@@ -1004,8 +1004,7 @@ security refactorings provided in other languages.
 
 \section{Related Work}\label{sec:rw}
 
-\Luis{pode ser uma cena só minha mas acho que fica melhor em vez de comecar
-fraseds com "And," usar outros conetores tipo "Besides," "In addition,", etc. œ}
+
 
 Many studies have investigated the relationship between refactorings and software quality.
 Previous work focused on coupling metrics has evaluated the impact of refactorings and
@@ -1015,19 +1014,18 @@ this work, Hegedus et al.~\cite{HEGEDUS2018313} did not select particular metric
 assess the effect of refactorings. Instead, statistical tests were used to find
 the metrics that have the potential to change significantly after refactorings.
 The differences of maintainability between groups of refactored elements and
-non-refactored were analyzed. And, the authors conclude that the source
+non-refactored were analyzed. In addition, the authors conclude that the source
 code elements subjected to refactorings had significantly lower maintainability
 than the elements not affected. Studying the evolution of maintaninability issues during the development of Android apps, Malavolta et al. (2018)~\cite{8530041} discovered that maintainability
 decreases over time. Palomba et al. (2018)~\cite{Palomba:2018:DIM:3231288.3231337} exhibits
 proof that code smells should be carefully monitored by programmers, since there is
 a high correlation between maintainability aspects and proneness to changes and faults.
-The present work is based on the 10 guidelines proposed
-by the Software Improvement Group (SIG) and focuses solely on evaluating
+The present work uses a model proposed by BCH and focuses solely on evaluating
 the impact of patching vulnerabilities on software maintainability.
 
 \Luis{eu nao acho que usar 10 guidelines proposed by the Software Improvement
 Group (SIG) seja algo que nos esteja a diferenciar. Acho que o a prinicpal
-diferenca é que estamos a estudar maintainability issues noutro contexto.}
+diferenca é que estamos a estudar maintainability issues noutro contexto.}\Sof{Melhor?}
 
 Researchers investigated the relationship between design patterns and
 software maintainability~\cite{10.1007/978-3-642-35267-6-18}. 300 revisions
@@ -1043,9 +1041,9 @@ language design has impact on software quality. However, the authors of the seco
 study were not able to reproduce the first one and did not obtain any evidence about the
 impact of language design. Both have used the number of defects as an indicator of
 software quality. The present work studies how security refactorings affect software quality
-based on the code maintainability analysis.
+based on the code maintainability analysis and provides some evidence that the programming language has impact on maintainability.
 
-\Luis{ tambem fizemos analise por linguagem, nesta ultima citacao deviamos falar sobre isso tb.}
+\Luis{ tambem fizemos analise por linguagem, nesta ultima citacao deviamos falar sobre isso tb.}\Sof{Acho que esta!}
 
 \section{Conclusion and Future Work}\label{sec:conclusions}
 
@@ -1059,11 +1057,12 @@ overall maintainability increases (50.16\%). However, there is still a very cons
 cases that harm maintaniability (41.35\%).
 
 \Luis{secure security frameworks, nao percebi bem o que se quer dizer aí.}
+\Sof{Melhor?}
 
 This study also exhibits evidence that some patterns need more attention than
 others. \emph{Broken Autentication} issues, \emph{Denial-of-Service} attacks and \emph{Memory Leaks}
 endure maintainability in 55.3\%, 51.3\% and 47.5\%, respectively. Following
-the implications of our work, we draw attention for the need of secure security
+the implications of our work, we draw attention for the need of trustfull security
 frameworks, code best practices documentation to produce safe and maintainable
 code, proper authorization mechanisms design and implementation, better tools
 to introduce in the CI/CD pipeline to help software maintenance and new or
