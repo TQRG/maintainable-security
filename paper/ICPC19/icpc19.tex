@@ -328,11 +328,11 @@ Although limiting the size of a handshake message seems an elementary problem to
 repair, the example shows that there was a significant amount of changes
 performed in the codebase which produced a negative impact in the project
 maintainability. Even though the developer tries to simplify the codebase with
-the creation of a smaller unit \texttt{dtls1\_max\_handshake\_message\_len} (~\ref{lst:func1}), it
+the creation of a smaller unit \texttt{dtls1\_max\_handshake\_message\_len} (\ref{lst:func1}), it
 also disrupts $2$ of the guidelines proposed by the Software Improvement Group
 (SIG) for building maintainable software~\cite{Visser:2016:OREILLY}. It adds a
 new branch point to the \texttt{dtls1\_process\_out\_of\_seq\_message} unit
-(~\ref{lst:func5}) increasing the cyclomatic complexity and breaking the
+(\ref{lst:func5}) increasing the cyclomatic complexity and breaking the
 \emph{Write Simple Units of Code} guideline. Moreover, it increases the codebase
 size in $4$ lines of code ($13$ lines added, $9$ lines deleted) which contributes
 to a potential violation of the
@@ -367,12 +367,23 @@ affect open-source software maintainability?}
 \end{framed}
 
 There are security flaws that are more difficult to refactor than others. For
-instance, implementing secure authentication is not as easy as fixing a cross-site scripting vulnerability with an \texttt{escape}
-function. Knowing which patterns are more likely to increase maintainability
+instance, implementing secure authentication is not as easy as fixing a cross-site scripting vulnerability with simple function to sanitize data. Knowing which patterns are more likely to increase maintainability
 issues is one step forward to bring awareness to security engineers of what
 patterns need more attention. The taxonomy of security patterns used to answer
 this question is the same as the one provided by the authors of the dataset~\cite{Reis:2017:IJSSE}.
 Maintainability is measured separately for each pattern.
+
+\setcounter{lstannotation}{0}
+\begin{lstlisting}[caption={Fix provided by nextcloud/server developers to a \\Cross-Site Scripting vulnerability},label={lst:fix},language=php]
+ <ul>
+    <li class='error'>
+       <?php echo $l->t( 'Cloud not found' ); ?><br/>
+-      <p class='hint'><?php if(isset($_['file'])) echo $_['file']?></p>
++      <p class='hint'><?php if(isset($_['file'])) echo htmlentities($_['file'])?></p>
+    </li>
+ </ul>
+
+\end{lstlisting}
 %
 \section{Methodology}\label{sec:methodology}
 %
