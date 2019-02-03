@@ -179,7 +179,7 @@ to find vulnerabilities and defects. Therefore, writing maintainable code
 prevents the introduction of vulnerabilities in the codebases. In this work, we are
 concerned about the impact that patching vulnerabilities may have in the
 open-source software maintainability. Are developers affecting software
-maintainability when trying to improve software safety? We suspect that some of
+maintainability when trying to improve software security? We suspect that some of
 the patches may have a negative impact in the software maintainability and
 possibly even be the cause of the introduction of new vulnerabilities.
 
@@ -190,7 +190,7 @@ software quality ISO/IEC 25010. As ISO does not provide any specific guidelines 
 formula to calculate maintainability, we resort on Software Improvement
 Group (SIG)'s web-based source code analysis service Better Code Hub
 (BCH)~\cite{Visser:2016:OREILLY} to compute the maintainability of a given
-project. There are other well-known standards and models that have been proposed to increase software safety:
+project. There are other well-known standards and models that have been proposed to increase software security:
 Common Criteria~\cite{common:2009} which suffered a lot of criticism regarding the
 costs associated and poor technical evaluation; the OWASP
 Application Security Verification Criteria~\cite{oswap:2009} which is focused only
@@ -893,14 +893,14 @@ maintainability of open-source software, Figure~\ref{fig:secvsreg}. This raises
 a new tradeoff when developers need to fix vulnerabilities on their projects
 because they might be affecting the software maintainability or even introducing
 new vulnerabilities. This study exhibits evidence that developers may have to
-reduce maintainability for the sake of safety. We understand that developers
+reduce maintainability for the sake of security. We understand that developers
 should be able to produce secure code without affecting the maintainability of
 their projects. But there are still some concerns that need to be addressed:
 \begin{itemize}
 	\item \textbf{Security Frameworks} need to be secure and user-friendly~\cite{5287006, 7676144}. Unfortunately,
 	there are several vulnerabilities that stay undisclosed. Thus, developers should not
 	trust them blindly and check defaults.
-	\item \textbf{Documentation} of software should provide developers with the best practices to implement safe and maintainable software. Unmaintainable code is difficult to test, analyze and re-use.
+	\item \textbf{Documentation} of software should provide developers with the best practices to implement secure and maintainable software. Unmaintainable code is difficult to test, analyze and re-use.
 	\item \textbf{Proper Authorization Mechanisms} should be designed and implemented. This is
 	one of the most complex security features to implement. Some mechanisms might assist authorization maintenance in long run, such as the combination of \texttt{HTTP} filters with \texttt{Spring Security} annotations.
 	\item \textbf{Deprecated code} should be avoided by developers. They should integrate tools such as BCH on their projects CI/CD pipelines to help them be more aware of the maintainability of their code and issues (e.g., dead and duplicated code).
@@ -935,7 +935,7 @@ maintainability. One evidence of that is the fact of \emph{Cross-Site
 Scripting} and \emph{Using Components with Known Vulnerabilities} refactorings
 endure more cases without any impact in the maintainability. Typically, these
 types of vulnerabilities do not need extra lines to be fixed, as showed in
-Listing~\ref{lst:fix}. 
+Listing~\ref{lst:fix}.
 Whereas, \emph{Broken Authentication} and vulnerabilities such as the one presented in
 Section~\ref{sec:motivation} responsible by DoS attacks are more difficult to
 fix (several code lines deleted and added). Another example is the Apple
@@ -989,22 +989,18 @@ the baseline.
 
 \subsection{External}
 
-\Luis{A primeira threat que falas é que os resultados podem nao generalizar
-para software fechado. Eu acho que deviamos ser mais diretos.}
-\Sof{Melhor?}
-
-We use a dataset that only comprises refactorings of open-source software. However, the methodology requires to access data that is not publicly available. Thus, our findings may not extent to non-open source software.
+We use a dataset that only comprises refactorings of open-source software. As
+such, our findings may not generalize to non-open source software.
 
 Different programming languages may require different coding practices to
-address software safety. The dataset comprises more commits in C and PHP, i.e.,
-the dataset may not be properly representative of the population regarding to programming languages.
+address software security. The dataset comprises more commits in C and PHP, i.e.,
+the dataset may not be properly representative of the population regarding to
+programming languages.
 
 All the security commits are described in English. This approach discards
 security refactorings provided in other languages.
 
 \section{Related Work}\label{sec:rw}
-
-
 
 Many studies have investigated the relationship between refactorings and software quality.
 Previous work focused on coupling metrics has evaluated the impact of refactorings and
@@ -1023,10 +1019,6 @@ a high correlation between maintainability aspects and proneness to changes and 
 The present work uses a model proposed by BCH and focuses solely on evaluating
 the impact of patching vulnerabilities on software maintainability.
 
-\Luis{eu nao acho que usar 10 guidelines proposed by the Software Improvement
-Group (SIG) seja algo que nos esteja a diferenciar. Acho que o a prinicpal
-diferenca é que estamos a estudar maintainability issues noutro contexto.}\Sof{Melhor?}
-
 Researchers investigated the relationship between design patterns and
 software maintainability~\cite{10.1007/978-3-642-35267-6-18}. 300 revisions
 of \texttt{JHotDraw} were analyzed to conclude that every introduced pattern
@@ -1035,46 +1027,47 @@ use of design patterns may introduce maintainability issues into software~\cite{
 The present work studies how security patterns influence maintainability
 for open-source software.
 
-Other studies investigated the effect of programming languages in software quality~\cite{Ray:2017:LSP:3144574.3126905,
-2019arXiv190110220B}. The first study shows that some programming languages are more buggy than others, i.e.,
-language design has impact on software quality. However, the authors of the second
-study were not able to reproduce the first one and did not obtain any evidence about the
-impact of language design. Both have used the number of defects as an indicator of
-software quality. The present work studies how security refactorings affect software quality
-based on the code maintainability analysis and provides some evidence that the programming language has impact on maintainability.
-
-\Luis{ tambem fizemos analise por linguagem, nesta ultima citacao deviamos falar sobre isso tb.}\Sof{Acho que esta!}
+Other studies investigated the effect of programming languages in software
+quality~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. The first
+study shows that there are programming languages that are more prone to bugs
+than others. However, the authors of the second study~\cite{2019arXiv190110220B}
+were not able to reproduce the first one and did not obtain any evidence about
+the impact of language design. Both have used the number of defects as an
+indicator of software quality. The present work studies how security
+refactorings affect software quality based on the code maintainability analysis
+and provides some evidence that the programming language has impact on
+maintainability.
 
 \section{Conclusion and Future Work}\label{sec:conclusions}
 
-This work presents an empirical study on the impact of 607 security refactorings on
-the maintainability of 94 open-source projects. We leveraged Better Code Hub reports
-of each project version to calculate maintainability based on a model proposed in
-previous work. Security refactorings significantly affect the software maintainability of open-source
-software, i.e., developers hinder maintainability when fixing vulnerabilities. We found
-this evidence in 40.2\% of the studied cases. Regarding regular commits, it seems that
-overall maintainability increases (50.16\%). However, there is still a very considerable amout of
-cases that harm maintaniability (41.35\%).
+This work presents an empirical study on the impact of 607 security refactorings
+on the maintainability of 94 open-source projects. We leveraged Better Code Hub
+reports of each project version to calculate maintainability based on a model
+proposed in previous work. Security refactorings significantly affect the
+software maintainability of open-source software, i.e., developers hinder
+maintainability when fixing vulnerabilities. We found this evidence in 40.2\% of
+the studied cases. Regarding regular commits, we observed that the overall
+maintainability increases (50.16\%). However, there is still a very considerable
+amout of cases that harm maintaniability (41.35\%).
 
-\Luis{secure security frameworks, nao percebi bem o que se quer dizer aí.}
-\Sof{Melhor?}
-
-This study also exhibits evidence that some patterns need more attention than
-others. \emph{Broken Autentication} issues, \emph{Denial-of-Service} attacks and \emph{Memory Leaks}
-endure maintainability in 55.3\%, 51.3\% and 47.5\%, respectively. Following
-the implications of our work, we draw attention for the need of trustfull security
-frameworks, code best practices documentation to produce safe and maintainable
-code, proper authorization mechanisms design and implementation, better tools
-to introduce in the CI/CD pipeline to help software maintenance and new or
-improved programming languages to allow developers to easily implement safety
-in their software without endangering maintainability.
+Our study also shows evidence that there are patterns that need more attention
+than others. \emph{Broken Autentication}, \emph{Denial-of-Service}, and
+\emph{Memory Leaks} endure maintainability in 55.3\%, 51.3\% and 47.5\%,
+respectively. Following the implications of our work, we draw attention for the
+need of code best practices  documentation to produce secure and maintainable
+code, proper authorization mechanisms design and implementation, better tools to
+introduce in the CI/CD pipeline to help software maintenance and new or improved
+programming languages to allow developers to easily implement security in their
+software without endangering maintainability.
 
 
-As future work, this study may be extended in many directions: analyze which guidelines are
-more likely to affect security refactorings; evaluate the impact of each refactoring pattern on software maintainbility; investigate if there is any correlation between
-software maintainability and projects popularity; expand our methodology with other software quality
-properties; validate these findings with closed or private software; and, expand this analysis
-to other quality standards.
+As future work, this study may be extended in many directions: analyze which
+guidelines are more likely to affect security refactorings; evaluate the impact
+of each refactoring pattern on software maintainbility; investigate if there is
+any correlation between software maintainability and projects popularity; expand
+our methodology with other software quality properties; validate these findings
+with closed or private software; and, expand this analysis to other quality
+standards.
 
 \section*{Acknowledgment}\label{sec:ack}
 
