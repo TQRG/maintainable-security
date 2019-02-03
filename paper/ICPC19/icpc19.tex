@@ -332,13 +332,18 @@ https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd
 
 \end{lstlisting}
 
-In the example (Listing~\ref{lst:vuln}), all functions receive as input the \textbf{handshake} represented by \texttt{s}. Every SSL/TLS connection begins with a handshake which is reponsible by the negotiation between two parties. The handshake determines what cryptographic algorithms will be used to encrypt communications, verify the server and establish a secure connection before beginning data transfer. In the \texttt{dtls1\_reassemble\_fragment} function the value of
-\texttt{msg\_hdr-$>$frag\_off+frag\_len} is checked against the maximum
-handshake message size, but \texttt{msg\_len} is allocated to the fragment
-buffer in line $37$. Thus, if the fragment was within the allowed size, the
-pending handshake message could could use up to $18MB$ ($16MB$+$2MB$). According to the
-message commit, $10$ handshake messages are allowed, so the attacker could
-consume until $180MB$ per DTLS connection.
+In the example (Listing~\ref{lst:vuln}), all functions receive as input the
+\textbf{handshake} represented by \texttt{s}. Every SSL/TLS connection begins
+with a handshake which is reponsible by the negotiation between two parties. The
+handshake determines what cryptographic algorithms will be used to encrypt
+communications, verify the server and establish a secure connection before
+beginning data transfer. In the \texttt{dtls1\_reassemble\_fragment} function
+the value of \texttt{msg\_hdr-$>$frag\_off+frag\_len} is checked against the
+maximum handshake message size, but \texttt{msg\_len} is allocated to the
+fragment buffer in line $37$. Thus, if the fragment was within the allowed size,
+the pending handshake message could use up to $18$MB ($16$MB+$2$MB).
+According to the message commit, $10$ handshake messages are allowed. Hence,
+the attacker could potentially use $180$MB per DTLS connection.
 
 The code changes performed to fix the vulnerability were the following:
 
