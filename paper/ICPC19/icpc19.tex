@@ -202,10 +202,11 @@ BCH compiles the ISO/IEC 25010 into a set of 10 guidelines that are the
 base of BCH's evaluation. Two examples are the
 \emph{Write Simple Units of Code} based on the McCabe Complexity~\cite{1702388}
 and \emph{Keep your Codebase Small} based on the idea that smaller codebases are
-easier to maintain and less prone to defects~\cite{Visser:2016:OREILLY}. Compliance to the guidelines is derived from the SIG's
-industry benchmark which, according to official sources, consists of over 8
-billion lines of code in more than 180 different technologies. SIG analyzes
-around 15 million lines of code, per week.
+easier to maintain and less prone to defects~\cite{Visser:2016:OREILLY}. 
+% Compliance to the guidelines is derived from the SIG's
+% industry benchmark which, according to official sources, consists of over 8
+% billion lines of code in more than 180 different technologies. SIG analyzes
+% around 15 million lines of code, per week.
 
 The particular subject of this paper is to explore whether there is a trade-off
 between refactoring source code to patch disclosed vulnerabilities while keeping
@@ -260,7 +261,7 @@ maintainability of software.
 As an example, consider the refactoring of the Datagram Transport Layer Security
 (DTLS) protocol implementation in OpenSSL\footnote{OpenSSL is a tookit that
 contains open-source implementations of the SSL and TLS cryptographic
-protocols.} to address a vulnerability where an hacker could cause a Denial-of-Service
+protocols.} to address a vulnerability where an attacker could cause a Denial-of-Service
 (DoS) attack by crafting DTLS handshake messages to trigger memory allocations
 corresponding to large length values. This vulnerability is listed at the Common
 Vulnerabilities and Exposures dictionary as CVE-2014-3506\footnote{CVE-2014-3506
@@ -269,7 +270,7 @@ details available at http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3506
 evaluation. The following snippet presents the changes performend on the
 \emph{ssl/d1\_both.c} file\footnote{CVE-2014-3506 fix available  at
 https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd7636
-(Accessed on \today{})} by the OpenSLL developers to fix the vulnerability.
+(Accessed on \today{})} by the OpenSLL developers to patch the vulnerability.
 
 \medskip
 
@@ -332,32 +333,29 @@ https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd
 
 \end{lstlisting}
 
-In the example (Listing~\ref{lst:vuln}), all functions receive as input the
-\textbf{handshake} represented by \texttt{s}. Every SSL/TLS connection begins
-with a handshake which is reponsible by the negotiation between two parties. The
-handshake determines what cryptographic algorithms will be used to encrypt
-communications, verify the server and establish a secure connection before
-beginning data transfer. In the \texttt{dtls1\_reassemble\_fragment} function
-the value of \texttt{msg\_hdr-$>$frag\_off+frag\_len} is checked against the
-maximum handshake message size, but \texttt{msg\_len} is allocated to the
-fragment buffer in line $37$. Thus, if the fragment was within the allowed size,
-the pending handshake message could use up to $18$MB ($16$MB+$2$MB).
-According to the message commit, $10$ handshake messages are allowed. Hence,
-the attacker could potentially use $180$MB per DTLS connection.
+Every SSL/TLS connection begins with a handshake which is responsible by the negotiation between two parties. 
+DTLS provides a mechanism for fragmenting a handshake message over a number of packets, each of which can be 
+transmitted separately. In the example (Listing~\ref{lst:vuln}), all functions receive as input the
+SSL session, \texttt{s}. In the \texttt{dtls1\_reassemble\_fragment} function the size of the fragment \texttt{msg\_hdr-$>$frag\_off+frag\_len} is checked against the handshake message size \texttt{msg\_hdr->msg\_len} 
+(line 13) and then against the maximum handshake message size allowed by DTLS1 for \texttt{s} (line 16-21). 
+However, it is not verified if \texttt{msg\_hdr->msg\_len} is lower than the allowed by DTLS. Thus, in line 37,
+when \texttt{msg\_len} is allocated to the fragment buffer, more memory than the allowed might be allocated. According to the message commit, $10$ handshake messages are allowed per DTLS connection. Hence, a remote attacker could leverage this issue to trigger
+memory allocations corresponding to large length values and lead the system to memory exhaustion that could end
+in a DoS attack. The code changes performed to fix the vulnerability were the following:
 
-The code changes performed to fix the vulnerability were the following:
-
-~\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was inserted to limit the number of bytes allowed in a DTLS handshake message,
-\texttt{s}. Checks if the maximum certificate list size
+~\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was inserted to return the number of 
+maximum number of bytes allowed in a DTLS handshake message for \texttt{s}. The mininum is $16$KB, but may be greater 
+if the maximum certificate list size requires it which is set by the user. More specifically, it checks if the 
+maximum certificate list size
 (\texttt{s-$>$max\_cert\_list}) requires more length than the maximum length
 (\texttt{max\_len}). If that condition holds, the function returns the size of
 the certificate list, otherwise it returns the maximum length. This function replaces lines $18$-$21$.
 
-~\ref{lst:func5} and~\ref{lst:func4} add the check to ensure that the message
-length is never higher than the maxiumum allowed by the DTSL protocol in
-different functions.
+~\ref{lst:func5} and~\ref{lst:func4} add the check to different functions to ensure that the message 
+and the fragment length are never higher than the maximum allowed by DTSL. However, \ref{lst:func5} is
+the responsible for patching the vulnerability.
 
-Although limiting the size of a handshake message seems an elementary problem to
+Although checking the maximum size of a handshake message seems an elementary problem to
 repair, the example shows that there was a significant amount of changes
 performed in the codebase which produced a negative impact in the project
 maintainability. Even though the developer tries to simplify the codebase with
@@ -374,7 +372,7 @@ impact of this refactoring on the OpenSSL maintainability was negative.
 
 In this paper, our concern is to study whether, while improving software
 security, developers are also negatively impacting the maintainability
-of their software application. To answer the following two
+of their software applications. To answer the following two
 research questions, we use a dataset of security refactorings~\cite{Reis:2017:IJSSE} to measure the
 impact of the changes in the maintainability of open-source software.
 
@@ -494,18 +492,18 @@ the dataset containing less than $20$ instances):
 
 	\item \textbf{Broken Authentication \& Session Management.} Uncorrectly
 	implemented functionalities related to authentication and session management,
-	allowing crackers to gain access to session tokens, passwords, keys and other
+	allowing attacker to gain access to session tokens, passwords, keys and other
 	sensitive data. \textit{Based on the OWASP Top 10 of 2013.}
 
 	\item \textbf{Cross-Site Request Forgery.} Poor session tokens generation and
-	management usually allow crackers to send forged HTTP requests including
+	management usually allow attackers to send forged HTTP requests including
 	authentication information from the victim to vulnerable web application.
 	\textit{Based on the OWASP Top 10 of 2013.}
 
-	\item \textbf{Denial-of-Service} Security flaws that can allow a cracker to
+	\item \textbf{Denial-of-Service} Security flaws that can allow a attacker to
 	flood or crashing services. This attacks usually occur when the system
 	receives much traffic causing it to slow down and eventually stop. For
-	example, flaws allowing crackers to trigger memory allocations corresponding
+	example, flaws allowing attackers to trigger memory allocations corresponding
 	to large length values (Listing~\ref{lst:vuln}).
 
 	\item \textbf{Miscellaneous} This pattern comprises several others categories
@@ -517,12 +515,12 @@ the dataset containing less than $20$ instances):
 	\textit{Insufficient Attack Protection}, \textit{Overflow}, \textit{Path Traversal}.
 
 	\item \textbf{Cross-Site Scripting.} Lack of proper validation or escaping
-	allow crackers to submit untrusted data to web browsers through malicious
+	allow attackers to submit untrusted data to web browsers through malicious
 	scripts that can hijack the user sessions or redirect the user to malicious
 	sites. \textit{Based on the OWASP Top 10 of 2017.}
 
 	\item \textbf{Injection.} When developers do not keep untrusted data separate
-	from commands and queries. If a cracker sends a string that exploits the
+	from commands and queries. If a attacker sends a string that exploits the
 	syntax of the interpreter, then an injection attack is possible (e.g., SQL and
 	LDAP injection). \textit{Based on the OWASP Top 10 of 2017.}
 
