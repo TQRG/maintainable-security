@@ -86,7 +86,7 @@
 % Add comments in the text
 %
 \newboolean{showcomments}
-\setboolean{showcomments}{true}
+\setboolean{showcomments}{false}
 %\setboolean{showcomments}{false}
 
 \ifthenelse{\boolean{showcomments}}
@@ -801,7 +801,7 @@ impact in the maintainability of open-source software}.
 
 \begin{figure}[h]
  	\centering
- 	\includegraphics[width=0.55\textwidth]{figures/language.pdf}
+ 	\includegraphics[width=0.56\textwidth]{figures/language.pdf}
  	\caption{Maintainability difference by language after security refactorings}
 	\label{fig:lang_main}
 \end{figure}
@@ -817,7 +817,7 @@ statistical evidence which supports that the maintainability of open-source soft
 decreases for security refactorings in 3 different languages: \emph{C}
 (p = $5.72$x$10^{-9}$), Ruby (p = 0.057) and PHP (p = $3.54$x$10^{-6}$). The results
 also provide statistical significance for when security refactorings are performed
-in \emph{Java} (p = $3.61$x$10^{-2}$). \emph{Python} and the other languages
+in \emph{Java} (p = $3.61$x$10^{-2}$). \emph{Python} and the languages
 that integrate the \emph{Others} set contain more cases where the maintainability
 increases. However, the results obtained for these patterns are not statistically
 significant.
@@ -842,9 +842,9 @@ Scripting Vulnerabilities} (p = 0.001). \emph{Injection} and \emph{Cross-Site Re
 produced more cases where the refactorings had a negative impact in the maintainability.
 However, the results obtained for these patterns are not statistically significant.
 
-Projects with \emph{Broken Authentication} flaws are the most affected ones by security
+Software with \emph{Broken Authentication} flaws are the most affected ones by security
 refactorings. 55.3\% (21) of the refactorings had a negative impact in the maintainability
-while 35\% (11) had a positive impact and only 13.8\% (6) did not suffer any
+while 35\% (11) yielded a positive impact and only 13.8\% (6) did not suffer any
 change. The results also show that fixing \emph{Memory Leak}s affects the maintainability
 of 51.3\% (41) of the cases and leaves only 13.8\% (11) of the cases unaffected.
 In 35\% (28) of the cases, maintainability increased. Refactoring vulnerabilities
@@ -859,10 +859,10 @@ impact on the maintainability of open-source software.
 
 It is also important to notice that overall the maintainability of open-source
 software is not affected by \emph{Cross-Site Scripting} vulnerabilities and by \emph{Using
-Components with Know Vulnerabilities}. \emph{Cross-Site Scripting} does not suffer any
+Components with Known Vulnerabilities}. \emph{Cross-Site Scripting} does not suffer any
 decrease in the maintainability of 55.3\% (63) of cases and 21.1\% (24) have a
 positive effect on it. Only 23.7\% (27) of the cases hinder the software
-maintainability. From 21 cases evaluated for \emph{Using Componentes with Known
+maintainability. From the 21 cases evaluated for \emph{Using Componentes with Known
 Vulnerabilities}, only 4.8\% (1) has a positive effect in the maintainability
 of software. 14.3\% (3) harms maintainability software and 81\% has no effect
 in the maintainability.
@@ -924,13 +924,13 @@ https://www.php-fig.org/psr/psr-2/ (Accessed on \today{})}.
 \end{framed}
 
 \textbf{\textit{Broken Authentication \& Session Management, Denial-of-Service attacks and Memory Leaks and Miscellaneous patterns are more likely to affect open-source software maintainability.}} Although there are
-a few refactorings that harm software maintainability in the \emph{Cross-Site Scripting} and \emph{Using Components with Know Vulnerabilities}, overall maintainability does not suffer any changes for these patterns. For the remaining patterns, \emph{Injection} and \emph{Cross-Site Request Forgery}, results are not statistically significant.
+a few refactorings that harm software maintainability in the \emph{Cross-Site Scripting} and \emph{Using Components with Known Vulnerabilities}, overall maintainability does not suffer any changes for these patterns. For the remaining patterns, \emph{Injection} and \emph{Cross-Site Request Forgery}, results are not statistically significant.
 
 
 The impact of a refactoring depends on its complexity, i.e., if the refactoring
 adds complexity to the codebase it is probably affecting the software
 maintainability. One evidence of that is the fact of \emph{Cross-Site
-Scripting} and \emph{Using Components with Know Vulnerabilities} refactorings
+Scripting} and \emph{Using Components with Known Vulnerabilities} refactorings
 endure more cases without any impact in the maintainability. Typically, these
 type of vulnerabilities are one line fixes --- adding an \texttt{escape}
 function or changing the version of the component, respectively. Whereas,
