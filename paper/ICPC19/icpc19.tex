@@ -34,23 +34,43 @@
 
 \usepackage{pifont}
 \newcommand{\lstbg}[3][0pt]{{\fboxsep#1\colorbox{#2}{\strut #3}}}
-\lstset{ %
-  language=C,
-  backgroundcolor=\color{white},   % choose the background color
-  basicstyle=\ttfamily\scriptsize,        % size of fonts used for the code
-  breaklines=true,                 % automatic line breaking only at whitespace
-  captionpos=b,                    % sets the caption-position to bottom
-  commentstyle=\color{mygray}\bfseries,    % comment style
-  escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
-  keywordstyle=\color{blue},       % keyword style
-  stringstyle=\color{mymauve},     % string literal style
-  frame=single,
-  numbers=left,
-  stepnumber=1,
-  xleftmargin=2em,
-  escapeinside={/*!}{!*/},
-  moredelim=**[l][\color{mygreen}]{+\ },
-  moredelim=*[l][\color{red}]{-\ }
+
+\lstdefinestyle{CStyle} {
+    language=C,
+    backgroundcolor=\color{white},   % choose the background color
+    basicstyle=\ttfamily\scriptsize,        % size of fonts used for the code
+    breaklines=true,                 % automatic line breaking only at whitespace
+    captionpos=b,                    % sets the caption-position to bottom
+    commentstyle=\color{mygray}\bfseries,    % comment style
+    escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+    keywordstyle=\color{blue},       % keyword style
+    stringstyle=\color{mymauve},     % string literal style
+    frame=single,
+    numbers=left,
+    stepnumber=1,
+    xleftmargin=2em,
+    escapeinside={/*!}{!*/},
+    moredelim=**[l][\color{mygreen}]{+\ },
+    moredelim=*[l][\color{red}]{-\ }
+}
+
+\lstdefinestyle{PHPStyle} {
+    language=PHP,
+    backgroundcolor=\color{white},   % choose the background color
+    basicstyle=\ttfamily\scriptsize,        % size of fonts used for the code
+    breaklines=true,                 % automatic line breaking only at whitespace
+    captionpos=b,                    % sets the caption-position to bottom
+    commentstyle=\color{mygray}\bfseries,    % comment style
+    escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+    keywordstyle=\color{blue},       % keyword style
+    stringstyle=\color{mymauve},     % string literal style
+    frame=single,
+    numbers=left,
+    stepnumber=1,
+    xleftmargin=2em,
+    escapeinside={/*!}{!*/},
+    moredelim=**[l][\color{mygreen}]{+\ },
+    moredelim=*[l][\color{red}]{-\ }
 }
 
 
@@ -59,15 +79,12 @@
 \renewcommand{\thelstannotation}{\ding{\number\numexpr181+\arabic{lstannotation}}}
 \newcommand{\annotation}[1]{\refstepcounter{lstannotation}\label{#1}\thelstannotation}
 
-
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
 \newcommand{\Sof}[1]{\textbf{[Sofia:[}{\color{red} #1}\textbf{]]}}
 \newcommand{\Luis}[1]{\textbf{[Luis:[}{\color{green} #1}\textbf{]]}}
 \newcommand{\Rui}[1]{\textbf{[Rui:[}{\color{blue} #1}\textbf{]]}}
-
-
 
 \begin{document}
 
@@ -242,12 +259,11 @@ https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd
 \medskip
 
 \setcounter{lstannotation}{0}
-\begin{lstlisting}[caption={Fix provided by OpenSSL developers to the
+\begin{lstlisting}[style={CStyle}, caption={Fix provided by OpenSSL developers to the
 \\CVE-2014-3506 vulnerability},label={lst:vuln}]
-
 + static unsigned long dtls1_max_handshake_message_len(const SSL *s){ /*!\annotation{lst:func1}!*/
 +  unsigned long max_len = DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH;
-+  if(max_len < (unsigned long)s->max_cert_list) /*!\annotation{lst:func2}!*/
++  if(max_len < (unsigned long)s->max_cert_list) 
 +     return s->max_cert_list;
 +  return max_len;
 + }
@@ -301,24 +317,21 @@ https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd
 
 \end{lstlisting}
 
-In the \texttt{dtls1\_reassemble\_fragment} function the value of
+In the example (Listing~\ref{lst:vuln}), all functions receive as input the \textbf{handshake} represented by \texttt{s}. Every SSL/TLS connection begins with a handshake which is reponsible by the negotiation between two parties. The handshake determines what cryptographic algorithms will be used to encrypt communications, verify the server and establish a secure connection before beginning data transfer. In the \texttt{dtls1\_reassemble\_fragment} function the value of
 \texttt{msg\_hdr-$>$frag\_off+frag\_len} is checked against the maximum
 handshake message size, but \texttt{msg\_len} is allocated to the fragment
 buffer in line $37$. Thus, if the fragment was within the allowed size, the
 pending handshake message could consume $18MB$ ($16MB$+$2MB$). According to the
 message commit, $10$ handshake messages are allowed, so the attacker could
-consume approximately $180MB$ per DTLS connection.
+consume until $180MB$ per DTLS connection.
 
 The code changes performed to fix the vulnerability were the following:
 
-~\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was
-inserted to limit the number of bytes allowed in a DTLS handshake message for
-\texttt{s}. This function replaces lines $18$---$21$.
-
-~\ref{lst:func2} Checks if the maximum certificate list size
+~\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was inserted to limit the number of bytes allowed in a DTLS handshake message,
+\texttt{s}. Checks if the maximum certificate list size
 (\texttt{s-$>$max\_cert\_list}) requires more length than the maximum length
 (\texttt{max\_len}). If that condition holds, the function returns the size of
-the certificate list, otherwise it returns the maximum length.
+the certificate list, otherwise it returns the maximum length. This function replaces lines $18$-$21$.
 
 ~\ref{lst:func5} and~\ref{lst:func4} add the check to ensure that the message
 length is never higher than the maxiumum allowed by the DTSL protocol in
@@ -367,17 +380,17 @@ affect open-source software maintainability?}
 \end{framed}
 
 There are security flaws that are more difficult to refactor than others. For
-instance, implementing secure authentication is not as easy as fixing a cross-site scripting vulnerability with simple function to sanitize data. Knowing which patterns are more likely to increase maintainability
+instance, implementing secure authentication is not as easy as fixing a cross-site scripting vulnerability with simple function to sanitize data\footnote{More information about \texttt{htmlentities()} at http://php.net/manual/en/function.htmlentities.php (Accessed on \today{})}. Knowing which patterns are more likely to increase maintainability
 issues is one step forward to bring awareness to security engineers of what
 patterns need more attention. The taxonomy of security patterns used to answer
 this question is the same as the one provided by the authors of the dataset~\cite{Reis:2017:IJSSE}.
 Maintainability is measured separately for each pattern.
 
 \setcounter{lstannotation}{0}
-\begin{lstlisting}[caption={Fix provided by nextcloud/server developers to a \\Cross-Site Scripting vulnerability},label={lst:fix},language=php]
+\begin{lstlisting}[style={PHPStyle}, caption={Fix provided by \texttt{nextcloud/server} developers to a \\Cross-Site Scripting vulnerability},label={lst:fix},language=php]
  <ul>
     <li class='error'>
-       <?php echo $l->t( 'Cloud not found' ); ?><br/>
+       <?php echo $l->t('Cloud not found');?><br/>
 -      <p class='hint'><?php if(isset($_['file'])) echo $_['file']?></p>
 +      <p class='hint'><?php if(isset($_['file'])) echo htmlentities($_['file'])?></p>
     </li>
