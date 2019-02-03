@@ -319,7 +319,7 @@ In the example (Listing~\ref{lst:vuln}), all functions receive as input the \tex
 \texttt{msg\_hdr-$>$frag\_off+frag\_len} is checked against the maximum
 handshake message size, but \texttt{msg\_len} is allocated to the fragment
 buffer in line $37$. Thus, if the fragment was within the allowed size, the
-pending handshake message could consume $18MB$ ($16MB$+$2MB$). According to the
+pending handshake message could could use up to $18MB$ ($16MB$+$2MB$). According to the
 message commit, $10$ handshake messages are allowed, so the attacker could
 consume until $180MB$ per DTLS connection.
 
@@ -816,37 +816,37 @@ The impact of each type of security refactoring on the maintainability of
 open-source software is presented in Figure~\ref{fig:pat}. The results of the
 Wilcoxon signed-rank test by pattern returned statistical evidence which
 supports that the maintainability of open-source software decreases for 4
-different patterns: Broken Autentication (p = 0.018), Denial-of-Service
-(p = 0.029), Memory Leak (p = 0.009) and Miscellaneous (p = $3.07$x$10^{-4}$).
+different patterns: \emph{Broken Autentication} (p = 0.018), \emph{Denial-of-Service}
+(p = 0.029), \emph{Memory Leak} (p = 0.009) and \emph{Miscellaneous} (p = $3.07$x$10^{-4}$).
 The results also returned statistical significance that evidence that maintainability
 is more likely to not suffer differences for open-source software after removing
-Components with Known Vulnerabilities (p = $7.96$x$10^{-4}$) and fixing Cross-Site
-Scripting Vulnerabilities (p = 0.001). Injection and Cross-Site Request Forgery
+\emph{Components with Known Vulnerabilities} (p = $7.96$x$10^{-4}$) and fixing \emph{Cross-Site
+Scripting Vulnerabilities} (p = 0.001). \emph{Injection} and \emph{Cross-Site Request Forgery}
 produced more cases where the refactorings had a negative impact in the maintainability.
 However, the results obtained for these patterns are not statistically significant.
 
-Projects with Broken Authentication flaws are the most affected ones by security
+Projects with \emph{Broken Authentication} flaws are the most affected ones by security
 refactorings. 55.3\% (21) of the refactorings had a negative impact in the maintainability
 while 35\% (11) had a positive impact and only 13.8\% (6) did not suffer any
-change. The results also show that fixing memory leaks affects the maintainability
+change. The results also show that fixing \emph{Memory Leak}s affects the maintainability
 of 51.3\% (41) of the cases and leaves only 13.8\% (11) of the cases unaffected.
 In 35\% (28) of the cases, maintainability increased. Refactoring vulnerabilities
-that allow denial-of-service attacks (e.g., CVE-2014-3506) has a negative impact
+that allow \emph{Denial-of-Dervice} attacks (e.g., CVE-2014-3506) has a negative impact
 of 47.5\% (19) in the maintainability of open-source software. 30.0\% (12) of
 the cases exhibit maintainability improvement while 22.5\% (9) show that overall
-maintainability does not suffer any change. Miscellaneous refactorings pattern
+maintainability does not suffer any change. \emph{Miscellaneous} refactorings pattern
 integrates several types of security flaws whose impact is of 43.1\% (84) negative
 in the maintainability of open-source sofware. 31.8\% (62) of the cases do not
 exhibit any change in maintainability and 25.1\% (49) of cases have a positive
 impact on the maintainability of open-source software.
 
 It is also important to notice that overall the maintainability of open-source
-software is not affected by Cross-Site Scripting vulnerabilities and by Using
-Components with Know Vulnerabilities. Cross-Site Scripting does not suffer any
+software is not affected by \emph{Cross-Site Scripting} vulnerabilities and by \emph{Using
+Components with Know Vulnerabilities}. \emph{Cross-Site Scripting} does not suffer any
 decrease in the maintainability of 55.3\% (63) of cases and 21.1\% (24) have a
 positive effect on it. Only 23.7\% (27) of the cases hinder the software
-maintainability. From 21 cases evaluated for Using Componentes with Known
-Vulnerabilities, only 4.8\% (1) has a positive effect in the maintainability
+maintainability. From 21 cases evaluated for \emph{Using Componentes with Known
+Vulnerabilities}, only 4.8\% (1) has a positive effect in the maintainability
 of software. 14.3\% (3) harms maintainability software and 81\% has no effect
 in the maintainability.
 
@@ -893,8 +893,7 @@ We would expect that the negative impact of programming languages on maintainabi
 would be more intense due to the buzz of the last years surrounding the idea that
 poor design of programming languages and lack of using the best practices lead to
 more buggy and vulnerable code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}.
-However, Figure~\ref{fig:lang_main} shows that only \emph{C} has a negative impact of more than 50\% on
-software maintainability. We suspect that these values are the result of projects
+However, Figure~\ref{fig:lang_main} shows that only \emph{C} has a negative impact of more than 50\% on software maintainability. We suspect that these values are the result of projects
 contributions policies. 9 out of 10 projects --- the equivalent to 31.8\% of the commits ---
 of the top-10 of dataset projects with more contributors have restrict contribution
 policies regarding code standards. Some examples are the \texttt{laravel/framework},
@@ -908,10 +907,7 @@ https://www.php-fig.org/psr/psr-2/ (Accessed on \today{})}.
 \end{framed}
 
 \textbf{\textit{Broken Authentication \& Session Management, Denial-of-Service attacks and Memory Leaks and Miscellaneous patterns are more likely to affect open-source software maintainability.}} Although there are
-a few refactorings that harm software maintainability in the \emph{Cross-Site Scripting} and \emph{Using
-Components with Know Vulnerabilities}, overall maintainability does not suffer any changes for these patterns.
-For the remaining patterns, \emph{Injection} and \emph{Cross-Site Request Forgery}, results are not statistically
-significant.
+a few refactorings that harm software maintainability in the \emph{Cross-Site Scripting} and \emph{Using Components with Know Vulnerabilities}, overall maintainability does not suffer any changes for these patterns. For the remaining patterns, \emph{Injection} and \emph{Cross-Site Request Forgery}, results are not statistically significant.
 
 
 The impact of a refactoring depends on its complexity, i.e., if the refactoring
@@ -921,7 +917,7 @@ Scripting} and \emph{Using Components with Know Vulnerabilities} refactorings
 endure more cases without any impact in the maintainability. Typically, these
 type of vulnerabilities are one line fixes --- adding an \texttt{escape}
 function or changing the version of the component, respectively. Whereas,
-Broken Authentication and vulnerabilities such as the one presented in
+\emph{Broken Authentication} and vulnerabilities such as the one presented in
 Section~\ref{sec:motivation} responsible by DoS attacks are more difficult to
 fix (several code lines deleted and added). Another example is the Apple
 authentication flaw discovered in 2017 (CVE-2017-13872)\footnote{CVE-2017-13872
@@ -1046,7 +1042,7 @@ cases that harm maintaniability (41.35\%).
 \Luis{secure security frameworks, nao percebi bem o que se quer dizer aí.}
 
 This study also exhibits evidence that some patterns need more attention than
-others. Broken Autentication issues, Denial-of-Service attacks and Memory Leaks
+others. \emph{Broken Autentication} issues, \emph{Denial-of-Service} attacks and \emph{Memory Leaks}
 endure maintainability in 55.3\%, 51.3\% and 47.5\%, respectively. Following
 the implications of our work, we draw attention for the need of secure security
 frameworks, code best practices documentation to produce safe and maintainable
