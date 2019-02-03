@@ -214,9 +214,7 @@ programming languages. The main contributions of the present work is:
 This empirical study exhibits proof that changes applied in the codebase to fix
 vulnerabilities affect code maintainability. Especially, for refactorings that
 address \emph{Broken Authentication and Session Management} issues, \emph{Memory
-Leaks} and \emph{Denial-of-Service} attacks. There are already several tools that
-suggest security improvements using static analysis, dynamic analysis, and even
-artificial intelligence. With this study, we intend to highlight the need for tools
+Leaks} and \emph{Denial-of-Service} attacks. With this study, we intend to highlight the need for tools
 to predict the impact of patches on maintainability~\cite{4724577} and documentation
 to help developers adopt security best practices~\cite{6311252, 7927935, MESQUIDA201519}.
 
@@ -976,8 +974,8 @@ the baseline.
 
 \subsection{External}
 
-% \Luis{A primeira threat que falas é que os resultados podem nao generalizar
-% para software fechado. Eu acho que deviamos ser mais diretos.}\Sof{Diretos como?}
+\Luis{A primeira threat que falas é que os resultados podem nao generalizar
+para software fechado. Eu acho que deviamos ser mais diretos.}\Sof{Diretos como?}
 
 This study uses a dataset that only covers
 open-source software to perform the maintainability evaluation. However, BCH
@@ -991,8 +989,8 @@ security refactorings provided in other languages.
 
 \section{Related Work}\label{sec:rw}
 
-% \Luis{pode ser uma cena só minha mas acho que fica melhor em vez de comecar
-% fraseds com "And," usar outros conetores tipo "Besides," "In addition,", etc. œ}
+\Luis{pode ser uma cena só minha mas acho que fica melhor em vez de comecar
+fraseds com "And," usar outros conetores tipo "Besides," "In addition,", etc. œ}
 
 Many studies have investigated the relationship between refactorings and software quality.
 Previous work focused on coupling metrics has evaluated the impact of refactorings and
@@ -1012,9 +1010,9 @@ The present work is based on the 10 guidelines proposed
 by the Software Improvement Group (SIG) and focuses solely on evaluating
 the impact of patching vulnerabilities on software maintainability.
 
-% \Luis{eu nao acho que usar 10 guidelines proposed by the Software Improvement
-% Group (SIG) seja algo que nos esteja a diferenciar. Acho que o a prinicpal
-% diferenca é que estamos a estudar maintainability issues noutro contexto.}
+\Luis{eu nao acho que usar 10 guidelines proposed by the Software Improvement
+Group (SIG) seja algo que nos esteja a diferenciar. Acho que o a prinicpal
+diferenca é que estamos a estudar maintainability issues noutro contexto.}
 
 Researchers investigated the relationship between design patterns and
 software maintainability~\cite{10.1007/978-3-642-35267-6-18}. 300 revisions
@@ -1032,7 +1030,7 @@ impact of language design. Both have used the number of defects as an indicator 
 software quality. The present work studies how security refactorings affect software quality
 based on the code maintainability analysis.
 
-% \Luis{ tambem fizemos analise por linguagem, nesta ultima citacao deviamos falar sobre isso tb.}
+\Luis{ tambem fizemos analise por linguagem, nesta ultima citacao deviamos falar sobre isso tb.}
 
 \section{Conclusion and Future Work}\label{sec:conclusions}
 
@@ -1045,7 +1043,7 @@ this evidence in 40.2\% of the studied cases. Regarding regular commits, it seem
 overall maintainability increases (50.16\%). However, there is still a very considerable amout of
 cases that harm maintaniability (41.35\%).
 
-% \Luis{secure security frameworks, nao percebi bem o que se quer dizer aí.}
+\Luis{secure security frameworks, nao percebi bem o que se quer dizer aí.}
 
 This study also exhibits evidence that some patterns need more attention than
 others. Broken Autentication issues, Denial-of-Service attacks and Memory Leaks
