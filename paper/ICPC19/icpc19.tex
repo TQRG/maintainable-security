@@ -263,7 +263,7 @@ https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd
 \\CVE-2014-3506 vulnerability},label={lst:vuln}]
 + static unsigned long dtls1_max_handshake_message_len(const SSL *s){ /*!\annotation{lst:func1}!*/
 +  unsigned long max_len = DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH;
-+  if(max_len < (unsigned long)s->max_cert_list) 
++  if(max_len < (unsigned long)s->max_cert_list)
 +     return s->max_cert_list;
 +  return max_len;
 + }
@@ -869,7 +869,7 @@ of open-source software?}
 \end{framed}
 
 \textbf{\textit{Security refactorings harm the maintainability of open-source software.}}
-
+%
 We found that 40.2\% of the security refactoring have a negative impact on the
 maintainability of open-source software, Figure~\ref{fig:secvsreg}. This raises
 a new tradeoff when developers need to fix vulnerabilities on their projects
