@@ -82,9 +82,26 @@
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 
-\newcommand{\Sof}[1]{\textbf{[Sofia:[}{\color{red} #1}\textbf{]]}}
-\newcommand{\Luis}[1]{\textbf{[Luis:[}{\color{green} #1}\textbf{]]}}
-\newcommand{\Rui}[1]{\textbf{[Rui:[}{\color{blue} #1}\textbf{]]}}
+%
+% Add comments in the text
+%
+\newboolean{showcomments}
+\setboolean{showcomments}{true}
+%\setboolean{showcomments}{false}
+
+\ifthenelse{\boolean{showcomments}}
+  {\newcommand{\nb}[3]{
+  {\color{#2}\small\fbox{\bfseries\sffamily\scriptsize#1}}
+  {\color{#2}\sffamily\small$\triangleright~$\textit{\small #3}$~\triangleleft$}
+  }
+  }
+  {\newcommand{\nb}[3]{}
+  }
+
+\newcommand\Sof[1]{\nb{Sofia}{red}{#1}}
+\newcommand\Luis[1]{\nb{Luis}{green}{#1}}
+\newcommand\Rui[1]{\nb{Rui}{blue}{#1}}
+
 
 \begin{document}
 
