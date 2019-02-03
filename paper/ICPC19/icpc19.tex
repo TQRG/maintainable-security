@@ -375,7 +375,7 @@ impact of this refactoring on the OpenSSL maintainability was negative.
 In this paper, our concern is to study whether, while improving software
 security, developers are also negatively impacting the maintainability
 of their software application. To answer the following two
-research questions, we use a dataset of security refactorings to measure the
+research questions, we use a dataset of security refactorings~\cite{Reis:2017:IJSSE} to measure the
 impact of the changes in the maintainability of open-source software.
 
 \begin{framed}
@@ -847,20 +847,17 @@ Scripting Vulnerabilities} (p = 0.001). \emph{Injection} and \emph{Cross-Site Re
 produced more cases where the refactorings had a negative impact in the maintainability.
 However, the results obtained for these patterns are not statistically significant.
 
-Software with \emph{Broken Authentication} flaws are the most affected ones by security
-refactorings. 55.3\% (21) of the refactorings had a negative impact in the maintainability
-while 35\% (11) yielded a positive impact and only 13.8\% (6) did not suffer any
+Projects with \emph{Broken Authentication} flaws are the most affected ones by security
+refactorings: 55.3\% (21) of the refactorings had a negative impact in the maintainability
+while 35\% (11) yielded a positive impact, and only 13.8\% (6) did not suffer any
 change. The results also show that fixing \emph{Memory Leak}s affects the maintainability
 of 51.3\% (41) of the cases and leaves only 13.8\% (11) of the cases unaffected.
 In 35\% (28) of the cases, maintainability increased. Refactoring vulnerabilities
-that allow \emph{Denial-of-Dervice} attacks (e.g., CVE-2014-3506) has a negative impact
-of 47.5\% (19) in the maintainability of open-source software. 30.0\% (12) of
-the cases exhibit maintainability improvement while 22.5\% (9) show that overall
-maintainability does not suffer any change. \emph{Miscellaneous} refactorings pattern
-integrates several types of security flaws whose impact is of 43.1\% (84) negative
-in the maintainability of open-source sofware. 31.8\% (62) of the cases do not
-exhibit any change in maintainability and 25.1\% (49) of cases have a positive
-impact on the maintainability of open-source software.
+that allow \emph{Denial-of-Service} attacks (e.g., CVE-2014-3506) have a negative impact
+of 47.5\% (19) in the maintainability of open-source software while 30.0\% (12) of
+the cases exhibit maintainability improvement and 22.5\% (9) show that
+maintainability does not suffer any change. The \emph{Miscellaneous} refactorings pattern
+integrates several types of security flaws. These type of refactorings harm maintainability in 43.1\% (84) of the cases. In 31.8\% (62), there is no affect in maintainability and for the other 25.1\% (49) maintainability increases.
 
 It is also important to notice that overall the maintainability of open-source
 software is not affected by \emph{Cross-Site Scripting} vulnerabilities and by \emph{Using
@@ -868,8 +865,8 @@ Components with Known Vulnerabilities}. \emph{Cross-Site Scripting} does not suf
 decrease in the maintainability of 55.3\% (63) of cases and 21.1\% (24) have a
 positive effect on it. Only 23.7\% (27) of the cases hinder the software
 maintainability. From the 21 cases evaluated for \emph{Using Componentes with Known
-Vulnerabilities}, only 4.8\% (1) has a positive effect in the maintainability
-of software. 14.3\% (3) harms maintainability software and 81\% has no effect
+Vulnerabilities}, only 4.8\% (1) have a positive effect in the maintainability
+of software while 14.3\% (3) harms maintainability software, and 81\%(17) have no effect
 in the maintainability.
 
 \begin{figure}[h]
@@ -916,7 +913,7 @@ would be more intense due to the buzz of the last years surrounding the idea tha
 poor design of programming languages and lack of using the best practices lead to
 more buggy and vulnerable code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}.
 However, Figure~\ref{fig:lang_main} shows that only \emph{C} has a negative impact of more than 50\% on software maintainability. We suspect that these values are the result of projects
-contributions policies. 9 out of 10 projects --- the equivalent to 31.8\% of the commits ---
+contributions policies. Nine out of ten projects --- the equivalent to 31.8\% of the commits ---
 of the top-10 of dataset projects with more contributors have restrict contribution
 policies regarding code standards. Some examples are the \texttt{laravel/framework},
 \texttt{php/php-src}, \texttt{openssl/openssl} and
