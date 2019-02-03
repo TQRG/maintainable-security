@@ -409,8 +409,8 @@ software aiming at the extraction of real examples --- created by real
 developers --- to test and assess the performance of static analysis tools since
 using hand-seeded test cases or mutations could lead to misleading assessments
 of the capabilities of the tools~\cite{just2014mutants}. The study yielded a
-dataset with $716$ test cases for $16$ security patterns. Some of the patterns 
-are based in the OWASP Top 10 of 2013~\cite{oswap:2013} and OWASP Top 10 of 
+dataset with $716$ test cases for $16$ security patterns. Some of the patterns
+are based in the OWASP Top 10 of 2013~\cite{oswap:2013} and OWASP Top 10 of
 2017~\cite{oswap:2017}. Each test case of the
 dataset is a triplet: the commit before the refactoring, the commit responsible
 for the refactoring, and the snippets of code that differ from one version to
@@ -846,12 +846,13 @@ of open-source software?}
 
 \textbf{\textit{Security refactorings harm the maintainability of open-source software.}}
 
-40.2\% of the security refactoring have a negative impact on the maintainability
-of open-source software, Figure~\ref{fig:secvsreg}. This raises a new tradeoff when
-developers need to fix vulnerabilities on their projects because they might be affecting
-the software maintainability or even introducing new vulnerabilities. This study exhibits
-proof that developers may have to reduce maintainability for the sake of safety. We understand
-that developers should be able to produce secure code without affecting the maintainability of
+In particular, 40.2\% of the security refactoring have a negative impact on the
+maintainability of open-source software, Figure~\ref{fig:secvsreg}. This raises
+a new tradeoff when developers need to fix vulnerabilities on their projects
+because they might be affecting the software maintainability or even introducing
+new vulnerabilities. This study exhibits evidence that developers may have to
+reduce maintainability for the sake of safety. We understand that developers
+should be able to produce secure code without affecting the maintainability of
 their projects. But there are still some concerns that need to be addressed:
 \begin{itemize}
 	\item \textbf{Security Frameworks} need to be secure and user-friendly~\cite{5287006, 7676144}. Unfortunately,
