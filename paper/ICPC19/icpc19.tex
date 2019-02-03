@@ -420,8 +420,8 @@ software aiming at the extraction of real examples --- created by real
 developers --- to test and assess the performance of static analysis tools since
 using hand-seeded test cases or mutations could lead to misleading assessments
 of the capabilities of the tools~\cite{just2014mutants}. The study yielded a
-dataset with $716$ test cases for $16$ security patterns. Some of the patterns 
-are based in the OWASP Top 10 of 2013~\cite{oswap:2013} and OWASP Top 10 of 
+dataset with $716$ test cases for $16$ security patterns. Some of the patterns
+are based in the OWASP Top 10 of 2013~\cite{oswap:2013} and OWASP Top 10 of
 2017~\cite{oswap:2017}. Each test case of the
 dataset is a triplet: the commit before the refactoring, the commit responsible
 for the refactoring, and the snippets of code that differ from one version to
@@ -856,13 +856,15 @@ of open-source software?}
 \end{framed}
 
 \textbf{\textit{Security refactorings harm the maintainability of open-source software.}}
+\Luis{Nao uses numeros no inico da frase. --> We found that 40.2\% of the security refactorings}
 
-40.2\% of the security refactoring have a negative impact on the maintainability
-of open-source software, Figure~\ref{fig:secvsreg}. This raises a new tradeoff when
-developers need to fix vulnerabilities on their projects because they might be affecting
-the software maintainability or even introducing new vulnerabilities. This study exhibits
-proof that developers may have to reduce maintainability for the sake of safety. We understand
-that developers should be able to produce secure code without affecting the maintainability of
+In particular, 40.2\% of the security refactoring have a negative impact on the
+maintainability of open-source software, Figure~\ref{fig:secvsreg}. This raises
+a new tradeoff when developers need to fix vulnerabilities on their projects
+because they might be affecting the software maintainability or even introducing
+new vulnerabilities. This study exhibits evidence that developers may have to
+reduce maintainability for the sake of safety. We understand that developers
+should be able to produce secure code without affecting the maintainability of
 their projects. But there are still some concerns that need to be addressed:
 \begin{itemize}
 	\item \textbf{Security Frameworks} need to be secure and user-friendly~\cite{5287006, 7676144}. Unfortunately,
@@ -901,7 +903,34 @@ Components with Know Vulnerabilities}, overall maintainability does not suffer a
 For the remaining patterns, \emph{Injection} and \emph{Cross-Site Request Forgery}, results are not statistically
 significant.
 
-The impact of a refactoring depends on its complexity, i.e., if the refactoring adds complexity to the codebase it is probably affecting the software maintainability. One evidence of that is the fact of \emph{Cross-Site Scripting} and \emph{Using Components with Know Vulnerabilities} refactorings endure more cases without any impact in the maintainability. Typically, these type of vulnerabilities are one line fixes --- adding an \texttt{escape} function or changing the version of the component, respectively. Whereas, Broken Authentication and vulnerabilities such as the one presented in Section~\ref{sec:motivation} responsible by DoS attacks are more difficult to fix (several code lines deleted and added). Another example is the Apple authentication flaw discovered in 2017 (CVE-2017-13872)\footnote{CVE-2017-13872 details available at https://support.apple.com/en-us/HT208315 (Accessed on \today{})}, where any user could login as root with an empty password. Patrick Wardle examined the cause of the issue\footnote{\emph{Why $<$blank$>$ Gets You Root} available at https://objective-see.com/blog/blog\_0x24.html (Accessed on \today{})} and conclude that the flaw was due to the introduction of high cyclomatic complexity in a method used to verify the password. In sum, \emph{Cross-Site Scripting} and \emph{Using Components with Known Vulnerabilities} should take part of the developers preocupations along with the other patterns that explicitly hinder maintainability because despite their low complexity these are patterns that still produce a considerable negative impact on the maintainability. Real efforts have been made in creating and incorporating coding standards and best practices in software production. However, security is still far from perfection and fixing vulnerabilities might hinder software maintainability. Thus, it is important to provide tool support to developers to help them applying these patterns without harming software maintainability.
+
+The impact of a refactoring depends on its complexity, i.e., if the refactoring
+adds complexity to the codebase it is probably affecting the software
+maintainability. One evidence of that is the fact of \emph{Cross-Site
+Scripting} and \emph{Using Components with Know Vulnerabilities} refactorings
+endure more cases without any impact in the maintainability. Typically, these
+type of vulnerabilities are one line fixes --- adding an \texttt{escape}
+function or changing the version of the component, respectively. Whereas,
+Broken Authentication and vulnerabilities such as the one presented in
+Section~\ref{sec:motivation} responsible by DoS attacks are more difficult to
+fix (several code lines deleted and added). Another example is the Apple
+authentication flaw discovered in 2017 (CVE-2017-13872)\footnote{CVE-2017-13872
+details available at https://support.apple.com/en-us/HT208315 (Accessed on
+\today{})}, where any user could login as root with an empty password. Patrick
+Wardle examined the cause of the issue\footnote{\emph{Why $<$blank$>$ Gets You
+Root} available at https://objective-see.com/blog/blog\_0x24.html (Accessed on
+\today{})} and conclude that the flaw was due to the introduction of high
+cyclomatic complexity in a method used to verify the password. In sum,
+\emph{Cross-Site Scripting} and \emph{Using Components with Known
+Vulnerabilities} should take part of the developers preoccupations along with
+the other patterns that explicitly hinder maintainability because despite their
+low complexity these are patterns that still produce a considerable negative
+impact on the maintainability. Real efforts have been made in creating and
+incorporating coding standards and best practices in software production.
+However, security is still far from perfection and fixing vulnerabilities might
+hinder software maintainability. Thus, it is important to provide tool support
+to developers to help them applying these patterns without harming software
+maintainability.
 
 \section{Threats to Validity}\label{sec:threats}
 %
@@ -909,8 +938,10 @@ The following section presents the potential threats to validity of this study.
 %
 \subsection{Construct}
 %
+
+\Luis{Better Code Hub -> BCH}
 The maintainability formula was inferred based on the reports of the Better Code Hub.
-The high amount of different projects and backgrounds may require different maintainablity
+The high amount of different projects and backgrounds may require different maintainability
 standards. However, BCH does have a representative benchmark of closed and open-source
 software projects that is under the calculation of the thresholds used in the computation
 of each maintainability guideline (Table~\ref{tab:guidelines})~\cite{Visser:2016:OREILLY,
@@ -923,18 +954,38 @@ was collected based on the messages of GitHub commits produced by project develo
 to classify the changes perfomed by them to fix security flaws. This approach
 discards security refactorings that were not explicit in commits messages.
 
-Baseline commits are retrieved randomly by selecting one commit from the same project of a given security refactoring. This approach softens the differences that may result from the
-characteristics of each project. However, maintainability still may be affected by the developers experience, coding style and software contribution polices which it is not evaluated in this study. Furthermore, this evaluation considers that 607 regular commits are enough to alleviate random irregularities in the maintainability differences of the baseline.
+Baseline commits are retrieved randomly by selecting one commit from the same
+project of a given security refactoring. This approach softens the differences
+that may result from the characteristics of each project. However,
+maintainability still may be affected by the developers experience, coding
+style and software contribution polices which it is not evaluated in this
+study. Furthermore, this evaluation considers that 607 regular commits are
+enough to alleviate random irregularities in the maintainability differences of
+the baseline.
 
+\Luis{maintainability still may be affected -> maintainability may sitll be affected}
 
 \subsection{External}
 
-In contrast to the BCH benchmark, this study uses a dataset that only covers open-source software to perform the maintanibility evaluation. However, BCH thresholds are calculated from a set of both open and closed sotfware. Different programming languages may require different coding practices to address software safety. The dataset
-comprises more commits in C and PHP, i.e., the dataset may not be properly representative of the population regarding to programming languages.
+\Luis{A primeira threat que falas é que os resultados podem nao generalizar
+para software fechado. Eu acho que deviamos ser mais diretos. Para alem disso
+tirava o "In contrast to the BCH benchmark,"}
 
-All the security commits are described in English. This approach discards security refactorings provided in other languages.
+In contrast to the BCH benchmark, this study uses a dataset that only covers
+open-source software to perform the maintainability evaluation. However, BCH
+thresholds are calculated from a set of both open and closed software.
+Different programming languages may require different coding practices to
+address software safety. The dataset comprises more commits in C and PHP, i.e.,
+the dataset may not be properly representative of the population regarding to
+programming languages.
+
+All the security commits are described in English. This approach discards
+security refactorings provided in other languages.
 
 \section{Related Work}\label{sec:rw}
+
+\Luis{pode ser uma cena só minha mas acho que fica melhor em vez de comecar
+fraseds com "And," usar outros conetores tipo "Besides," "In addition,", etc. œ}
 
 Many studies have investigated the relationship between refactorings and software quality.
 Previous work focused on coupling metrics has evaluated the impact of refactorings and
@@ -954,6 +1005,10 @@ The present work is based on the 10 guidelines proposed
 by the Software Improvement Group (SIG) and focuses solely on evaluating
 the impact of patching vulnerabilities on software maintainability.
 
+\Luis{eu nao acho que usar 10 guidelines proposed by the Software Improvement
+Group (SIG) seja algo que nos esteja a diferenciar. Acho que o a prinicpal
+diferenca é que estamos a estudar maintainability issues noutro contexto.}
+
 Researchers investigated the relationship between design patterns and
 software maintainability~\cite{10.1007/978-3-642-35267-6-18}. 300 revisions
 of \texttt{JHotDraw} were analyzed to conclude that every introduced pattern
@@ -970,6 +1025,8 @@ impact of language design. Both have used the number of defects as an indicator 
 software quality. The present work studies how security refactorings affect software quality
 based on the code maintainability analysis.
 
+\Luis{ tambem fizemos analise por linguagem, nesta ultima citacao deviamos falar sobre isso tb.}
+
 \section{Conclusion and Future Work}\label{sec:conclusions}
 
 This work presents an empirical study on the impact of 607 security refactorings on
@@ -981,13 +1038,21 @@ this evidence in 40.2\% of the studied cases. Regarding regular commits, it seem
 overall maintainability increases (50.16\%). However, there is still a very considerable amout of
 cases that harm maintaniability (41.35\%).
 
-This study also exhibits evidence that some patterns
-need more attention than others. Broken Autentication issues, Denial-of-Service attacks
-and Memory Leaks endure maintainability in 55.3\%, 51.3\% and 47.5\%, respectively. Following
-the implications of our work, we draw attention for the need of secure security frameworks,
-code best practices documentation to produce safe and maintainable code, proper authorization
-mechanisms design and implementation, better tools to introduce in the CI/CD pipeline to help software
-maintenance and new or improved programming languages to allow developers to easily implement safety in their software without endangering maintainability.
+\Luis{secure security frameworks, nao percebi bem o que se quer dizer aí.}
+
+This study also exhibits evidence that some patterns need more attention than
+others. Broken Autentication issues, Denial-of-Service attacks and Memory Leaks
+endure maintainability in 55.3\%, 51.3\% and 47.5\%, respectively. Following
+the implications of our work, we draw attention for the need of secure security
+frameworks, code best practices documentation to produce safe and maintainable
+code, proper authorization mechanisms design and implementation, better tools
+to introduce in the CI/CD pipeline to help software maintenance and new or
+improved programming languages to allow developers to easily implement safety
+in their software without endangering maintainability.
+
+\Luis{many directions such as -> many directions:}
+\Luis{evaluate the impact of programming languages of the
+maintainability of each refactoring pattern; - > evaluate the impact of each refactoring pattern on the maintainbility of each  }
 
 As future work, this study may be extended in many directions such as analyze which guidelines are
 more likely to affect security refactorings; evaluate the impact of programming languages of the
