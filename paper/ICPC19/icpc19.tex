@@ -167,7 +167,7 @@ These vulnerabilities are gateways for attackers to penetrate
 systems and exploit their resources.
 As an example, in the last week of January $2019$, a severe vulnerability in Apple
 FaceTime was revealed\footnote{https://thehackernews.com/2019/01/apple-facetime-
-privacy-hack.html (Accessed on \today{})} --- the outcome of a design/logical 
+privacy-hack.html (Accessed on \today{})} --- the outcome of a design/logical
 flaw that allowed callers to see and hear others without them picking up the call.
 
 In $2011$, the International Organization for Standardization (ISO) issued an
@@ -175,7 +175,7 @@ update for software product quality ISO/IEC 25010~\cite{iso:2011} considering
 \emph{Security} as one of the main software product quality characteristics.
 Unmaintainable code is hard to test, analyze and re-use, and thus more difficult
 to find vulnerabilities and defects. Therefore, writing maintainable code
-prevents the introduction of vulnerabilities in the codebases. In this work, we 
+prevents the introduction of vulnerabilities in the codebases. In this work, we
 are concerned about the impact that patching vulnerabilities may have in the
 open-source software maintainability. Are developers affecting software
 maintainability when trying to improve software security? We suspect that some
@@ -185,29 +185,29 @@ possibly even be the cause of the introduction of new vulnerabilities.
 ISO describes software maintainability as ``the degree of effectiveness and
 efficiency with which a software product or system can be modified to improve
 it, correct it or adapt it to changes in environment, and in requirements'' on
-software quality ISO/IEC 25010. As ISO does not provide any specific guidelines 
+software quality ISO/IEC 25010. As ISO does not provide any specific guidelines
 or formula to calculate maintainability, we resort on Software Improvement
 Group (SIG)'s web-based source code analysis service Better Code Hub
 (BCH)~\cite{Visser:2016:OREILLY} to compute the maintainability of a given
 project. There are other well-known standards and models that have been proposed
-to increase software security: Common Criteria~\cite{common:2009} which suffered
-a lot of criticism regarding the costs associated and poor technical evaluation; 
-the OWASP Application Security Verification Criteria~\cite{oswap:2009} which is 
+to increase software security: Common Criteria~\cite{common:2009} which received
+negative criticism regarding the costs associated and poor technical evaluation;
+the OWASP Application Security Verification Criteria~\cite{oswap:2009} which is
 focused only on web applications, and a model proposed by Xu et al. ($2013$)
-~\cite{6616351} for rating software security which we believe it was one of the
-first steps taken by SIG to introduce security on their maintainability model.
+~\cite{6616351} for rating software security (arguably, it was one of the
+first steps taken by SIG to introduce security on their maintainability model).
 
 BCH compiles the ISO/IEC 25010 into a set of $10$ guidelines that are the
-base of BCH's evaluation. Two examples are the \emph{Write Simple Units of Code} 
+base of BCH's evaluation. Two examples are the \emph{Write Simple Units of Code}
 based on the McCabe Complexity~\cite{1702388} and \emph{Keep your Codebase Small}
 based on the idea that smaller codebases are easier to maintain and less prone to defects~\cite{Visser:2016:OREILLY}.
 
 The particular subject of this paper is to explore whether there is a trade-off
-between refactoring source code to patch disclosed vulnerabilities while keeping
+between refactoring source code to patch disclosed vulnerabilities and keeping
 (or even improving) the maintainability of software systems. Hedegus et al. ($2018$)~\cite{HEGEDUS2018313}, analyzed the difference of maintainability between
 groups of refactored elements and non-refactored and conclude that the source
 code elements subjected to refactorings had significantly lower maintainability
-than the elements not affected.
+than the elements not modified.
 
 In this paper, we present the results of our analysis on the maintainability of
 $607$ security changes collected from open-source software, from different
@@ -224,9 +224,9 @@ programming languages. The main contributions of the present work are:
 This empirical study exhibits proof that changes applied in the codebase to fix
 vulnerabilities affect code maintainability. Especially, for refactorings that
 address \emph{Broken Authentication and Session Management} issues, \emph{Memory
-Leaks} and \emph{Denial-of-Service} attacks. With this study, we intend to highlight 
-the need for tools to predict the impact of patches on maintainability~\cite{4724577} 
-and documentation to help developers adopt security best practices~\cite{6311252, 
+Leaks} and \emph{Denial-of-Service} attacks. With this study, we intend to highlight
+the need for tools to predict the impact of patches on maintainability~\cite{4724577}
+and documentation to help developers adopt security best practices~\cite{6311252,
 7927935, MESQUIDA201519}.
 
 This paper is structured as follows: section~\ref{sec:motivation} introduces an
@@ -337,14 +337,14 @@ $13$) and then against the maximum handshake message size allowed by DTLS1 for
 \texttt{s} (line $16$-$21$). However, it is not verified if
 \texttt{msg\_hdr->msg\_len} is lower than the allowed by DTLS. Thus, in line
 $37$, when \texttt{msg\_len} is allocated to the fragment buffer, more memory
-than the allowed might be allocated. According to the message commit, $10$
+than the allowed might be allocated. According to the commit message, $10$
 handshake messages are allowed per DTLS connection. Hence, a remote attacker
 could leverage this issue to trigger memory allocations corresponding to large
 length values and lead the system to memory exhaustion that could end in a DoS
 attack. The code changes performed to fix the vulnerability were the following:
 
 ~\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was
-inserted to return the number of maximum number of bytes allowed in a DTLS
+inserted to return the maximum number of bytes allowed in a DTLS
 handshake message for \texttt{s}. The minimum is $16$KB but may be greater if
 the maximum certificate list size requires it which is set by the user. More
 specifically, it checks if the maximum certificate list size
@@ -353,18 +353,18 @@ specifically, it checks if the maximum certificate list size
 the certificate list, otherwise, it returns the maximum length. This function
 replaces lines $18$-$21$.
 
-~\ref{lst:func5} and~\ref{lst:func4} add the check to different functions to
-ensure that the message and the fragment length are never higher than the
-maximum allowed by DTSL. However, \ref{lst:func5} is responsible for patching
+~\ref{lst:func5} and~\ref{lst:func4} are guards added to different functions to
+ascertain that the message and the fragment length are never higher than the
+maximum allowed by DTSL. In particular, \ref{lst:func5} is responsible for patching
 the vulnerability.
 
 Although checking the maximum size of a handshake message seems an elementary
 problem to repair, the example shows that there was a significant amount of
 changes performed in the codebase which produced a negative impact in the
-project maintainability. Even though the developer tries to simplify the
-codebase with the creation of a smaller unit
-\texttt{dtls1\_max\_handshake\_message\_len} (\ref{lst:func1}), it also disrupts
-$2$ of the guidelines proposed by the Software Improvement Group (SIG) for
+maintainability. Even though the developer tries to simplify the
+codebase by introducing a smaller unit
+\texttt{dtls1\_max\_handshake\_message\_len} (\ref{lst:func1}), this change also
+disrupts $2$ of the guidelines proposed by the Software Improvement Group (SIG) for
 building maintainable software~\cite{Visser:2016:OREILLY}. It adds a new branch
 point to the \texttt{dtls1\_process\_out\_of\_seq\_message} unit
 (\ref{lst:func5}) increasing the cyclomatic complexity and breaking the
@@ -405,7 +405,7 @@ There are security flaws that are more difficult to refactor than others. For
 instance, implementing secure authentication is not as easy as fixing a
 cross-site scripting vulnerability since usually the last one is can be fixed
 without adding new lines of code, as seen in Figure~\ref{lst:fix}. The developer
-added the function \emph{htmlentities} to escape the data inserted by the
+added the function \emph{htmlentities} to \textit{escape} the data given by the
 variable \emph{\$\_['file']}. Knowing which patterns are more likely to increase
 maintainability issues is one step forward to bring awareness to security
 engineers of what patterns need more attention. The taxonomy of security
