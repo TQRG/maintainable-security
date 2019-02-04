@@ -166,18 +166,17 @@ https://www.zerodayinitiative.com/advisories/published/ (Accessed on \today{})}.
 These vulnerabilities are gateways for attackers to penetrate
 systems and exploit their resources.
 As an example, in the last week of January $2019$, a severe vulnerability in Apple
-FaceTime was revealed\footnote{https://thehackernews.com/2019/01/apple-facetime-privacy-hack.html
-(Accessed on \today{})} --- the outcome of a design/logical flaw that allowed callers to see and
-hear others without them picking up the call.
-
+FaceTime was revealed\footnote{https://thehackernews.com/2019/01/apple-facetime-
+privacy-hack.html (Accessed on \today{})} --- the outcome of a design/logical 
+flaw that allowed callers to see and hear others without them picking up the call.
 
 In $2011$, the International Organization for Standardization (ISO) issued an
 update for software product quality ISO/IEC 25010~\cite{iso:2011} considering
 \emph{Security} as one of the main software product quality characteristics.
 Unmaintainable code is hard to test, analyze and re-use, and thus more difficult
 to find vulnerabilities and defects. Therefore, writing maintainable code
-prevents the introduction of vulnerabilities in the codebases. In this work, we are
-concerned about the impact that patching vulnerabilities may have in the
+prevents the introduction of vulnerabilities in the codebases. In this work, we 
+are concerned about the impact that patching vulnerabilities may have in the
 open-source software maintainability. Are developers affecting software
 maintainability when trying to improve software security? We suspect that some
 patches may have a negative impact on the software maintainability and
@@ -186,28 +185,26 @@ possibly even be the cause of the introduction of new vulnerabilities.
 ISO describes software maintainability as ``the degree of effectiveness and
 efficiency with which a software product or system can be modified to improve
 it, correct it or adapt it to changes in environment, and in requirements'' on
-software quality ISO/IEC 25010. As ISO does not provide any specific guidelines or
-formula to calculate maintainability, we resort on Software Improvement
+software quality ISO/IEC 25010. As ISO does not provide any specific guidelines 
+or formula to calculate maintainability, we resort on Software Improvement
 Group (SIG)'s web-based source code analysis service Better Code Hub
 (BCH)~\cite{Visser:2016:OREILLY} to compute the maintainability of a given
-project. There are other well-known standards and models that have been proposed to increase software security:
-Common Criteria~\cite{common:2009} which suffered a lot of criticism regarding the
-costs associated and poor technical evaluation; the OWASP
-Application Security Verification Criteria~\cite{oswap:2009} which is focused only
-on web applications, and a model proposed by Xu et al. ($2013$)~\cite{6616351} for
-rating software security which we believe it was one of the first steps taken
-by SIG to introduce security on their maintainability model.
+project. There are other well-known standards and models that have been proposed
+to increase software security: Common Criteria~\cite{common:2009} which suffered
+a lot of criticism regarding the costs associated and poor technical evaluation; 
+the OWASP Application Security Verification Criteria~\cite{oswap:2009} which is 
+focused only on web applications, and a model proposed by Xu et al. ($2013$)
+~\cite{6616351} for rating software security which we believe it was one of the
+first steps taken by SIG to introduce security on their maintainability model.
 
 BCH compiles the ISO/IEC 25010 into a set of $10$ guidelines that are the
-base of BCH's evaluation. Two examples are the
-\emph{Write Simple Units of Code} based on the McCabe Complexity~\cite{1702388}
-and \emph{Keep your Codebase Small} based on the idea that smaller codebases are
-easier to maintain and less prone to defects~\cite{Visser:2016:OREILLY}.
+base of BCH's evaluation. Two examples are the \emph{Write Simple Units of Code} 
+based on the McCabe Complexity~\cite{1702388} and \emph{Keep your Codebase Small}
+based on the idea that smaller codebases are easier to maintain and less prone to defects~\cite{Visser:2016:OREILLY}.
 
 The particular subject of this paper is to explore whether there is a trade-off
 between refactoring source code to patch disclosed vulnerabilities while keeping
-(or even improving) the maintainability of software systems. Hedegus et al. ($2018$)~\cite{HEGEDUS2018313},
-analyzed the difference of maintainability between
+(or even improving) the maintainability of software systems. Hedegus et al. ($2018$)~\cite{HEGEDUS2018313}, analyzed the difference of maintainability between
 groups of refactored elements and non-refactored and conclude that the source
 code elements subjected to refactorings had significantly lower maintainability
 than the elements not affected.
@@ -215,22 +212,22 @@ than the elements not affected.
 In this paper, we present the results of our analysis on the maintainability of
 $607$ security changes collected from open-source software, from different
 programming languages. The main contributions of the present work are:
+
 \begin{itemize}
 	\item An empirical study on the impact of security changes on software
 	maintainability and what patterns need more attention.
-
 	\item A replication package with all scripts and data created to perform the
 	empirical evaluation, for reproducibility. Available online:
   \url{https://figshare.com/s/3e17518222df6a11a8d6}.
-
 \end{itemize}
 
 This empirical study exhibits proof that changes applied in the codebase to fix
 vulnerabilities affect code maintainability. Especially, for refactorings that
 address \emph{Broken Authentication and Session Management} issues, \emph{Memory
-Leaks} and \emph{Denial-of-Service} attacks. With this study, we intend to highlight the need for tools
-to predict the impact of patches on maintainability~\cite{4724577} and documentation
-to help developers adopt security best practices~\cite{6311252, 7927935, MESQUIDA201519}.
+Leaks} and \emph{Denial-of-Service} attacks. With this study, we intend to highlight 
+the need for tools to predict the impact of patches on maintainability~\cite{4724577} 
+and documentation to help developers adopt security best practices~\cite{6311252, 
+7927935, MESQUIDA201519}.
 
 This paper is structured as follows: section~\ref{sec:motivation} introduces an
 example of a security refactoring of a known vulnerability found in
