@@ -676,7 +676,7 @@ example only complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean Code}).
 \end{figure}
 
 One of the guidelines with which the project does not comply is the one presented in the report (cf. Figure~\ref{fig:bchrep}): \emph{Write Simple Units of Code}. SIG defines \emph{Units} as the smallest groups of code that can be maintained and executed independently~\cite{Visser:2016:OREILLY} (e.g., methods and constructors in Java). BCH evaluates this guideline based on the number 
-
+\Luis{this seems unfinished. i think we ve already mention this Mccabe metric somewhere else.}
 
 McCabe~\cite{1702388} is a software
 metric that calculates the number of linearly independent paths of the source
@@ -863,18 +863,21 @@ affect open-source software maintainability?}
 
 The impact of each type of security refactoring on the maintainability of
 open-source software is presented in Figure~\ref{fig:pat}. The results of the
-Wilcoxon signed-rank test \Rui{again} per pattern indicated statistical evidence
-supporting that the maintainability of open-source software decreases for $4$
-different patterns: \emph{Broken Autentication} (p-value = $0.018$),
-\emph{Denial-of-Service} (p-value = $0.029$), \emph{Memory Leak} (p-value = $0.009$) and
-\emph{Miscellaneous} (p-value = $3.07$x$10^{-4}$). With statistical significance,
-results demonstrate evidence that maintainability is not negatively impacted
-when removing \emph{Components with Known Vulnerabilities} (p-value = $7.96$x$10^{-4}$)
-and fixing \emph{Cross-Site Scripting Vulnerabilities} (p-value = $0.001$).
-\emph{Injection} and \emph{Cross-Site Request Forgery} produced more
-cases where the refactorings had a negative impact in the maintainability.
-However, the results obtained for these patterns are not statistically
-significant.
+Wilcoxon signed-rank test \Rui{again} per pattern indicated statistical
+evidence supporting that the maintainability of open-source software decreases
+for $4$ different patterns: \emph{Broken Autentication} (p-value = $0.018$),
+\emph{Denial-of-Service}\Luis{em varios pontos deste paper este pattern era
+referido com a sigla DoS. Por uma questao de consistencia com os outros
+patterns sugiro que se escreva sempre por extenso (ou entao sempre com a
+sigla).} (p-value = $0.029$), \emph{Memory Leak} (p-value = $0.009$) and
+\emph{Miscellaneous} (p-value = $3.07$x$10^{-4}$). With statistical
+significance, results demonstrate evidence that maintainability is not
+negatively impacted when removing \emph{Components with Known Vulnerabilities}
+(p-value = $7.96$x$10^{-4}$) and fixing \emph{Cross-Site Scripting
+Vulnerabilities} (p-value = $0.001$). \emph{Injection} and \emph{Cross-Site
+Request Forgery} produced more cases where the refactorings had a negative
+impact in the maintainability. However, the results obtained for these patterns
+are not statistically significant.
 
 Projects with \emph{Broken Authentication} flaws are the most affected ones by
 security refactorings: $55.3\%$ ($21$) of the refactorings had a negative impact
