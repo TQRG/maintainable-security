@@ -333,7 +333,7 @@ separately. In the example (Listing~\ref{lst:vuln}), all functions receive as
 input the SSL session, \texttt{s}. In the \texttt{dtls1\_reassemble\_fragment}
 function the size of the fragment \texttt{msg\_hdr-$>$frag\_off+frag\_len} is
 checked against the handshake message size \texttt{msg\_hdr->msg\_len} (line
-$13$) and then against the maximum size allowed in a DTLS handshake message for \texttt{s} (line $16$-$21$)\Rui{DTLS1 for s?}. However, it is not verified if \texttt{msg\_hdr->msg\_len} is lower than the size allowed by DTLS. \Rui{$<$- does not parse} Thus, in line
+$13$) and then against the maximum size allowed in a DTLS handshake message for \texttt{s} (line $16$-$21$)\Rui{DTLS1 for s?}\Sof{Better?}. However, it is not verified if \texttt{msg\_hdr->msg\_len} is lower than the size allowed by DTLS. \Rui{$<$- does not parse}\Sof{Better?} Thus, in line
 $37$, when \texttt{msg\_len} is allocated to the fragment buffer, more memory
 than the allowed might be allocated. According to the commit message, $10$
 handshake messages are allowed per DTLS connection. Hence, a remote attacker
@@ -343,7 +343,7 @@ attack. The code changes performed to fix the vulnerability were the following:
 
 ~\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was
 inserted to return the maximum number of bytes allowed in a DTLS
-handshake message for \texttt{s}. The minimum is $16$KB but it might be greater if the maximum certificate list size requires it. \Rui{$<$- does not parse} More
+handshake message for \texttt{s}. The minimum is $16$KB but it might be greater if the maximum certificate list size requires it. \Rui{$<$- does not parse}\Sof{Better?} More
 specifically, it checks if the maximum certificate list size
 (\texttt{s-$>$max\_cert\_list}) requires more length than the maximum length
 (\texttt{max\_len}). If that condition holds, the function returns the size of
@@ -492,7 +492,7 @@ have decided to change the label to \textit{Miscellaneous} of the patterns in
 the dataset containing less than $20$ instances):
 
 \begin{itemize}
-    \item \textbf{Using Components with Known Vulnerabilities (21 cases).} The majority of
+    \item \Sof{Cases added, check it out}\textbf{Using Components with Known Vulnerabilities (21 cases).} The majority of
     software produced today integrates several components, such as libraries and
     frameworks, which may affect the software if developers use vulnerable
     versions - usually known and disclosed somewhere on the Internet.
@@ -663,12 +663,19 @@ example only complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean Code}).
 	\label{fig:bchrep}
 \end{figure}
 
-\emph{Units} are the smallest groups of code that can be maintained and executed independently~\cite{Visser:2016:OREILLY}.
+One of the guidelines with which the project does not comply is the one presented in the report (Figure~\ref{fig:bchrep}): \emph{Write Simple Units of Code}. SIG defines \emph{Units} as the smallest groups of code that can be maintained and executed independently~\cite{Visser:2016:OREILLY} (e.g., methods and constructors in Java).
+
 
 McCabe~\cite{1702388} is a software
 metric that calculates the number of linearly independent paths of the source
 code. BCH uses this metric to measure the number of branch points in the
-\emph{Write Simple Units of Code} guideline. The bar at the bottom of the figure
+\emph{Write Simple Units of Code} guideline. 
+
+\emph{Units} are the smallest sets of code that can be maintained and executed independently~\cite{Visser:2016:OREILLY}. For instance, in Java
+units are methods and contructors. 
+
+
+The bar at the bottom of the figure
 represents the top $30$ units that violate the guideline, sorted by severity,
 The violation severities are indicated using colors, and there is a legend to
 help to interpret the colors. The green bar represents the number of compliant
@@ -914,16 +921,18 @@ reduce maintainability for the sake of security. We understand that developers
 should be able to produce secure code without affecting the maintainability of
 their projects. But there are still some concerns that need to be addressed:
 \begin{itemize}
-	\item \textbf{Security Frameworks} need to be secure and
-	user-friendly~\cite{5287006, 7676144}. Unfortunately, there are several
-	vulnerabilities that stay undisclosed. Thus, developers should not trust them
-	blindly and check defaults. \Rui{I don't understand the point.}
+	% \item \textbf{Security Frameworks} need to be secure and
+	% user-friendly~\cite{5287006, 7676144}. Unfortunately, there are several
+	% vulnerabilities that stay undisclosed. Thus, developers should not trust them
+	% blindly and check defaults. \Rui{I don't understand the point.}
 
 	\item \textbf{Documentation} of software should provide developers with the
 	best practices to implement secure and maintainable software. Unmaintainable
 	code is difficult to test, analyze and re-use.
-
-	\item \textbf{Proper Authorization Mechanisms} should be designed and
+	\item\textbf{Programming Languages} should provide new mechanisms to easily
+	implement security patterns without endangering maintainability. \Rui{merge with
+  3rd bullet?}
+	Proper Authorization Mechanisms should be designed and
 	implemented. This is one of the most complex security features to implement.
 	Some mechanisms might assist authorization maintenance in long run, such as
 	the combination of \texttt{HTTP} filters with \texttt{Spring Security}
@@ -931,23 +940,29 @@ their projects. But there are still some concerns that need to be addressed:
   should offer these mechanisms? What is that combination that you're talking
   about?}
 
-	\item \textbf{Deprecated code} should be avoided by developers. They should
+	\item \textbf{Software Developers} should be avoided by developers. They should
 	integrate tools such as BCH on their projects CI/CD pipelines to help them be
-	more aware of the maintainability of their code and issues (e.g., dead and
-	duplicated code). \Rui{not clear. deprecated code vs. BCH??}
-
-	\item\textbf{Programming Languages} should provide new mechanisms to easily
-	implement security patterns without endangering maintainability. \Rui{merge with
-  3rd bullet?}
+	more aware of the maintainability of their code and issues.
+	
 \end{itemize}
 
 \Rui{Intense, buzz --- this is not a blog. Don't understand the point very
 well too.}
-We would expect that the negative impact of programming languages on
-maintainability would be more intense due to the buzz of the last years
-surrounding the idea that poor design of programming languages and lack of using
-the best practices lead to more buggy and vulnerable
-code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. However,
+
+
+% Ray et al. (2017)~\cite{Ray:2017:LSP:3144574.3126905} and
+% Berger et al. (2019)~\cite{2019arXiv190110220B}
+%
+% It would be expected that programming languages would have a more significant impact on the software maintainability according with previous work.
+%
+% According with the implications of previous work~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}, we would expect that the negative impact of programming languages on
+% maintainability would be more significant
+% surrounding the idea that poor design of programming languages and lack of using
+% the best practices lead to more buggy and vulnerable
+% code.
+
+
+However,
 Figure~\ref{fig:lang_main} shows that only \emph{C} has a negative impact of
 more than $50\%$ on software maintainability. We suspect that these values are
 the result of projects contributions policies. Nine out of ten projects --- the
@@ -998,7 +1013,7 @@ efforts have been made in creating and incorporating coding standards and best
 practices in software production. However, security is still far from perfection
 and fixing vulnerabilities might hinder software maintainability. Thus, it is
 important to provide tool support to developers to help them apply these
-patterns without harming software maintainability. \Rui{and redesign programming
+patterns without harming software maintainability. It is also important to redesign programming languages. \Rui{and redesign programming
 languages?}
 
 \section{Threats to Validity}\label{sec:threats}
@@ -1044,12 +1059,12 @@ programming languages.
 
 All the security commits are described in English. This approach discards
 security refactorings provided in other languages.\Rui{ehmm, isn't this
-related to the first paragraph in the internal threat?}
+related to the first paragraph in the internal threat?}\Sof{I think we can close this one}
 
 \section{Related Work}\label{sec:rw}
 
 Many studies have investigated the relationship between refactorings and
-software quality. Previous work focused on coupling metrics \Rui{?} has evaluated the
+software quality. Previous work focused on object-oriented metrics \Rui{?}\Sof{Better?} has evaluated the
 impact of refactorings and exhibited proof that quantifying effectively the
 impact of refactoring on maintainability may help to choose the appropriate
 refactoring type~\cite{1167822}. In contrast to this work, Hegedus et
@@ -1102,8 +1117,8 @@ considerable amount of cases that harm maintainability ($41.35\%$).
 This study also shows evidence that there are security patterns that need more attention than
 others. \emph{Broken Autentication} issues, \emph{Denial-of-Service} attacks and
 \emph{Memory Leaks} endure maintainability in $55.3\%$, $51.3\%$, and $47.5\%$,
-respectively. Following the implications of our work, we draw attention for the
-need of trustful security frameworks \Rui{?}, code best practices documentation to
+respectively. \Sof{Check this par again}Following the implications of our work, we draw attention for the
+need of code best practices documentation to
 produce safe and maintainable code, proper authorization mechanisms design and
 implementation, better tools to introduce in the CI/CD pipeline to help software
 maintenance and new or improved programming languages to allow developers to
@@ -1111,8 +1126,7 @@ easily implement safety in their software without endangering maintainability.
 
 As future work, this study may be extended in many directions: analyze which
 guidelines are more likely to be affected by security-related refactorings;
-evaluate the impact of each refactoring pattern on software maintainability
-\Rui{?}\Sof{}; investigate if there is any correlation between software
+investigate what are the most frequent vulnerabilities in each programming language\Rui{?}\Sof{Better?}; study if there is any correlation between software
 maintainability and popularity of the project; expand our methodology with other
 software quality properties; validate these findings with closed or private
 software; and, expand this analysis to other quality standards.
