@@ -97,7 +97,7 @@
   }
 
 \newcommand\Sof[1]{\nb{Sofia}{red}{#1}}
-\newcommand\Luis[1]{\nb{Luis}{green}{#1}}
+\newcommand\Luis[1]{\nb{Luis}{mygreen}{#1}}
 \newcommand\Rui[1]{\nb{Rui}{blue}{#1}}
 
 
@@ -435,7 +435,8 @@ Maintainability is measured separately for each pattern.
 The methodology used to measure the impact of security refactorings on the
 maintainability of open-source software is discussed in this section. The
 methodology is comprised of the following steps, as illustrated in
-Figure~\ref{fig:met}:
+Figure~\ref{fig:met}\Luis{como usamos numeros na enumeracao que descreve a
+figura, esses numeros tb deveriam estar na figura.}:
 
 \begin{enumerate}
 	\item Extract relevant data from a dataset containing $716$ security
@@ -539,15 +540,19 @@ the dataset containing less than $20$ instances):
     and Objective-C), i.e., where instead developers are responsible for
     handling it. One of the main causes of DoS attacks.
 
-    \item \textbf{Miscellaneous (195 cases)} This pattern comprises several other categories
-    of security refactorings (e.g., \textit{path traversal and buffer
-    overflow}). It contains several other security refactorings that do not have
-    their own pattern yet. The patterns not satisfying the size requirement of
-    more than $20$ refactorings are the following ones: \textit{Resource Leak} (19),
-    \textit{SHA-1 Hash Function} (1), \textit{Broken Access Control} (2),
-    \textit{Sensitive Data Exposure} (18), \textit{Insufficient Attack Protection} (4),
-    \textit{Overflow} (18), \textit{Path Traversal} (19).
-\end{itemize}
+    \item \textbf{Miscellaneous (195 cases)} This pattern comprises several
+    other categories of security refactorings (e.g., \textit{path traversal and
+    buffer overflow})\Luis{exemplos ja nao precisa estar aqui porque sao
+    enumerados logo a seguir}. It contains several other security refactorings
+    that do not have their own pattern yet. The patterns not satisfying the
+    size requirement of more than $20$ refactorings are the following ones:
+    \textit{Resource Leak} (19), \textit{SHA-1 Hash Function} (1),
+    \textit{Broken Access Control} (2), \textit{Sensitive Data Exposure} (18),
+    \textit{Insufficient Attack Protection} (4), \textit{Overflow} (18),
+    \textit{Path Traversal} (19).\Luis{Acho que este item pode ser reescrito de forma mais clara. sugestao:
+    This category comprises the security refactorings that (1) do not relate to
+    any particular pattern or (2) relate to patterns that do not occur in at
+    least 20 refactorings: \textit{Resource Leak} (19), \dots} \end{itemize}
 
 \begin{table*}[h]
 	\centering
@@ -571,7 +576,7 @@ The dataset contains security flaws for more than $13$ different languages,
 being PHP ($39\%$) and C ($24\%$) the most prevalent ones (see Figure~\ref{fig:lang}).
 To classify the applications in the dataset, we use a taxonomy for open-source
 software from previous work~\cite{7816479}. Figure~\ref{fig:domain}
-presents the projects domain distribution: \textit{Aplication Software} ($25$),
+presents the projects domain distribution: \textit{Application Software} ($25$),
 software that provides end-users with functional systems; \textit{Web libraries
 and frameworks} ($20$); \textit{System Software} ($18$), software that provides
 services and infrastructures (e.g., operating systems, servers and databases);
@@ -672,7 +677,7 @@ example only complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean Code}).
 \end{figure}
 
 One of the guidelines with which the project does not comply is the one presented in the report (cf. Figure~\ref{fig:bchrep}): \emph{Write Simple Units of Code}. SIG defines \emph{Units} as the smallest groups of code that can be maintained and executed independently~\cite{Visser:2016:OREILLY} (e.g., methods and constructors in Java). BCH evaluates this guideline based on the number 
-
+\Luis{this seems unfinished. i think we ve already mention this Mccabe metric somewhere else.}
 
 McCabe~\cite{1702388} is a software
 metric that calculates the number of linearly independent paths of the source
@@ -859,18 +864,21 @@ affect open-source software maintainability?}
 
 The impact of each type of security refactoring on the maintainability of
 open-source software is presented in Figure~\ref{fig:pat}. The results of the
-Wilcoxon signed-rank test \Rui{again} per pattern indicated statistical evidence
-supporting that the maintainability of open-source software decreases for $4$
-different patterns: \emph{Broken Autentication} (p-value = $0.018$),
-\emph{Denial-of-Service} (p-value = $0.029$), \emph{Memory Leak} (p-value = $0.009$) and
-\emph{Miscellaneous} (p-value = $3.07$x$10^{-4}$). With statistical significance,
-results demonstrate evidence that maintainability is not negatively impacted
-when removing \emph{Components with Known Vulnerabilities} (p-value = $7.96$x$10^{-4}$)
-and fixing \emph{Cross-Site Scripting Vulnerabilities} (p-value = $0.001$).
-\emph{Injection} and \emph{Cross-Site Request Forgery} produced more
-cases where the refactorings had a negative impact in the maintainability.
-However, the results obtained for these patterns are not statistically
-significant.
+Wilcoxon signed-rank test \Rui{again} per pattern indicated statistical
+evidence supporting that the maintainability of open-source software decreases
+for $4$ different patterns: \emph{Broken Autentication} (p-value = $0.018$),
+\emph{Denial-of-Service}\Luis{em varios pontos deste paper este pattern era
+referido com a sigla DoS. Por uma questao de consistencia com os outros
+patterns sugiro que se escreva sempre por extenso (ou entao sempre com a
+sigla).} (p-value = $0.029$), \emph{Memory Leak} (p-value = $0.009$) and
+\emph{Miscellaneous} (p-value = $3.07$x$10^{-4}$). With statistical
+significance, results demonstrate evidence that maintainability is not
+negatively impacted when removing \emph{Components with Known Vulnerabilities}
+(p-value = $7.96$x$10^{-4}$) and fixing \emph{Cross-Site Scripting
+Vulnerabilities} (p-value = $0.001$). \emph{Injection} and \emph{Cross-Site
+Request Forgery} produced more cases where the refactorings had a negative
+impact in the maintainability. However, the results obtained for these patterns
+are not statistically significant.
 
 Projects with \emph{Broken Authentication} flaws are the most affected ones by
 security refactorings: $55.3\%$ ($21$) of the refactorings had a negative impact
