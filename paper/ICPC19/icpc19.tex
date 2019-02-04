@@ -65,9 +65,7 @@
     keywordstyle=\color{blue},       % keyword style
     stringstyle=\color{mymauve},     % string literal style
     frame=single,
-    numbers=left,
     stepnumber=1,
-    xleftmargin=2em,
     escapeinside={/*!}{!*/},
     moredelim=**[l][\color{mygreen}]{+\ },
     moredelim=*[l][\color{red}]{-\ }
@@ -412,20 +410,25 @@ Maintainability is measured separately for each pattern.
 \setcounter{lstannotation}{0}
 \begin{lstlisting}[style={PHPStyle}, caption={Fix provided by \texttt{nextcloud/server} developers to a \\Cross-Site Scripting vulnerability},label={lst:fix}]
  <ul>
-   <li class='error'>
-      <?php echo $l->t('Cloud not found');?><br/>
--     <p class='hint'><?php if(isset($_['file'])) echo $_['file']?></p>
-+     <p class='hint'><?php if(isset($_['file'])) echo htmlentities($_['file'])?><?php 
-   </li>
+  <li class='error'>
+   <?php echo $l->t('Cloud not found');?>
+   <br/>
+   <p class='hint'>
+-    <?php if(isset($_['file'])) echo $_['file']?>
+   </p>
+   <p class='hint'>
++    <?php if(isset($_['file'])) echo htmlentities($_['file'])?>
+   </p> 
+  </li>
  </ul>
 
-\end{lstlisting} \Luis{no listing lst:fix o que achas de fazer linebreak para
-cada uma das tags? assim nao havi o problema de ter a mesma linha dividida e ficava mais facil de ler:\\
-\texttt{<p class='hint'>}\\
-\texttt{~~<?php }\\
-\texttt{</p>}\\
-Also: reduz numero de espacos para cada tab -- 2 é suficiente.
-}
+\end{lstlisting} % \Luis{no listing lst:fix o que achas de fazer linebreak para
+% cada uma das tags? assim nao havi o problema de ter a mesma linha dividida e ficava mais facil de ler:\\
+% \texttt{<p class='hint'>}\\
+% \texttt{~~<?php }\\
+% \texttt{</p>}\\
+% Also: reduz numero de espacos para cada tab -- 2 é suficiente.
+% }
 %
 \section{Methodology}\label{sec:methodology}
 %
