@@ -518,15 +518,6 @@ the dataset containing less than $20$ instances):
     example, flaws allowing attackers to trigger memory allocations
     corresponding to large length values (Listing~\ref{lst:vuln}).
 
-    \item \textbf{Miscellaneous} This pattern comprises several other categories
-    of security refactorings (e.g., \textit{path traversal and buffer
-    overflow}). It contains several other security refactorings that do not have
-    their own pattern yet. The patterns not satisfying the size requirement of
-    more than $20$ refactorings are contemplated here: \textit{Resource Leak},
-    \textit{SHA-1 Hash Function}, \textit{Broken Access Control},
-    \textit{Sensitive Data Exposure}, \textit{Insufficient Attack Protection},
-    \textit{Overflow}, \textit{Path Traversal}.
-
     \item \textbf{Cross-Site Scripting.} Lack of proper validation or escaping
     allow attackers to submit untrusted data to web browsers through malicious
     scripts that can hijack the user sessions or redirect the user to malicious
@@ -542,6 +533,15 @@ the dataset containing less than $20$ instances):
     programming languages that do not manage memory automatically (e.g., C/C++
     and Objective-C), i.e., where instead developers are responsible for
     handling it. One of the main causes of DoS attacks.
+
+    \item \textbf{Miscellaneous} This pattern comprises several other categories
+    of security refactorings (e.g., \textit{path traversal and buffer
+    overflow}). It contains several other security refactorings that do not have
+    their own pattern yet. The patterns not satisfying the size requirement of
+    more than $20$ refactorings are contemplated here: \textit{Resource Leak},
+    \textit{SHA-1 Hash Function}, \textit{Broken Access Control},
+    \textit{Sensitive Data Exposure}, \textit{Insufficient Attack Protection},
+    \textit{Overflow}, \textit{Path Traversal}.
 \end{itemize}
 
 \begin{table*}[h]
