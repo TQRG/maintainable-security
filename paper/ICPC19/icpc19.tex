@@ -333,9 +333,7 @@ separately. In the example (Listing~\ref{lst:vuln}), all functions receive as
 input the SSL session, \texttt{s}. In the \texttt{dtls1\_reassemble\_fragment}
 function the size of the fragment \texttt{msg\_hdr-$>$frag\_off+frag\_len} is
 checked against the handshake message size \texttt{msg\_hdr->msg\_len} (line
-$13$) and then against the maximum handshake message size allowed by DTLS1 for
-\texttt{s} (line $16$-$21$). However, it is not verified if
-\texttt{msg\_hdr->msg\_len} is lower than the allowed by DTLS. Thus, in line
+$13$) and then against the maximum size allowed in a DTLS handshake message for \texttt{s} (line $16$-$21$)\Rui{DTLS1 for s?}. However, it is not verified if \texttt{msg\_hdr->msg\_len} is lower than the size allowed by DTLS. \Rui{$<$- does not parse} Thus, in line
 $37$, when \texttt{msg\_len} is allocated to the fragment buffer, more memory
 than the allowed might be allocated. According to the commit message, $10$
 handshake messages are allowed per DTLS connection. Hence, a remote attacker
@@ -345,8 +343,7 @@ attack. The code changes performed to fix the vulnerability were the following:
 
 ~\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was
 inserted to return the maximum number of bytes allowed in a DTLS
-handshake message for \texttt{s}. The minimum is $16$KB but may be greater if
-the maximum certificate list size requires it which is set by the user. More
+handshake message for \texttt{s}. The minimum is $16$KB but it might be greater if the maximum certificate list size requires it. \Rui{$<$- does not parse} More
 specifically, it checks if the maximum certificate list size
 (\texttt{s-$>$max\_cert\_list}) requires more length than the maximum length
 (\texttt{max\_len}). If that condition holds, the function returns the size of
@@ -495,53 +492,53 @@ have decided to change the label to \textit{Miscellaneous} of the patterns in
 the dataset containing less than $20$ instances):
 
 \begin{itemize}
-    \item \textbf{Using Components with Known Vulnerabilities.} The majority of
+    \item \textbf{Using Components with Known Vulnerabilities (21 cases).} The majority of
     software produced today integrates several components, such as libraries and
     frameworks, which may affect the software if developers use vulnerable
     versions - usually known and disclosed somewhere on the Internet.
     \textit{Based on the OWASP Top $10$ of $2017$.}
 
-    \item \textbf{Broken Authentication \& Session Management.} Incorrectly
+    \item \textbf{Broken Authentication \& Session Management (38 cases).} Incorrectly
     implemented functionalities related to authentication and session
     management, allowing an attacker to gain access to session tokens,
     passwords, keys, and other sensitive data. \textit{Based on the OWASP Top
     $10$ of $2013$.}
 
-    \item \textbf{Cross-Site Request Forgery.} Poor session tokens generation
+    \item \textbf{Cross-Site Request Forgery (30 cases).} Poor session tokens generation
     and management usually allow attackers to send forged HTTP requests
     including authentication information from the victim to the vulnerable web
     application. \textit{Based on the OWASP Top $10$ of $2013$.}
 
-    \item \textbf{Denial-of-Service} Security flaws that can allow an attacker
+    \item \textbf{Denial-of-Service (40 cases).} Security flaws that can allow an attacker
     to flood or crashing services. This attacks usually occur when the system
     receives much traffic causing it to slow down and eventually stop. For
     example, flaws allowing attackers to trigger memory allocations
     corresponding to large length values (Listing~\ref{lst:vuln}).
 
-    \item \textbf{Cross-Site Scripting.} Lack of proper validation or escaping
+    \item \textbf{Cross-Site Scripting (114 cases).} Lack of proper validation or escaping
     allow attackers to submit untrusted data to web browsers through malicious
     scripts that can hijack the user sessions or redirect the user to malicious
     sites. \textit{Based on the OWASP Top $10$ of $2017$.}
 
-    \item \textbf{Injection.} When developers do not keep untrusted data
+    \item \textbf{Injection (89 cases).} When developers do not keep untrusted data
     separate from commands and queries. If an attacker sends a string that
     exploits the syntax of the interpreter, then an injection attack is possible
     (e.g., SQL and LDAP injection). \textit{Based on the OWASP Top $10$ of
     $2017$.}
 
-    \item \textbf{Memory Leak.} Memory management issue found more frequently in
+    \item \textbf{Memory Leak (80 cases).} Memory management issue found more frequently in
     programming languages that do not manage memory automatically (e.g., C/C++
     and Objective-C), i.e., where instead developers are responsible for
     handling it. One of the main causes of DoS attacks.
 
-    \item \textbf{Miscellaneous} This pattern comprises several other categories
+    \item \textbf{Miscellaneous (195 cases)} This pattern comprises several other categories
     of security refactorings (e.g., \textit{path traversal and buffer
     overflow}). It contains several other security refactorings that do not have
     their own pattern yet. The patterns not satisfying the size requirement of
-    more than $20$ refactorings are contemplated here: \textit{Resource Leak},
-    \textit{SHA-1 Hash Function}, \textit{Broken Access Control},
-    \textit{Sensitive Data Exposure}, \textit{Insufficient Attack Protection},
-    \textit{Overflow}, \textit{Path Traversal}.
+    more than $20$ refactorings are the following ones: \textit{Resource Leak} (19),
+    \textit{SHA-1 Hash Function} (1), \textit{Broken Access Control} (2),
+    \textit{Sensitive Data Exposure} (18), \textit{Insufficient Attack Protection} (4),
+    \textit{Overflow} (18), \textit{Path Traversal} (19).
 \end{itemize}
 
 \begin{table*}[h]
@@ -666,8 +663,9 @@ example only complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean Code}).
 	\label{fig:bchrep}
 \end{figure}
 
-\emph{Units} are the smallest groups of code that can be maintained and executed
-independently~\cite{Visser:2016:OREILLY}. McCabe~\cite{1702388} is a software
+\emph{Units} are the smallest groups of code that can be maintained and executed independently~\cite{Visser:2016:OREILLY}. 
+
+McCabe~\cite{1702388} is a software
 metric that calculates the number of linearly independent paths of the source
 code. BCH uses this metric to measure the number of branch points in the
 \emph{Write Simple Units of Code} guideline. The bar at the bottom of the figure
@@ -792,8 +790,7 @@ change, three types of impact of refactorings in the software maintainability
 are presented: \emph{negative}, maintainability decreases (\emph{red});
 \emph{none}, maintainability remains the same (\emph{yellow}); and,
 \emph{positive}, maintainability increases (\emph{green}). Next to each
-group, it is presented the mean ($\overline{x}$) and median ({$\widetilde{x}$)
-\Rui{notation is not consistent... use M}
+group, it is presented the mean ($\overline{x}$) and median (M)
 of the maintainability difference and the p-value resulting from the Wilcoxon
 signed-rank test. \Rui{this is not consistent to the statistical section...}
 
@@ -1080,7 +1077,7 @@ software~\cite{4493325}. The present work studies how security patterns
 influence maintainability for open-source software.
 
 Other studies investigated the effect of programming languages in software
-quality~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}\Rui{quality or maintainability?}. The first
+quality~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. The first
 study shows that some programming languages are more buggy than others, i.e.,
 language design has an impact on software quality. However, the authors of the
 second study were not able to reproduce the first one and did not obtain any
@@ -1113,8 +1110,8 @@ maintenance and new or improved programming languages to allow developers to
 easily implement safety in their software without endangering maintainability.
 
 As future work, this study may be extended in many directions: analyze which
-guidelines are more likely to affect security refactorings \Rui{? }; evaluate the impact
-of each refactoring pattern on software maintainability \Rui{? }; investigate if there is
+guidelines are more likely to be affected by security refactorings \Rui{?}\Sof{melhor?}; evaluate the impact
+of each refactoring pattern on software maintainability \Rui{?}\Sof{}; investigate if there is
 any correlation between software maintainability and popularity of the project; expand
 our methodology with other software quality properties; validate these findings
 with closed or private software; and, expand this analysis to other quality
