@@ -401,14 +401,15 @@ affect open-source software maintainability?}
 There are security flaws that are more difficult to refactor than others. For
 instance, implementing secure authentication is not as easy as fixing a
 cross-site scripting vulnerability since usually the last one is can be fixed
-without adding new lines of code, as seen in Figure~\ref{lst:fix}. The developer
-added the function \emph{htmlentities} to \textit{escape} the data given by the
-variable \emph{\$\_['file']}. Knowing which patterns are more likely to increase
-maintainability issues is one step forward to bring awareness to security
-engineers of what patterns need more attention. The taxonomy of security
-patterns used to answer this question is the same as the one provided by the
-authors of the dataset~\cite{Reis:2017:IJSSE}. Maintainability is measured
-separately for each pattern.
+without adding new lines of code, as seen in Figure~\ref{lst:fix}.\Luis{as seen
+in Listing?} The developer added the function \emph{htmlentities} to
+\textit{escape} the data given by the variable \emph{\$\_['file']}.\Luis{usa
+sempre o mesmo tipo de letra para nomes de funcoes. \\texttt?} Knowing which
+patterns are more likely to increase maintainability issues is one step forward
+to bring awareness to security engineers of what patterns need more attention.
+The taxonomy of security patterns used to answer this question is the same as
+the one provided by the authors of the dataset~\cite{Reis:2017:IJSSE}.
+Maintainability is measured separately for each pattern.
 
 \setcounter{lstannotation}{0}
 \begin{lstlisting}[style={PHPStyle}, caption={Fix provided by \texttt{nextcloud/server} developers to a \\Cross-Site Scripting vulnerability},label={lst:fix}]
@@ -416,11 +417,17 @@ separately for each pattern.
     <li class='error'>
        <?php echo $l->t('Cloud not found');?><br/>
 -      <p class='hint'><?php if(isset($_['file'])) echo $_['file']?></p>
-+      <p class='hint'><?php if(isset($_['file'])) echo htmlentities($_['file'])?></p>
++      <p class='hint'><?php if(isset($_['file'])) echo htmlentities($_['file'])?><?php 
     </li>
  </ul>
 
-\end{lstlisting}
+\end{lstlisting} \Luis{no listing lst:fix o que achas de fazer linebreak para
+cada uma das tags? assim nao havi o problema de ter a mesma linha dividida e ficava mais facil de ler:\\
+\texttt{<p class='hint'>}\\
+\texttt{~~<?php }\\
+\texttt{</p>}\\
+Also: reduz numero de espacos para cada tab -- 2 é suficiente.
+}
 %
 \section{Methodology}\label{sec:methodology}
 %
