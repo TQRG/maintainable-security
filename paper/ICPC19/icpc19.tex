@@ -333,7 +333,7 @@ separately. In the example (Listing~\ref{lst:vuln}), all functions receive as
 input the SSL session, \texttt{s}. In the \texttt{dtls1\_reassemble\_fragment}
 function the size of the fragment \texttt{msg\_hdr-$>$frag\_off+frag\_len} is
 checked against the handshake message size \texttt{msg\_hdr->msg\_len} (line
-$13$) and then against the maximum size allowed in a DTLS handshake message for \texttt{s} (line $16$-$21$)\Rui{DTLS1 for s?}\Sof{Better?}. However, it is not verified if \texttt{msg\_hdr->msg\_len} is lower than the size allowed by DTLS. \Rui{$<$- does not parse}\Sof{Better?} Thus, in line
+$13$) and then against the maximum size allowed in a DTLS handshake message for \texttt{s} (line $16$-$21$). However, it is not verified if \texttt{msg\_hdr->msg\_len} is lower than the size allowed by DTLS. Thus, in line
 $37$, when \texttt{msg\_len} is allocated to the fragment buffer, more memory
 than the allowed might be allocated. According to the commit message, $10$
 handshake messages are allowed per DTLS connection. Hence, a remote attacker
@@ -343,7 +343,7 @@ attack. The code changes performed to fix the vulnerability were the following:
 
 ~\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was
 inserted to return the maximum number of bytes allowed in a DTLS
-handshake message for \texttt{s}. The minimum is $16$KB but it might be greater if the maximum certificate list size requires it. \Rui{$<$- does not parse}\Sof{Better?} More
+handshake message for \texttt{s}. The minimum is $16$KB but it might be greater if the maximum certificate list size requires it. More
 specifically, it checks if the maximum certificate list size
 (\texttt{s-$>$max\_cert\_list}) requires more length than the maximum length
 (\texttt{max\_len}). If that condition holds, the function returns the size of
@@ -492,7 +492,7 @@ have decided to change the label to \textit{Miscellaneous} of the patterns in
 the dataset containing less than $20$ instances):
 
 \begin{itemize}
-    \item \Sof{Cases added, check it out}\textbf{Using Components with Known Vulnerabilities (21 cases).} The majority of
+    \item \textbf{Using Components with Known Vulnerabilities (21 cases).} The majority of
     software produced today integrates several components, such as libraries and
     frameworks, which may affect the software if developers use vulnerable
     versions - usually known and disclosed somewhere on the Internet.
@@ -663,7 +663,7 @@ example only complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean Code}).
 	\label{fig:bchrep}
 \end{figure}
 
-One of the guidelines with which the project does not comply is the one presented in the report (cf. Figure~\ref{fig:bchrep}): \emph{Write Simple Units of Code}. SIG defines \emph{Units} as the smallest groups of code that can be maintained and executed independently~\cite{Visser:2016:OREILLY} (e.g., methods and constructors in Java). BCH reports 
+One of the guidelines with which the project does not comply is the one presented in the report (cf. Figure~\ref{fig:bchrep}): \emph{Write Simple Units of Code}. SIG defines \emph{Units} as the smallest groups of code that can be maintained and executed independently~\cite{Visser:2016:OREILLY} (e.g., methods and constructors in Java). BCH evaluates this guideline based on the number 
 
 
 McCabe~\cite{1702388} is a software
