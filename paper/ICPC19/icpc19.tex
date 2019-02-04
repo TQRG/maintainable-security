@@ -776,10 +776,10 @@ reduce maintainability.
 %
 \section{Results}\label{sec:results}
 
-In total, this study evaluates $607$ security and baseline commits from $94$
-different open-source projects distributed among $5$ different main types of
-software, Figure~\ref{fig:domain}. The following section presents the results
-obtained for each research question.
+As mentioned before, this study evaluates $607$ security and baseline commits
+from $94$ distinct open-source projects, distributed amongst $5$ main
+types of software applications. The following section presents the
+results obtained for each research question.
 
 \begin{framed}
 \textit{\textbf{RQ1} What is the impact of security refactorings on the
@@ -790,11 +790,12 @@ The impact of security and baseline commits in the maintainability of
 open-source software is presented in Figure~\ref{fig:secvsreg}. For each type of
 change, three types of impact of refactorings in the software maintainability
 are presented: \emph{negative}, maintainability decreases (\emph{red});
-\emph{none}, maintainability stays the same (\emph{yellow}); and,
-\emph{positive}, maintainability increases (\emph{green}). In front of each
+\emph{none}, maintainability remains the same (\emph{yellow}); and,
+\emph{positive}, maintainability increases (\emph{green}). Next to each
 group, it is presented the mean ($\overline{x}$) and median ({$\widetilde{x}$)
+\Rui{notation is not consistent... use M}
 of the maintainability difference and the p-value resulting from the Wilcoxon
-signed-rank test.
+signed-rank test. \Rui{this is not consistent to the statistical section...}
 
 \begin{figure}[h]
  	\centering 	\includegraphics[width=0.5\textwidth]{figures/maintainability.pdf}
@@ -803,19 +804,19 @@ signed-rank test.
 \end{figure}
 
 Regarding security commits results, we observe that maintainability decreases in
-$40.20\%$ ($244$), stays equal in $30.5\%$ ($185$) and increases in $29.33\%$
-($178$) of the cases after security refactorings being applied. The resulting
-p-value of the Wilcoxon signed-rank test is $1.21$x$10^{-10}$. Since the p-value
-is below the significance level of $0.05$, it is reasonable to affirm that
+$40.20\%$ ($244$), remains the same in $30.5\%$ ($185$) and increases in $29.33\%$
+($178$) of the cases after security refactorings are applied. The resulting
+p-value of the Wilcoxon signed-rank \Rui{consistentcy...} test is $1.21$x$10^{-10}$.
+Since the p-value is below the significance level of $0.05$, we argue that
 \emph{security refactorings have a negative impact in the maintainability of
 open-source software}.
 
-For regular commits, we also observe that maintainability decreases in $41.35\%$
-($251$) of the cases after regular refactorings being applyed. But in contrast
-to security commits, it increases in $58.16\%$ ($353$) and stays equal in
-$0.5\%$ ($3$) of the cases. The resulting p-value of the Wilcoxon signed-rank
+For regular commits, we observe that the maintainability decreases in $41.35\%$
+($251$) of the cases after regular refactorings are applied. But in contrast
+to security commits, it increases in $58.16\%$ ($353$) and remains the same in
+$0.5\%$ ($3$) of the cases. The resulting p-value of the Wilcoxon signed-rank\Rui{consistency..}
 test is $1.54$x$10^{-6}$. Since the p-value is below the significance level of
-$0.05$, it is reasonable to affirm that \emph{regular refactorings have a
+$0.05$, we argue that \emph{regular refactorings have a
 positive impact in the maintainability of open-source software}.
 
 \begin{figure}[h]
@@ -825,18 +826,18 @@ positive impact in the maintainability of open-source software}.
 	\label{fig:lang_main}
 \end{figure}
 
-In this study, we also evaluated the impact of each programming language on the
-maintainability of open-source software, Figure~\ref{fig:lang_main}. Although
+We have also evaluated the impact in the maintainability per programming language
+of open-source software, Figure~\ref{fig:lang_main}. Although
 the dataset contains security refactorings for more than $13$ languages, we only
 present the results for \emph{Java}, \emph{C}, \emph{Ruby} and \emph{PHP}
-because one of the requirements of the Wilcoxon signed-rank test is that the
-input sample has to have more than $20$ measurements. The other languages were
-integrated into the \emph{Others} set. The results of the Wilcoxon signed-rank
-test by pattern returned statistical evidence which supports that the
+because one of the requirements of the Wilcoxon signed-rank test\Rui{consistency} is that the
+input sample has to have more than $20$ samples. The other languages were
+integrated into \emph{Others}. The results of the Wilcoxon signed-rank\Rui{consistency}
+test by pattern indicate that there is statistical evidence to support that the
 maintainability of open-source software decreases for security refactorings in
-$3$ different languages: \emph{C} (p = $5.72$x$10^{-9}$), Ruby (p = $0.057$) and
-PHP (p = $3.54$x$10^{-6}$). The results also provide statistical significance
-for when security refactorings are performed in \emph{Java} (p =
+$3$ different languages: \emph{C} (p-value = $5.72$x$10^{-9}$), Ruby (p-value = $0.057$) and
+PHP (p-value = $3.54$x$10^{-6}$). The results also provide statistical significance
+for when security refactorings are performed in \emph{Java} (p-value =
 $3.61$x$10^{-2}$). \emph{Python} and the languages that integrate the
 \emph{Others} set contain more cases where the maintainability increases.
 However, the results obtained for these patterns are not statistically
@@ -849,14 +850,14 @@ affect open-source software maintainability?}
 
 The impact of each type of security refactoring on the maintainability of
 open-source software is presented in Figure~\ref{fig:pat}. The results of the
-Wilcoxon signed-rank test by pattern returned statistical evidence which
-supports that the maintainability of open-source software decreases for $4$
-different patterns: \emph{Broken Autentication} (p = $0.018$),
-\emph{Denial-of-Service} (p = $0.029$), \emph{Memory Leak} (p = $0.009$) and
-\emph{Miscellaneous} (p = $3.07$x$10^{-4}$). With statistical significance,
+Wilcoxon signed-rank test \Rui{again} per pattern indicated statistical evidence
+supporting that the maintainability of open-source software decreases for $4$
+different patterns: \emph{Broken Autentication} (p-value = $0.018$),
+\emph{Denial-of-Service} (p-value = $0.029$), \emph{Memory Leak} (p-value = $0.009$) and
+\emph{Miscellaneous} (p-value = $3.07$x$10^{-4}$). With statistical significance,
 results demonstrate evidence that maintainability is not negatively impacted
-when removing \emph{Components with Known Vulnerabilities} (p = $7.96$x$10^{-4}$)
-and fixing \emph{Cross-Site Scripting Vulnerabilities} (p = $0.001$).
+when removing \emph{Components with Known Vulnerabilities} (p-value = $7.96$x$10^{-4}$)
+and fixing \emph{Cross-Site Scripting Vulnerabilities} (p-value = $0.001$).
 \emph{Injection} and \emph{Cross-Site Request Forgery} produced more
 cases where the refactorings had a negative impact in the maintainability.
 However, the results obtained for these patterns are not statistically
@@ -908,7 +909,7 @@ of open-source software?}
 \textbf{\textit{Security refactorings harm the maintainability of open-source software.}}
 %
 We found that $40.2\%$ of the security refactoring have a negative impact on the
-maintainability of open-source software, Figure~\ref{fig:secvsreg}. This raises
+maintainability of open-source software (Figure~\ref{fig:secvsreg}). This raises
 a new tradeoff when developers need to fix vulnerabilities on their projects
 because they might be affecting the software maintainability or even introducing
 new vulnerabilities. This study exhibits evidence that developers may have to
@@ -919,7 +920,7 @@ their projects. But there are still some concerns that need to be addressed:
 	\item \textbf{Security Frameworks} need to be secure and
 	user-friendly~\cite{5287006, 7676144}. Unfortunately, there are several
 	vulnerabilities that stay undisclosed. Thus, developers should not trust them
-	blindly and check defaults.
+	blindly and check defaults. \Rui{I don't understand the point.}
 
 	\item \textbf{Documentation} of software should provide developers with the
 	best practices to implement secure and maintainable software. Unmaintainable
@@ -929,17 +930,22 @@ their projects. But there are still some concerns that need to be addressed:
 	implemented. This is one of the most complex security features to implement.
 	Some mechanisms might assist authorization maintenance in long run, such as
 	the combination of \texttt{HTTP} filters with \texttt{Spring Security}
-	annotations.
+	annotations. \Rui{not crystal clear -- do you mean programming languages
+  should offer these mechanisms? What is that combination that you're talking
+  about?}
 
 	\item \textbf{Deprecated code} should be avoided by developers. They should
 	integrate tools such as BCH on their projects CI/CD pipelines to help them be
 	more aware of the maintainability of their code and issues (e.g., dead and
-	duplicated code).
+	duplicated code). \Rui{not clear. deprecated code vs. BCH??}
 
 	\item\textbf{Programming Languages} should provide new mechanisms to easily
-	implement security patterns without endangering maintainability.
+	implement security patterns without endangering maintainability. \Rui{merge with
+  3rd bullet?}
 \end{itemize}
 
+\Rui{Intense, buzz --- this is not a blog. Don't understand the point very
+well too.}
 We would expect that the negative impact of programming languages on
 maintainability would be more intense due to the buzz of the last years
 surrounding the idea that poor design of programming languages and lack of using
@@ -995,7 +1001,8 @@ efforts have been made in creating and incorporating coding standards and best
 practices in software production. However, security is still far from perfection
 and fixing vulnerabilities might hinder software maintainability. Thus, it is
 important to provide tool support to developers to help them apply these
-patterns without harming software maintainability.
+patterns without harming software maintainability. \Rui{and redesign programming
+languages?}
 
 \section{Threats to Validity}\label{sec:threats}
 %
@@ -1007,9 +1014,8 @@ study.
 The maintainability formula was inferred based on the BCH's reports. The high
 amount of different projects and backgrounds may require different
 maintainability standards. However, BCH does have a representative benchmark of
-closed and open-source software projects that are under the calculation of the
-thresholds used in the computation of each maintainability guideline
-(Table~\ref{tab:guidelines})~\cite{Visser:2016:OREILLY, Baggen2012}.
+closed and open-source software projects that are used to compute the
+thresholds for each maintainability guideline~\cite{Visser:2016:OREILLY, Baggen2012}.
 
 \subsection{Internal}
 
@@ -1040,12 +1046,13 @@ the dataset may not be properly representative of the population regarding
 programming languages.
 
 All the security commits are described in English. This approach discards
-security refactorings provided in other languages.
+security refactorings provided in other languages.\Rui{ehmm, isn't this
+related to the first paragraph in the internal threat?}
 
 \section{Related Work}\label{sec:rw}
 
 Many studies have investigated the relationship between refactorings and
-software quality. Previous work focused on coupling metrics has evaluated the
+software quality. Previous work focused on coupling metrics \Rui{?} has evaluated the
 impact of refactorings and exhibited proof that quantifying effectively the
 impact of refactoring on maintainability may help to choose the appropriate
 refactoring type~\cite{1167822}. In contrast to this work, Hegedus et
@@ -1073,21 +1080,21 @@ software~\cite{4493325}. The present work studies how security patterns
 influence maintainability for open-source software.
 
 Other studies investigated the effect of programming languages in software
-quality~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. The first
+quality~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}\Rui{quality or maintainability?}. The first
 study shows that some programming languages are more buggy than others, i.e.,
 language design has an impact on software quality. However, the authors of the
 second study were not able to reproduce the first one and did not obtain any
 evidence about the impact of language design. Both have used the number of
-defects as an indicator of software quality. The present work studies how
+defects as an indicator of software quality. Our works studies how
 security refactorings affect software quality based on the code maintainability
-analysis and provides some evidence that programming language have impact on
+analysis and provides evidence that programming language have impact on
 maintainability.
 
 \section{Conclusion and Future Work}\label{sec:conclusions}
 
 This work presents an empirical study on the impact of $607$ security
 refactorings on the maintainability of $94$ open-source projects. We leveraged
-Better Code Hub reports of each project version to calculate maintainability
+Better Code Hub reports to calculate maintainability
 based on a model proposed in previous work. Security refactorings significantly
 affect the software maintainability of open-source software, i.e., developers
 hinder maintainability when fixing vulnerabilities. We found this evidence in
@@ -1095,20 +1102,20 @@ $40.2\%$ of the studied cases. Regarding regular commits, it seems that overall
 maintainability increases ($50.16\%$). However, there is still a very
 considerable amount of cases that harm maintainability ($41.35\%$).
 
-This study also exhibits evidence that some security patterns need more attention than
+This study also shows evidence that there are security patterns that need more attention than
 others. \emph{Broken Autentication} issues, \emph{Denial-of-Service} attacks and
 \emph{Memory Leaks} endure maintainability in $55.3\%$, $51.3\%$, and $47.5\%$,
 respectively. Following the implications of our work, we draw attention for the
-need of trustful security frameworks, code best practices documentation to
+need of trustful security frameworks \Rui{?}, code best practices documentation to
 produce safe and maintainable code, proper authorization mechanisms design and
 implementation, better tools to introduce in the CI/CD pipeline to help software
 maintenance and new or improved programming languages to allow developers to
 easily implement safety in their software without endangering maintainability.
 
 As future work, this study may be extended in many directions: analyze which
-guidelines are more likely to affect security refactorings; evaluate the impact
-of each refactoring pattern on software maintainability; investigate if there is
-any correlation between software maintainability and projects popularity; expand
+guidelines are more likely to affect security refactorings \Rui{? }; evaluate the impact
+of each refactoring pattern on software maintainability \Rui{? }; investigate if there is
+any correlation between software maintainability and popularity of the project; expand
 our methodology with other software quality properties; validate these findings
 with closed or private software; and, expand this analysis to other quality
 standards.
