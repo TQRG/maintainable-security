@@ -193,8 +193,7 @@ negative criticism regarding the costs associated and poor technical evaluation;
 the OWASP Application Security Verification Criteria~\cite{oswap:2009} which is
 focused only on web applications, and a model proposed by Xu et al. ($2013$)
 ~\cite{6616351} for rating software security (arguably, it was one of the
-first steps taken by SIG to introduce security on their maintainability model).
-
+first steps taken by SIG to introduce security on their maintainability model). 
 BCH compiles the ISO/IEC 25010 into a set of $10$ guidelines that are the
 base of BCH's evaluation. Two examples are the \emph{Write Simple Units of Code}
 based on the McCabe Complexity~\cite{1702388} and \emph{Keep your Codebase Small}
@@ -202,7 +201,8 @@ based on the idea that smaller codebases are easier to maintain and less prone t
 
 The particular subject of this paper is to explore whether there is a trade-off
 between refactoring source code to patch disclosed vulnerabilities and keeping
-(or even improving) the maintainability of software systems. Hedegus et al. ($2018$)~\cite{HEGEDUS2018313}, analyzed the difference of maintainability between
+(or even improving) the maintainability of software systems. Hedegus et al. 
+($2018$)~\cite{HEGEDUS2018313}, analyzed the difference of maintainability between
 groups of refactored elements and non-refactored and conclude that the source
 code elements subjected to refactorings had significantly lower maintainability
 than the elements not modified.
@@ -331,7 +331,9 @@ separately. In the example (Listing~\ref{lst:vuln}), all functions receive as
 input the SSL session, \texttt{s}. In the \texttt{dtls1\_reassemble\_fragment}
 function the size of the fragment \texttt{msg\_hdr-$>$frag\_off+frag\_len} is
 checked against the handshake message size \texttt{msg\_hdr->msg\_len} (line
-$13$) and then against the maximum size allowed in a DTLS handshake message for \texttt{s} (line $16$-$21$). However, it is not verified if \texttt{msg\_hdr->msg\_len} is lower than the size allowed by DTLS. Thus, in line
+$13$) and then against the maximum size allowed in a DTLS handshake message for 
+\texttt{s} (line $16$-$21$). However, it is not verified if \texttt{msg\_hdr->msg\_len} 
+is lower than the size allowed by DTLS. Thus, in line
 $37$, when \texttt{msg\_len} is allocated to the fragment buffer, more memory
 than the allowed might be allocated. According to the commit message, $10$
 handshake messages are allowed per DTLS connection. Hence, a remote attacker
@@ -341,7 +343,8 @@ attack. The code changes performed to fix the vulnerability were the following:
 
 ~\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was
 inserted to return the maximum number of bytes allowed in a DTLS
-handshake message for \texttt{s}. The minimum is $16$KB but it might be greater if the maximum certificate list size requires it. More
+handshake message for \texttt{s}. The minimum is $16$KB but it might be greater if 
+the maximum certificate list size requires it. More
 specifically, it checks if the maximum certificate list size
 (\texttt{s-$>$max\_cert\_list}) requires more length than the maximum length
 (\texttt{max\_len}). If that condition holds, the function returns the size of
@@ -412,31 +415,23 @@ Maintainability is measured separately for each pattern.
  <ul>
   <li class='error'>
    <?php echo $l->t('Cloud not found');?>
-   <br/>
    <p class='hint'>
--    <?php if(isset($_['file'])) echo $_['file']?>
+-   <?php if(isset($_['file'])) echo $_['file']?>
    </p>
    <p class='hint'>
-+    <?php if(isset($_['file'])) echo htmlentities($_['file'])?>
++   <?php if(isset($_['file'])) echo htmlentities($_['file'])?>
    </p> 
   </li>
  </ul>
 
-\end{lstlisting} % \Luis{no listing lst:fix o que achas de fazer linebreak para
-% cada uma das tags? assim nao havi o problema de ter a mesma linha dividida e ficava mais facil de ler:\\
-% \texttt{<p class='hint'>}\\
-% \texttt{~~<?php }\\
-% \texttt{</p>}\\
-% Also: reduz numero de espacos para cada tab -- 2 é suficiente.
-% }
-%
+\end{lstlisting} 
+
 \section{Methodology}\label{sec:methodology}
 %
 The methodology used to measure the impact of security refactorings on the
 maintainability of open-source software is discussed in this section. The
 methodology is comprised of the following steps, as illustrated in
-Figure~\ref{fig:met}\Luis{como usamos numeros na enumeracao que descreve a
-figura, esses numeros tb deveriam estar na figura.}:
+Figure~\ref{fig:met}:
 
 \begin{enumerate}
 	\item Extract relevant data from a dataset containing $716$ security
@@ -490,8 +485,6 @@ evaluate if the impact was positive, negative or none.
 	\label{fig:domain}
 \end{figure}
 
-
-
 The $716$ refactorings in the dataset were run against the BCH toolset to
 calculate their maintainability reports. However, there are refactorings
 discarded from tour study due to limitations of BCH: in particular, lack of
@@ -540,19 +533,13 @@ the dataset containing less than $20$ instances):
     and Objective-C), i.e., where instead developers are responsible for
     handling it. One of the main causes of DoS attacks.
 
-    \item \textbf{Miscellaneous (195 cases)} This pattern comprises several
-    other categories of security refactorings (e.g., \textit{path traversal and
-    buffer overflow})\Luis{exemplos ja nao precisa estar aqui porque sao
-    enumerados logo a seguir}. It contains several other security refactorings
-    that do not have their own pattern yet. The patterns not satisfying the
-    size requirement of more than $20$ refactorings are the following ones:
+    \item \textbf{Miscellaneous (195 cases)} This pattern comprises 
+	several other security refactorings that do not have their own pattern yet and patterns that
+	do not satisfy the Wilcoxon test size requirement of more than $20$ refactorings:
     \textit{Resource Leak} (19), \textit{SHA-1 Hash Function} (1),
     \textit{Broken Access Control} (2), \textit{Sensitive Data Exposure} (18),
     \textit{Insufficient Attack Protection} (4), \textit{Overflow} (18),
-    \textit{Path Traversal} (19).\Luis{Acho que este item pode ser reescrito de forma mais clara. sugestao:
-    This category comprises the security refactorings that (1) do not relate to
-    any particular pattern or (2) relate to patterns that do not occur in at
-    least 20 refactorings: \textit{Resource Leak} (19), \dots} \end{itemize}
+    \textit{Path Traversal} (19). \end{itemize}
 
 \begin{table*}[h]
 	\centering
@@ -676,20 +663,16 @@ example only complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean Code}).
 	\label{fig:bchrep}
 \end{figure}
 
-One of the guidelines with which the project does not comply is the one presented in the report (cf. Figure~\ref{fig:bchrep}): \emph{Write Simple Units of Code}. SIG defines \emph{Units} as the smallest groups of code that can be maintained and executed independently~\cite{Visser:2016:OREILLY} (e.g., methods and constructors in Java). BCH evaluates this guideline based on the number 
-\Luis{this seems unfinished. i think we ve already mention this Mccabe metric somewhere else.}
-
-McCabe~\cite{1702388} is a software
-metric that calculates the number of linearly independent paths of the source
-code. BCH uses this metric to measure the number of branch points in the
-\emph{Write Simple Units of Code} guideline. 
-
-
-The bar at the bottom of the figure
-represents the top $30$ units that violate the guideline, sorted by severity,
+SIG defines \emph{Units} as the smallest groups of code that can be maintained and executed 
+independently~\cite{Visser:2016:OREILLY} (e.g., methods and constructors in Java). 
+One of the guidelines with which the project does not comply is the one presented in 
+the report (cf. Figure~\ref{fig:bchrep}): \emph{Write Simple Units of Code}. BCH analyzes 
+this guideline based on the McCabe Complexity~\cite{1702388} to calculate the number of branch 
+points of a method. The bar at the bottom of the figure
+represents the top $30$ units that violate the guideline, sorted by severity.
 The violation severities are indicated using colors, and there is a legend to
-help to interpret the colors. The green bar represents the number of compliant
-branch points per unit (\emph{at most $5$}), i.e., the units are compliant with
+help to interpret them. The green bar represents the number of compliant
+branch points per unit (\emph{at most $5$}), i.e., the number of units are compliant with
 ISO 25010~\cite{iso:2011}. Yellow, orange and red bars represent units that do
 not comply with medium (\emph{above $5$}), high (\emph{above $10$}) and very high
 (\emph{above $25$}) severity levels. In the bar, there are marks that pinpoint the
@@ -703,7 +686,7 @@ in the green bar it means it is compliant with a low level of severity.
 \end{figure}
 
 Aiming to analyze the impact of security refactorings, we use BCH to compute
-maintainability of two different versions of the project (Figure~\ref{fig:commit}):
+maintainability of two different versions of the project (cf. Figure~\ref{fig:commit}):
 \begin{itemize}
 	\item $v_{s-1}$, the version containing the security flaw, i.e., before the
 	refactoring;
@@ -777,14 +760,15 @@ Figure~\ref{fig:commit}.
 %
 To validate the maintainability differences in different groups of commits
 (e.g., baseline and security commits), we use the Paired Wilcoxon signed-rank
-test with the significance level $\alpha = 0.05$~\cite{10.2307/3001968} . In
+test with the significance level $\alpha = 0.05$~\cite{10.2307/3001968}. In
 other words, we test the null hypothesis that the maintainability difference
 between pairs of versions $v_{v-1}$, $v_v$ (i.e., before and after a
-security-commit) follows a symmetric distribution around $0$. However, when the
-difference between groups is zero, the observations are discarded. Thus, we use
-a more robust approach to the Wilcoxon test, the Wilcoxon test by Pratt which
-provides an alternative that incorporates the cases where the maintainability
-difference is zero~\cite{10.2307/2282543}. To understand the effect-size, as
+security-commit) come from the same distribution. Nevertheless, this test has a 
+limitation: it does not consider the groups of commits with a zero-difference 
+maintainability. In $1959$, Pratt provided an improvement to the test to solve 
+this issue making the test more robust. Thus, we use a version of the Wilcoxon 
+test that incorporates the cases where maintainability is different from zero~\cite{10.2307/2282543}. 
+To understand the effect-size, as
 advocated by the Common-language effect sizes\cite{graw:1992}, we compute the
 mean difference, the median of the difference, and the percentage of cases that
 reduce maintainability.
@@ -808,8 +792,7 @@ are presented: \emph{negative}, maintainability decreases (\emph{red});
 \emph{none}, maintainability remains the same (\emph{yellow}); and,
 \emph{positive}, maintainability increases (\emph{green}). Next to each
 group, it is presented the mean ($\overline{x}$) and median (M)
-of the maintainability difference and the p-value resulting from the Wilcoxon
-signed-rank test. \Rui{this is not consistent to the statistical section...}
+of the maintainability difference and the p-value resulting from the Paired Wilcoxon signed-rank test.
 
 \begin{figure}[h]
  	\centering 	\includegraphics[width=0.5\textwidth]{figures/maintainability.pdf}
@@ -820,7 +803,7 @@ signed-rank test. \Rui{this is not consistent to the statistical section...}
 Regarding security commits results, we observe that maintainability decreases in
 $40.20\%$ ($244$), remains the same in $30.5\%$ ($185$) and increases in $29.33\%$
 ($178$) of the cases after security refactorings are applied. The resulting
-p-value of the Wilcoxon signed-rank \Rui{consistentcy...} test is $1.21$x$10^{-10}$.
+p-value of the Paired Wilcoxon signed-rank test is $1.21$x$10^{-10}$.
 Since the p-value is below the significance level of $0.05$, we argue that
 \emph{security refactorings have a negative impact in the maintainability of
 open-source software}.
@@ -828,7 +811,7 @@ open-source software}.
 For regular commits, we observe that the maintainability decreases in $41.35\%$
 ($251$) of the cases after regular refactorings are applied. But in contrast
 to security commits, it increases in $58.16\%$ ($353$) and remains the same in
-$0.5\%$ ($3$) of the cases. The resulting p-value of the Wilcoxon signed-rank\Rui{consistency..}
+$0.5\%$ ($3$) of the cases. The resulting p-value of the Paired Wilcoxon signed-rank
 test is $1.54$x$10^{-6}$. Since the p-value is below the significance level of
 $0.05$, we argue that \emph{regular refactorings have a
 positive impact in the maintainability of open-source software}.
@@ -844,9 +827,9 @@ We have also evaluated the impact in the maintainability per programming languag
 of open-source software, Figure~\ref{fig:lang_main}. Although
 the dataset contains security refactorings for more than $13$ languages, we only
 present the results for \emph{Java}, \emph{C}, \emph{Ruby} and \emph{PHP}
-because one of the requirements of the Wilcoxon signed-rank test\Rui{consistency} is that the
+because one of the requirements of the Paired Wilcoxon signed-rank is that the
 input sample has to have more than $20$ samples. The other languages were
-integrated into \emph{Others}. The results of the Wilcoxon signed-rank\Rui{consistency}
+integrated into \emph{Others}. The results of the Paired Wilcoxon signed-rank
 test by pattern indicate that there is statistical evidence to support that the
 maintainability of open-source software decreases for security refactorings in
 $3$ different languages: \emph{C} (p-value = $5.72$x$10^{-9}$), Ruby (p-value = $0.057$) and
@@ -864,13 +847,10 @@ affect open-source software maintainability?}
 
 The impact of each type of security refactoring on the maintainability of
 open-source software is presented in Figure~\ref{fig:pat}. The results of the
-Wilcoxon signed-rank test \Rui{again} per pattern indicated statistical
+Paired Wilcoxon signed-rank per pattern indicated statistical
 evidence supporting that the maintainability of open-source software decreases
 for $4$ different patterns: \emph{Broken Autentication} (p-value = $0.018$),
-\emph{Denial-of-Service}\Luis{em varios pontos deste paper este pattern era
-referido com a sigla DoS. Por uma questao de consistencia com os outros
-patterns sugiro que se escreva sempre por extenso (ou entao sempre com a
-sigla).} (p-value = $0.029$), \emph{Memory Leak} (p-value = $0.009$) and
+\emph{Denial-of-Service} (p-value = $0.029$), \emph{Memory Leak} (p-value = $0.009$) and
 \emph{Miscellaneous} (p-value = $3.07$x$10^{-4}$). With statistical
 significance, results demonstrate evidence that maintainability is not
 negatively impacted when removing \emph{Components with Known Vulnerabilities}
@@ -912,7 +892,7 @@ maintainability.
  	\includegraphics[width=0.57\textwidth]{figures/category.pdf}
  	\caption{Maintainability difference by pattern after security refactorings.
   \Luis{a median e' zero em muitos casos -- como interpretam isso? se nao houver
-boa/simples explicacao talvez seja melhor usar o common language.}}
+boa/simples explicacao talvez seja melhor usar o common language.}\Sof{Preciso de pensar melhor nisto}}
 	\label{fig:pat}
 \end{figure}
 
@@ -928,7 +908,7 @@ of open-source software?}
 \textbf{\textit{Security refactorings harm the maintainability of open-source software.}}
 %
 We found that $40.2\%$ of the security refactoring have a negative impact on the
-maintainability of open-source software (Figure~\ref{fig:secvsreg}). This raises
+maintainability of open-source software (cf. Figure~\ref{fig:secvsreg}). This raises
 a new tradeoff when developers need to fix vulnerabilities on their projects
 because they might be affecting the software maintainability or even introducing
 new vulnerabilities. This study exhibits evidence that developers may have to
@@ -936,48 +916,32 @@ reduce maintainability for the sake of security. We understand that developers
 should be able to produce secure code without affecting the maintainability of
 their projects. But there are still some concerns that need to be addressed:
 \begin{itemize}
-	% \item \textbf{Security Frameworks} need to be secure and
-	% user-friendly~\cite{5287006, 7676144}. Unfortunately, there are several
-	% vulnerabilities that stay undisclosed. Thus, developers should not trust them
-	% blindly and check defaults. \Rui{I don't understand the point.}
-
-	\item \textbf{Documentation} of software should provide developers with the
+	\item \textbf{Documentation} of software must provide developers with the
 	best practices to implement secure and maintainable software. Unmaintainable
 	code is difficult to test, analyze and re-use.
-	\item\textbf{Programming Languages} should provide new mechanisms to easily
-	implement security patterns without endangering maintainability. \Rui{merge with
-  3rd bullet?}
-	Proper Authorization Mechanisms should be designed and
-	implemented. This is one of the most complex security features to implement.
+	\item\textbf{Programming Languages} should provide new design patterns to easily
+	implement security patterns without endangering maintainability. One example is 
+	the need for designing new authorization mechanisms since these are one of the most 
+	complex security features to implement.
 	Some mechanisms might assist authorization maintenance in long run, such as
 	the combination of \texttt{HTTP} filters with \texttt{Spring Security}
-	annotations. \Rui{not crystal clear -- do you mean programming languages
-  should offer these mechanisms? What is that combination that you're talking
-  about?}
+	annotations. 
 
-	\item \textbf{Software Developers} should be avoided by developers. They should
-	integrate tools such as BCH on their projects CI/CD pipelines to help them be
-	more aware of the maintainability of their code and issues.
+	\item \textbf{Software Developers} lack the knowledge to create secure and 
+	maintainable code. Mainly because academic curriculums are not yet prepared 
+	to educate these matters to them. Universities should do their part on making 
+	this possible. Online services such as BCH have also a great potential to help 
+	developers to be more aware of the maintainability issues introduced by their 
+	changes. Thus, developers can put more work into improving their code maintainability 
+	and avoid common issues such as code duplication.
 	
 \end{itemize}
 
-\Rui{Intense, buzz --- this is not a blog. Don't understand the point very
-well too.}
 
-
-% Ray et al. (2017)~\cite{Ray:2017:LSP:3144574.3126905} and
-% Berger et al. (2019)~\cite{2019arXiv190110220B}
-%
-% It would be expected that programming languages would have a more significant impact on the software maintainability according with previous work.
-%
-% According with the implications of previous work~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}, we would expect that the negative impact of programming languages on
-% maintainability would be more significant
-% surrounding the idea that poor design of programming languages and lack of using
-% the best practices lead to more buggy and vulnerable
-% code.
-
-
-However,
+We would expect that the negative impact of programming languages on
+maintainability would be more severe given the ideas that poor design of programming languages and lack of using
+the best practices lead to more buggy and vulnerable
+code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. However,
 Figure~\ref{fig:lang_main} shows that only \emph{C} has a negative impact of
 more than $50\%$ on software maintainability. We suspect that these values are
 the result of projects contributions policies. Nine out of ten projects --- the
@@ -1010,7 +974,7 @@ and \emph{Using Components with Known Vulnerabilities} refactorings endure more
 cases without any impact in the maintainability. Typically, these types of
 vulnerabilities do not need extra lines to be fixed, as shown in
 Listing~\ref{lst:fix}. Whereas, \emph{Broken Authentication} and vulnerabilities
-such as the one presented in Section~\ref{sec:motivation} responsible by DoS
+such as the one presented in Section~\ref{sec:motivation} responsible by Denial-of-Service
 attacks are more difficult to fix (several code lines deleted and added).
 Another example is the Apple authentication flaw discovered in $2017$
 (CVE-$2017$-$13872$)\footnote{CVE-$2017$-$13872$ details available at
@@ -1027,9 +991,9 @@ still produce a considerable negative impact on the maintainability. Real
 efforts have been made in creating and incorporating coding standards and best
 practices in software production. However, security is still far from perfection
 and fixing vulnerabilities might hinder software maintainability. Thus, it is
-important to provide tool support to developers to help them apply these
-patterns without harming software maintainability. It is also important to redesign programming languages. \Rui{and redesign programming
-languages?}
+not only important to provide tool support to developers to help them apply these
+patterns without harming software maintainability, but also to create and redesign 
+programming languages to facilitate developers improving software maintainability.
 
 \section{Threats to Validity}\label{sec:threats}
 %
@@ -1080,7 +1044,7 @@ security refactorings provided in other languages.
 Many studies have investigated the relationship between refactorings and
 software quality. Previous work focused on object-oriented metrics has evaluated the
 impact of refactorings and exhibited proof that quantifying effectively the
-impact of refactoring on maintainability may help to choose the appropriate
+impact of refactorings on maintainability may help to choose the appropriate
 refactoring type~\cite{1167822}. In contrast to this work, Hegedus et
 al.~\cite{HEGEDUS2018313} did not select particular metrics to assess the effect
 of refactorings. Instead, statistical tests were used to find the metrics that
@@ -1106,12 +1070,15 @@ software~\cite{4493325}. The present work studies how security patterns
 influence maintainability for open-source software.
 
 Other studies investigated the effect of programming languages in software
-quality~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. The first
+quality~\cite{Ray:2014:LSS:2635868.2635922,Ray:2017:LSP:3144574.3126905}. The first
 study shows that some programming languages are more buggy than others, i.e.,
 language design has an impact on software quality. However, the authors of the
 second study were not able to reproduce the first one and did not obtain any
 evidence about the impact of language design. Both have used the number of
-defects as an indicator of software quality. Our works studies how
+defects as an indicator of software quality. In addition, 
+Berger et al. ($2019$)~\cite{2019arXiv190110220B} tried to reproduce~\cite{Ray:2014:LSS:2635868.2635922, 
+Ray:2017:LSP:3144574.3126905} and identified flaws that throw into distrust the previously demonstrated 
+correlation between programming language and software defects. Our works studies how
 security refactorings affect software quality based on the code maintainability
 analysis and provides evidence that programming language have impact on
 maintainability.
@@ -1131,19 +1098,21 @@ considerable amount of cases that harm maintainability ($41.35\%$).
 This study also shows evidence that there are security patterns that need more attention than
 others. \emph{Broken Autentication} issues, \emph{Denial-of-Service} attacks and
 \emph{Memory Leaks} endure maintainability in $55.3\%$, $51.3\%$, and $47.5\%$,
-respectively. \Sof{Check this par again}Following the implications of our work, we draw attention for the
-need of code best practices documentation to
-produce safe and maintainable code, proper authorization mechanisms design and
-implementation, better tools to introduce in the CI/CD pipeline to help software
-maintenance and new or improved programming languages to allow developers to
-easily implement safety in their software without endangering maintainability.
+respectively. Following the implications of our work, we draw attention for the
+need of better documentation explaining how to use best practices to produce secure 
+and maintainable code; new and better programming languages; new academic curriculums 
+in the fields of security and software quality; and, tools such as BCH to help developers 
+predit the effect of their patches.
 
 As future work, this study may be extended in many directions: analyze which
 guidelines are more likely to be affected by security-related refactorings;
-investigate what are the most frequent vulnerabilities in each programming language; study if there is any correlation between software
+investigate what are the most frequent vulnerabilities in each programming language; 
+study if there is any correlation between software
 maintainability and popularity of the project; expand our methodology with other
 software quality properties; validate these findings with closed or private
 software; and, expand this analysis to other quality standards.
+
+
 
 \section*{Acknowledgment}\label{sec:ack}
 
