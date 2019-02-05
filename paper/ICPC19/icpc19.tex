@@ -722,7 +722,10 @@ $M(v)$ as follows:
 \noindent
 where $G$ is the group of maintainability guidelines from BCH
 (Table~\ref{tab:guidelines}) and $v$ is the version of the software under
-evaluation. The maintenance $M$ based on the guideline $g$ for a given version
+evaluation. $M(v) < 0$ indicates that version $v$ violates the guidelines,
+while $M(v) > 0$ indicates that version $v$ follows the BCH guideliens.
+
+The maintenance for the guideline $g$, $M_g$ for a given version
 of a project is computed with the following equation:
 
 \begin{equation}
