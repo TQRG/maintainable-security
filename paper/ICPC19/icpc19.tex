@@ -454,7 +454,7 @@ Figure~\ref{fig:met}:
 
 %
 \begin{figure}[h]
- 	\centering 	\includegraphics[width=0.5\textwidth]{figures/methodology.pdf}
+ 	\centering 	\includegraphics[width=0.4\textwidth]{figures/methodology.pdf}
  	\caption{Study Methodology}
 	\label{fig:met}
 \end{figure}
@@ -479,13 +479,13 @@ maintainability of the commits before and after the security refactoring to
 evaluate if the impact was positive, negative or none.
 
 \begin{figure}[h]
- 	\centering 	\includegraphics[width=0.5\textwidth]{figures/language_dist.pdf}
+ 	\centering 	\includegraphics[width=0.4\textwidth]{figures/language_dist.pdf}
  	\caption{Distribution of Security Refactorings per Language}
 	\label{fig:lang}
 \end{figure}
 
 \begin{figure}[h]
- 	\centering 	\includegraphics[width=0.5\textwidth]{figures/type_dist.pdf}
+ 	\centering 	\includegraphics[width=0.4\textwidth]{figures/type_dist.pdf}
  	\caption{Distribution of the Domain of Projects}
 	\label{fig:domain}
 \end{figure}
@@ -831,7 +831,7 @@ positive impact in the maintainability of open-source software}.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=0.5\textwidth]{figures/language.pdf}
+  \includegraphics[width=0.45\textwidth]{figures/language.pdf}
   \caption{Maintainability difference by language after security refactorings.}
   \label{fig:lang_main}
 \end{figure}
@@ -886,7 +886,7 @@ $30.0\%$ ($12$) of the cases exhibit maintainability improvement and $22.5\%$
 ($9$) show that maintainability does not suffer any change. The
 \emph{Miscellaneous} refactorings pattern integrates several types of security
 flaws. These type of refactorings harm maintainability in $43.1\%$ ($84$) of the
-cases. In $31.8\%$ ($62$), there is no effect in maintainability and for the
+cases. In $31.8\%$ ($62$), there is no impact and for the
 other $25.1\%$ ($49$) maintainability increases.
 
 It is also important to notice that overall the maintainability of open-source
@@ -902,7 +902,7 @@ maintainability.
 
 \begin{figure}[h]
  	\centering
- 	\includegraphics[width=0.57\textwidth]{figures/category.pdf}
+ 	\includegraphics[width=0.50\textwidth]{figures/category.pdf}
  	\caption{Maintainability difference by pattern after security refactorings.
   \Luis{a median e' zero em muitos casos -- como interpretam isso? se nao houver
 boa/simples explicacao talvez seja melhor usar o common language.}\Sof{Preciso de pensar melhor nisto}}
@@ -953,7 +953,7 @@ their projects. But there are still some concerns that need to be addressed:
 
 
 We would expect that the negative impact of programming languages on
-maintainability would be more severe given the ideas that poor design of programming 
+maintainability to be more severe, as arguably poor design of programming
 languages and lack of using the best practices lead to more buggy and vulnerable
 code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. However,
 Figure~\ref{fig:lang_main} shows that only \emph{C} has a negative impact of
@@ -1010,11 +1010,11 @@ patterns without harming software maintainability, but also to create and redesi
 programming languages to facilitate developers improving software maintainability.
 
 
-We measured the effect sizes between both distribution - before and after patches - per 
-language and security flaw using the Common Language Effect Size~\cite{cliff:1993} method
-to understand the magnitude of the differences between distributions. Overall, the effect 
-sizes were of a low-medium level. Thus, considering the median equal 0 and the low size effects
-it is reasonable to affirm that there is a significant real effect but it might only be 
+We measured the effect sizes between both distribution -- before and after
+patches --- per language and security patterns using the Common Language Effect
+Size~\cite{cliff:1993} method. Effect sizes are of a low-medium level.
+Thus, considering the $0$ median and the low size effects, it is reasonable
+to affirm that there is a significant real effect but it might only be
 recognized after a thoughtful data analysis.
 
 
@@ -1026,9 +1026,9 @@ study.
 \subsection{Construct}
 %
 The maintainability formula was inferred based on the BCH's reports. The high
-amount of different projects and backgrounds may require different
-maintainability standards. However, BCH does have a representative benchmark of
-closed and open-source software projects that are used to compute the
+amount of different projects and backgrounds may require other
+maintainability standards. However, BCH does use a representative benchmark of
+closed and open-source software projects to compute the
 thresholds for each maintainability guideline~\cite{Visser:2016:OREILLY, Baggen2012}.
 
 \subsection{Internal}
