@@ -84,7 +84,7 @@
 % Add comments in the text
 %
 \newboolean{showcomments}
-\setboolean{showcomments}{false}
+\setboolean{showcomments}{true}
 %\setboolean{showcomments}{false}
 
 \ifthenelse{\boolean{showcomments}}
@@ -699,10 +699,10 @@ maintainability amongst different project versions. Thus, our work proposes an
 equation to capture the distance between the current state of the project and
 the standard thresholds based on previous work\cite{Olivari:2018}.
 \begin{itemize}
-	\item \textbf{Size project changes do not affect the maintainability
+	\item \textbf{Size of project changes does not affect the maintainability
 	difference between two versions, $\Delta M (v_{s-1},v_{s})$.} In this work, we
 	aim to evaluate the alike security patterns occurring in different projects.
-	Thus, normalization based on its size cannot be used - we convert relative
+	Thus, normalization based on its size cannot be used --- we convert relative
 	data to the respective number of lines of code.
 	\item \textbf{Distance to lower severity levels are less penalized than to the
 	thresholds in high severity levels.} Severity level weights based on the
@@ -791,8 +791,9 @@ change, three types of impact of refactorings in the software maintainability
 are presented: \emph{negative}, maintainability decreases (\emph{red});
 \emph{none}, maintainability remains the same (\emph{yellow}); and,
 \emph{positive}, maintainability increases (\emph{green}). Next to each
-group, it is presented the mean ($\overline{x}$) and median (M)
-of the maintainability difference and the p-value resulting from the Paired Wilcoxon signed-rank test.
+type of change, it is shown the mean ($\overline{x}$) and median (M)
+of the maintainability difference and the p-value resulting from the
+Paired Wilcoxon signed-rank test.
 
 \begin{figure}[h]
  	\centering 	\includegraphics[width=0.5\textwidth]{figures/maintainability.pdf}
