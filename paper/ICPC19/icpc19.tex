@@ -710,15 +710,14 @@ considers the following:
 	severity level to count lines of code that violate maintainability guidelines.
 \end{itemize}
 
-We compute the mean average of the maintainability score $M(v)$ for all the
-selected guidelines, as follows:
+We compute the mean average of the maintainability score $M(v)$ as follows:
 
 \begin{equation}
     M(v) = \sum_{g \in G}^{} M_{g}(v)
 \end{equation}
 
 \noindent
-where $G$ is the group of selected maintainability guidelines from BCH
+where $G$ is the group of maintainability guidelines from BCH
 (Table~\ref{tab:guidelines}) and $v$ is the version of the software under
 evaluation. The maintenance $M$ based on the guideline $g$ for a given version
 of a project is computed with the following equation:
