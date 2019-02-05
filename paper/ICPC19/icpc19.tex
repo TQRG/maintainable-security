@@ -703,8 +703,8 @@ considers the following:
 	\item \textbf{Size of project changes does not affect the maintainability
 	difference between two versions, $\Delta M (v_{s-1},v_{s})$.} We
 	aim at evaluating security patterns occurring in different projects similarly.
-	Thus, normalization based on its size cannot be used --- we convert relative
-	data to the respective number of lines of code.
+	Thus, the divised metric uses the \textit{raw} number of lines of code rather
+  percentages for normalization purposes.
 	\item \textbf{Distance to lower severity levels are less penalized than to the
 	thresholds in high severity levels.} Severity level weights based on the
 	severity level to count lines of code that violate maintainability guidelines.
