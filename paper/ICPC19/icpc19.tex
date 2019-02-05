@@ -56,6 +56,7 @@
 
 \lstdefinestyle{PHPStyle} {
     language=PHP,
+    alsolanguage=HTML,
     backgroundcolor=\color{white},   % choose the background color
     basicstyle=\ttfamily\scriptsize,        % size of fonts used for the code
     breaklines=true,                 % automatic line breaking only at whitespace
@@ -416,10 +417,14 @@ Maintainability is measured separately for each pattern.
   <li class='error'>
    <?php echo $l->t('Cloud not found');?>
    <p class='hint'>
--   <?php if(isset($_['file'])) echo $_['file']?>
+    <?php
+-   if(isset($_['file'])) echo $_['file']
+    ?>
    </p>
    <p class='hint'>
-+   <?php if(isset($_['file'])) echo htmlentities($_['file'])?>
+    <?php
++   if(isset($_['file'])) echo htmlentities($_['file'])
+    ?>
    </p>
   </li>
  </ul>
