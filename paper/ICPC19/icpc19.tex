@@ -953,8 +953,8 @@ their projects. But there are still some concerns that need to be addressed:
 
 
 We would expect that the negative impact of programming languages on
-maintainability would be more severe given the ideas that poor design of programming languages and lack of using
-the best practices lead to more buggy and vulnerable
+maintainability would be more severe given the ideas that poor design of programming 
+languages and lack of using the best practices lead to more buggy and vulnerable
 code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. However,
 Figure~\ref{fig:lang_main} shows that only \emph{C} has a negative impact of
 more than $50\%$ on software maintainability. We suspect that these values are
@@ -1008,6 +1008,15 @@ and fixing vulnerabilities might hinder software maintainability. Thus, it is
 not only important to provide tool support to developers to help them apply these
 patterns without harming software maintainability, but also to create and redesign
 programming languages to facilitate developers improving software maintainability.
+
+
+We measured the effect sizes between both distribution - before and after patches - per 
+language and security flaw using the Common Language Effect Size~\cite{cliff:1993} method
+to understand the magnitude of the differences between distributions. Overall, the effect 
+sizes were of a low-medium level. Thus, considering the median equal 0 and the low size effects
+it is reasonable to affirm that there is a significant real effect but it might only be 
+recognized after a thoughtful data analysis.
+
 
 \section{Threats to Validity}\label{sec:threats}
 %
