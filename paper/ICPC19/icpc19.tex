@@ -697,11 +697,12 @@ maintainability of two different versions of the project (cf. Figure~\ref{fig:co
 The BCH tool does not compute the final score that our study needs to compare
 maintainability amongst different project versions. Thus, our work proposes an
 equation to capture the distance between the current state of the project and
-the standard thresholds based on previous work\cite{Olivari:2018}.
+the standard thresholds based on previous work~\cite{Olivari:2018}. The equation
+considers the following:
 \begin{itemize}
 	\item \textbf{Size of project changes does not affect the maintainability
-	difference between two versions, $\Delta M (v_{s-1},v_{s})$.} In this work, we
-	aim to evaluate the alike security patterns occurring in different projects.
+	difference between two versions, $\Delta M (v_{s-1},v_{s})$.} We
+	aim at evaluating security patterns occurring in different projects similarly.
 	Thus, normalization based on its size cannot be used --- we convert relative
 	data to the respective number of lines of code.
 	\item \textbf{Distance to lower severity levels are less penalized than to the
