@@ -663,21 +663,23 @@ example only complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean Code}).
 	\label{fig:bchrep}
 \end{figure}
 
-SIG defines \emph{Units} as the smallest groups of code that can be maintained and executed
-independently~\cite{Visser:2016:OREILLY} (e.g., methods and constructors in Java).
-One of the guidelines with which the project does not comply is the one presented in
-the report (cf. Figure~\ref{fig:bchrep}): \emph{Write Simple Units of Code}. BCH analyzes
-this guideline based on the McCabe Complexity~\cite{1702388} to calculate the number of branch
-points of a method. The bar at the bottom of the figure
-represents the top $30$ units that violate the guideline, sorted by severity.
-The violation severities are indicated using colors, and there is a legend to
-help to interpret them. The green bar represents the number of compliant
-branch points per unit (\emph{at most $5$}), i.e., the number of units are compliant with
-ISO 25010~\cite{iso:2011}. Yellow, orange and red bars represent units that do
-not comply with medium (\emph{above $5$}), high (\emph{above $10$}) and very high
-(\emph{above $25$}) severity levels. In the bar, there are marks that pinpoint the
-compliance thresholds for each severity level. If the green mark is somewhere
-in the green bar it means it is compliant with a low level of severity.
+SIG defines \emph{Units} as the smallest groups of code that can be maintained
+and executed independently~\cite{Visser:2016:OREILLY} (e.g., methods and
+constructors in Java). One of the guidelines with which the project does not
+comply is the one presented in the report (cf. Figure~\ref{fig:bchrep}):
+\emph{Write Simple Units of Code}. BCH analyzes this guideline based on the
+McCabe Complexity~\cite{1702388} to calculate the number of branch points of a
+method. The bar at the bottom of the figure represents the top $30$ units that
+violate the guideline, sorted by severity. The violation severities are
+indicated using colors, and there is a legend to help to interpret them. The
+green bar represents the number of compliant branch points per unit (\emph{at
+most $5$}), i.e., the number of units are compliant with ISO
+25010~\cite{iso:2011}. Yellow, orange and red bars represent units that do not
+comply with medium (\emph{above $5$}), high (\emph{above $10$}) and very high
+(\emph{above $25$}) severity levels. In the bar, there are marks that pinpoint
+the compliance thresholds for each severity level. If the green mark is
+somewhere in the green bar it means it is compliant with a low level of
+severity.
 
 \begin{figure}[h]
  	\centering 	\includegraphics[width=0.49\textwidth]{figures/commit.pdf}
@@ -710,7 +712,8 @@ considers the following:
 	severity level to count lines of code that violate maintainability guidelines.
 \end{itemize}
 
-We compute the mean average of the maintainability score $M(v)$ as follows:
+Given the violations for the guidelines, as given by BCH, we compute the
+maintainability score $M(v)$ as follows:
 
 \begin{equation}
     M(v) = \sum_{g \in G}^{} M_{g}(v)
