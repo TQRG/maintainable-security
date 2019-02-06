@@ -331,18 +331,25 @@ Every SSL/TLS connection begins with a handshake which is responsible by the
 negotiation between two parties. DTLS provides a mechanism for fragmenting a
 handshake message over a number of packets, each of which can be transmitted
 separately. In the example (Listing~\ref{lst:vuln}), all functions receive as
-input the SSL session, \texttt{s}. In the \texttt{dtls1\_reassemble\_fragment}
-function the size of the fragment \texttt{msg\_hdr-$>$frag\_off+frag\_len} is
-checked against the handshake message size \texttt{msg\_hdr->msg\_len} (line
-$13$) and then against the maximum size allowed in a DTLS handshake message for
-\texttt{s} (line $16$-$21$). However, it is not verified if \texttt{msg\_hdr->msg\_len}
-is lower than the size allowed by DTLS. Thus, in line
-$37$, when \texttt{msg\_len} is allocated to the fragment buffer, more memory
-than the allowed might be allocated. According to the commit message, $10$
-handshake messages are allowed per DTLS connection. Hence, a remote attacker
-could leverage this issue to trigger memory allocations corresponding to large
-length values and lead the system to memory exhaustion that could end in a DoS
-attack. The code changes performed to fix the vulnerability were the following:
+input the SSL session, \texttt{s}.\Luis{is the previous sentence relevant?.} In
+the \texttt{dtls1\_reassemble\_fragment} function the size of the fragment
+\texttt{msg\_hdr-$>$frag\_off+frag\_len} is checked against the handshake
+message size \texttt{msg\_hdr->msg\_len} (line $13$) and then against the
+maximum size allowed in a DTLS handshake message for \texttt{s} (line
+$16$-$21$).\Luis{I'm not sure about my comment: I think it could be easier if
+we explain the previous sentence in pure natural language. These kind of
+statements \texttt{msg\_hdr-$>$frag\_off+frag\_len} are not easy to process in
+this context.} However, it is not verified if \texttt{msg\_hdr->msg\_len} is
+lower than the size allowed by DTLS\Luis{did not understand the problem of not
+checking the minimum.}. Thus, in line $37$, when \texttt{msg\_len} is allocated
+to the fragment buffer, more memory than the allowed might be allocated.
+According to the commit message, $10$ handshake messages are allowed per DTLS
+connection. Hence, a remote attacker could leverage this issue to trigger
+memory allocations corresponding to large length values and lead the system to
+memory exhaustion that could end in a DoS attack.\Luis{I'm not happy with this
+paragraph. It's difficult to process and I dont think a reviewer will actually
+spend a lot of energy to understand this. (Ignore this if you find it clear.)}
+The code changes performed to fix the vulnerability were the following:
 
 ~\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was
 inserted to return the maximum number of bytes allowed in a DTLS
