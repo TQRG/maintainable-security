@@ -42,7 +42,7 @@ def language_dist(commits):
     ax.set_yticklabels(dic_lang['lang'], minor=False)
     plt.subplots_adjust(left=0.15, right=0.95, top=0.9, bottom=0.05)
     plt.gca().xaxis.grid(True, linestyle='--')
-    
+    plt.tight_layout()
     plt.savefig('../paper/ICPC19/figures/language_dist.pdf')
 
 def type_dist(projects):
@@ -70,7 +70,7 @@ def type_dist(projects):
     ax.set_yticklabels(app_type['type'], minor=False)
     plt.subplots_adjust(left=0.31, right=0.9, top=0.9, bottom=0.05)
     plt.gca().xaxis.grid(True, linestyle='--')
-    
+    plt.tight_layout()
     plt.savefig('../paper/ICPC19/figures/type_dist.pdf')
 
 def main(projects, commits):    

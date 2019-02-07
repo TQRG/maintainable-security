@@ -237,7 +237,7 @@ OpenSSL\footnote{Repository available at https://github.com/openssl/openssl
 methodology used to answer the research questions; section~\ref{sec:results}
 presents the results and section~\ref{sec:discussion} discusses their
 implications; section~\ref{sec:threats}, threats to the validity of the study
-are enumerated; section~\ref{sec:rw} describres the different work and existing
+are enumerated; section~\ref{sec:rw} describes the different work and existing
 literature in the field of study; and, finally section~\ref{sec:conclusions}
 concludes the main findings and elaborates on future work.
 %
@@ -337,7 +337,7 @@ the \texttt{dtls1\_reassemble\_fragment} function the size of the fragment
 message size \texttt{msg\_hdr->msg\_len} (line $13$) and then against the
 maximum size allowed in a DTLS handshake message for \texttt{s} (line
 $16$-$21$).\Luis{I'm not sure about my comment: I think it could be easier if
-we explain the previous sentence in pure natural language. These kind of
+we explain the previous sentence in pure natural language. This kind of
 statements \texttt{msg\_hdr-$>$frag\_off+frag\_len} are not easy to process in
 this context.} However, it is not verified if \texttt{msg\_hdr->msg\_len} is
 lower than the size allowed by DTLS\Luis{did not understand the problem of not
@@ -489,7 +489,7 @@ evaluate if the impact was positive, negative or none.
 
 \begin{figure}[h]
  	\centering 	\includegraphics[width=0.4\textwidth]{figures/language_dist.pdf}
- 	\caption{Distribution of Security Refactorings per Language}
+ 	\caption{Distribution of Security Refactorings per Language\Luis{esta figure pode ser maior nao pode?}}
 	\label{fig:lang}
 \end{figure}
 
@@ -532,7 +532,7 @@ the dataset containing less than $20$ instances):
     corresponding to large length values (Listing~\ref{lst:vuln}).
 
     \item \textbf{Cross-Site Scripting (114 cases).} Lack of proper validation or escaping
-    allow attackers to submit untrusted data to web browsers through malicious
+    allows attackers to submit untrusted data to web browsers through malicious
     scripts that can hijack the user sessions or redirect the user to malicious
     sites. \textit{Based on the OWASP Top $10$ of $2017$.}
 
@@ -618,7 +618,7 @@ by BCH's authors for delivering software that is not difficult to
 maintain~\cite{Visser:2016:OREILLY}. During each guideline evaluation, the tool
 determines the compliance towards one guideline by establishing limits for the
 percentage of code allowed to be in each of the $4$ risk severity levels
-(\emph{low risk}, \emph{medium risk}, \emph{high risk} and \emph{very high
+(\emph{low risk}, \emph{medium risk}, \emph{high risk}, and \emph{very high
 risk}). If the project does not violate the thresholds, then it is compliant
 with the guideline. These thresholds are calibrated by BCH using their own
 data/experience --- using open-source and closed software systems. If a project is
@@ -701,7 +701,7 @@ severity.
 	\label{fig:commit}
 \end{figure}
 
-Aiming to analyze the impact of security refactorings, we use BCH to compute
+Aiming to analyze the impact of security refactorings, we use BCH to compute the
 maintainability of two different versions of the project (cf. Figure~\ref{fig:commit}):
 \begin{itemize}
 	\item $v_{s-1}$, the version containing the security flaw, i.e., before the
@@ -719,9 +719,9 @@ considers the following:
 	\item \textbf{Size of project changes does not affect the maintainability
 	difference between two versions, $\Delta M (v_{s-1},v_{s})$.} We
 	aim at evaluating security patterns occurring in different projects similarly.
-	Thus, the divised metric uses the \textit{raw} number of lines of code rather
+	Thus, the derived metric uses the \textit{raw} number of lines of code rather
   percentages for normalization purposes.
-	\item \textbf{Distance to lower severity levels are less penalized than to the
+	\item \textbf{Distance to lower severity levels is less penalized than to the
 	thresholds in high severity levels.} Severity level weights based on the
 	severity level to count lines of code that violate maintainability guidelines.
 \end{itemize}
@@ -738,7 +738,7 @@ where $G$ is the group of maintainability guidelines from BCH
 (Table~\ref{tab:guidelines}) and $v$ is the version of the software under
 evaluation. $M(v) < 0$ indicates that version $v$ is violating (some of) the
 guidelines, while $M(v) > 0$ indicates that version $v$ is following
-the BCH guideliens.
+the BCH guidelines.
 
 The maintenance for the guideline $g$, $M_g$ for a given version
 of a project is computed with the following equation:
@@ -848,7 +848,7 @@ positive impact in the maintainability of open-source software}.
 We have also evaluated the impact in the maintainability per programming language
 of open-source software, Figure~\ref{fig:lang_main}. Although
 the dataset contains security refactorings for more than $13$ languages, we only
-present the results for \emph{Java}, \emph{C}, \emph{Ruby} and \emph{PHP}
+present the results for \emph{Java}, \emph{C}, \emph{Ruby}, and \emph{PHP}
 because one of the requirements of the Paired Wilcoxon signed-rank is that the
 input sample has to have more than $20$ samples. The other languages were
 integrated into \emph{Others}. The results of the Paired Wilcoxon signed-rank
@@ -946,7 +946,7 @@ their projects. But there are still some concerns that need to be addressed:
 	easily implement security patterns without endangering maintainability.
 	Ultimately, new programming languages, both secure and maintainable by design,
 	may be designed to help developers be highly productive when writing and
-	maintaing  secure applications. One example is the need for designing new
+	maintaining  secure applications. One example is the need for designing new
 	authorization mechanisms since these are one of the most complex security
 	features to implement.
 
@@ -982,7 +982,7 @@ affect open-source software maintainability?}
 \end{framed}
 
 \textbf{\textit{Broken Authentication \& Session Management, Denial-of-Service
-attacks and Memory Leaks and Miscellaneous patterns are more likely to affect
+attacks, and Memory Leaks, and Miscellaneous patterns are more likely to affect
 open-source software maintainability.}} Although there are a few refactorings
 that harm software maintainability in the \emph{Cross-Site Scripting} and
 \emph{Using Components with Known Vulnerabilities}, overall maintainability does
@@ -1022,8 +1022,8 @@ programming languages to facilitate developers improving software maintainabilit
 We measured the effect sizes between both distribution -- before and after
 patches --- per language and security patterns using the Common Language Effect
 Size~\cite{cliff:1993} method. Effect sizes are of a low-medium level.
-Thus, considering the $0$ median and the low size effects, it is reasonable
-to affirm that there is a significant real effect but it might only be
+Thus, considering the $0$ median and the low effect sizes, it is reasonable
+to affirm that there is a significant effect but it might only be
 recognized after a thoughtful data analysis.
 
 
@@ -1111,7 +1111,7 @@ Berger et al. ($2019$)~\cite{2019arXiv190110220B} tried to reproduce~\cite{Ray:2
 Ray:2017:LSP:3144574.3126905} and identified flaws that throw into distrust the previously demonstrated
 correlation between programming language and software defects. Our work studies how
 security refactorings affect software quality based on the code maintainability
-analysis and provides evidence that programming language have impact on
+analysis and provides evidence that programming languages have an impact on
 maintainability.
 
 \section{Conclusion and Future Work}\label{sec:conclusions}
@@ -1133,13 +1133,13 @@ in $55.3\%$, $51.3\%$, and $47.5\%$, respectively. Therefore, we draw attention
 for the need of better documentation explaining how to use best practices to
 produce secure and maintainable code; new and better programming languages; new
 academic curricula in the fields of security and software quality; and, tools
-such as BCH to help developers predit the effect of their patches.
+such as BCH to help developers predict the effect of their patches.
 
 As future work, this study may be extended in many directions: analyze which
 guidelines are more likely to be affected by security-related refactorings;
-investigate what are the most frequent vulnerabilities in each programming language;
-study if there is any correlation between software
-maintainability and popularity of the project; expand our methodology with other
+investigate what are the most frequent vulnerabilities in each programming
+language; study if there is any correlation between code maintainability and
+the popularity of a software project; expand our methodology with other
 software quality properties; validate these findings with closed or private
 software; and, expand this analysis to other quality standards.
 
