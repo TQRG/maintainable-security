@@ -87,7 +87,7 @@
 % Add comments in the text
 %
 \newboolean{showcomments}
-\setboolean{showcomments}{false}
+\setboolean{showcomments}{true}
 %\setboolean{showcomments}{false}
 
 \ifthenelse{\boolean{showcomments}}
@@ -236,8 +236,8 @@ OpenSSL\footnote{Repository available at https://github.com/openssl/openssl
 (Accessed on \today{})}; section~\ref{sec:methodology} describes the
 methodology used to answer the research questions; section~\ref{sec:results}
 presents the results and section~\ref{sec:discussion} discusses their
-implications; section~\ref{sec:threats}, threats to the validity of the study
-are enumerated; section~\ref{sec:rw} describes the different work and existing
+implications; section~\ref{sec:threats}, enumerates the threats to the validity of 
+this study; section~\ref{sec:rw} describes the different work and existing
 literature in the field of study; and, finally section~\ref{sec:conclusions}
 concludes the main findings and elaborates on future work.
 %
@@ -265,6 +265,17 @@ evaluation. The following snippet presents the changes performed on the
 \emph{ssl/d1\_both.c} file\footnote{CVE-$2014$-$3506$ fix available  at
 https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd7636
 (Accessed on \today{})} by the OpenSSL developers to patch the vulnerability.
+
+Every SSL/TLS connection, \texttt{s}, begins with a handshake which is responsible by the
+negotiation between two parties. DTLS provides a mechanism for fragmenting a
+handshake message over a number of packets, each of which can be transmitted
+separately over the Internet from one party to another. The problem in CVE-$2014$-$3506$ 
+is that the size of the handshake message collected by the receiver is not verified against 
+the maximum size allowed by DTLS and latter in the code it is allocated to a new fragment (line $37$). 
+Thus, if an attacker has access to one of these packages it can change the handshake messsage size and
+trigger unnecessary memory allocations of large length which can lead to memory exhaustion that could
+could end in a DoS attack.
+
 
 \medskip
 
@@ -327,43 +338,21 @@ https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd
 
 \end{lstlisting}
 
-Every SSL/TLS connection begins with a handshake which is responsible by the
-negotiation between two parties. DTLS provides a mechanism for fragmenting a
-handshake message over a number of packets, each of which can be transmitted
-separately. In the example (Listing~\ref{lst:vuln}), all functions receive as
-input the SSL session, \texttt{s}.\Luis{is the previous sentence relevant?.} In
-the \texttt{dtls1\_reassemble\_fragment} function the size of the fragment
-\texttt{msg\_hdr-$>$frag\_off+frag\_len} is checked against the handshake
-message size \texttt{msg\_hdr->msg\_len} (line $13$) and then against the
-maximum size allowed in a DTLS handshake message for \texttt{s} (line
-$16$-$21$).\Luis{I'm not sure about my comment: I think it could be easier if
-we explain the previous sentence in pure natural language. This kind of
-statements \texttt{msg\_hdr-$>$frag\_off+frag\_len} are not easy to process in
-this context.} However, it is not verified if \texttt{msg\_hdr->msg\_len} is
-lower than the size allowed by DTLS\Luis{did not understand the problem of not
-checking the minimum.}. Thus, in line $37$, when \texttt{msg\_len} is allocated
-to the fragment buffer, more memory than the allowed might be allocated.
-According to the commit message, $10$ handshake messages are allowed per DTLS
-connection. Hence, a remote attacker could leverage this issue to trigger
-memory allocations corresponding to large length values and lead the system to
-memory exhaustion that could end in a DoS attack.\Luis{I'm not happy with this
-paragraph. It's difficult to process and I dont think a reviewer will actually
-spend a lot of energy to understand this. (Ignore this if you find it clear.)}
 The code changes performed to fix the vulnerability were the following:
 
 ~\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was
 inserted to return the maximum number of bytes allowed in a DTLS
 handshake message for \texttt{s}. The minimum is $16$KB but it might be greater if
-the maximum certificate list size requires it. More
-specifically, it checks if the maximum certificate list size
-(\texttt{s-$>$max\_cert\_list}) requires more length than the maximum length
+the maximum certificate list size (\texttt{s-$>$max\_cert\_list}) requires it. More
+specifically, it checks if the maximum certificate list size requires more length than the maximum length
 (\texttt{max\_len}). If that condition holds, the function returns the size of
 the certificate list, otherwise, it returns the maximum length. This function
 replaces lines $18$-$21$.
 
+
 ~\ref{lst:func5} and~\ref{lst:func4} are guards added to different functions to
 ascertain that the message and the fragment length are never higher than the
-maximum allowed by DTSL. In particular, \ref{lst:func5} is responsible for patching
+maximum allowed by DTLS. In particular, \ref{lst:func5} is responsible for patching
 the vulnerability.
 
 Although checking the maximum size of a handshake message seems an elementary
@@ -501,7 +490,7 @@ evaluate if the impact was positive, negative or none.
 
 The $716$ refactorings in the dataset were run against the BCH toolset to
 calculate their maintainability reports. However, there are refactorings
-discarded from tour study due to limitations of BCH: in particular, lack of
+discarded from our study due to limitations of BCH: in particular, lack of
 language support and project size. The final dataset used in this paper contains
 $607$ security refactorings labeled as one of the following categories (we
 have decided to change the label to \textit{Miscellaneous} of the patterns in
@@ -783,7 +772,7 @@ To validate the maintainability differences in different groups of commits
 (e.g., baseline and security commits), we use the Paired Wilcoxon signed-rank
 test with the significance level $\alpha = 0.05$~\cite{10.2307/3001968}. In
 other words, we test the null hypothesis that the maintainability difference
-between pairs of versions $v_{v-1}$, $v_v$ (i.e., before and after a
+between pairs of versions $v_{s-1}$, $v_v$ (i.e., before and after a
 security-commit) come from the same distribution. Nevertheless, this test has a
 limitation: it does not consider the groups of commits with a zero-difference
 maintainability. In $1959$, Pratt provided an improvement to the test to solve
@@ -1005,7 +994,7 @@ https://support.apple.com/en-us/HT208315 (Accessed on \today{})}, where any user
 could log in as root with an empty password. Patrick Wardle examined the cause
 of the issue\footnote{\emph{Why $<$blank$>$ Gets You Root} available at
 https://objective-see.com/blog/blog\_0x24.html (Accessed on \today{})} and
-conclude that the flaw was due to the introduction of high cyclomatic complexity
+concluded that the flaw was due to the introduction of high cyclomatic complexity
 in a method used to verify the password. In sum, \emph{Cross-Site Scripting} and
 \emph{Using Components with Known Vulnerabilities} should take part of the
 developers' preoccupations along with the other patterns that explicitly hinder
@@ -1082,7 +1071,7 @@ al.~\cite{HEGEDUS2018313} did not select particular metrics to assess the effect
 of refactorings. Instead, statistical tests were used to find the metrics that
 have the potential to change significantly after refactorings. The differences
 of maintainability between groups of refactored elements and non-refactored were
-analyzed. In addition, the authors conclude that the source code elements
+analyzed. In addition, the authors concluded that the source code elements
 subjected to refactorings had significantly lower maintainability than the
 elements not affected. Studying the evolution of maintainability issues during
 the development of Android apps, Malavolta et al. ($2018$)~\cite{8530041}
@@ -1119,7 +1108,7 @@ maintainability.
 This work presents an empirical study on the impact of $607$ security
 refactorings on the maintainability of $94$ open-source projects. We leveraged
 Better Code Hub reports to calculate maintainability
-based on a model proposed in previous work. Security refactorings significantly
+based on a model proposed in previous work~\cite{Olivari:2018}. Security refactorings significantly
 affect the software maintainability of open-source software, i.e., developers
 hinder maintainability when fixing vulnerabilities. We found this evidence in
 $40.2\%$ of the studied cases. Regarding regular commits, it seems that overall
