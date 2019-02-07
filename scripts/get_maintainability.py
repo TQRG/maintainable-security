@@ -4,10 +4,14 @@ import csv
 import collections
 import pandas as pd
 import numpy as np
+import matplotlib
+matplotlib.rcParams['font.family'] = 'serif'
+matplotlib.rcParams['mathtext.fontset'] = 'cm'
 import matplotlib.pyplot as plt
 from scipy.stats import wilcoxon, shapiro
 from statistics import mean, stdev
 from math import sqrt
+from cles import cles_paired
 
 def _print_hypothesis_test(differences):
     """Paired Wilcoxon signed-rank test (N should be > 20)"""
@@ -83,7 +87,7 @@ def total_main_barchart(total_sec, total_reg, graphics, result):
             p = '<0.001'
         else:
             p = '={:.{}f}'.format(l[1]['pvalue'], 3)
-        box_text = '$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\n$\widetilde{x}$=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
+        box_text = '$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
         ax.text(0.46, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':4}, fontsize=9)
         y -= 1.1
     
@@ -209,14 +213,10 @@ def sec_vs_rg_commits(CACHE, graphics, dataset):
         
     fil = df[(df['main(diff)_reg'] != 'error') & (df['main(diff)_sec'] != 'error')]
     
-    cohens_d = (fil['main(diff)_reg'].astype('float64').mean() - fil['main(diff)_sec'].astype('float64').mean()) / (sqrt((stdev(fil['main(diff)_reg'].astype('float64')) ** 2 + stdev(fil['main(diff)_sec'].astype('float64')) ** 2) / 2))
-    print('coehns', cohens_d)
-    
     stats1 = _print_hypothesis_test(fil['main(diff)_sec'].astype('float64'))
     stats = _print_hypothesis_test(fil['main(diff)_reg'].astype('float64'))
 
     result = stats.append([stats1])
-    print(result)
     result.to_csv('../results/statistical_test.csv')
     
     total_sec, total_reg = {'neg': 0, 'pos': 0, 'nul': 0}, {'neg': 0, 'pos': 0, 'nul': 0}
@@ -242,34 +242,26 @@ def sec_vs_rg_commits(CACHE, graphics, dataset):
     print(total_reg, 'total=', sum([value for key,value in total_reg.items()]), ', none=', none_reg, ', error=', error_reg)
     
     return fil
-    
-    
-    
-def main_by_type_barchart(patterns, diff):
 
-    keys = {'ml':'Memory Leak', 'misc': 'Miscellaneous', 'injec': 'Injection', 'xss':'Cross-Site Scripting','dos':'Denial-of-Service', 
-            'csrf':'Cross-Site Request Forgery', 'auth': 'Broken Authentication', 'ucwkv':'Components with Known Vuln(s)',
-            'rl': 'Resource Leak'}
+def main_by_type_barchart(patterns, diff, keys, filename, wilcoxon=False, boxes_start=0, text_start=0, delta=0, left_padding=0, f_size=7):
     
     d = {'neg': pd.Series([patterns[i][0]/sum(patterns[i]) for i in patterns]),
         'pos': pd.Series([patterns[i][1]/sum(patterns[i]) for i in patterns]),
         'nul': pd.Series([patterns[i][2]/sum(patterns[i]) for i in patterns]),
-        'N': pd.Series([len(diff[i]) for i in patterns]),
-        'mean': pd.Series([_print_hypothesis_test(diff[i])['test'][0] for i in patterns]),
-        'med': pd.Series([_print_hypothesis_test(diff[i])['med'][0] for i in patterns]),
-        'p': pd.Series([_print_hypothesis_test(diff[i])['pvalue'][0] for i in patterns]),
+        'N': pd.Series([len(diff[i]) for i in patterns if wilcoxon]),
+        'mean': pd.Series([_print_hypothesis_test(diff[i])['test'][0] for i in patterns if wilcoxon]),
+        'med': pd.Series([_print_hypothesis_test(diff[i])['med'][0] for i in patterns if wilcoxon]),
+        'p': pd.Series([_print_hypothesis_test(diff[i])['pvalue'][0] for i in patterns if wilcoxon]),
         'type': pd.Series([keys[i] for i in patterns])}
         
-    e = {'neg': pd.Series([patterns[i][0] for i in patterns]),
+    absoluto = {'neg': pd.Series([patterns[i][0] for i in patterns]),
         'pos': pd.Series([patterns[i][1] for i in patterns]),
-        'nul': pd.Series([patterns[i][2] for i in patterns])}
-    
-    ef = pd.DataFrame(e)
-    print(ef)
+        'nul': pd.Series([patterns[i][2] for i in patterns]),
+        'type': pd.Series([keys[i] for i in patterns]),
+        'p': pd.Series([_print_hypothesis_test(diff[i])['pvalue'][0] for i in patterns if wilcoxon])}
 
     df = pd.DataFrame(d)
-    print(df[['neg','pos','nul']])
-
+    abso = pd.DataFrame(absoluto)
     index = np.arange(len(d['type']))
 
     fig = plt.figure()
@@ -283,23 +275,22 @@ def main_by_type_barchart(patterns, diff):
     plt.yticks(index + bar_width, df['type'], fontsize=6.5)
     plt.xticks(fontsize=7) 
     plt.gca().set_xticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_xticks()])
-    plt.subplots_adjust(left=0.25, right=0.85, top=0.9, bottom=0.06)
+    plt.subplots_adjust(left=left_padding, right=0.85, top=0.9, bottom=0.06)
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.08), fancybox=True, ncol=3, fontsize=7)
-
-    y = 7
-    for l in df[::-1].iterrows():
-        print(l[1]['p'])
-        if float('{:.{}f}'.format(l[1]['p'], 3)) <= 0.000:
-            p = '<0.001'
-        else:
-            p = '={:.{}f}'.format(l[1]['p'], 3)
-        box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\n$\widetilde{x}$=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
-        ax.text(0.75, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=5)
-        y -= 1.02
+          
+    if wilcoxon:
+        for l in df[::-1].iterrows():
+            if float('{:.{}f}'.format(l[1]['p'], 3)) <= 0.000:
+                p = '<0.001'
+            else:
+                p = '={:.{}f}'.format(l[1]['p'], 3)
+            box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
+            ax.text(text_start, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=f_size)
+            boxes_start -= delta
         
     plt.gca().xaxis.grid(True, linestyle='--')
     plt.tight_layout()
-    plt.savefig('../paper/ICPC19/figures/category.pdf')
+    plt.savefig('../paper/ICPC19/figures/{}'.format(filename))
 
 def sec_by_type(CACHE, fil):
     
@@ -337,20 +328,70 @@ def sec_by_type(CACHE, fil):
                 diff_by_pattern[i[1]['pattern']] += [float(i[1]['main(diff)_sec']) for i in df.iterrows()]
             else:
                 diff_by_pattern[i[1]['pattern']] = [float(i[1]['main(diff)_sec']) for i in df.iterrows()]
+    
+    keys = {'ml':'Memory Leak', 'misc': 'Miscellaneous', 'injec': 'Injection', 'xss':'Cross-Site Scripting','dos':'Denial-of-Service', 
+            'csrf':'Cross-Site Request Forgery', 'auth': 'Broken Authentication', 'ucwkv':'Components with Known Vuln(s)',
+            'rl': 'Resource Leak'}
+        
+    for i in diff_by_pattern:
+        print(i, cles_paired(diff_by_pattern[i])) 
 
+    main_by_type_barchart(patterns, diff_by_pattern, keys, 'category.pdf', wilcoxon=True, boxes_start=7, text_start=0.73, delta=1.03, left_padding=0.25, f_size=6)
+
+def sec_by_lang(CACHE, fil):
+        
+    keys = fil['language'].unique()
+    patterns, diff_by_pattern = {}, {}
+
+    for i in keys:
+        res, diff = [0,0,0], []
+        df = fil[fil['language'] == i]
+        for i in df.iterrows():
+            if float(i[1]['main(diff)_sec']) < 0:
+                res[0] += 1
+            elif float(i[1]['main(diff)_sec']) > 0:
+                res[1] += 1
+            else:
+                res[2] += 1
+        
+        if len(df) < 21:
+            if 'others' in patterns:
+                patterns['others'][0] += res[0]
+                patterns['others'][1] += res[1]
+                patterns['others'][2] += res[2]
+            else:
+                patterns['others'] = res
+                
+            if 'others' in diff_by_pattern:
+                diff_by_pattern['others'] += [float(i[1]['main(diff)_sec']) for i in df.iterrows()]
+            else:
+                diff_by_pattern['others'] = [float(i[1]['main(diff)_sec']) for i in df.iterrows()]
+        else:
+            patterns[i[1]['language']] = res
+            
+            if i[1]['language'] in diff_by_pattern:
+                diff_by_pattern[i[1]['language']] += [float(i[1]['main(diff)_sec']) for i in df.iterrows()]
+            else:
+                diff_by_pattern[i[1]['language']] = [float(i[1]['main(diff)_sec']) for i in df.iterrows()]
 
     count = 0
     for i in diff_by_pattern:
         count += len(diff_by_pattern[i])
     print('Count=', count)
-        
+
     count = 0
     for i in patterns:
         count += sum(patterns[i])
     print('Count=', count)
 
-    main_by_type_barchart(patterns, diff_by_pattern)
+    keys = {'objc':'Objective-C', 'php':'PHP', 'ruby':'Ruby', 'c':'C', 'c++':'C++', 'groovy':'Groovy', 'javascript':'JavaScript',
+                    'python':'Python', 'java':'Java', 'objc++':'Objective-C++', 'scala':'scala', 'swift':'Swift', 'smarty':'Smarty', 'others': 'Others'}
     
+    for i in diff_by_pattern:
+       print(i, cles_paired(diff_by_pattern[i]))
+          
+    main_by_type_barchart(patterns, diff_by_pattern, keys, 'language.pdf', wilcoxon=True, boxes_start=5, text_start=0.565, delta=1.01, left_padding=0.07, f_size=7)
+        
 
 def main(cache, results, graphics, dataset):
 
@@ -361,7 +402,10 @@ def main(cache, results, graphics, dataset):
     plt.clf()
     # Figure 2
     sec_by_type(CACHE, fil)
-
+    plt.clf()
+    # Figure 3
+    sec_by_lang(CACHE, fil)
+    
     fil.to_csv('final_results.csv')
 
 
