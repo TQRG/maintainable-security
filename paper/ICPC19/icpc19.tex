@@ -267,12 +267,12 @@ https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd
 (Accessed on \today{})} by the OpenSSL developers to patch the vulnerability.
 
 Every SSL/TLS connection, \texttt{s}, begins with a handshake which is responsible by the
-negotiation between two parties. DTLS provides a mechanism for fragmenting a
+negotiation between the two parties. DTLS provides a mechanism for fragmenting a
 handshake message over a number of packets, each of which can be transmitted
-separately over the Internet from one party to another. The problem in CVE-$2014$-$3506$ 
+separately over the internet from one party to another. The problem in CVE-$2014$-$3506$ 
 is that the size of the handshake message collected by the receiver is not verified against 
-the maximum size allowed by DTLS and latter in the code it is allocated to a new fragment (line $37$). 
-Thus, if an attacker has access to one of these packages it can change the handshake messsage size and
+the maximum size allowed by DTLS. It is then allocated to a new fragment (line $37$). 
+Thus, if an attacker has access to one of these packages, the attacker can change the handshake messsage size and
 trigger unnecessary memory allocations of large length which can lead to memory exhaustion that could
 could end in a DoS attack.
 
