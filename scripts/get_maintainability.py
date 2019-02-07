@@ -89,7 +89,7 @@ def total_main_barchart(total_sec, total_reg, graphics, result):
     
     plt.gca().xaxis.grid(True, linestyle='--')
     
-
+    plt.tight_layout()
     plt.savefig('../paper/ICPC19/figures/maintainability.pdf')
 
 def dic_barchart(dic, graphics, title, file_name):
@@ -108,6 +108,7 @@ def dic_barchart(dic, graphics, title, file_name):
     plt.xticks(index + bar_width, df['type'], fontsize=8, rotation='vertical')
     plt.legend()
     plt.subplots_adjust(bottom=0.2)
+    plt.tight_layout()
     plt.savefig(graphics+file_name)
 
 def check_if_in(key, dic):
@@ -297,7 +298,7 @@ def main_by_type_barchart(patterns, diff):
         y -= 1.02
         
     plt.gca().xaxis.grid(True, linestyle='--')
-
+    plt.tight_layout()
     plt.savefig('../paper/ICPC19/figures/category.pdf')
 
 def sec_by_type(CACHE, fil):

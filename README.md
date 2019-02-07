@@ -19,3 +19,10 @@ cd scripts
 python get_maintainability.py --bch-cache maintainability/bch_cache.json --results-file ../results/sec-main-results.csv --graphics-path ../results/ --dataset ../dataset/commits_patterns_sec.csv
 ``` 
 
+Reports:
+
+```
+source venv/bin/activate
+cd scripts
+python histogram.py --projects-csv final_projects.csv --commits-csv final_results.csv
+```

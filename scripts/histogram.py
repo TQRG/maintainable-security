@@ -35,15 +35,15 @@ def language_dist(commits):
             dic_lang['no'].append(dic[i]/len(df['language']))
     
     lang = pd.DataFrame(dic_lang)
-    
-    ax = lang['no'].plot(kind='barh', figsize=(10, 11), fontsize=12, color="#3F86DB")
+
+    fig, ax = plt.subplots(figsize=(10, 8))
+    ax = lang['no'].plot(kind='barh', fontsize=16, color="#3F86DB", ax=ax)
     vals = ax.get_xticks()
     ax.set_xticklabels(['{:,.0%}'.format(x) for x in vals])
     ax.set_yticklabels(dic_lang['lang'], minor=False)
-    plt.subplots_adjust(left=0.15, right=0.95, top=0.9, bottom=0.05)
-    plt.gca().xaxis.grid(True, linestyle='--')
-    plt.tight_layout()
-    plt.savefig('../paper/ICPC19/figures/language_dist.pdf')
+    ax.xaxis.grid(True, linestyle='--')
+    fig.tight_layout()
+    fig.savefig('../paper/ICPC19/figures/language_dist.pdf')
 
 def type_dist(projects):
     
@@ -64,14 +64,14 @@ def type_dist(projects):
                 
     app_type = pd.DataFrame(dic_type)
     
-    ax = app_type['no'].plot(kind='barh', figsize=(10, 7), fontsize=12, color="#3F86DB")
+    fig, ax = plt.subplots()
+    app_type['no'].plot(kind='barh', figsize=(10, 4), fontsize=16, color="#3F86DB", ax=ax)
     vals = ax.get_xticks()
     ax.set_xticklabels(['{}'.format(int(x)) for x in vals])
     ax.set_yticklabels(app_type['type'], minor=False)
-    plt.subplots_adjust(left=0.31, right=0.9, top=0.9, bottom=0.05)
-    plt.gca().xaxis.grid(True, linestyle='--')
-    plt.tight_layout()
-    plt.savefig('../paper/ICPC19/figures/type_dist.pdf')
+    ax.xaxis.grid(True, linestyle='--')
+    fig.tight_layout()
+    fig.savefig('../paper/ICPC19/figures/type_dist.pdf')
 
 def main(projects, commits):    
     
