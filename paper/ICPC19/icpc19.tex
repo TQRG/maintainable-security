@@ -190,17 +190,18 @@ software quality ISO/IEC 25010. As ISO does not provide any specific guidelines
 or formula to calculate maintainability, we resort on Software Improvement
 Group (SIG)'s web-based source code analysis service Better Code Hub
 (BCH)~\cite{Visser:2016:OREILLY} to compute the maintainability of a given
-project. There are other well-known standards and models that have been proposed
+project. BCH compiles the ISO/IEC 25010 into a set of $10$ guidelines that are the
+base of BCH's evaluation. Two examples are the \emph{Write Simple Units of Code}
+based on the McCabe Complexity~\cite{1702388} and \emph{Keep your Codebase Small}
+based on the idea that smaller codebases are easier to maintain and less prone to defects~\cite{Visser:2016:OREILLY}. 
+There are other well-known standards and models that have been proposed
 to increase software security: Common Criteria~\cite{common:2009} which received
 negative criticism regarding the costs associated and poor technical evaluation;
 the OWASP Application Security Verification Criteria~\cite{oswap:2009} which is
 focused only on web applications, and a model proposed by Xu et al. ($2013$)
 ~\cite{6616351} for rating software security (arguably, it was one of the
 first steps taken by SIG to introduce security on their maintainability model).
-BCH compiles the ISO/IEC 25010 into a set of $10$ guidelines that are the
-base of BCH's evaluation. Two examples are the \emph{Write Simple Units of Code}
-based on the McCabe Complexity~\cite{1702388} and \emph{Keep your Codebase Small}
-based on the idea that smaller codebases are easier to maintain and less prone to defects~\cite{Visser:2016:OREILLY}.
+
 
 The particular subject of this paper is to explore whether there is a trade-off
 between refactoring source code to patch disclosed vulnerabilities and keeping
@@ -588,15 +589,16 @@ kilobytes), the number of issues, and the number of pull requests.
 Previous studies attempted to measure the impact of regular refactorings on
 open-source software maintainability~\cite{HEGEDUS2018313}. However, there is no
 previous work focused on comparing the impact of security refactorings with
-regular refactorings on maintainability. We analyze the maintainability of
-regular commits (i.e., commits not related to security fixes) and use them as a
-baseline.
+regular refactorings on maintainability.
+We analyze the maintainability of regular commits (i.e., commits not related 
+to security fixes) and use them as a baseline. 
 
-The baseline dataset uses the security commits dataset as input. For each
+The baseline dataset uses the security commits dataset as input. 
+Both datasets have the same size. For each
 security commit, one random commit is selected from the list of all commits of
 that particular project. We originate the regular commits from the security
 commits to ensure that differences in maintainability are not a consequence of
-characteristics of different projects.
+characteristics of different projects. 
 %
 \subsection{Maintainability Analysis}
 
@@ -901,9 +903,7 @@ maintainability.
 \begin{figure}[h]
  	\centering
  	\includegraphics[width=0.50\textwidth]{figures/category.pdf}
- 	\caption{Maintainability difference by pattern after security refactorings.
-  \Luis{a median e' zero em muitos casos -- como interpretam isso? se nao houver
-boa/simples explicacao talvez seja melhor usar o common language.}\Sof{Preciso de pensar melhor nisto}}
+ 	\caption{Maintainability difference by pattern after security refactorings.}
 	\label{fig:pat}
 \end{figure}
 
@@ -956,13 +956,13 @@ languages and lack of using the best practices lead to more buggy and vulnerable
 code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. However,
 Figure~\ref{fig:lang_main} shows that only \emph{C} has a negative impact of
 more than $50\%$ on software maintainability. We suspect that these values are
-the result of projects contributions policies. Nine out of ten projects --- the
-equivalent to $31.8\%$ of the commits --- of the top-$10$ of dataset projects
+the result of projects contributions policies. Nine of the top-10 of dataset projects  --- the
+equivalent to $31.8\%$ of the commits --- 
 with more contributors have restrict contribution policies regarding code
 standards. Some examples are the \texttt{laravel/framework},
 \texttt{php/php-src}, \texttt{openssl/openssl} and \texttt{cakephp/cakephp}. For
 instance, \texttt{laravel/framework} requires the \texttt{PSR-2
-Standard}\footnote{PSR-2 Standard available at
+Standard} that is a coding style guide for \texttt{PHP}\footnote{PSR-2 Standard available at
 https://www.php-fig.org/psr/psr-2/ (Accessed on \today{})}.
 
 \begin{framed}
@@ -1127,7 +1127,9 @@ such as BCH to help developers predict the effect of their patches.
 As future work, this study may be extended in many directions: analyze which
 guidelines are more likely to be affected by security-related refactorings;
 investigate what are the most frequent vulnerabilities in each programming
-language; study if there is any correlation between code maintainability and
+language; investigate how refactorings impact maintainability for each
+vulnerability and programming language; 
+study if there is any correlation between code maintainability and
 the popularity of a software project; expand our methodology with other
 software quality properties; validate these findings with closed or private
 software; and, expand this analysis to other quality standards.
