@@ -839,12 +839,12 @@ positive impact in the maintainability of open-source software}.
   \label{fig:lang_main}
 \end{figure}
 
-We have also evaluated the impact in the maintainability per programming language
+We have also evaluated the impact on the maintainability per programming language
 of open-source software, Figure~\ref{fig:lang_main}. Although
 the dataset contains security refactorings for more than $13$ languages, we only
 present the results for \emph{Java}, \emph{C}, \emph{Ruby}, and \emph{PHP}
-because one of the requirements of the Paired Wilcoxon signed-rank is that the
-input sample has to have more than $20$ samples. The other languages were
+because the Paired Wilcoxon signed-rank requirement: input sample has to have more 
+than $20$ samples. The other languages were
 integrated into \emph{Others}. The results of the Paired Wilcoxon signed-rank
 test by pattern indicate that there is statistical evidence to support that the
 maintainability of open-source software decreases for security refactorings in
@@ -863,7 +863,7 @@ affect open-source software maintainability?}
 
 The impact of each type of security refactoring on the maintainability of
 open-source software is presented in Figure~\ref{fig:pat}. The results of the
-Paired Wilcoxon signed-rank per pattern indicated statistical
+Paired Wilcoxon signed-rank per pattern exhibited statistical
 evidence supporting that the maintainability of open-source software decreases
 for $4$ different patterns: \emph{Broken Autentication} (p-value = $0.018$),
 \emph{Denial-of-Service} (p-value = $0.029$), \emph{Memory Leak} (p-value = $0.009$) and
@@ -872,7 +872,7 @@ significance, results demonstrate evidence that maintainability is not
 negatively impacted when removing \emph{Components with Known Vulnerabilities}
 (p-value = $7.96$x$10^{-4}$) and fixing \emph{Cross-Site Scripting
 Vulnerabilities} (p-value = $0.001$). \emph{Injection} and \emph{Cross-Site
-Request Forgery} produced more cases where the refactorings had a negative
+Request Forgery} produced more cases where refactorings had a negative
 impact in the maintainability. However, the results obtained for these patterns
 are not statistically significant.
 
@@ -905,7 +905,7 @@ maintainability.
 
 \begin{figure}[h]
  	\centering
- 	\includegraphics[width=0.56\textwidth]{figures/category.pdf}
+ 	\includegraphics[width=0.57\textwidth]{figures/category.pdf}
  	\caption{Maintainability difference by pattern after security refactorings.}
 	\label{fig:pat}
 \end{figure}
@@ -965,8 +965,8 @@ with more contributors have restrict contribution policies regarding code
 standards. Some examples are the \texttt{laravel/framework},
 \texttt{php/php-src}, \texttt{openssl/openssl} and \texttt{cakephp/cakephp}. For
 instance, \texttt{laravel/framework} requires the \texttt{PSR-2
-Standard} that is a coding style guide for \texttt{PHP}\footnote{PSR-2 Standard available at
-\url{https://www.php-fig.org/psr/psr-2/} (Accessed on \today{})}.
+Standard}\footnote{PSR-2 Standard available at
+\url{https://www.php-fig.org/psr/psr-2/} (Accessed on \today{})} that is a coding style guide for \texttt{PHP}.
 
 \begin{framed}
 \textit{\textbf{RQ2} Which patterns of security refactorings are more likely to
