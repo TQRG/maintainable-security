@@ -163,12 +163,12 @@ non-functional requirement during the development of software systems.  However,
 there is still a considerable amount of zero-day vulnerabilities being
 discovered, and fixed, almost weekly as disclosed by the Zero Day Initiative
 website\footnote{Zero Day Initiative website available at
-https://www.zerodayinitiative.com/advisories/published/ (Accessed on \today{})}.
+\url{https://www.zerodayinitiative.com/advisories/published/} (Accessed on \today{})}.
 These vulnerabilities are gateways for attackers to penetrate
 systems and exploit their resources.
 As an example, in the last week of January $2019$, a severe vulnerability in Apple
-FaceTime was revealed\footnote{https://thehackernews.com/2019/01/apple-facetime-
-privacy-hack.html (Accessed on \today{})} --- the outcome of a design/logical
+FaceTime was revealed\footnote{FaceTime vulnerability details available at \url{https://thehackernews.com/2019/01/apple-facetime-
+privacy-hack.html} (Accessed on \today{})} --- the outcome of a design/logical
 flaw that allowed callers to see and hear others without them picking up the call.
 
 In $2011$, the International Organization for Standardization (ISO) issued an
@@ -233,13 +233,13 @@ and documentation to help developers adopt security best practices~\cite{6311252
 
 This paper is structured as follows: section~\ref{sec:motivation} introduces an
 example of a security refactoring of a known vulnerability found in
-OpenSSL\footnote{Repository available at https://github.com/openssl/openssl
+OpenSSL\footnote{Repository available at \url{https://github.com/openssl/openssl}
 (Accessed on \today{})}; section~\ref{sec:methodology} describes the
 methodology used to answer the research questions; section~\ref{sec:results}
 presents the results and section~\ref{sec:discussion} discusses their
 implications; section~\ref{sec:threats}, enumerates the threats to the validity of 
 this study; section~\ref{sec:rw} describes the different work and existing
-literature in the field of study; and, finally section~\ref{sec:conclusions}
+literature in the field of study; and, finally, section~\ref{sec:conclusions}
 concludes the main findings and elaborates on future work.
 %
 \section{Motivation and Research Questions}\label{sec:motivation}
@@ -260,11 +260,11 @@ protocols.} to address a vulnerability where an attacker could cause a Denial-of
 (DoS) attack by crafting DTLS handshake messages to trigger memory allocations
 corresponding to large length values. This vulnerability is listed at the Common
 Vulnerabilities and Exposures dictionary as CVE-$2014$-$3506$\footnote{CVE-$2014$-$3506$
-details available at http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3506
+details available at \url{http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3506}
 (Accessed on \today{})}. It is amongst the vulnerabilities studied in our
 evaluation. The snippet in Listing~\ref{lst:vuln} presents the changes performed on the
 \emph{ssl/d1\_both.c} file\footnote{CVE-$2014$-$3506$ fix available  at
-https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd7636
+\url{https://github.com/openssl/openssl/commit/1250f12613b61758675848f6600ebd914ccd7636}
 (Accessed on \today{})} by the OpenSSL developers to patch the vulnerability.
 
 Every SSL/TLS connection begins with a handshake which is responsible by the
@@ -273,10 +273,10 @@ a handshake message over a number of packets, each of which can be transmitted
 separately over the internet from one party to another. The problem in
 CVE-$2014$-$3506$ is that the size of the handshake message collected by the
 receiver is not verified against the maximum size allowed by DTLS. It is then
-allocated to a new fragment (cf. Listing~\ref{lst:vuln}, line~37). Thus, if
-an attacker has access to one of these packages, the attacker can change the
-handshake messsage size and trigger unnecessary memory allocations of large
-length which can lead to memory exhaustion that could could end in a DoS attack.
+allocated to a new fragment (cf. Listing~\ref{lst:vuln}, line~37). Thus, if an 
+attacker has access to one of these packages, the attacker can change the 
+handshake message size and trigger unnecessary memory allocations of large 
+length which can lead to memory exhaustion that could end in a DoS attack.
 
 
 \medskip
@@ -448,9 +448,9 @@ Figure~\ref{fig:met}:
 	projects of the main dataset to evaluate the impact of regular commits on the
 	maintainability of open-source software.
   \item Use the Software Improvement Group's\footnote{SIG's website is available
-  at https://www.sig.eu/ (Accessed on \today{})} web-based source code analysis
+  at \url{https://www.sig.eu/} (Accessed on \today{})} web-based source code analysis
   service \emph{Better Code Hub} (BCH)\footnote{BCH's website is available at
-  https://bettercodehub.com/ (Accessed on \today{})} to quantify maintainability
+  \url{https://bettercodehub.com/} (Accessed on \today{})} to quantify maintainability
   for both security and regular commits.
 \end{enumerate}
 
@@ -619,7 +619,7 @@ data/experience --- using open-source and closed software systems. If a project 
 compliant with a guideline, it means that it is at least $65\%$ better than the
 software used by BCH to calculate the thresholds\footnote{Check the answer to
 \emph{How can I adjust the threshold for passing/not passing a guideline?} at
-https://bettercodehub.com/docs/faq (Accessed on \today{})}.
+\url{https://bettercodehub.com/docs/faq} (Accessed on \today{})}.
 
 Figure~\ref{fig:bchrep} shows an example of the report
 provided by BCH for a project after finishing its evaluation. The example
@@ -966,7 +966,7 @@ standards. Some examples are the \texttt{laravel/framework},
 \texttt{php/php-src}, \texttt{openssl/openssl} and \texttt{cakephp/cakephp}. For
 instance, \texttt{laravel/framework} requires the \texttt{PSR-2
 Standard} that is a coding style guide for \texttt{PHP}\footnote{PSR-2 Standard available at
-https://www.php-fig.org/psr/psr-2/ (Accessed on \today{})}.
+\url{https://www.php-fig.org/psr/psr-2/} (Accessed on \today{})}.
 
 \begin{framed}
 \textit{\textbf{RQ2} Which patterns of security refactorings are more likely to
@@ -993,10 +993,10 @@ such as the one presented in Section~\ref{sec:motivation} responsible by Denial-
 attacks are more difficult to fix (several code lines deleted and added).
 Another example is the Apple authentication flaw discovered in $2017$
 (CVE-$2017$-$13872$)\footnote{CVE-$2017$-$13872$ details available at
-https://support.apple.com/en-us/HT208315 (Accessed on \today{})}, where any user
+\url{https://support.apple.com/en-us/HT208315} (Accessed on \today{})}, where any user
 could log in as root with an empty password. Patrick Wardle examined the cause
 of the issue\footnote{\emph{Why $<$blank$>$ Gets You Root} available at
-https://objective-see.com/blog/blog\_0x24.html (Accessed on \today{})} and
+\url{https://objective-see.com/blog/blog\_0x24.html} (Accessed on \today{})} and
 concluded that the flaw was due to the introduction of high cyclomatic complexity
 in a method used to verify the password. In sum, \emph{Cross-Site Scripting} and
 \emph{Using Components with Known Vulnerabilities} should take part of the
