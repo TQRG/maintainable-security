@@ -140,8 +140,8 @@ developers address these vulnerabilities on their codebases, they actually
 affect the maintainability of software, potentially introducing other
 vulnerabilities. This paper evaluates the impact of refactorings to improve
 security on the maintainability of open-source software. Maintainability is
-measured based on the \emph{Better Code Hub}'s model of $10$ guidelines using a
-dataset including $607$ security commits. Results show that fixing software
+measured based on the \emph{Better Code Hub}'s model of 10 guidelines using a
+dataset including 607 security commits. Results show that fixing software
 vulnerabilities hinders the maintainability of open-source software. This is
 particularly the case for refactorings that address \emph{Broken Authentication
 and Session Management} issues, \emph{Memory Leaks} and \emph{Denial-of-Service}
@@ -247,11 +247,11 @@ concludes the main findings and elaborates on future work.
 Due to time-to-market pressure and the lack of security expertise, code-related
 security flaws are generally detected \textit{after the fact}, i.e., when
 hackers exploit them. It turns out that fixing these issues is as simple as
-modifying the software codebase. However, these refactorings may have a negative
-impact on software maintenance, mostly because developers follow the quickest
-solution to fix the problem and not necessarily the most elegant and performant
-one. Thus, we want to understand how security refactorings impact the
-maintainability of software.
+modifying the software codebase. However, these refactorings may have a
+negative impact on software maintenance --- e.g., developers might follow the
+quickest solution to fix the problem and not necessarily the most elegant and
+performant one. Thus, we want to understand how security refactorings impact
+the maintainability of software.
 
 As an example, consider the refactoring of the Datagram Transport Layer Security
 (DTLS) protocol implementation in OpenSSL\footnote{OpenSSL is a toolkit that
@@ -262,20 +262,21 @@ corresponding to large length values. This vulnerability is listed at the Common
 Vulnerabilities and Exposures dictionary as CVE-$2014$-$3506$\footnote{CVE-$2014$-$3506$
 details available at http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3506
 (Accessed on \today{})}. It is amongst the vulnerabilities studied in our
-evaluation. The following snippet presents the changes performed on the
+evaluation. The snippet in Listing~\ref{lst:vuln} presents the changes performed on the
 \emph{ssl/d1\_both.c} file\footnote{CVE-$2014$-$3506$ fix available  at
 https://github.com/openssl/openssl/commit/\\1250f12613b61758675848f6600ebd914ccd7636
 (Accessed on \today{})} by the OpenSSL developers to patch the vulnerability.
 
-Every SSL/TLS connection, \texttt{s}, begins with a handshake which is responsible by the
-negotiation between the two parties. DTLS provides a mechanism for fragmenting a
-handshake message over a number of packets, each of which can be transmitted
-separately over the internet from one party to another. The problem in CVE-$2014$-$3506$ 
-is that the size of the handshake message collected by the receiver is not verified against 
-the maximum size allowed by DTLS. It is then allocated to a new fragment (line $37$). 
-Thus, if an attacker has access to one of these packages, the attacker can change the handshake messsage size and
-trigger unnecessary memory allocations of large length which can lead to memory exhaustion that could
-could end in a DoS attack.
+Every SSL/TLS connection begins with a handshake which is responsible by the
+negotiation between the two parties. DTLS provides a mechanism for fragmenting
+a handshake message over a number of packets, each of which can be transmitted
+separately over the internet from one party to another. The problem in
+CVE-$2014$-$3506$ is that the size of the handshake message collected by the
+receiver is not verified against the maximum size allowed by DTLS. It is then
+allocated to a new fragment (cf. Listing~\ref{lst:vuln}, line~37). Thus, if
+an attacker has access to one of these packages, the attacker can change the
+handshake messsage size and trigger unnecessary memory allocations of large
+length which can lead to memory exhaustion that could could end in a DoS attack.
 
 
 \medskip
@@ -348,7 +349,7 @@ the maximum certificate list size (\texttt{s-$>$max\_cert\_list}) requires it. M
 specifically, it checks if the maximum certificate list size requires more length than the maximum length
 (\texttt{max\_len}). If that condition holds, the function returns the size of
 the certificate list, otherwise, it returns the maximum length. This function
-replaces lines $18$-$21$.
+replaces lines $18$--$21$.
 
 
 ~\ref{lst:func5} and~\ref{lst:func4} are guards added to different functions to
@@ -362,7 +363,7 @@ changes performed in the codebase which produced a negative impact in the
 maintainability. Even though the developer tries to simplify the
 codebase by introducing a smaller unit
 \texttt{dtls1\_max\_handshake\_message\_len} (\ref{lst:func1}), this change also
-disrupts $2$ of the guidelines proposed by the Software Improvement Group (SIG) for
+disrupts two of the guidelines proposed by the Software Improvement Group (SIG) for
 building maintainable software~\cite{Visser:2016:OREILLY}. It adds a new branch
 point to the \texttt{dtls1\_process\_out\_of\_seq\_message} unit
 (\ref{lst:func5}) increasing the cyclomatic complexity and breaking the
@@ -401,14 +402,16 @@ affect open-source software maintainability?}
 
 There are security flaws that are more difficult to refactor than others. For
 instance, implementing secure authentication is not as easy as fixing a
-cross-site scripting vulnerability since usually the last one is can be fixed
-without adding new lines of code, as seen in Listing~\ref{lst:fix}. The developer added the function \emph{htmlentities} to
-\textit{escape} the data given by the variable \texttt{\$\_['file']}. Knowing which
-patterns are more likely to increase maintainability issues is one step forward
-to bring awareness to security engineers of what patterns need more attention.
-The taxonomy of security patterns used to answer this question is the same as
-the one provided by the authors of the dataset~\cite{Reis:2017:IJSSE}.
-Maintainability is measured separately for each pattern.
+cross-site scripting vulnerability since usually the last one can be fixed
+without adding new lines of code. A typical fix for the cross-site scripting
+vulnerability is presented in Listing~\ref{lst:fix}. The developer added the
+function \texttt{htmlentities} to \textit{escape} the data given by the variable
+\texttt{\$\_['file']}. Knowing which patterns are more likely to increase
+maintainability issues is one step forward to bring awareness to security
+engineers of what patterns need more attention. The taxonomy of security
+patterns used to answer this question is the same as the one provided by the
+authors of the dataset~\cite{Reis:2017:IJSSE}. Maintainability is measured
+separately for each pattern.
 
 \setcounter{lstannotation}{0}
 \begin{lstlisting}[style={PHPStyle}, caption={Fix provided by \texttt{nextcloud/server} developers to a \\Cross-Site Scripting vulnerability},label={lst:fix}]
@@ -578,7 +581,7 @@ libraries and frameworks} ($18$), for desktop and mobile software.
 Table~\ref{tab:dataset} presents the descriptive statistics of the $94$
 open-source projects involved in this study, including the number of forks, the
 number of stars, the number of watchers, the number of contributors, the number
-of commits, the number of branches, the number of releases,  size (cf. GitHub, it
+of commits, the number of branches, the number of releases, size (cf. GitHub, it
 is the size of the whole repository, including all of its history, in
 kilobytes), the number of issues, and the number of pull requests.
 
@@ -687,7 +690,7 @@ somewhere in the green bar it means it is compliant with a low level of
 severity.
 
 \begin{figure}[h]
- 	\centering 	\includegraphics[width=0.49\textwidth]{figures/commit.pdf}
+ 	\centering 	\includegraphics[width=0.8\linewidth]{figures/commit.pdf}
  	\caption{Maintainability difference for security commits}
 	\label{fig:commit}
 \end{figure}
@@ -774,7 +777,7 @@ To validate the maintainability differences in different groups of commits
 (e.g., baseline and security commits), we use the Paired Wilcoxon signed-rank
 test with the significance level $\alpha = 0.05$~\cite{10.2307/3001968}. In
 other words, we test the null hypothesis that the maintainability difference
-between pairs of versions $v_{s-1}$, $v_v$ (i.e., before and after a
+between pairs of versions $v_{s-1}$, $v_s$ (i.e., before and after a
 security-commit) come from the same distribution. Nevertheless, this test has a
 limitation: it does not consider the groups of commits with a zero-difference
 maintainability. In $1959$, Pratt provided an improvement to the test to solve
@@ -1054,7 +1057,7 @@ Thus, our findings may not extend to non-open source software.
 
 Different programming languages may require different coding practices to
 address software safety. The dataset comprises more commits in C and PHP, i.e.,
-the dataset may not be properly representative of the population regarding
+the dataset may not be representative of the population regarding
 programming languages.
 
 Our approach does not consider security refactorings in any other languages but
