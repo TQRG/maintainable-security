@@ -689,7 +689,7 @@ somewhere in the green bar it means it is compliant with a low level of
 severity.
 
 \begin{figure}[h]
- 	\centering 	\includegraphics[width=0.8\linewidth]{figures/commit.pdf}
+ 	\centering 	\includegraphics[width=0.75\linewidth]{figures/commit.pdf}
  	\caption{Maintainability difference for security commits}
 	\label{fig:commit}
 \end{figure}
@@ -810,7 +810,7 @@ of the maintainability difference and the p-value resulting from the
 Paired Wilcoxon signed-rank test.
 
 \begin{figure}[h]
- 	\centering 	\includegraphics[width=0.5\textwidth]{figures/maintainability.pdf}
+ 	\centering 	\includegraphics[width=0.46\textwidth]{figures/maintainability.pdf}
  	\caption{Maintainability difference for security and baseline refactorings}
 	\label{fig:secvsreg}
 \end{figure}
@@ -841,14 +841,16 @@ positive impact in the maintainability of open-source software}.
 We have also evaluated the impact on the maintainability per programming language
 of open-source software, Figure~\ref{fig:lang_main}. Although
 the dataset contains security refactorings for more than $13$ languages, we only
-present the results for \emph{Java}, \emph{C}, \emph{Ruby}, and \emph{PHP}
-because the Paired Wilcoxon signed-rank requirement: input sample has to have more 
+present the results for \emph{Java}, \emph{Python}, \emph{C}, \emph{Ruby}, and \emph{PHP}
+because of the Paired Wilcoxon signed-rank test requirement: input sample has to have more 
 than $20$ samples. The other languages were
 integrated into \emph{Others}. The results of the Paired Wilcoxon signed-rank
 test by pattern indicate that there is statistical evidence to support that the
 maintainability of open-source software decreases for security refactorings in
 $3$ different languages: \emph{C} (p-value = $5.72$x$10^{-9}$), Ruby (p-value = $0.057$) and
-PHP (p-value = $3.54$x$10^{-6}$). The results also provide statistical significance
+PHP (p-value = $3.54$x$10^{-6}$). Following the \textit{American Statistical Association} recommendations~\cite{doi:10.1080/00031305.2016.1154108}, 
+we consider the results for Ruby as statistically significant because its p-value is on the borderline.
+The results also exhibit statistical significance
 for when security refactorings are performed in \emph{Java} (p-value =
 $3.61$x$10^{-2}$). \emph{Python} and the languages that integrate the
 \emph{Others} set contain more cases where the maintainability increases.
