@@ -10,7 +10,7 @@ matplotlib.rcParams['mathtext.fontset'] = 'cm'
 import matplotlib.pyplot as plt
 
 
-def language_dist(commits):
+def language_dist(commits, output):
     
     df = pd.read_csv(commits)
     
@@ -30,11 +30,17 @@ def language_dist(commits):
     dic_lang['no'].append(dic['others']/len(df['language']))
     
     for i in dic:
-        if i != 'others': 
+        if i not in ('others','php','ruby','c','python','java'): 
             dic_lang['lang'].append(lang_trans[i])
             dic_lang['no'].append(dic[i]/len(df['language']))
     
+    for i in ('php','ruby','c','python','java'):
+        dic_lang['lang'].append(lang_trans[i])
+        dic_lang['no'].append(dic[i]/len(df['language']))
+    
     lang = pd.DataFrame(dic_lang)
+    print(lang)
+    
 
     fig, ax = plt.subplots(figsize=(10, 8))
     ax = lang['no'].plot(kind='barh', fontsize=16, color="#3F86DB", ax=ax)
@@ -43,9 +49,9 @@ def language_dist(commits):
     ax.set_yticklabels(dic_lang['lang'], minor=False)
     ax.xaxis.grid(True, linestyle='--')
     fig.tight_layout()
-    fig.savefig('../paper/ICPC19/figures/language_dist.pdf')
+    fig.savefig('{}/language_dist.pdf'.format(output))
 
-def type_dist(projects):
+def type_dist(projects, output):
     
     df = pd.read_csv(projects)
     
@@ -63,6 +69,7 @@ def type_dist(projects):
         dic_type['no'].append(dic[i]) 
                 
     app_type = pd.DataFrame(dic_type)
+    print(app_type)
     
     fig, ax = plt.subplots()
     app_type['no'].plot(kind='barh', figsize=(10, 4), fontsize=16, color="#3F86DB", ax=ax)
@@ -71,20 +78,20 @@ def type_dist(projects):
     ax.set_yticklabels(app_type['type'], minor=False)
     ax.xaxis.grid(True, linestyle='--')
     fig.tight_layout()
-    fig.savefig('../paper/ICPC19/figures/type_dist.pdf')
+    fig.savefig('{}/type_dist.pdf'.format(output))
 
-def main(projects, commits):    
+def main(projects, commits, output):    
     
-    language_dist(commits)
+    language_dist(commits, output)
     plt.clf()
-    type_dist(projects)
+    type_dist(projects, output)
     
 
 if __name__ == "__main__":
-    
     parser = argparse.ArgumentParser()
-    parser.add_argument('--projects-csv',metavar='projects-csv',required=True,help='the projects filename')
-    parser.add_argument('--commits-csv',metavar='commits-csv',required=True,help='the commits filename')
+    parser.add_argument('--projects-csv',metavar='projects-csv',required=True,help='the projects filename path')
+    parser.add_argument('--commits-csv',metavar='commits-csv',required=True,help='the commits filename path')
+    parser.add_argument('--output',metavar='output',required=True,help='the ouput folder')
     
     args = parser.parse_args()
-    main(projects=args.projects_csv, commits=args.commits_csv)
+    main(projects=args.projects_csv, commits=args.commits_csv, output=args.output)
