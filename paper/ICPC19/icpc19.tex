@@ -1,7 +1,7 @@
 \documentclass[10pt,conference]{IEEEtran}
 \IEEEoverridecommandlockouts
 % The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
-\usepackage{cite}
+\usepackage[noadjust]{cite}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
 \usepackage{graphicx}
@@ -193,7 +193,7 @@ Group (SIG)'s web-based source code analysis service Better Code Hub
 project. BCH compiles the ISO/IEC 25010 into a set of $10$ guidelines that are the
 base of BCH's evaluation. Two examples are the \emph{Write Simple Units of Code}
 based on the McCabe Complexity~\cite{1702388} and \emph{Keep your Codebase Small}
-based on the idea that smaller codebases are easier to maintain and less prone to defects~\cite{Visser:2016:OREILLY}. 
+based on the idea that smaller codebases are easier to maintain and less prone to defects~\cite{Visser:2016:OREILLY}.
 There are other well-known standards and models that have been proposed
 to increase software security: Common Criteria~\cite{common:2009} which received
 negative criticism regarding the costs associated and poor technical evaluation;
@@ -237,7 +237,7 @@ OpenSSL\footnote{Repository available at \url{https://github.com/openssl/openssl
 (Accessed on \today{})}; section~\ref{sec:methodology} describes the
 methodology used to answer the research questions; section~\ref{sec:results}
 presents the results and section~\ref{sec:discussion} discusses their
-implications; section~\ref{sec:threats}, enumerates the threats to the validity of 
+implications; section~\ref{sec:threats}, enumerates the threats to the validity of
 this study; section~\ref{sec:rw} describes the different work and existing
 literature in the field of study; and, finally, section~\ref{sec:conclusions}
 concludes the main findings and elaborates on future work.
@@ -273,9 +273,9 @@ a handshake message over a number of packets, each of which can be transmitted
 separately over the internet from one party to another. The problem in
 CVE-$2014$-$3506$ is that the size of the handshake message collected by the
 receiver is not verified against the maximum size allowed by DTLS. It is then
-allocated to a new fragment (cf. Listing~\ref{lst:vuln}, line~37). Thus, if an 
-attacker has access to one of these packages, the attacker can change the 
-handshake message size and trigger unnecessary memory allocations of large 
+allocated to a new fragment (cf. Listing~\ref{lst:vuln}, line~37). Thus, if an
+attacker has access to one of these packages, the attacker can change the
+handshake message size and trigger unnecessary memory allocations of large
 length which can lead to memory exhaustion that could end in a DoS attack.
 
 
@@ -436,7 +436,7 @@ separately for each pattern.
 \section{Methodology}\label{sec:methodology}
 %
 The methodology used to measure the impact of security refactorings on the
-maintainability of open-source software is discussed in this section. 
+maintainability of open-source software is discussed in this section.
 The methodology comprises the following steps, as illustrated in
 Figure~\ref{fig:met}:
 
@@ -535,7 +535,7 @@ the dataset containing less than $20$ instances):
     (e.g., SQL and LDAP injection). \textit{Based on the OWASP Top $10$ of
     $2017$.}
 
-    \item \textbf{Memory Leak (80 cases).} Memory management issues are found more frequently 
+    \item \textbf{Memory Leak (80 cases).} Memory management issues are found more frequently
 	in programming languages that do not manage memory automatically (e.g., C/C++
     and Objective-C), i.e., where developers are responsible for
     handling it instead. It is one of the main causes of DoS attacks.
@@ -593,15 +593,15 @@ Previous studies attempted to measure the impact of regular refactorings on
 open-source software maintainability~\cite{HEGEDUS2018313}. However, there is no
 previous work focused on comparing the impact of security refactorings with
 regular refactorings on maintainability.
-We analyze the maintainability of regular commits (i.e., commits not related 
-to security fixes) and use them as a baseline. 
+We analyze the maintainability of regular commits (i.e., commits not related
+to security fixes) and use them as a baseline.
 
-The baseline dataset uses the security commits dataset as input. 
+The baseline dataset uses the security commits dataset as input.
 Both datasets have the same size. For each
 security commit, one random commit is selected from the list of all commits of
 that particular project. We originate the regular commits from the security
 commits to ensure that differences in maintainability are not a consequence of
-characteristics of different projects. 
+characteristics of different projects.
 %
 \subsection{Maintainability Analysis}
 
@@ -843,7 +843,7 @@ We have also evaluated the impact on the maintainability per programming languag
 of open-source software, Figure~\ref{fig:lang_main}. Although
 the dataset contains security refactorings for more than $13$ languages, we only
 present the results for \emph{Java}, \emph{C}, \emph{Ruby}, and \emph{PHP}
-because the Paired Wilcoxon signed-rank requirement: input sample has to have more 
+because the Paired Wilcoxon signed-rank requirement: input sample has to have more
 than $20$ samples. The other languages were
 integrated into \emph{Others}. The results of the Paired Wilcoxon signed-rank
 test by pattern indicate that there is statistical evidence to support that the
@@ -960,7 +960,7 @@ code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. However,
 Figure~\ref{fig:lang_main} shows that only \emph{C} has a negative impact of
 more than $50\%$ on software maintainability. We suspect that these values are
 the result of projects contributions policies. Nine of the top-10 of dataset projects  --- the
-equivalent to $31.8\%$ of the commits --- 
+equivalent to $31.8\%$ of the commits ---
 with more contributors have restrict contribution policies regarding code
 standards. Some examples are the \texttt{laravel/framework},
 \texttt{php/php-src}, \texttt{openssl/openssl} and \texttt{cakephp/cakephp}. For
@@ -1131,7 +1131,7 @@ As future work, this study may be extended in many directions: analyze which
 guidelines are more likely to be affected by security-related refactorings;
 investigate what are the most frequent vulnerabilities in each programming
 language; investigate how refactorings impact maintainability for each
-vulnerability and programming language; 
+vulnerability and programming language;
 study if there is any correlation between code maintainability and
 the popularity of a software project; expand our methodology with other
 software quality properties; validate these findings with closed or private
@@ -1149,7 +1149,7 @@ help in validating the methodology.
 \balance
 
 {
- \bibliographystyle{IEEEtran}
+  \bibliographystyle{unsrt}
   \bibliography{icpc19}
 }
 
