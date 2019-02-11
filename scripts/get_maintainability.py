@@ -21,7 +21,7 @@ def _print_hypothesis_test(differences):
     stats = {'test': [test], 'med':[pd.DataFrame({'diff': differences})['diff'].median()],'pvalue': [pvalue], 
                 'mean':[pd.DataFrame({'diff': differences})['diff'].mean()]}
     df = pd.DataFrame(stats)
-    print("Wilcoxon signed-rank test {}, p-value: {}".format(test,pvalue))
+    #print("Wilcoxon signed-rank test {}, p-value: {}".format(test,pvalue))
     return df
 
 def _hypothesis_test(differences):
@@ -49,11 +49,12 @@ def pair_info(file):
 def clean_plot():
     plt.gcf().clear()
 
-# TODO: IMPROVE
 def count(id, pattern, p):
     pattern[p][id] += 1
 
-def total_main_barchart(total_sec, total_reg, graphics, result):
+def total_main_barchart(total_sec, total_reg, reports, result):
+    
+    print(len(total_sec))
     
     sec = sum([value for key,value in total_sec.items()])
     reg = sum([value for key,value in total_reg.items()])
@@ -66,7 +67,6 @@ def total_main_barchart(total_sec, total_reg, graphics, result):
     index = np.arange(len(d['type']))
     
     df = pd.DataFrame(d)
-    print(df[['neg','pos','none']])
     
     fig = plt.figure()
     ax = fig.add_subplot(111)
@@ -88,32 +88,13 @@ def total_main_barchart(total_sec, total_reg, graphics, result):
         else:
             p = '={:.{}f}'.format(l[1]['pvalue'], 3)
         box_text = '$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
-        ax.text(0.46, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':4}, fontsize=9)
+        ax.text(0.49, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':4}, fontsize=9)
         y -= 1.1
     
     plt.gca().xaxis.grid(True, linestyle='--')
     
     plt.tight_layout()
-    plt.savefig('../paper/ICPC19/figures/maintainability.pdf')
-
-def dic_barchart(dic, graphics, title, file_name):
-    d = {'neg' : pd.Series([dic[key][0] for key in dic]),
-        'pos' : pd.Series([dic[key][1] for key in dic]),
-        'nul' : pd.Series([dic[key][2] for key in dic]),
-        'type' : pd.Series([key for key in dic])}
-    index = np.arange(len(d['type']))
-    df = pd.DataFrame(d)
-    bar_width = 0.3
-    neg = plt.bar(index, df['neg'], bar_width, alpha=0.9, align='center', color='red', label='neg')
-    pos = plt.bar(index + bar_width, df['pos'], bar_width, alpha=0.9, align='center', color='green', label='pos')
-    nul = plt.bar(index + 2 * bar_width, df['nul'], bar_width, alpha=0.9, align='center', color='orange', label='nul')
-    plt.title(title)
-    plt.ylabel("# samples")
-    plt.xticks(index + bar_width, df['type'], fontsize=8, rotation='vertical')
-    plt.legend()
-    plt.subplots_adjust(bottom=0.2)
-    plt.tight_layout()
-    plt.savefig(graphics+file_name)
+    plt.savefig('{}/maintainability.pdf'.format(reports))
 
 def check_if_in(key, dic):
     if key not in dic:
@@ -198,26 +179,28 @@ def analysis(dataset, results, CACHE):
                     
             return patterns, none, error, diff_by_pat 
 
-def sec_vs_rg_commits(CACHE, graphics, dataset):
+def sec_vs_rg_commits(CACHE, reports, reg_dataset, sec_dataset):
     
-    _, none_sec, error_sec, _ = analysis('../dataset/commits_patterns_sec.csv', '../results/sec-main-results.csv', CACHE)
-    _, none_reg, error_reg, _ = analysis('../dataset/commits_regular.csv', '../results/sec-reg-results.csv', CACHE)
+    _, none_sec, error_sec, _ = analysis(sec_dataset, '../results/sec-main-results.csv', CACHE)
+    _, none_reg, error_reg, _ = analysis(reg_dataset, '../results/sec-reg-results.csv', CACHE)
+    print('SEC', none_sec, error_sec)
+    print('REG', none_reg, error_reg)
     
     df_sec = pd.read_csv('../results/sec-main-results.csv')
     df_reg = pd.read_csv('../results/sec-reg-results.csv')
-    df_aux = pd.read_csv('../dataset/commits_patterns_sec.csv')
+    df_aux = pd.read_csv(sec_dataset)
     df_pat = df_aux[['pattern','language']]
     
     df = df_sec.join(df_reg,lsuffix='_sec',rsuffix='_reg')
     df = df.join(df_pat)
         
     fil = df[(df['main(diff)_reg'] != 'error') & (df['main(diff)_sec'] != 'error')]
+    print(len(fil))
     
     stats1 = _print_hypothesis_test(fil['main(diff)_sec'].astype('float64'))
     stats = _print_hypothesis_test(fil['main(diff)_reg'].astype('float64'))
 
     result = stats.append([stats1])
-    result.to_csv('../results/statistical_test.csv')
     
     total_sec, total_reg = {'neg': 0, 'pos': 0, 'nul': 0}, {'neg': 0, 'pos': 0, 'nul': 0}
     
@@ -236,14 +219,12 @@ def sec_vs_rg_commits(CACHE, graphics, dataset):
         else:
             total_reg['nul'] += 1
     
-    total_main_barchart(total_sec, total_reg, graphics, result)
+    total_main_barchart(total_sec, total_reg, reports, result)
     clean_plot()
-    print(total_sec, 'total=', sum([value for key,value in total_sec.items()]), ', none=', none_sec, ', error=', error_sec)
-    print(total_reg, 'total=', sum([value for key,value in total_reg.items()]), ', none=', none_reg, ', error=', error_reg)
-    
+        
     return fil
 
-def main_by_type_barchart(patterns, diff, keys, filename, wilcoxon=False, boxes_start=0, text_start=0, delta=0, left_padding=0, f_size=7):
+def main_by_type_barchart(patterns, diff, keys, filename, reports, wilcoxon=False, boxes_start=0, text_start=0, delta=0, left_padding=0, f_size=7):
     
     d = {'neg': pd.Series([patterns[i][0]/sum(patterns[i]) for i in patterns]),
         'pos': pd.Series([patterns[i][1]/sum(patterns[i]) for i in patterns]),
@@ -263,7 +244,7 @@ def main_by_type_barchart(patterns, diff, keys, filename, wilcoxon=False, boxes_
     df = pd.DataFrame(d)
     abso = pd.DataFrame(absoluto)
     index = np.arange(len(d['type']))
-
+ 
     fig = plt.figure()
     ax = fig.add_subplot(111)
 
@@ -290,9 +271,9 @@ def main_by_type_barchart(patterns, diff, keys, filename, wilcoxon=False, boxes_
         
     plt.gca().xaxis.grid(True, linestyle='--')
     plt.tight_layout()
-    plt.savefig('../paper/ICPC19/figures/{}'.format(filename))
+    plt.savefig('{}/{}'.format(reports, filename))
 
-def sec_by_type(CACHE, fil):
+def sec_by_type(CACHE, fil, reports):
     
     keys = fil['pattern'].unique()    
     patterns, diff_by_pattern = {}, {}
@@ -336,9 +317,10 @@ def sec_by_type(CACHE, fil):
     for i in diff_by_pattern:
         print(i, cles_paired(diff_by_pattern[i])) 
 
-    main_by_type_barchart(patterns, diff_by_pattern, keys, 'category.pdf', wilcoxon=True, boxes_start=7, text_start=0.73, delta=1.03, left_padding=0.25, f_size=6)
+    main_by_type_barchart(patterns, diff_by_pattern, keys, 'category.pdf', reports, wilcoxon=True, boxes_start=7, 
+                            text_start=0.71, delta=1.03, left_padding=0.25, f_size=6)
 
-def sec_by_lang(CACHE, fil):
+def sec_by_lang(CACHE, fil, reports):
         
     keys = fil['language'].unique()
     patterns, diff_by_pattern = {}, {}
@@ -374,48 +356,41 @@ def sec_by_lang(CACHE, fil):
             else:
                 diff_by_pattern[i[1]['language']] = [float(i[1]['main(diff)_sec']) for i in df.iterrows()]
 
-    count = 0
-    for i in diff_by_pattern:
-        count += len(diff_by_pattern[i])
-    print('Count=', count)
-
-    count = 0
-    for i in patterns:
-        count += sum(patterns[i])
-    print('Count=', count)
-
     keys = {'objc':'Objective-C', 'php':'PHP', 'ruby':'Ruby', 'c':'C', 'c++':'C++', 'groovy':'Groovy', 'javascript':'JavaScript',
                     'python':'Python', 'java':'Java', 'objc++':'Objective-C++', 'scala':'scala', 'swift':'Swift', 'smarty':'Smarty', 'others': 'Others'}
     
     for i in diff_by_pattern:
        print(i, cles_paired(diff_by_pattern[i]))
           
-    main_by_type_barchart(patterns, diff_by_pattern, keys, 'language.pdf', wilcoxon=True, boxes_start=5, text_start=0.565, delta=1.01, left_padding=0.07, f_size=7)
+    main_by_type_barchart(patterns, diff_by_pattern, keys, 'language.pdf', reports, wilcoxon=True, boxes_start=5, 
+                            text_start=0.59, delta=1.01, left_padding=0.07, f_size=7)
         
 
-def main(cache, results, graphics, dataset):
+def main(cache, filename, reports, reg_dataset, sec_dataset):
 
     CACHE = readBCHCache(cache)
     
     # Figure 1
-    fil = sec_vs_rg_commits(CACHE, graphics, dataset)
+    fil = sec_vs_rg_commits(CACHE, reports, reg_dataset, sec_dataset)
     plt.clf()
     # Figure 2
-    sec_by_type(CACHE, fil)
+    sec_by_type(CACHE, fil, reports)
     plt.clf()
     # Figure 3
-    sec_by_lang(CACHE, fil)
+    sec_by_lang(CACHE, fil, reports)
     
-    fil.to_csv('final_results.csv')
+    fil.to_csv(filename)
 
 
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser()
     parser.add_argument('--bch-cache',metavar='bch-cache',required=True,help='the bch cache filename')
-    parser.add_argument('--results-file',metavar='results-file',required=True,help='the path to save the results')
-    parser.add_argument('--graphics-path',metavar='graphics-path',required=True,help='the graphics path')
-    parser.add_argument('--dataset',metavar='dataset',required=True,help='the dataset path')
+    parser.add_argument('--results-filename',metavar='results',required=True,help='the filename to save the maintainability results')
+    parser.add_argument('--reports',metavar='reports',required=True,help='the reports path')
+    parser.add_argument('--reg-dataset',metavar='reg-dataset',required=True,help='the regular dataset path')
+    parser.add_argument('--sec-dataset',metavar='sec-dataset',required=True,help='the security dataset path')
+    
 
     args = parser.parse_args()
-    main(cache=args.bch_cache, results=args.results_file, graphics=args.graphics_path, dataset=args.dataset)
+    main(cache=args.bch_cache, filename=args.results_filename, reports=args.reports, reg_dataset=args.reg_dataset, sec_dataset=args.sec_dataset)

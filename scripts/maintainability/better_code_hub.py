@@ -180,20 +180,15 @@ def _compute_maintainability_for_guideline(guideline, total_loc):
         ]
 
     bad_thresholds = guideline['qualityProfileComplianceThresholds'][1:]
-    print(bad_thresholds)
     return _compute_distance_to_thresholds(volumes, bad_thresholds)
 
 def _compute_distance_to_thresholds(volumes, bad_thresholds):
     results = []
     for index, threshold in enumerate(bad_thresholds):
-        print('threshold=', threshold)
         good_code_loc = sum(volumes[:index+1])
-        print('good_code_loc', good_code_loc)
         bad_code_loc = sum(volumes[index+1:])
-        print('bad_code_loc', bad_code_loc)
         granularity = 0.01 # thresholds have a minimum of 0.01
         bad_code_factor = ((1-threshold)/(threshold+granularity))
-        print('bad_code_factor', bad_code_factor)
         results.append(good_code_loc - bad_code_factor*bad_code_loc)
     return mean(results)
 
