@@ -1,5 +1,5 @@
 config/*.json
-paper/ICPC19/icpc19.pdf
+paper/*.pdf
 *.aux
 *.bbl
 *.blg
