@@ -1,5 +1,7 @@
 # security-maintainability
 
+**Resubmission @ISSRE19**
+
 How to collect maintainability reports from BCH:
 
 Create a config file in `scripts/maintainability/config.json` based on the example in `scripts/maintainability/config-template.json`.
