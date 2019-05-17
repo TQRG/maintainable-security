@@ -135,17 +135,17 @@
 \maketitle
 
 \begin{abstract}
-Security is a requirement of utmost importance to produce software with high
+Security is a requirement of utmost importance to produce software of high
 quality. However, there is still a considerable amount of zero-day
-vulnerabilities being discovered, and fixed, almost weekly. We suspect that when
-developers address these vulnerabilities on their code bases, they actually
-affect the maintainability and, consequently, the reliability of software $-$ potentially introducing other
-vulnerabilities. This paper evaluates the impact of refactorings to improve
-security on the maintainability of open-source software. Maintainability is
-measured based on the \emph{Better Code Hub}'s model of 10 guidelines using a
-dataset including 607 security commits. Results show that fixing software
-vulnerabilities hinders the maintainability of open-source software. This is
-particularly the case for refactorings that address \emph{Broken Authentication
+vulnerabilities being discovered, and fixed, almost weekly. We suspect that 
+when developers address these vulnerabilities on their code bases, they actually
+affect the maintainability and, pottentially, the reliability of software through the
+introduction of other vulnerabilities. This paper evaluates the impact 
+of refactorings to improve security on the maintainability of open-source software. 
+Maintainability is measured based on the \emph{Better Code Hub}'s model of 10 guidelines 
+using a dataset including 607 security commits. Results show that fixing software
+vulnerabilities hinders the maintainability of open-source software. This is,
+particularly, the case for refactorings that address \emph{Broken Authentication
 and Session Management} issues, \emph{Memory Leaks} and \emph{Denial-of-Service}
 attacks. Furthermore, we conclude that changes to code bases to fix vulnerabilities
 need to be performed with extra care in open-source software.
@@ -158,55 +158,70 @@ Security, Software Maintenance, Open-Source Software
 \section{Introduction}
 
 Software quality is important because it is ultimately related to the overall
-cost of developing, extending and maintaining software applications~\cite{slaughter1998evaluating}. Software
-quality characteristics include, but are not limited to functional correctnes,
-reliability, usability, maintainability, and security~\cite{iso:2011}. Security is an important
-non-functional requirement during the development of software systems.  However,
-there is still a considerable amount of zero-day vulnerabilities being
+cost of developing, extending and maintaining software applications~\cite{slaughter1998evaluating}. 
+Software quality characteristics include, but are not limited to functional correctnes,
+reliability, usability, maintainability, and security~\cite{iso:2011}. Security is an 
+important non-functional requirement during the development of software systems. 
+However, there is still a considerable amount of zero-day vulnerabilities being
 discovered, and fixed, almost weekly as disclosed by the Zero Day Initiative
 website\footnote{Zero Day Initiative website available at
 \url{https://www.zerodayinitiative.com/advisories/published/} (Accessed on \today{})}.
-These vulnerabilities are gateways for attackers to penetrate
-systems and exploit their resources.
-As an example, in the last week of January $2019$, a severe vulnerability in Apple
-FaceTime was revealed\footnote{FaceTime vulnerability details available at \url{https://thehackernews.com/2019/01/apple-facetime-
+These vulnerabilities are gateways for attackers to penetrate systems and 
+exploit their resources. As an example, in the last week of January $2019$, 
+a severe vulnerability in Apple FaceTime was revealed\footnote{FaceTime vulnerability 
+details available at \url{https://thehackernews.com/2019/01/apple-facetime-
 privacy-hack.html} (Accessed on \today{})} --- the outcome of a design/logical
 flaw that allowed callers to see and hear others without them picking up the call.
 
 In $2011$, the International Organization for Standardization (ISO) issued an
 update for software product quality ISO/IEC 25010~\cite{iso:2011} considering
-\emph{Security} as one of the main software product quality characteristics. Unmaintainable code is hard to test, analyze and re-use, and thus more difficult
+\emph{Security} as one of the main software product quality characteristics. 
+Unmaintainable code is hard to test, analyze and re-use, and thus more difficult
 to find vulnerabilities and defects. Therefore, writing maintainable code
-supports the production of more reliable software preventing the introduction of faults/vulnerabilities in the code bases\Sof{cite smth}. ISO describes software maintainability as ``the degree of effectiveness and
+supports the production of more reliable software preventing the introduction of 
+faults/vulnerabilities in the code bases\Sof{cite smth}. ISO describes software 
+maintainability as ``the degree of effectiveness and
 efficiency with which a software product or system can be modified to improve
 it, correct it or adapt it to changes in environment, and in requirements'' on
-software quality ISO/IEC 25010. Software maintainbility can also be defined as the property of
-software that reveals how easily the software system can be maintained~\cite{IEEEComputerSociety:2014:GSE:2616205} or recover after a failure. 
+software quality ISO/IEC 25010. Software maintainbility can also be defined as 
+the property of software that reveals how easily the software system can be 
+maintained~\cite{IEEEComputerSociety:2014:GSE:2616205} or recover after a failure. 
 
-There is still little information about the impact of patching vulnerabilities
-in open-source software maintainability. 
 % Hedegus et al.
 % ($2018$)~\cite{HEGEDUS2018313}, analyzed the difference of maintainability between
 % groups of refactored elements and non-refactored and conclude that the source
 % code elements subjected to refactorings had significantly lower maintainability
 % than the elements not modified.
-\textit{Are developers affecting software
-maintainability when trying to improve software security?}, it is what we want to investigate. Our suspiciousness is
-that some of the patches may have a negative impact on the software maintainability and possibly even be the cause of the introduction
-of new vulnerabilities $-$ harming software reliability. Therefore, in this paper we present an empirical study on the evolution of patches of vulnerabilities accross open-source software. 
 
-As ISO does not provide any specific guidelines
-or formula to calculate maintainability, we resort on Software Improvement
-Group (SIG)'s web-based source code analysis service Better Code Hub
-(BCH) to compute the software compliance with a set of $10$ guidelines to
-produce quality software~\cite{Visser:2016:OREILLY} based in ISO/IEC 25010. The results obtained for each guideline are merged into a mathematical formula that calculates software maintainability. From a methodological perspective, we leveraged a dataset of $607$ security changes collected from open-source software. Each change provides two different versions of the software - the vulnerable one and the patched one. For each version, we calculate software maintainability, using the proposed formula, after BCH computes the compliance with each guideline. Thus, we assess the impact of security changes comparing the maintainbility value of both versions. We also compare the impact of security changes with regular changes on software
-maintainability. For that, we also collect a dataset of regular changes and do the same experiments as for security changes. This empirical study exhibits proof that changes applied in the code bases to fix
-vulnerabilities affect code maintainability. Especially, for refactorings that
-address \emph{Broken Authentication and Session Management} issues, \emph{Memory
-Leaks} and \emph{Denial-of-Service} attacks. With this study, we intend to highlight
-the need for tools to predict the impact of patches on maintainability~\cite{4724577}
-and documentation to help developers adopt security best practices~\cite{6311252,
-7927935, MESQUIDA201519}.
+There is still little information about the impact of patching vulnerabilities
+in open-source software maintainability. \textit{Are developers affecting software
+maintainability when trying to improve software security?}, it is what we want to 
+investigate. Our suspiciousness is that some of the patches may have a negative 
+impact on the software maintainability and possibly even be the cause of the 
+introduction of new vulnerabilities $-$ harming software reliability. Therefore, 
+in this paper we present an empirical study on the evolution of patches of 
+vulnerabilities accross open-source software. 
+
+As ISO does not provide any specific guidelines or formula to calculate 
+maintainability, we resort on Software Improvement Group (SIG)'s web-based source 
+code analysis service Better Code Hub (BCH) to compute the software compliance 
+with a set of $10$ guidelines to produce quality software~\cite{Visser:2016:OREILLY} 
+based in ISO/IEC 25010. The results obtained for each guideline are merged into a 
+mathematical formula that calculates software maintainability. From a methodological 
+perspective, we leveraged a dataset of $607$ security changes collected from open-source 
+software. Each change provides two different versions of the software - the vulnerable 
+one and the patched one. For each version, we calculate software maintainability, using 
+the proposed formula, after BCH computes the compliance with each guideline. Thus, we 
+assess the impact of security changes comparing the maintainbility value of both versions. 
+We also compare the impact of security changes with regular changes on software
+maintainability. For that, we also collect a dataset of regular changes and do the same 
+experiments as for security changes. This empirical study exhibits proof that changes 
+applied in the code bases to fix vulnerabilities affect code maintainability. 
+Especially, for refactorings that address \emph{Broken Authentication and Session Management} 
+issues, \emph{Memory Leaks} and \emph{Denial-of-Service} attacks. With this study, 
+we intend to highlight the need for tools to predict the impact of patches on 
+maintainability~\cite{4724577} and documentation to help developers adopt security 
+best practices~\cite{6311252, 7927935, MESQUIDA201519}.
 
 %BCH compiles the ISO/IEC 25010 into a set of $10$ guidelines that are the
 %base of BCH's evaluation. Two examples are the \emph{Write Simple Units of Code}
@@ -343,10 +358,10 @@ The code changes performed to fix the vulnerability were the following:
 inserted to return the maximum number of bytes allowed in a DTLS
 handshake message for \texttt{s}. The minimum is $16$KB but it might be greater if
 the maximum certificate list size (\texttt{s-$>$max\_cert\_list}) requires it. More
-specifically, it checks if the maximum certificate list size requires more length than the maximum length
-(\texttt{max\_len}). If that condition holds, the function returns the size of
-the certificate list, otherwise, it returns the maximum length. This function
-replaces lines $18$--$21$.
+specifically, it checks if the maximum certificate list size requires more length 
+than the maximum length (\texttt{max\_len}). If that condition holds, the function 
+returns the size of the certificate list, otherwise, it returns the maximum length. 
+This function replaces lines $18$--$21$.
 
 
 ~\ref{lst:func5} and~\ref{lst:func4} are guards added to different functions to
@@ -442,13 +457,15 @@ The methodology comprises the following steps, as illustrated in
 Figure~\ref{fig:met}:
 
 \begin{enumerate}
-	\item Extract relevant data (e.g., sha, owner of the project, name of the repository) and code bases from a dataset containing $711$ security
+	\item Extract relevant data (e.g., sha, owner of the project, name of 
+	the repository) and code bases from a dataset containing $711$ security
 	refactorings collected from open-source software available on
 	GitHub~\cite{Reis:2017:IJSSE}.
 	\item A baseline of regular commits was randomly collected from the list of
 	projects of the main dataset to evaluate the impact of regular commits on the
 	maintainability of open-source software.
-  \item Use the Software Improvement Group's\footnote{SIG's website: \url{https://www.sig.eu/} (Accessed on \today{})} web-based source code analysis
+  \item Use the Software Improvement Group's\footnote{SIG's website: \url{https://www.sig.eu/} 
+  (Accessed on \today{})} web-based source code analysis
   service \emph{Better Code Hub} (BCH)\footnote{BCH's website:
   \url{https://bettercodehub.com/} (Accessed on \today{})} to quantify maintainability
   for both security and regular commits. The code bases that resemble to the commits
@@ -618,7 +635,9 @@ As said before, the web-based source code analysis service \emph{Better Code
 Hub} (BCH) is used to collect the maintainability reports of the refactorings of
 each project. Table~\ref{tab:guidelines} presents the $10$ guidelines $-$ proposed
 by BCH's authors for delivering software that is not difficult to
-maintain~\cite{Visser:2016:OREILLY} $-$ and maps each guideline to the metric calculated by BCH. Some of theses guidelines are calculated using the metrics presented in~\cite{criteria:2017}. During each guideline evaluation, the tool
+maintain~\cite{Visser:2016:OREILLY} $-$ and maps each guideline to the metric 
+calculated by BCH. Some of theses guidelines are calculated using the metrics 
+presented in~\cite{criteria:2017}. During each guideline evaluation, the tool
 determines the compliance towards one guideline by establishing limits for the
 percentage of code allowed to be in each of the $4$ risk severity levels
 (\emph{low risk}, \emph{medium risk}, \emph{high risk}, and \emph{very high
@@ -656,44 +675,51 @@ Clean Code}.
 \midrule
 
 \textbf{Write Short Units of Code} & Limit code units to $15$ LOCs because smaller
- units are easier to understand, reuse and test them & \textbf{Unit Size:} \% of LOCs within each unit~\cite{criteria:2017} \\\midrule
+ units are easier to understand, reuse and test them & \textbf{Unit Size:} \% of 
+ LOCs within each unit~\cite{criteria:2017} \\\midrule
 
 \textbf{Write Simple Units of Code} & Limit branch points to $4$ per unit because
-it makes units easier to test and modify & \textbf{McCabe Complexity:} \# of decision points~\cite{1702388,criteria:2017}\\\midrule
+it makes units easier to test and modify & \textbf{McCabe Complexity:} \# of decision 
+points~\cite{1702388,criteria:2017}\\\midrule
 
 \textbf{Write Code Once} & Do not copy code because bugs tend to replicate at
-multiple places (inefficient and error-prone) & \textbf{Duplication:} \% of redundant LOCs~\cite{criteria:2017}\\\midrule
+multiple places (inefficient and error-prone) & \textbf{Duplication:} \% of redundant 
+LOCs~\cite{criteria:2017}\\\midrule
 
 \textbf{Keep Unit Interfaces Small} & Limit the number of parameters to at most
-$4$ because it makes units easier to understand and reuse & \textbf{Unit Interfacing:} \# of parameters defined in a signature of a unit~\cite{criteria:2017} \\\midrule
+$4$ because it makes units easier to understand and reuse & \textbf{Unit Interfacing:} 
+\# of parameters defined in a signature of a unit~\cite{criteria:2017} \\\midrule
 
 \textbf{Separate Concerns in Modules} & Avoid large modules because changes in
 loosely coupled databases are easier to oversee and execute & \textbf{Module Coupling:} \# of
 incoming dependencies~\cite{criteria:2017} \\\midrule
 
 \textbf{Couple Architecture Components Loosely} & Minimize the amount of code
-within modules that are exposed to modules in other components & \textbf{Component Independence:} \% of code in modules classified as hidden~\cite{criteria:2017}\\\midrule
+within modules that are exposed to modules in other components & \textbf{Component Independence:} 
+\% of code in modules classified as hidden~\cite{criteria:2017}\\\midrule
 
 \textbf{Keep Architecture Components Balanced} & Balancing the number of
-components ease locating code and allow for isolated maintenance & \textbf{Component Balance:} Gini coefficient to measure the inequality of distribution between components~\cite{criteria:2017} \\\midrule
+components ease locating code and allow for isolated maintenance & \textbf{Component Balance:} 
+Gini coefficient to measure the inequality of distribution between components~\cite{criteria:2017} \\\midrule
 
 \textbf{Keep your code base Small} & Reduce and avoid the system size because
-small products are easier to manage and maintain & \textbf{Volume:} \# of LOCs converted to man-month/man-year~\cite{criteria:2017} \\\midrule
+small products are easier to manage and maintain & \textbf{Volume:} \# of LOCs converted 
+to man-month/man-year~\cite{criteria:2017} \\\midrule
 
 \textbf{Automate Tests} & Test your code base because it makes development
-predictable and less risky & \textbf{Testability:} Ratings aggregation $-$ unit complexity, component independence and volume~\cite{Visser:2016:OREILLY}
+predictable and less risky & \textbf{Testability:} Ratings aggregation $-$ unit 
+complexity, component independence and volume~\cite{Visser:2016:OREILLY}
  \\\midrule
 
 \textbf{Write Clean Code} & Avoid producing software with code smells because
-it is more likely to be maintainable in the future & \textbf{Code Smells:} \# of Occurrences~\cite{Visser:2016:OREILLY} (e.g., magic constants and long identifier names) \\
+it is more likely to be maintainable in the future & \textbf{Code Smells:} 
+\# of Occurrences~\cite{Visser:2016:OREILLY} (e.g., magic constants and long 
+identifier names) \\
 \bottomrule
 \end{tabular}
 \vspace{-0.5cm}
 \label{tab:guidelines}
 \end{table}
-
-
-
 
 
 SIG defines \emph{Units} as the smallest groups of code that can be maintained
@@ -878,14 +904,14 @@ integrated into \emph{Others}. The results of the Paired Wilcoxon signed-rank
 test by pattern indicate that there is statistical evidence to support that the
 maintainability of open-source software decreases for security refactorings in
 $3$ different languages: \emph{C} (p-value = $5.72$x$10^{-9}$), Ruby (p-value = $0.057$) and
-PHP (p-value = $3.54$x$10^{-6}$). Following the \textit{American Statistical Association} recommendations~\cite{doi:10.1080/00031305.2016.1154108}, 
-we consider the results for Ruby as statistically significant because its p-value is on the borderline.
-The results also exhibit statistical significance
-for when security refactorings are performed in \emph{Java} (p-value =
-$3.61$x$10^{-2}$). \emph{Python} and the languages that integrate the
-\emph{Others} set contain more cases where the maintainability increases.
-However, the results obtained for these patterns are not statistically
-significant.
+PHP (p-value = $3.54$x$10^{-6}$). Following the \textit{American Statistical Association} 
+recommendations~\cite{doi:10.1080/00031305.2016.1154108}, we consider the results for 
+Ruby as statistically significant because its p-value is on the borderline.
+The results also exhibit statistical significance for when security refactorings 
+are performed in \emph{Java} (p-value = $3.61$x$10^{-2}$). \emph{Python} and the 
+languages that integrate the \emph{Others} set contain more cases where the 
+maintainability increases. However, the results obtained for these patterns are 
+not statistically significant.
 
 \begin{framed}
 \textit{\textbf{RQ2} Which patterns of security refactorings are more likely to
@@ -1091,11 +1117,11 @@ baseline.
 
 We use a dataset that only comprises refactorings of open-source software.
 However, the methodology requires to access data that is not publicly available.
-Thus, our findings may not extend to non-open source software. Different programming languages may require different coding practices to
-address software safety. The dataset comprises more commits in C and PHP, i.e.,
-the dataset may not be representative of the population regarding
-programming languages. Our approach does not consider security refactorings in any other languages but
-English.
+Thus, our findings may not extend to non-open source software. Different programming 
+languages may require different coding practices to address software safety. The 
+dataset comprises more commits in C and PHP, i.e., the dataset may not be representative 
+of the population regarding programming languages. Our approach does not consider 
+security refactorings in any other languages but English.
 
 \section{Related Work}\label{sec:rw}
 
@@ -1145,9 +1171,9 @@ maintainability.
 This work presents an empirical study on the impact of $607$ security
 refactorings on the maintainability of $94$ open-source projects. We leveraged
 Better Code Hub reports to calculate maintainability
-based on a model proposed in previous work~\cite{Olivari:2018}. Security refactorings significantly
-affect the software maintainability of open-source software, i.e., developers
-hinder maintainability when fixing vulnerabilities. We found this evidence in
+based on a model proposed in previous work~\cite{Olivari:2018}. Security refactorings 
+significantly affect the software maintainability of open-source software, i.e., 
+developers hinder maintainability when fixing vulnerabilities. We found this evidence in
 $40.2\%$ of the studied cases. Regarding regular commits, it seems that overall
 maintainability increases ($50.16\%$). However, there is still a very
 considerable amount of cases that harm maintainability ($41.35\%$).
