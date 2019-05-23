@@ -22,6 +22,7 @@
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 
+
 \usepackage{listings}
 
 \definecolor{mygreen}{rgb}{0,0.6,0}
@@ -105,6 +106,10 @@
 \newcommand\Luis[1]{\nb{Luis}{mygreen}{#1}}
 \newcommand\Rui[1]{\nb{Rui}{blue}{#1}}
 
+\makeatletter
+\newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
+\makeatother
+
 
 \begin{document}
 
@@ -137,10 +142,10 @@
 \begin{abstract}
 Security is a requirement of utmost importance to produce software of high
 quality. However, there is still a considerable amount of zero-day
-vulnerabilities being discovered, and fixed, almost weekly. We suspect that 
+vulnerabilities being discovered and fixed, almost weekly. We suspect that 
 when developers address these vulnerabilities on their code bases, they actually
-affect the maintainability and, pottentially, the reliability of software through the
-introduction of other vulnerabilities. This paper evaluates the impact 
+affect the maintainability and, potentially, the reliability of software through the
+introduction of new vulnerabilities. This paper evaluates the impact 
 of refactorings to improve security on the maintainability of open-source software. 
 Maintainability is measured based on the \emph{Better Code Hub}'s model of 10 guidelines 
 using a dataset including 607 security commits. Results show that fixing software
@@ -160,7 +165,7 @@ Security, Software Maintenance, Open-Source Software
 Software quality is important because it is ultimately related to the overall
 cost of developing, extending and maintaining software applications~\cite{slaughter1998evaluating}. 
 Software quality characteristics include, but are not limited to functional correctnes,
-reliability, usability, maintainability, and security~\cite{iso:2011}. Security is an 
+reliability, usability, maintainability, and security. Security is an 
 important non-functional requirement during the development of software systems. 
 However, there is still a considerable amount of zero-day vulnerabilities being
 discovered, and fixed, almost weekly as disclosed by the Zero Day Initiative
@@ -174,18 +179,29 @@ privacy-hack.html} (Accessed on \today{})} --- the outcome of a design/logical
 flaw that allowed callers to see and hear others without them picking up the call.
 
 In $2011$, the International Organization for Standardization (ISO) issued an
-update for software product quality ISO/IEC 25010~\cite{iso:2011} considering
-\emph{Security} as one of the main software product quality characteristics. 
+update for software product quality ISO/IEC 25010 considering
+\emph{Security} as one of the main software product quality characteristics~\cite{iso:2011}. 
+However, many developers still lack the knowledge about best practices to deliver secure and high-quality software~\cite{Pothamsetty:2005:SEL:1107622.1107635, 8077802}.
 Unmaintainable code is hard to test, analyze and re-use, and thus more difficult
 to find vulnerabilities and defects. Therefore, writing maintainable code
 supports the production of more reliable software preventing the introduction of 
-faults/vulnerabilities in the code bases\Sof{cite smth}. ISO describes software 
+faults/vulnerabilities in the code bases. ISO describes software 
 maintainability as ``the degree of effectiveness and
 efficiency with which a software product or system can be modified to improve
 it, correct it or adapt it to changes in environment, and in requirements'' on
-software quality ISO/IEC 25010. Software maintainbility can also be defined as 
-the property of software that reveals how easily the software system can be 
-maintained~\cite{IEEEComputerSociety:2014:GSE:2616205} or recover after a failure. 
+software quality ISO/IEC 25010~\cite{iso:2011}. Novel tools have been built to 
+detect automatically software vulnerabilities (e.g., FindBugs, Infer and more). 
+Despite these efforts, improving software security is not a trivial task and requires 
+implementing refactorings that might affect software maintainability. 
+Our suspiciousness is that some of the these patches may have a negative 
+impact on the software maintainability and, possibly, even be the cause of the 
+introduction of new vulnerabilities $-$ harming software reliability. Therefore, 
+in this paper, we present an empirical study on the impact of patches of 
+vulnerabilities in software maintenance accross open-source software.
+
+% Software maintainability can also be defined as 
+% the property of software that reveals how easily the software system can be 
+% maintained~\cite{IEEEComputerSociety:2014:GSE:2616205} or recover after a failure. 
 
 % Hedegus et al.
 % ($2018$)~\cite{HEGEDUS2018313}, analyzed the difference of maintainability between
@@ -193,32 +209,37 @@ maintained~\cite{IEEEComputerSociety:2014:GSE:2616205} or recover after a failur
 % code elements subjected to refactorings had significantly lower maintainability
 % than the elements not modified.
 
-There is still little information about the impact of patching vulnerabilities
-in open-source software maintainability. \textit{Are developers affecting software
-maintainability when trying to improve software security?}, it is what we want to 
-investigate. Our suspiciousness is that some of the patches may have a negative 
-impact on the software maintainability and possibly even be the cause of the 
-introduction of new vulnerabilities $-$ harming software reliability. Therefore, 
-in this paper we present an empirical study on the evolution of patches of 
-vulnerabilities accross open-source software. 
+% There is still little information about the impact of patching vulnerabilities
+% in open-source software maintainability. \textit{Are developers affecting software
+% maintainability when trying to improve software security?}, it is what we want to
+% investigate.
 
-As ISO does not provide any specific guidelines or formula to calculate 
+
+As ISO does not provide any specific guidelines or formulas to calculate 
 maintainability, we resort on Software Improvement Group (SIG)'s web-based source 
 code analysis service Better Code Hub (BCH) to compute the software compliance 
-with a set of $10$ guidelines to produce quality software~\cite{Visser:2016:OREILLY} 
-based in ISO/IEC 25010. The results obtained for each guideline are merged into a 
-mathematical formula that calculates software maintainability. From a methodological 
-perspective, we leveraged a dataset of $607$ security changes collected from open-source 
-software. Each change provides two different versions of the software - the vulnerable 
-one and the patched one. For each version, we calculate software maintainability, using 
-the proposed formula, after BCH computes the compliance with each guideline. Thus, we 
-assess the impact of security changes comparing the maintainbility value of both versions. 
-We also compare the impact of security changes with regular changes on software
-maintainability. For that, we also collect a dataset of regular changes and do the same 
-experiments as for security changes. This empirical study exhibits proof that changes 
+with a set of $10$ guidelines/metrics to produce quality software 
+based in ISO/IEC 25010~\cite{Visser:2016:OREILLY}. The code metrics used by BCH 
+were empirically validated in previous work~\cite{Bijlsma:2012:FIR:2317098.2317124, 8530041}. 
+There are other well-known standards and models that have been proposed
+to increase software security: Common Criteria~\cite{common:2009} which received
+negative criticism regarding the costs associated and poor technical evaluation;
+the OWASP Application Security Verification Criteria~\cite{oswap:2009} which is
+focused only on web applications, and a model proposed by Xu et al. ($2013$)
+~\cite{6616351} for rating software security (arguably, it was one of the
+first steps taken by SIG to introduce security on their maintainability model). 
+We use BCH's toolset to provide an assessment of maintainability in 
+software mainly due to the broad number of metrics used.
+
+From a methodological 
+perspective, we leveraged a dataset of $607$ security refactorings collected from open-source 
+software. We calculate software maintainability before and after the refactoring to measure its 
+impact. This empirical study exhibits proof that changes 
 applied in the code bases to fix vulnerabilities affect code maintainability. 
 Especially, for refactorings that address \emph{Broken Authentication and Session Management} 
-issues, \emph{Memory Leaks} and \emph{Denial-of-Service} attacks. With this study, 
+issues, \emph{Memory Leaks} and \emph{Denial-of-Service} attacks. This is important work
+because there is still little information about the impact of security patches on the software
+maintainability. With this study, 
 we intend to highlight the need for tools to predict the impact of patches on 
 maintainability~\cite{4724577} and documentation to help developers adopt security 
 best practices~\cite{6311252, 7927935, MESQUIDA201519}.
@@ -228,13 +249,6 @@ best practices~\cite{6311252, 7927935, MESQUIDA201519}.
 %based on the McCabe Complexity~\cite{1702388} and \emph{Keep your code base Small}
 %based on the idea that smaller code bases are easier to maintain and less prone to defects~\cite{Visser:2016:OREILLY}.
 
-% There are other well-known standards and models that have been proposed
-% to increase software security: Common Criteria~\cite{common:2009} which received
-% negative criticism regarding the costs associated and poor technical evaluation;
-% the OWASP Application Security Verification Criteria~\cite{oswap:2009} which is
-% focused only on web applications, and a model proposed by Xu et al. ($2013$)
-% ~\cite{6616351} for rating software security (arguably, it was one of the
-% first steps taken by SIG to introduce security on their maintainability model).
 
 
 The main contributions of the present work are:
@@ -250,7 +264,9 @@ The main contributions of the present work are:
 
 This paper is structured as follows: section~\ref{sec:motivation} introduces an
 example of a security refactoring of a known vulnerability found in
-OpenSSL\footnote{Repository available at \url{https://github.com/openssl/openssl}
+OpenSSL\footnote{\label{openssl}OpenSSL is a toolkit that
+contains open-source implementations of the SSL and TLS cryptographic
+protocols. Repository available at \url{https://github.com/openssl/openssl}
 (Accessed on \today{})}; section~\ref{sec:methodology} describes the
 methodology used to answer the research questions; section~\ref{sec:results}
 presents the results and section~\ref{sec:discussion} discusses their
@@ -261,37 +277,33 @@ concludes the main findings and elaborates on future work.
 %
 \section{Motivation and Research Questions}\label{sec:motivation}
 %
-Due to time-to-market pressure and the lack of security expertise, code-related
+Due to time-to-market pressure and the lack of security expertise~\cite{8077802}, code-related
 security flaws are generally detected \textit{after the fact}, i.e., when
 hackers exploit them. It turns out that fixing these issues is as simple as
 modifying the software code base. However, these refactorings may have a
 negative impact on software maintenance --- e.g., developers might follow the
 quickest solution to fix the problem and not necessarily the most elegant and
 performant one. Thus, we want to understand how security refactorings impact
-the maintainability of software.
+the maintainability of software. 
 
 As an example, consider the refactoring of the Datagram Transport Layer Security
-(DTLS) protocol implementation in OpenSSL\footnote{OpenSSL is a toolkit that
-contains open-source implementations of the SSL and TLS cryptographic
-protocols.} to address a vulnerability where an attacker could cause a Denial-of-Service
+(DTLS) protocol implementation in OpenSSL\footnoteref{openssl} to address a vulnerability where an attacker could cause a Denial-of-Service
 (DoS) attack by crafting DTLS handshake messages to trigger memory allocations
 corresponding to large length values. This vulnerability is listed at the Common
 Vulnerabilities and Exposures dictionary as CVE-$2014$-$3506$\footnote{CVE-$2014$-$3506$
 details available at \url{http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3506}
 (Accessed on \today{})}. It is amongst the vulnerabilities studied in our
-evaluation. The snippet in Listing~\ref{lst:vuln} presents the changes performed on the
+evaluation. The snippet, in Listing~\ref{lst:vuln}, presents the changes performed on the
 \emph{ssl/d1\_both.c} file\footnote{CVE-$2014$-$3506$ fix available  at
 \url{https://github.com/openssl/openssl/commit/1250f12613b61758675848f6600ebd914ccd7636}
-(Accessed on \today{})} by the OpenSSL developers to patch the vulnerability.
-
-Every SSL/TLS connection begins with a handshake which is responsible by the
+(Accessed on \today{})} by the OpenSSL developers to patch the vulnerability. Every SSL/TLS connection begins with a handshake which is responsible by the
 negotiation between the two parties. DTLS provides a mechanism for fragmenting
 a handshake message over a number of packets, each of which can be transmitted
 separately over the internet from one party to another. The problem in
 CVE-$2014$-$3506$ is that the size of the handshake message collected by the
 receiver is not verified against the maximum size allowed by DTLS. It is then
-allocated to a new fragment (cf. Listing~\ref{lst:vuln}, line~37). Thus, if an
-attacker has access to one of these packages, the attacker can change the
+allocated to a new fragment (cf. Listing~\ref{lst:vuln}, line~36). Thus, if an
+attacker has access to one of these packages, he can change the
 handshake message size and trigger unnecessary memory allocations of large
 length which can lead to memory exhaustion that could end in a DoS attack.
 
@@ -352,7 +364,7 @@ length which can lead to memory exhaustion that could end in a DoS attack.
 
 \end{lstlisting}
 
-The code changes performed to fix the vulnerability were the following:
+The code changes performed to fix the vulnerability are:
 
 ~\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was
 inserted to return the maximum number of bytes allowed in a DTLS
@@ -361,7 +373,7 @@ the maximum certificate list size (\texttt{s-$>$max\_cert\_list}) requires it. M
 specifically, it checks if the maximum certificate list size requires more length 
 than the maximum length (\texttt{max\_len}). If that condition holds, the function 
 returns the size of the certificate list, otherwise, it returns the maximum length. 
-This function replaces lines $18$--$21$.
+This function replaces lines $17$--$21$.
 
 
 ~\ref{lst:func5} and~\ref{lst:func4} are guards added to different functions to
@@ -374,16 +386,13 @@ problem to repair, the example shows that there was a significant amount of
 changes performed in the code base which produced a negative impact in the
 maintainability. Even though the developer tries to simplify the
 code base by introducing a smaller unit
-\texttt{dtls1\_max\_handshake\_message\_len} (\ref{lst:func1}), this change also
-disrupts two of the guidelines proposed by the Software Improvement Group (SIG) for
+\texttt{dtls1\_max\_handshake\_message\_len} (\ref{lst:func1}), this change disrupts
+one of the guidelines proposed by the Software Improvement Group (SIG) for
 building maintainable software~\cite{Visser:2016:OREILLY}. It adds a new branch
 point to the \texttt{dtls1\_process\_out\_of\_seq\_message} unit
 (\ref{lst:func5}) increasing the cyclomatic complexity and breaking the
-\emph{Write Simple Units of Code} guideline. Moreover, it increases the code base
-size in $4$ lines of code ($13$ lines added, $9$ lines deleted) which
-contributes to a potential violation of the \emph{Keep Your code base Small}
-guideline. Hence, we have observed that the impact of this refactoring on the
-OpenSSL maintainability was negative.
+\emph{Write Simple Units of Code} guideline which resulted in a negative impact on the
+OpenSSL maintainability.
 
 In this paper, our concern is to study whether, while improving software
 security, developers are also negatively impacting the maintainability of their
@@ -394,9 +403,8 @@ the changes in the maintainability of open-source software.
 \begin{framed}
 \textit{\textbf{RQ1} What is the impact of security refactorings on the
 maintainability of open-source software?}
-\vspace{-0.1cm}
 \end{framed}
-\vspace{-0.2cm}
+\vspace{-0.1cm}
 
 Often security flaws require refactoring code to make software more secure.
 However, there is no evidence yet of how security refactorings impact the
@@ -412,9 +420,8 @@ they are not.
 \begin{framed}
 \textit{\textbf{RQ2} Which patterns of security refactorings are more likely to
 affect open-source software maintainability?}
-\vspace{-0.1cm}
 \end{framed}
-\vspace{-0.2cm}
+\vspace{-0.1cm}
 % here
 There are security flaws that are more difficult to refactor than others. For
 instance, implementing secure authentication is not as easy as fixing a
@@ -427,7 +434,7 @@ maintainability issues is one step forward to bring awareness to security
 engineers of what patterns need more attention. The taxonomy of security
 patterns used to answer this question is the same as the one provided by the
 authors of the dataset~\cite{Reis:2017:IJSSE}. Maintainability is measured
-separately for each pattern.
+separately for each pattern.\\
 
 \setcounter{lstannotation}{0}
 \begin{lstlisting}[style={PHPStyle}, caption={Fix provided by \texttt{nextcloud/server} developers to a \\Cross-Site Scripting vulnerability},label={lst:fix}]
@@ -849,9 +856,9 @@ results obtained for each research question.
 \begin{framed}
 \textit{\textbf{RQ1} What is the impact of security refactorings on the
 maintainability of open-source software?}
-\vspace{-0.1cm}
+\vspace{-0.05cm}
 \end{framed}
-\vspace{-0.2cm}
+\vspace{-0.1cm}
 
 The impact of security and baseline commits in the maintainability of
 open-source software is presented in Figure~\ref{fig:secvsreg}. For each type of
@@ -916,9 +923,9 @@ not statistically significant.
 \begin{framed}
 \textit{\textbf{RQ2} Which patterns of security refactorings are more likely to
 affect open-source software maintainability?}
-\vspace{-0.1cm}
+\vspace{-0.05cm}
 \end{framed}
-\vspace{-0.2cm}
+\vspace{-0.1cm}
 
 The impact of each type of security refactoring on the maintainability of
 open-source software is presented in Figure~\ref{fig:pat}. The results of the
@@ -977,9 +984,9 @@ In this section, we discuss the results and answer the proposed research questio
 \begin{framed}
 \textit{\textbf{RQ1} What is the impact of security refactorings on the maintainability
 of open-source software?}
-\vspace{-0.1cm}
+\vspace{-0.05cm}
 \end{framed}
-\vspace{-0.2cm}
+\vspace{-0.1cm}
 
 \textbf{\textit{Security refactorings harm the maintainability of open-source software.}}
 %
@@ -1033,9 +1040,9 @@ Standard}\footnote{PSR-2 Standard available at
 \begin{framed}
 \textit{\textbf{RQ2} Which patterns of security refactorings are more likely to
 affect open-source software maintainability?}
-\vspace{-0.1cm}
+\vspace{-0.05cm}
 \end{framed}
-\vspace{-0.2cm}
+\vspace{-0.05cm}
 
 \textbf{\textit{Broken Authentication \& Session Management, Denial-of-Service
 attacks, and Memory Leaks, and Miscellaneous patterns are more likely to affect
@@ -1102,9 +1109,7 @@ The security refactorings dataset provided by the previous
 work~\cite{Reis:2017:IJSSE} was collected based on the messages of GitHub
 commits produced by project developers to classify the changes performed by them
 to fix security flaws. This approach discards security refactorings that were
-not explicit in commits messages.
-
-Baseline commits are retrieved randomly by selecting one commit from the same
+not explicit in commits messages. Baseline commits are retrieved randomly by selecting one commit from the same
 project of a given security refactoring. This approach softens the differences
 that may result from the characteristics of each project. However,
 maintainability may still be affected by the developers' experience, coding
@@ -1150,8 +1155,7 @@ maintainability~\cite{10.1007/978-3-642-35267-6-18}. $300$ revisions of
 \texttt{JHotDraw} were analyzed to conclude that every introduced pattern
 instance improved software maintainability. However, other studies show that the
 use of design patterns may introduce maintainability issues into
-software~\cite{4493325}. The present work studies how security patterns
-influence maintainability for open-source software.
+software~\cite{4493325}. Yskout et. al were not able to detect if the usage of design patterns has a positive impact, but concludes that developers prefer to work with the support of security patterns~\cite{8077802}. The present work studies how security patterns influence maintainability for open-source software.
 
 There are studies that investigated the impact of programming languages on software
 quality~\cite{Ray:2014:LSS:2635868.2635922,Ray:2017:LSP:3144574.3126905}. The first
@@ -1170,8 +1174,7 @@ maintainability.
 
 This work presents an empirical study on the impact of $607$ security
 refactorings on the maintainability of $94$ open-source projects. We leveraged
-Better Code Hub reports to calculate maintainability
-based on a model proposed in previous work~\cite{Olivari:2018}. Security refactorings 
+Better Code Hub reports to calculate maintainability based on a model proposed in previous work~\cite{Olivari:2018}. Security refactorings 
 significantly affect the software maintainability of open-source software, i.e., 
 developers hinder maintainability when fixing vulnerabilities. We found this evidence in
 $40.2\%$ of the studied cases. Regarding regular commits, it seems that overall
@@ -1205,7 +1208,7 @@ software; and, expand this analysis to other quality standards.
 We thank the Software Improvement Group (SIG) team for all the support and
 help in validating the methodology.
 %ack pedro adao when accepted.
-
+\pagebreak
 \balance
 
 {
