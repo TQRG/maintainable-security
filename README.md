@@ -1,6 +1,7 @@
 # security-maintainability
 
-**Resubmission @ISSRE19**
+**3rd Re-submission @ICPC20**
+https://conf.researchr.org/home/icpc-2020
 
 How to collect maintainability reports from BCH:
 
