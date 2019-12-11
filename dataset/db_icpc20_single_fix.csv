@@ -1,0 +1,1014 @@
+Dataset,Code,Project,sha,CWE,Severity,Year,owner,project,Date,Message,sha-p
+VULAS,GOOGLE-GSON-2012-05-5,https://github.com/google/gson,1103bda23acb1719364e834a4545739ec2f76cd0,,,,google,gson,3/15/12 22:27,"Ensuring that the hash is unpredictable and well distributed.
+
+We achieve this by using the same algorithm as the Perl version, but this implementation
+is being written from scratch for license compliance.",94b8032df779a1cd501fa21c22bbda951af91a5c
+VULAS,ECLIPSE-JETTY-413684,https://github.com/eclipse/jetty.project,2f08ba29487aff6624dbf947b1fbd845cdd33464,,,,eclipse,jetty.project,7/25/13 1:01,"413684 - Trailing slash shows JSP source
+
+Fixed alias checkers.   Non existent directory does check for none existence.  Prefix and Suffix check look for none empty/trivial prefix/suffixes",ab7268e5163ff0788804e6d4eb809ce275dd51b9
+VULAS,APACHE-AXIS2-5683,https://github.com/apache/axis2-java,1b560264151217dae8b34b6aa4dfff4f51377656,,,,apache,axis2-java,6/5/16 9:32,"AXIS2-5683: Merge r1746880 to the 1.7 branch to fix a potential XSS vulnerability in ListingAgent.
+
+git-svn-id: https://svn.apache.org/repos/asf/axis/axis2/java/core/branches/1_7@1746886 13f79535-47bb-0310-9956-ffa450edef68",0959a27a51e844c7381ec1ad8a411861bba09b98
+VULAS,APACHE-AXIS2-5846,https://github.com/apache/axis2-java,65aaacc779530682887bc6da4099b5ec4cfab406,,,,apache,axis2-java,4/23/17 11:38,"AXIS2-5846: Fix a local file inclusion vulnerability in SimpleHTTPServer. This occurs because axis2server.sh adds the root directory of the binary distribution to the class path, and SimpleHTTPServer doesn't limit the search for XSD/WSDL files to the service class loader. This means that axis2.xml is accessible remotely via a specially crafted query string (xsd=../conf/axis2.xml).
+
+Although AxisServlet is not known to be vulnerable, this change also modifies ListingAgent to limit the search to the service class loader.
+
+
+git-svn-id: https://svn.apache.org/repos/asf/axis/axis2/java/core/trunk@1792353 13f79535-47bb-0310-9956-ffa450edef68",3f2ad217f0364c44d167f2d1907b019c97ae0640
+VULAS,APACHE-COMMONS-001,https://github.com/apache/commons-compress,a080293da69f3fe3d11d5214432e1469ee195870,,,,apache,commons-compress,6/15/18 17:44,"fix edge case vulnerability detected by @DidierLoiseau
+
+While this allows a path traversal attack it can only be exploited in
+a special edge case.",ba12419e6b73441a5a5c1e697ff32c9a9d28e855
+VULAS,CVE-2007-0450,https://github.com/apache/tomcat,1735d7f55094c3775c7d94e4f8568336dbe1a738,,,,apache,tomcat,2/12/07 1:02,"- Add some options for handling URL chars.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/tc6.0.x/trunk@506200 13f79535-47bb-0310-9956-ffa450edef68",820f6fba24b5b35e5ef41b12bdbbd7eeefc9784c
+VULAS,CVE-2007-2450,https://github.com/apache/tomcat,1bc3bcb2848f478fd6674487d6dad507fd5dd686,,,,apache,tomcat,6/14/07 1:55,"Fix XSS issue in Manager and Host Manager. This is CVE-2007-2450.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/tc6.0.x/trunk@547077 13f79535-47bb-0310-9956-ffa450edef68",85d386f7a336602a3dbb535bed56536470851711
+VULAS,CVE-2007-5461,https://github.com/apache/tomcat,901292cf9d7d8225f8a3b96c7583e2bd8b41772d,,,,apache,tomcat,10/18/07 11:44,"Fix CVE-2007-5461.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/tc6.0.x/trunk@585934 13f79535-47bb-0310-9956-ffa450edef68",558a6f3a9f1f98c0601d83a3cece49fa528b2b80
+VULAS,CVE-2008-1728,https://github.com/igniterealtime/Openfire,c9cd1e521673ef0cccb8795b78d3cbaefb8a576a,,,,igniterealtime,Openfire,3/4/08 20:09,"Fixed DoS attack that could bring the server down. JM-1289
+
+git-svn-id: http://svn.igniterealtime.org/svn/repos/openfire/branches/openfire_3_5_0@10031 b35dd754-fafc-0310-a699-88a17e54d16e",9d4ff701f3e7871d0a1addb146fe7c8da1825a40
+VULAS,CVE-2008-1947,https://github.com/apache/tomcat,49c71fc59c1b8f8da77aea9eb53e61db168aebab,,,,apache,tomcat,6/2/08 21:41,"Fix potential XSS in host-manager.
+This is CVE-2008-1947.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@662582 13f79535-47bb-0310-9956-ffa450edef68",e0200b0d9574b5809f30fb137c4cce9f8a27958e
+VULAS,CVE-2008-2938,https://github.com/apache/tomcat,150bc791ac3ba40081425dd1c37a053fbb02b339,,,,apache,tomcat,3/2/13 20:17,"Expand UTF-8 tests based on a test case written by Joe Orton for CVE-2008-2938
+Note the additional failures this generates are not exploitable. They are invalid only because they encode a valid code point in too many bytes.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1451933 13f79535-47bb-0310-9956-ffa450edef68",8d79505c2de930251e875b7ebfe8922e28d01f0e
+VULAS,CVE-2008-5515,https://github.com/apache/tomcat,6b61911f94d6d8d49ee933c5f1882a7e7c336d2c,,,,apache,tomcat,1/15/09 15:34,"Remove 3 of the essentially 4 duplicate normalise implementations.
+Minor tweaks where required to use the new single implementation.
+Remove unnecessary normalisation calls.
+This includes the fix for CVE-2008-5515.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@734734 13f79535-47bb-0310-9956-ffa450edef68",e3c54fb114a502bb794dd800dc7154987c8b022d
+VULAS,CVE-2009-2625,https://github.com/apache/xerces2-j,0bdf77af1d4fd26ec2e630fb6d12e2dfa77bc12b,,,,apache,xerces2-j,6/22/09 19:08,"Fixing JIRA Issue #1412: https://issues.apache.org/jira/browse/XERCESJ-1412. Resolves CVE-2009-2625 and a few other issues. We were missing checks for surrogates and well-formedness when scanning system identifiers.
+
+git-svn-id: https://svn.apache.org/repos/asf/xerces/java/trunk@787352 13f79535-47bb-0310-9956-ffa450edef68",00a1cb9257dd1806467cf7c8a5a95161298b34ed
+VULAS,CVE-2010-1244,https://github.com/apache/activemq,1f464b9412e1b1c08d40c8ffac40edd52731da48,,,,apache,activemq,2/23/10 15:38,"merging 915269,915384 - https://issues.apache.org/activemq/browse/AMQ-2613 - XSS and CSRF vunerabilities
+
+git-svn-id: https://svn.apache.org/repos/asf/activemq/branches/activemq-5.3@915387 13f79535-47bb-0310-9956-ffa450edef68",e440e903e206cac9832ca2c56592e6aaec844b81
+VULAS,CVE-2010-3260,https://github.com/orbeon/orbeon-forms,aba6681660f65af7f1676434da68c10298c30200,,,,orbeon,orbeon-forms,12/4/10 0:32,"Implemented ""[ #315668 ] Disable loading of external entities in XML parsing by default"".",9610d39e90ea9f3c3b8fcf5b47a6038ca52f0f14
+VULAS,CVE-2010-4172,https://github.com/apache/tomcat,5971f9392edc6d70808b2599b062b050fcd11d23,,,,apache,tomcat,11/22/10 17:19,"Fix CVE-2010-4172. Multiple XSS in Manager web application
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1037778 13f79535-47bb-0310-9956-ffa450edef68",991702c8cf6b30daabcaf53301c95dd02c494782
+VULAS,CVE-2011-0534,https://github.com/apache/tomcat,008447095ce8c3a8f713093d5e618f3f06f94ea8,,,,apache,tomcat,2/1/11 7:55,"Fix https://issues.apache.org/bugzilla/show_bug.cgi?id=50631
+InternalNioInputBuffer should honor maxHttpHeadSize
+This addresses CVE-2011-0534
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1065939 13f79535-47bb-0310-9956-ffa450edef68",b4e9488629bf03b4b65abf335e536e85386d1366
+VULAS,CVE-2011-1183,https://github.com/apache/tomcat,b7b5c63a932f6c1ea05f9b65ad9054247bb5af57,,,,apache,tomcat,4/1/11 10:49,"Fix https://issues.apache.org/bugzilla/show_bug.cgi?id=12428
+Add optional support for preemptive authentication on a per context basis
+Based on a patch suggested by Werner Donn
+This includes the fix for CVE-2011-1183
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1087643 13f79535-47bb-0310-9956-ffa450edef68",6eaeaf4b0fa26f7f7f1022989c12abcb2d705fd3
+VULAS,CVE-2011-1419,https://github.com/apache/tomcat,0ff4905158b77787a7f3aca55c9dec93456665dc,,,,apache,tomcat,3/9/11 11:16,"CVE-2011-1088
+Complete the fix for this issue. The optimisation not to configure an authenticator of there were no security constraints meant that in that case @ServletSecurity annotations had no effect. The unit tests did not pick this up since they added an authenticator directly.
+Add an explicit unit test for this scenario.
+
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1079752 13f79535-47bb-0310-9956-ffa450edef68",f4cb4b0faaafa941c00c62705aa6573009b6fcd9
+VULAS,CVE-2011-1498,https://github.com/apache/httpcomponents-client,a572756592c969affd0ce87885724e74839176fb,,,,apache,httpcomponents-client,2/25/11 11:19,"HTTPCLIENT-1061: Proxy-Authorization header gets sent to the target host when tunneling requests through a proxy that requires authentication
+
+git-svn-id: https://svn.apache.org/repos/asf/httpcomponents/httpclient/trunk@1074473 13f79535-47bb-0310-9956-ffa450edef68",d2670af7dc0d622f6ed121294a9eda4d424e2733
+VULAS,CVE-2011-1582,https://github.com/apache/tomcat,299b26af66793438c323ea6b18462fa44683080f,,,,apache,tomcat,5/8/11 22:53,"Use the correct classloader
+This is the fix for CVE-2011-1582
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1100832 13f79535-47bb-0310-9956-ffa450edef68",37b704da7eb200de09979164fe8a6864424c7291
+VULAS,CVE-2011-3375,https://github.com/apache/tomcat,9eae334e9492f55a841e6eb7ab302ff11d03ab21,,,,apache,tomcat,9/27/11 20:19,"Fix https://issues.apache.org/bugzilla/show_bug.cgi?id=51872
+Ensure access log always logs the correct remote IP.
+Ensure requests with multiple errors do not result in multiple access log entries. 
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/tc7.0.x/trunk@1176592 13f79535-47bb-0310-9956-ffa450edef68",d5bd2e6000689c56f0832bf1ff40d9d9d74e4d63
+VULAS,CVE-2011-4905,https://github.com/apache/activemq,3a71f8e33d0309cb0ca5b5758a8f251da205e757,,,,apache,activemq,12/2/11 21:34,"Fix for https://issues.apache.org/jira/browse/AMQ-3294 and https://issues.apache.org/jira/browse/AMQ-1928
+
+git-svn-id: https://svn.apache.org/repos/asf/activemq/trunk@1209700 13f79535-47bb-0310-9956-ffa450edef68",f260b17488ac00e8b9e1dcf12ff9ee9b2e68f80e
+VULAS,CVE-2012-0213,https://github.com/apache/poi,c702bc5ce58f9f11f408c7568cc96382c76641ef,,,,apache,poi,5/29/13 17:25,"Fix bug #54682 - UnhandledDataStructure should sanity check before allocating, not after
+
+git-svn-id: https://svn.apache.org/repos/asf/poi/trunk@1487555 13f79535-47bb-0310-9956-ffa450edef68",8044d82dd589d67dddb9cfcae71a708968b3d71c
+VULAS,CVE-2012-0392,https://github.com/apache/struts,34c80dae734e70f13c0e46f9c83602fb71318e58,,,,apache,struts,12/20/11 20:17,"WW-3729 - Improves Strict DMI mode
+
+git-svn-id: https://svn.apache.org/repos/asf/struts/struts2/branches/STRUTS_2_3_X@1221473 13f79535-47bb-0310-9956-ffa450edef68",49abe3704e980f1e77429b2b8a07f0e9f0306ce0
+VULAS,CVE-2012-0393,https://github.com/apache/struts,9cad25f258bb2629d263f828574d2671366c238d,,,,apache,struts,12/27/11 22:34,"Merges changes from 2.3.x branch
+
+git-svn-id: https://svn.apache.org/repos/asf/struts/struts2/trunk@1225038 13f79535-47bb-0310-9956-ffa450edef68",47e12adc0ea865f559f8b8d8064a791cb1e7fe37
+VULAS,CVE-2012-0394,https://github.com/apache/struts,9cad25f258bb2629d263f828574d2671366c238d,,,,apache,struts,12/27/11 22:34,"Merges changes from 2.3.x branch
+
+git-svn-id: https://svn.apache.org/repos/asf/struts/struts2/trunk@1225038 13f79535-47bb-0310-9956-ffa450edef68",47e12adc0ea865f559f8b8d8064a791cb1e7fe37
+VULAS,CVE-2012-1621,https://github.com/apache/ofbiz,ea604f84e4a21fe081d66bbdab454b1e8a7d09b3,,,,apache,ofbiz,4/5/12 18:58,"Merged from trunk r1309993: CVE-2012-1621: Prevent user submitted data from being streamed directly back to the browser when the content map-key is not found.  Log a warning instead.
+
+git-svn-id: https://svn.apache.org/repos/asf/ofbiz/branches/release10.04@1310013 13f79535-47bb-0310-9956-ffa450edef68",e5547096a3a0065f675bdc6a17b99759b367be80
+VULAS,CVE-2012-2379,https://github.com/apache/cxf,4500bf901cb2a7312291b6663045f28a95d2a0c4,,,,apache,cxf,5/14/12 14:27,"Improved SupportingToken policy validation
+
+git-svn-id: https://svn.apache.org/repos/asf/cxf/trunk@1338219 13f79535-47bb-0310-9956-ffa450edef68",577235e62a3358dce8c9f142285858c49c19fbde
+VULAS,CVE-2012-3451,https://github.com/apache/cxf,9c70abe28fbf2b4c4df0b93ed12295ea5a012554,,,,apache,cxf,8/2/12 15:49,"Some improvements to handling SOAP Actions
+
+git-svn-id: https://svn.apache.org/repos/asf/cxf/trunk@1368559 13f79535-47bb-0310-9956-ffa450edef68",92831c6a6da8b8a3771e4535dc75003152e74828
+VULAS,CVE-2012-4387,https://github.com/apache/struts,87935af56a27235e9399308ee1fcfb74f8edcefa,,,,apache,struts,8/3/12 13:41,"Merged from trunk
+WW-3860
+Restrict accepted parameter name length
+Thanks to Johno Crawford for the patch. [from revision 1368841]
+
+git-svn-id: https://svn.apache.org/repos/asf/struts/struts2/branches/STRUTS_2_3_4_X@1368949 13f79535-47bb-0310-9956-ffa450edef68",1081c52be93abfd2f33ba8453c676e3edcedec8b
+VULAS,CVE-2012-6092,https://github.com/apache/activemq,51eb87a84be88d28383ea48f6e341ffe1203c5ba,,,,apache,activemq,10/18/12 10:57,"https://issues.apache.org/jira/browse/AMQ-4115 - xss in web demos
+
+git-svn-id: https://svn.apache.org/repos/asf/activemq/trunk@1399577 13f79535-47bb-0310-9956-ffa450edef68",65af81e09ecbb38e43b1410b2e1bd9c02926fc88
+VULAS,CVE-2012-6119,https://github.com/candlepin/candlepin,f4d93230e58b969c506b4c9778e04482a059b08c,,,,candlepin,candlepin,12/19/12 19:19,"835977: Re-enable manifest signature checking.
+
+The production/stage public candlepin certificate is now packaged in the
+RPM. This is flagged as a config file but *without* noreplace, so any
+deployment using their own upstream cert (we don't think there are any)
+will have to restore it from the rpmsave file that results after a
+candlepin rpm upgrade. This was done because we expect this to be the
+desired behavior, there is no known usecase for using your own
+upstream cert at this time.",9cd5d7020f813b4f12c672ed075c4d6c63e49a70
+VULAS,CVE-2012-6153,https://github.com/apache/httpcomponents-client,6e14fc146a66e0f3eb362f45f95d1a58ee18886a,,,,apache,httpcomponents-client,11/20/12 15:37,"Fixed CN extraction from DN of X500 principal
+
+git-svn-id: https://svn.apache.org/repos/asf/httpcomponents/httpclient/trunk@1411702 13f79535-47bb-0310-9956-ffa450edef68",529541458b62a4ecada29e135968bb60ccc7dfcb
+VULAS,CVE-2012-6612,https://github.com/apache/lucene-solr,f230486ce6707762c1a6e81655d0fac52887906d,,,,apache,lucene-solr,9/27/12 10:10,"SOLR-3895, SOLR-3614: XML and XSLT UpdateRequestHandler should not try to resolve external entities; fix XML parsing in XPathEntityProcessor to correctly expand named entities, but ignore external entities
+
+git-svn-id: https://svn.apache.org/repos/asf/lucene/dev/trunk@1390921 13f79535-47bb-0310-9956-ffa450edef68",cc2dfa773a388950ea2738b70d97a740fad67476
+VULAS,CVE-2013-0239,https://github.com/apache/cxf,295a4e2f9eb3e7e0513980202949ccc424dee2d4,,,,apache,cxf,1/25/13 10:26,"[CXF-4776] - Fix + re-enable tests
+
+git-svn-id: https://svn.apache.org/repos/asf/cxf/trunk@1438424 13f79535-47bb-0310-9956-ffa450edef68",d315a7d5259c28e4babd4d5c061eade848958461
+VULAS,CVE-2013-1777,https://github.com/apache/geronimo,ee031c5e62b0d358250d06c2aa6722518579a6c5,,,,apache,geronimo,3/19/13 3:43,"set better classloader for jmx
+
+git-svn-id: https://svn.apache.org/repos/asf/geronimo/server/branches/3.0@1458113 13f79535-47bb-0310-9956-ffa450edef68",67b5e07bf00e01e690e825ee5674666e85e7e204
+VULAS,CVE-2013-1879,https://github.com/apache/activemq,148ca81dcd8f14cfe2ff37012fd1aa42518f02dc,,,,apache,activemq,3/21/13 12:34,"https://issues.apache.org/jira/browse/AMQ-4397 - xss in cron expressions
+
+git-svn-id: https://svn.apache.org/repos/asf/activemq/trunk@1459265 13f79535-47bb-0310-9956-ffa450edef68",0d58477039f01617c3f1287eb20c118bfa5e0522
+VULAS,CVE-2013-1880,https://github.com/apache/activemq,fafd12dfd4f71336f8e32c090d40ed1445959b40,,,,apache,activemq,3/21/13 13:25,"https://issues.apache.org/jira/browse/AMQ-4398 - sanitize header in stock portfolio servlet
+
+git-svn-id: https://svn.apache.org/repos/asf/activemq/trunk@1459301 13f79535-47bb-0310-9956-ffa450edef68",148ca81dcd8f14cfe2ff37012fd1aa42518f02dc
+VULAS,CVE-2013-1965,https://github.com/apache/struts,7e6f641ebb142663cbd1653dc49bed725edf7f56,,,,apache,struts,4/18/13 9:49,"Disable eval expressions
+
+git-svn-id: https://svn.apache.org/repos/asf/struts/struts2/branches/STRUTS_2_3_14_X@1469249 13f79535-47bb-0310-9956-ffa450edef68",9fbb0d92b945151a36744808627d186c221ee375
+VULAS,CVE-2013-1966,https://github.com/apache/struts,7e6f641ebb142663cbd1653dc49bed725edf7f56,,,,apache,struts,4/18/13 9:49,"Disable eval expressions
+
+git-svn-id: https://svn.apache.org/repos/asf/struts/struts2/branches/STRUTS_2_3_14_X@1469249 13f79535-47bb-0310-9956-ffa450edef68",9fbb0d92b945151a36744808627d186c221ee375
+VULAS,CVE-2013-2035,https://github.com/fusesource/hawtjni,92c266170ce98edc200c656bd034a237098b8aa5,,,,fusesource,hawtjni,5/6/13 13:49,Simplify shared lib extraction.,357bb279b0c8c67b7d357c1363efe86870ad9a81
+VULAS,CVE-2013-2172,https://github.com/apache/santuario-java,8e8f8bf92a43608d7d5f9e357fae19244454a61f,,,,apache,santuario-java,6/17/13 14:19,"Don't allow non-standard c14n method
+
+git-svn-id: https://svn.apache.org/repos/asf/santuario/xml-security-java/branches/1.5.x-fixes@1493772 13f79535-47bb-0310-9956-ffa450edef68",5cf6abf60a18385dfffe4d93777ba729351a5ee6
+VULAS,CVE-2013-2185,https://github.com/apache/tomcat,e246e5fc13307da0a5d3bbf860d64d97be1c40f8,,,,apache,tomcat,4/22/13 10:33,"Clean-up: Remove unnecessary code.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1470435 13f79535-47bb-0310-9956-ffa450edef68",a5f369ad9fb32ecf8430cc28c91eb9f4dab6af76
+VULAS,CVE-2013-2186,https://github.com/apache/commons-fileupload,163a6061fbc077d4b6e4787d26857c2baba495d1,,,,apache,commons-fileupload,7/25/13 16:16,"When deserializing DiskFileItems ensure that the repository location, if any, is a valid one.
+Patch provided by Arun Babu Neelicattu.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/fileupload/trunk@1507048 13f79535-47bb-0310-9956-ffa450edef68",e685ae49df3ccb864493f51a14ddd884e86e7e03
+VULAS,CVE-2013-2193,https://github.com/apache/hbase,408eb243ad51bbad593d83ad2cfd35cc0e90b38e,,,,apache,hbase,6/20/13 6:40,"Fix up RPC handling
+
+git-svn-id: https://svn.apache.org/repos/asf/hbase/branches/0.94@1494871 13f79535-47bb-0310-9956-ffa450edef68",1ec24ec1a72f6101f8f5e50f870a147abcbe4a24
+VULAS,CVE-2013-2250,https://github.com/apache/ofbiz,0187743b1ef3c847a2d6b8687070c909316936a6,,,,apache,ofbiz,7/8/13 14:37,"Removed support for runtime nested expressions in FlexibleStringExpander.java. This fixes the vulnerability CVE-2013-2250
+
+
+git-svn-id: https://svn.apache.org/repos/asf/ofbiz/trunk@1500772 13f79535-47bb-0310-9956-ffa450edef68",e65657f3307f41b1cb0fd2cf62102876ef75946f
+VULAS,CVE-2013-4152,https://github.com/spring-projects/spring-framework,7576274874deeccb6da6b09a8d5bd62e8b5538b7,,,,spring-projects,spring-framework,8/6/13 22:04,"Fix potential security risk when using Spring OXM
+
+Disable by default external entity resolution when using Spring OXM
+with jaxb. This prevents a XML entity from being able to resolve a
+local file on the host system.
+
+See:
+https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
+
+Issue: SPR-10806",28be8e9063ce0365a6a5efb3e69863a4e60c34fd
+VULAS,CVE-2013-4310,https://github.com/apache/struts,0c8366cb792227d484b9ca13e537037dd0cb57dc,,,,apache,struts,10/15/13 18:20,"Changes archetypes version to match latest release
+
+git-svn-id: https://svn.apache.org/repos/asf/struts/struts2/branches/STRUTS_2_3_15_X@1532467 13f79535-47bb-0310-9956-ffa450edef68",9a3d105c804a5641c659b6233de3c145d55a7f51
+VULAS,CVE-2013-4316,https://github.com/apache/struts,58947c3f85ae641c1a476316a2888e53605948d1,,,,apache,struts,9/18/13 5:50,"Disables DMI
+
+git-svn-id: https://svn.apache.org/repos/asf/struts/struts2/branches/STRUTS_2_3_15_1_X@1524296 13f79535-47bb-0310-9956-ffa450edef68",52feec5b14009e2cf46edd6185e7be48bbb26e41
+VULAS,CVE-2013-4366,https://github.com/apache/httpcomponents-client,08140864e3e4c0994e094c4cf0507932baf6a66,,,,apache,httpcomponents-client,10/2/13 20:14,"Ensure X509HostnameVerifier is never null
+
+git-svn-id: https://svn.apache.org/repos/asf/httpcomponents/httpclient/trunk@1528614 13f79535-47bb-0310-9956-ffa450edef68",d9e2140b1260db86f8dc6c77e378733c0459f244
+VULAS,CVE-2013-4378,https://github.com/javamelody/javamelody,aacbc46151ff4ac1ca34ce0899c2a6113071c66e,,,,javamelody,javamelody,9/26/13 22:02,fix for issue 346: XSS through X-Forwarded-For header spoofing,581a1de11ab9cd1e50e3b0a3b67049cedd4763ac
+VULAS,CVE-2013-4517,https://github.com/apache/santuario-java,a09b9042f7759d094f2d49f40fc7bcf145164b25,,,,apache,santuario-java,11/1/13 15:25,"Disallow doc type declarations when secure validation is enabled
+
+
+Conflicts:
+	src/main/java/org/apache/xml/security/c14n/Canonicalizer.java
+
+git-svn-id: https://svn.apache.org/repos/asf/santuario/xml-security-java/branches/1.5.x-fixes@1537956 13f79535-47bb-0310-9956-ffa450edef68",10c73335ccd7fabe63ea58754bea1bc4b2dc4a93
+VULAS,CVE-2013-5679,https://github.com/ESAPI/esapi-java-legacy,41138fef5f63d9cf0d5e05d2bee2c7f682ffef3f,,,,ESAPI,esapi-java-legacy,8/29/13 0:49,"Fix for Google Issue #306 and changes to address the side effects of the fix (i.e., the removal of the deprecated ESAPI 1.4 encrypt() / decrypt() methods from the Encryptor interface).",b03591e53823c3d6a7792b030bb4cbfa6b6916d8
+VULAS,CVE-2013-5960,https://github.com/ESAPI/esapi-java-legacy,b7cbc53f9cc967cf1a5a9463d8c6fef9ed6ef4f7,,,,ESAPI,esapi-java-legacy,1/31/16 6:56,Close #306. Close #359,6438ad007b202c563ceda080429ea77a66d5d6ed
+VULAS,CVE-2013-6372,https://github.com/jenkinsci/subversion-plugin,7d4562d6f7e40de04bbe29577b51c79f07d05ba6,,,,jenkinsci,subversion-plugin,11/19/13 2:07,"[FIXED SECURITY-58]
+
+encryption of passphrases wasn't sufficiently secure.",b5cd30370ef40439c37b7350810d3469b9a17fc1
+VULAS,CVE-2013-6397,https://github.com/apache/lucene-solr,da34b18cb3092df4972e2b6fa5178d1059923910,,,,apache,lucene-solr,9/21/13 14:51,"SOLR-4882: Restrict SolrResourceLoader to only allow access to resource files below the instance dir
+
+git-svn-id: https://svn.apache.org/repos/asf/lucene/dev/trunk@1525246 13f79535-47bb-0310-9956-ffa450edef68",243e614e5265d3243b90595b399211a197bb4c59
+VULAS,CVE-2013-6407,https://github.com/apache/lucene-solr,f230486ce6707762c1a6e81655d0fac52887906d,,,,apache,lucene-solr,9/27/12 10:10,"SOLR-3895, SOLR-3614: XML and XSLT UpdateRequestHandler should not try to resolve external entities; fix XML parsing in XPathEntityProcessor to correctly expand named entities, but ignore external entities
+
+git-svn-id: https://svn.apache.org/repos/asf/lucene/dev/trunk@1390921 13f79535-47bb-0310-9956-ffa450edef68",cc2dfa773a388950ea2738b70d97a740fad67476
+VULAS,CVE-2013-6408,https://github.com/apache/lucene-solr,7239a57a51ea0f4d05dd330ce5e15e4f72f72747,,,,apache,lucene-solr,5/30/13 18:58,"SOLR-4881: Fix DocumentAnalysisRequestHandler to correctly use EmptyEntityResolver to prevent loading of external entities like UpdateRequestHandler does
+
+git-svn-id: https://svn.apache.org/repos/asf/lucene/dev/trunk@1487976 13f79535-47bb-0310-9956-ffa450edef68",fecb6fb0a2c197d008adaa4ca44c8780231c7981
+VULAS,CVE-2013-6430,https://github.com/spring-projects/spring-framework,7a7df6637478607bef0277bf52a4e0a03e20a248,,,,spring-projects,spring-framework,2/15/13 11:45,"Update JavaScriptUtils
+
+Add escaping for <, >, and PS/LS line terminators
+
+Issue: SPR-9983",63bff1f068f0c749f938abacba1d38b7d0ca3cf9
+VULAS,CVE-2013-6447,https://github.com/seam2/jboss-seam,090aa6252affc978a96c388e3fc2c1c2688d9bb5,,,,seam2,jboss-seam,1/21/14 14:47,"https://issues.jboss.org/browse/WFK2-375 enhanced fix
+
+git-svn-id: https://svn.jboss.org/repos/seam/branches/enterprise/WFK-2_1@15651 a9c07ecc-ef43-0410-a306-c911db474e88",b1d14541be7f16f97cf388239cda8bc168d8372a
+VULAS,CVE-2013-6448,https://github.com/seam2/jboss-seam,090aa6252affc978a96c388e3fc2c1c2688d9bb5,,,,seam2,jboss-seam,1/21/14 14:47,"https://issues.jboss.org/browse/WFK2-375 enhanced fix
+
+git-svn-id: https://svn.jboss.org/repos/seam/branches/enterprise/WFK-2_1@15651 a9c07ecc-ef43-0410-a306-c911db474e88",b1d14541be7f16f97cf388239cda8bc168d8372a
+VULAS,CVE-2013-7251,https://github.com/micromata/projectforge-webapp,422de35e3c3141e418a73bfb39b430d5fd74077e,,,,micromata,projectforge-webapp,12/5/13 23:14,CSRF protection.,a9a5fd6844f7620eb8977d009aef94739812f195
+VULAS,CVE-2013-7285,https://github.com/x-stream/xstream,6344867dce6767af7d0fe34fb393271a6456672d,,,,x-stream,xstream,1/22/14 18:29,"Merge security framework from HEAD into branch.
+
+git-svn-id: http://svn.codehaus.org/xstream/branches/v-1.4.x@2219 9830eeb5-ddf4-0310-9ef7-f4b9a3e3227e",64533f1fe2ece82398a1478edc2d30478fb7cd11
+VULAS,CVE-2013-7315,https://github.com/spring-projects/spring-framework,7576274874deeccb6da6b09a8d5bd62e8b5538b7,,,,spring-projects,spring-framework,8/6/13 22:04,"Fix potential security risk when using Spring OXM
+
+Disable by default external entity resolution when using Spring OXM
+with jaxb. This prevents a XML entity from being able to resolve a
+local file on the host system.
+
+See:
+https://www.owasp.org/index.php/XML_External_Entity_(XXE)_Processing
+
+Issue: SPR-10806",28be8e9063ce0365a6a5efb3e69863a4e60c34fd
+VULAS,CVE-2013-7330,https://github.com/jenkinsci/jenkins,36342d71e29e0620f803a7470ce96c61761648d8,,,,jenkinsci,jenkins,2/11/13 21:47,"[SECURITY-55]
+
+This patch makes standard post-build action refuse to let you configure a downstream project you cannot currently build.
+The one from parameterized-trigger will show an error in the configure screen but still lets you save the configuration; needs an analogous patch to that plugin.
+Does not yet protect against POSTing config.xml with the trigger.
+(cherry picked from commit 757bc8a53956e6fbab267214e6e0896f03c3c262)
+
+Conflicts:
+
+	core/src/main/java/hudson/model/Descriptor.java",0de3e9b14ed75f70279435e78eb9f6a3a1a179df
+VULAS,CVE-2013-7397,https://github.com/AsyncHttpClient/async-http-client,df6ed70e86c8fc340ed75563e016c8baa94d7e72,,,,AsyncHttpClient,async-http-client,6/12/14 19:47,"Introduce acceptAnyCertificate config, defaulting to false, close #526, close #352",e5e6489941e222d4b510ba09ce7b53e9eed02601
+VULAS,CVE-2014-0034,https://github.com/apache/cxf,b4b9a010bb23059251400455afabddee15b46127,,,,apache,cxf,12/16/13 15:18,"Validation fix in the STS
+
+git-svn-id: https://svn.apache.org/repos/asf/cxf/trunk@1551228 13f79535-47bb-0310-9956-ffa450edef68",f9b4939d483b43eb72ad165f995e763ce6bc34d8
+VULAS,CVE-2014-0035,https://github.com/apache/cxf,5df3f72f1a26b7c9ac2888ab65e41f4105706580,,,,apache,cxf,2/5/14 12:01,"Another EncryptBeforeSigning fix
+
+git-svn-id: https://svn.apache.org/repos/asf/cxf/trunk@1564724 13f79535-47bb-0310-9956-ffa450edef68",0c77f4ff91451c0bf73ebe1103e99583cc26d786
+VULAS,CVE-2014-0050,https://github.com/apache/commons-fileupload,c61ff05b3241cb14d989b67209e57aa71540417a,,,,apache,commons-fileupload,2/6/14 10:14,"Fix CVE-2014-0050. Specially crafted input can trigger a DoS if the buffer used by the <code>MultipartStream</code> is not big enough. When constructing <code>MultipartStream</code> enforce the requirements for buffer size by throwing an <code>IllegalArgumentException</code> if the requested buffer size is too small. This prevents the DoS.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/fileupload/trunk@1565143 13f79535-47bb-0310-9956-ffa450edef68",401ba23732e9ae96c3e4797eb624d357cb9ae2d0
+VULAS,CVE-2014-0074,https://github.com/apache/shiro,9137e6cc45922b529fb776c6857647a3935471bb,,,,apache,shiro,2/28/14 3:53,"Updating JndiLdapContextFactory to conform to spec rfc4513 section-5.1.2
+
+git-svn-id: https://svn.apache.org/repos/asf/shiro/trunk@1572813 13f79535-47bb-0310-9956-ffa450edef68",0140fab53d2b2d620e7c9dda2e7688c5d5e7e94e
+VULAS,CVE-2014-0086,https://github.com/pslegr/core-1,8131f15003f5bec73d475d2b724472e4b87d0757,,,,pslegr,core-1,2/24/14 7:24,RF-13250: applying patch,fdb79dda3fa0a3886b8ef29271605ce1f0ed0fa2
+VULAS,CVE-2014-0094,https://github.com/apache/struts,74e26830d2849a84729b33497f729e0f033dc147,,,,apache,struts,1/10/16 10:46,Adds additional pattern to prevent access to getClass method,a4f8d492144a62af2a7d5e934e62d737bdfc8058
+VULAS,CVE-2014-0095,https://github.com/apache/tomcat,8884dae60ace77a87ed9385442ce429e98c3a479,,,,apache,tomcat,3/17/14 14:17,"Correct regression introduced in 8.0.0-RC2 as part of the Servlet 3.1 non-blocking IO support that broke handling of requests with an explicit content length of zero.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1578392 13f79535-47bb-0310-9956-ffa450edef68",f646a5acd5e32d6f5a2d9bf1d94ca66b65477675
+VULAS,CVE-2014-0107,https://github.com/apache/xalan-j,cbfd906cc5a1f1566fa1a98400c82e56077fae0c,,,,apache,xalan-j,3/24/14 20:55,"Commit patch to handle secure processing. Thank you Ryan Berg.
+
+git-svn-id: https://svn.apache.org/repos/asf/xalan/java/branches/xalan-j_2_7_1_maint@1581058 13f79535-47bb-0310-9956-ffa450edef68",c1c7e11cd3440a6ca76d30b7e05f6893c5e5d747
+VULAS,CVE-2014-0109,https://github.com/apache/cxf,f8ed98e684c1a67a77ae8726db05a04a4978a445,,,,apache,cxf,2/19/14 17:17,Update StaxInInterceptor to just create a html error message on the client side as the normal error handling works best on server side.,3158ccb445fbec6ca408c22b4e32ab054ab792b4
+VULAS,CVE-2014-0110,https://github.com/apache/cxf,8f4799b5bc5ed0fe62d6e018c45d960e3652373e,,,,apache,cxf,3/25/14 17:16,"Don't cache the input stream unless we have gotten through the service invoke phase.  If there is an exception or similar on input, there is no need to cache it, just discard what we can.",57d1e47f9559475c0e95a6adeb56da47f19c02ed
+VULAS,CVE-2014-0112,https://github.com/apache/struts,74e26830d2849a84729b33497f729e0f033dc147,,,,apache,struts,1/10/16 10:46,Adds additional pattern to prevent access to getClass method,a4f8d492144a62af2a7d5e934e62d737bdfc8058
+VULAS,CVE-2014-0113,https://github.com/apache/struts,74e26830d2849a84729b33497f729e0f033dc147,,,,apache,struts,1/10/16 10:46,Adds additional pattern to prevent access to getClass method,a4f8d492144a62af2a7d5e934e62d737bdfc8058
+VULAS,CVE-2014-0116,https://github.com/apache/struts,74e26830d2849a84729b33497f729e0f033dc147,,,,apache,struts,1/10/16 10:46,Adds additional pattern to prevent access to getClass method,a4f8d492144a62af2a7d5e934e62d737bdfc8058
+VULAS,CVE-2014-0168,https://github.com/rhuss/jolokia,2d9b168cfbbf5a6d16fa6e8a5b34503e3dc42364,,,,rhuss,jolokia,4/10/14 8:22,"Enchanced policy wr to origin handling. The Origin: can now be checked on the server side, too.",ec206b33b9ac139362dab02a3145c90ba0a2827e
+VULAS,CVE-2014-0193,https://github.com/netty/netty,8599ab5bdb761bb99d41a975d689f74c12e4892b,,,,netty,netty,4/30/14 6:04,"Remove ContinuationWebSocketFrame.aggregatedText()
+
+Motivation:
+Before we aggregated the full text in the WebSocket08FrameDecoder just to fill in the ContinuationWebSocketFrame.aggregatedText(). The problem was that there was no upper-limit and so it would be possible to see an OOME if the remote peer sends a TextWebSocketFrame + a never ending stream of ContinuationWebSocketFrames. Furthermore the aggregation does not really belong in the WebSocket08FrameDecoder, as we provide an extra ChannelHandler for this anyway (WebSocketFrameAggregator).
+
+Modification:
+Remove the ContinuationWebSocketFrame.aggregatedText() method and corresponding constructor. Also refactored WebSocket08FrameDecoder a bit to me more efficient which is now possible as we not need to aggregate here.
+
+Result:
+No more risk of OOME because of frames.",e920dc57db5e84c1eb8d822b6b1033ffc3bd97eb
+VULAS,CVE-2014-1972,https://github.com/apache/tapestry-5,95846b173d83c2eb42db75dae3e7d5e13a633946,,,,apache,tapestry-5,10/4/12 18:30,TAP5-2008: Implement HMAC signatures on object streams stored on the client,9001a1e3c2642c51550def85cde24cc31f96248e
+VULAS,CVE-2014-2058,https://github.com/jenkinsci/jenkins,b6b2a367a7976be80a799c6a49fa6c58d778b50e,,,,jenkinsci,jenkins,2/11/14 0:13,[FIXED SECURITY-109] SECURITY-55 fix to BuildTrigger configuration failed if downstream project was not visible.,ad38d8480f20ce3cbf8fec3e2003bc83efda4f7d
+VULAS,CVE-2014-2059,https://github.com/jenkinsci/jenkins,ad38d8480f20ce3cbf8fec3e2003bc83efda4f7d,,,,jenkinsci,jenkins,2/6/14 23:46,[FIXED SECURITY-108] Check job name created via CLI,622e39f8b4c4764a0768bf58645767405ba9ccaa
+VULAS,CVE-2014-2061,https://github.com/jenkinsci/jenkins,bf539198564a1108b7b71a973bf7de963a6213ef,,,,jenkinsci,jenkins,2/7/14 20:28,"[FIXED SECURITY-93] PasswordParameterDefinition should serve existing default value in encrypted form.
+And strengthen functional tests (using configRoundTrip) to ensure that the same mistake is not made elsewhere.",5548b5220cfd496831b5721124189ff18fbb12a3
+VULAS,CVE-2014-2062,https://github.com/jenkinsci/jenkins,5548b5220cfd496831b5721124189ff18fbb12a3,,,,jenkinsci,jenkins,2/7/14 17:57,"[FIXED SECURITY-89] When checking an API token, verify that the user actually exists.",788b7d7a067fad4972fefaaa527141847bfeff55
+VULAS,CVE-2014-2064,https://github.com/jenkinsci/jenkins,fbf96734470caba9364f04e0b77b0bae7293a1ec,,,,jenkinsci,jenkins,2/7/14 20:18,[FIXED SECURITY-79] Prevent (private security realm) usernames from being guessed.,a0b00508eeb74d7033dc4100eb382df4e8fa72e7
+VULAS,CVE-2014-2065,https://github.com/jenkinsci/jenkins,a0b00508eeb74d7033dc4100eb382df4e8fa72e7,,,,jenkinsci,jenkins,2/7/14 20:16,[FIXED SECURITY-77] XSS in iconSize cookie.,535c1115bbf07f8a57d509f2d00598d6e21870d4
+VULAS,CVE-2014-2066,https://github.com/jenkinsci/jenkins,8ac74c350779921598f9d5edfed39dd35de8842a,,,,jenkinsci,jenkins,6/13/13 19:45,[FIXED SECURITY-75] Invalidate session after login to avoid session fixation,5d57c855f3147bfc5e7fda9252317b428a700014
+VULAS,CVE-2014-2067,https://github.com/jenkinsci/jenkins,5d57c855f3147bfc5e7fda9252317b428a700014,,,,jenkinsci,jenkins,2/7/14 19:33,[FIXED SECURITY-74] Apply markup formatter to remote cause note.,0530a6645aac10fec005614211660e98db44b5eb
+VULAS,CVE-2014-2068,https://github.com/jenkinsci/jenkins,0530a6645aac10fec005614211660e98db44b5eb,,,,jenkinsci,jenkins,2/7/14 17:40,[FIXED SECURITY-73] Require RUN_SCRIPTS for /heapDump.,ac8e17b9ce7a835d0b049fd8329dde4daaa874d9
+VULAS,CVE-2014-3488,https://github.com/netty/netty,2fa9400a59d0563a66908aba55c41e7285a04994,,,,netty,netty,6/10/14 8:55,"Fix a bug where SslHandler does not handle SSLv2Hello correctly
+
+Motivation:
+
+When a SSLv2Hello message is received, SSLEngine expects the application buffer size to be more than 30KB which is larger than what SslBufferPool can provide.  SSLEngine will always return with BUFFER_OVERFLOW status, blocking the SSL session from continuing the handshake.
+
+Modifications:
+
+When SSLEngine.getSession().getApplicationBufferSize() returns a value larger than what SslBufferPool provides, allocate a temporary heap buffer.
+
+Result:
+
+SSLv2Hello is handled correctly.",129c17aaa4ac5c611519ef480c35a12e8282b807
+VULAS,CVE-2014-3490,https://github.com/ronsigal/Resteasy,9b7d0f574cafdcf3bea5428f3145ab4908fc6d83,,,,ronsigal,Resteasy,7/20/14 1:29,RESTEASY-1073: Prevent expansion of XML external parameter entities.,9f9f313960e7dcc32369fb8d89f7f3570efc6af8
+VULAS,CVE-2014-3576,https://github.com/apache/activemq,00921f22ff9a8792d7663ef8fadd4823402a6324,,,,apache,activemq,8/13/14 15:15,Remove unused ConnectionControl handling.,9a6d444e0a492231ad1f4833448b3bbacd839bce
+VULAS,CVE-2014-3577,https://github.com/apache/httpcomponents-client,51cc67567765d67f878f0dcef61b5ded454d3122,,,,apache,httpcomponents-client,7/28/14 15:57,"Improved cert subject parsing
+
+git-svn-id: https://svn.apache.org/repos/asf/httpcomponents/httpclient/branches/4.3.x@1614064 13f79535-47bb-0310-9956-ffa450edef68",8513c0dd3ef4a8ea889a1f7b527f7c52cfa4da5f
+VULAS,CVE-2014-3579,https://github.com/apache/activemq-apollo,e5647554e6801a522c508a8eb457979a9af8c398,,,,apache,activemq-apollo,8/26/14 13:11,https://issues.apache.org/jira/browse/APLO-366 - make xpath parser features configurable,e29cfd509d8c5f871b140b1392797f7f39568cd1
+VULAS,CVE-2014-3584,https://github.com/apache/cxf,0b3894f57388b9955f2c33b2295223f2835cd7b3,,,,apache,cxf,11/18/13 14:02,"[CXF-5390] DeflaterEncoderDecoder needs to throw the exception if the inflator can not finish the process
+
+git-svn-id: https://svn.apache.org/repos/asf/cxf/trunk@1543030 13f79535-47bb-0310-9956-ffa450edef68",11bccec4f48f65f36907cd04230b1b751a34d0e1
+VULAS,CVE-2014-3600,https://github.com/apache/activemq,b9696ac80bb496b52d05c3884f81b0746d9af9e2,,,,apache,activemq,8/26/14 12:46,https://issues.apache.org/jira/browse/AMQ-5333 - make xpath parser features configurable,4fa10356f09908d8cfb9fd4448983ac6d7e80ee7
+VULAS,CVE-2014-3612,https://github.com/apache/activemq,0b5231ada5ce365b41832ba8752ee210145d1cbe,,,,apache,activemq,9/8/14 11:51,https://issues.apache.org/jira/browse/AMQ-5345 - improve ldap communication,e8f8155141e75ba10c1ba03d9031b6128a735507
+VULAS,CVE-2014-3678,https://github.com/jenkinsci/monitoring-plugin,f0f6aeef2032696c97d4b015dd51fa2b841b0473,,,,jenkinsci,monitoring-plugin,10/1/14 21:03,"[FIXED SECURITY-113]
+
+Fixed XSS vulnerabilities and failure to check admin permission",f574a976b9cb4c3aad7f8af5e7f1eaa12f6bd548
+VULAS,CVE-2014-7809,https://github.com/apache/struts,1f301038a751bf16e525607c3db513db835b2999,,,,apache,struts,11/21/14 18:21,Uses better random generator,e1025a207ddfa1b8971ec6261ea2c09da2af157f
+VULAS,CVE-2014-8125,https://github.com/droolsjbpm/drools,c48464c3b246e6ef0d4cd0dbf67e83ccd532c6d3,,,,droolsjbpm,drools,12/22/14 13:17,BZ-1169553 - (CVE-2014-8125) EMBARGOED CVE-2014-8125 jBPM: BPMN2 file processing XXE in Process Execution,29769b4eb9bccdec0c00cf4f1c5e3023ca61cbcf
+VULAS,CVE-2014-8152,https://github.com/apache/santuario-java,55857fd4cdfdb1af4069170ecdac448c078f544e,,,,apache,santuario-java,10/26/14 14:25,"more signature verification tests
+
+
+git-svn-id: https://svn.apache.org/repos/asf/santuario/xml-security-java/trunk@1634334 13f79535-47bb-0310-9956-ffa450edef68",5b197b8ce5a81414138e96870bd619f3c733631f
+VULAS,CVE-2014-9970,https://github.com/jboss-fuse/jasypt,8e62852a8018978ee19d39056c650fb66ffa0ff6,,,,jboss-fuse,jasypt,2/20/14 16:41,"Hash matching: Replaced call to Arrays.equals() with a time-constant function in order to protect against timing attacks in hypothetical developer-made message authentication schemes. (Note password matching is not affected by this vulnerability)
+
+git-svn-id: http://svn.code.sf.net/p/jasypt/code/trunk/jasypt@668 da78853a-38a2-49c0-9af2-345bcb92683f",cef07e36654c3eefe02c524d56ca759dba8c41ca
+VULAS,CVE-2015-0225,https://github.com/apache/cassandra,c041ea8b3748089937168839791a6d64382b34de,,,,apache,cassandra,3/25/15 16:27,Bind JMX to localhost unless explicitly configured otherwise,7cc1cf000c6b48bc13aa551467f27e4ab28b2031
+VULAS,CVE-2015-0250,https://github.com/apache/batik,1e12686194370b22420da705d71af66161affa33,,,,apache,batik,3/5/15 12:53,"disable external xml entities
+
+git-svn-id: https://svn.apache.org/repos/asf/xmlgraphics/batik/trunk@1664335 13f79535-47bb-0310-9956-ffa450edef68",6611e7e655718410fb647551869289a9dbb3e2a9
+VULAS,CVE-2015-0263,https://github.com/apache/camel,7d19340bcdb42f7aae584d9c5003ac4f7ddaee36,,,,apache,camel,3/1/15 10:52,XML External Entity (XXE) injection in XmlConverter. Thanks to Stephan Siano for the patch.,1df559649a96a1ca0368373387e542f46e4820da
+VULAS,CVE-2015-0264,https://github.com/apache/camel,1df559649a96a1ca0368373387e542f46e4820da,,,,apache,camel,3/1/15 10:51,CAMEL-8312: XML External Entity (XXE) injection in XPath. Thanks to Stephan Siano for the patch.,504cf03deba0726754f05152f7d8606fb76a72b4
+VULAS,CVE-2015-0886,https://github.com/djmdjm/jBCrypt,0c28b698e79b132391be8333107040d774c79995,,,,djmdjm,jBCrypt,5/10/13 4:04,"Reduce max log(rounds) to 30 to avoid integer overflow; bz#2097
+from Marcus Rathsfeld",b129c40bc8c207ecdd0a2f05cbf154b0a67110d4
+VULAS,CVE-2015-0899,https://github.com/kawasima/struts1-forever,212bb0f7c57617b7b9c44cb1e056bd1e597c8e16,,,,kawasima,struts1-forever,5/13/15 1:27,Fixed CVE-2014-0114,b6f974288d16d53ab2a5cb6101d32bbddc187cf1
+VULAS,CVE-2015-1772,https://github.com/apache/hive,6929846a8120eaf094b914b4ca8af80b65f891c8,,,,apache,hive,3/17/15 22:06,"HIVE-9934: Vulnerability in LdapAuthenticationProviderImpl enables HiveServer2 client to degrade the authentication mechanism to none, allowing authentication without password (Chao via Xuefu)
+
+git-svn-id: https://svn.apache.org/repos/asf/hive/trunk@1667417 13f79535-47bb-0310-9956-ffa450edef68",9641b4d8310877a97cc9521dd28c730971683f32
+VULAS,CVE-2015-1775,https://github.com/apache/ambari,3ab123a109f6384f019db455f256520f4a8b85dd,,,,apache,ambari,6/23/15 18:23,AMBARI-12102. Increase unit test coverage for ViewURLStreamProvider (smohanty),af12bc565bf8c77d028512162f4a67e9a96bd949
+VULAS,CVE-2015-1776,https://github.com/apache/hadoop,6b710a42e00acca405e085724c89cda016cf7442,,,,apache,hadoop,5/14/15 23:07,Fixing MR intermediate spills. Contributed by Arun Suresh.,53fe4eff09fdaeed75a8cad3a26156bf963a8d37
+VULAS,CVE-2015-1831,https://github.com/apache/struts,d832747d647df343ed07a58b1b5e540a05a4d51b,,,,apache,struts,5/3/15 18:57,Applies better exclude patterns,8ab3272d9fd547880f06aa32366f7956628e6630
+VULAS,CVE-2015-1836,https://github.com/apache/hbase,942e09b71eef5bd9fdb1c8711125c4bc1193bcdc,,,,apache,hbase,5/27/15 19:21,HBASE-13768 ZooKeeper znodes are bootstrapped with insecure ACLs in a secure configuration (Enis Soztutar),19a57f1e7e57b83e17e0ef91e35b02dfd5af2893
+VULAS,CVE-2015-2913,https://github.com/orientechnologies/orientdb,668ece96be210e742a4e2820a3085b215cf55104,,,,orientechnologies,orientdb,4/4/15 14:45,Adopted SecureRandom to avoid predicable random numbers in session,41fd20ab022e22bce32d62372dbe279693322086
+VULAS,CVE-2015-3189,https://github.com/cloudfoundry/uaa,a79b89f6e4f66626914b029b7a15a423491f8013,,,,cloudfoundry,uaa,4/20/15 17:10,"password reset link expiration logic
+1. backwards compatible - if the link results in a user_id, we check last_modified date of the user and reject the link if the user has been modified
+2. going forward - we store both the username and the user_id, thus we can see if the email(username) has been modified
+https://www.pivotaltracker.com/story/show/92065804
+[#92065804]",cdf511ff9d3cbbaf31e7d16325ad641e62111768
+VULAS,CVE-2015-3192,https://github.com/spring-projects/spring-framework,5a711c05ec750f069235597173084c2ee796242,,,,spring-projects,spring-framework,6/30/15 11:59,"Disable DTD when parsing untrusted XML input
+
+Issue: SPR-13136",1e42464c223d3c17ef4823faec416ff8d6db3030
+VULAS,CVE-2015-3208,https://github.com/apache/activemq-artemis,48d9951d879e0c8cbb59d4b64ab59d53ef88310d,,,,apache,activemq-artemis,5/21/15 9:49,ActiveMQ6-112 Add defaults to the selector parser doc builder,879f4a6bb3b15dfc3d00bcde2d982194bd2dadc4
+VULAS,CVE-2015-3253,https://github.com/apache/groovy,09e9778e8a33052d8c27105aee5310649637233d,,,,apache,groovy,7/9/15 18:12,Fix potential problem when deserializing,03e3812cff011eda75a518af7f8f676db8622316
+VULAS,CVE-2015-3271,https://github.com/apache/tika,98672cdd92b6325ff78c763955a7c045b364095b,,,,apache,tika,7/23/15 13:00,"TIKA-1690: revert changes made in r1678515 that added fileUrl capability in tika-server
+
+git-svn-id: https://svn.apache.org/repos/asf/tika/trunk@1692383 13f79535-47bb-0310-9956-ffa450edef68",a4baebe62c9a29c71fac00b59657f508c681edbf
+VULAS,CVE-2015-4165,https://github.com/elastic/elasticsearch,f5cfb2a1869d1a52930cbd3138278a6e2c1b22e6,,,,elastic,elasticsearch,5/21/15 2:24,"Snapshot/Restore: fix FSRepository location configuration
+
+Closes #11068",e575a543ba3334bceae19da5013c557dccbe7200
+VULAS,CVE-2015-5170,https://github.com/cloudfoundry/uaa,a54f3fb8225ef7d5021ca7d4fb52bef1e884568e,,,,cloudfoundry,uaa,8/7/15 22:06,Merge branch 'feature/stateless_csrf_upon_login' into develop,8a3c0d9edd65f07883a5bea3fc61bff475c7d517:bdb1a39a1e72f615f2e7a429a896a11e7ee5ec17
+VULAS,CVE-2015-5171,https://github.com/cloudfoundry/uaa,9730cd6a3bbb481ee4e400b51952b537589c469d,,,,cloudfoundry,uaa,8/4/15 15:49,"Upon a password change we will expire all HTTP sessions for that user
+https://www.pivotaltracker.com/story/show/100043648
+[#100043648]",cad9bdd3b3a642093a3e3e783ce7e0125fbf17c0
+VULAS,CVE-2015-5172,https://github.com/cloudfoundry/uaa,cd31cc397fe17389d95b83d6a9caa46eebc54faf,,,,cloudfoundry,uaa,8/6/15 14:13,"When the link is clicked for reset password, the code is exchanged so
+that the link can not be used again",7c70a85f4c7b5a9b1603bc57cab14a7ffef2168b
+VULAS,CVE-2015-5253,https://github.com/apache/cxf,845eccb6484b43ba02875c71e824db23ae4f20c0,,,,apache,cxf,7/30/15 16:55,Adding SAML SSO tests.,b32c5d0cbf61ae599c33e401679066d92b8e2024
+VULAS,CVE-2015-5256,https://github.com/apache/cordova-android,af2969dec58ca89150b84b5d57edcf63d4ce1302,,,,apache,cordova-android,3/3/15 2:00,CB-8587 Don't allow webview navigations within showWebPage that are not whitelisted,53dba8678c90f06ee3bdaf903ec1ffa1106be338
+VULAS,CVE-2015-5258,https://github.com/spring-projects/spring-social,5151e1158e1ed51369e7aba9e8092930d28c31d3,,,,spring-projects,spring-social,11/11/15 19:38,Update dependencies; stronger enforcement of state parameter checks,f04fa5e7b722a569683511fb08e158765bed1aaf
+VULAS,CVE-2015-5347,https://github.com/apache/wicket,dffba2ce410ec7e917ad350d3528af4df67bc348,,,,apache,wicket,11/18/15 18:18,allow markup inside title via #setEscapeModelStrings(),497a5d629b609d2e6039b2df6c35bc1035077984
+VULAS,CVE-2015-5531,https://github.com/elastic/elasticsearch,df1427a2935237fb61fc641984f9c76478627fec,,,,elastic,elasticsearch,7/14/15 12:15,"Add url repository whitelist
+
+Require urls for URL repository to be listed in repositories.url.allowed_urls setting. This change ensures that only authorized URLs can be accessed by elasticsearch.",7a264c48c1b40519ce29d62c5e8290d615bd7751
+VULAS,CVE-2015-6524,https://github.com/apache/activemq,0b5231ada5ce365b41832ba8752ee210145d1cbe,,,,apache,activemq,9/8/14 11:51,https://issues.apache.org/jira/browse/AMQ-5345 - improve ldap communication,e8f8155141e75ba10c1ba03d9031b6128a735507
+VULAS,CVE-2015-6748,https://github.com/jhy/jsoup,4edb78991f8d0bf87dafde5e01ccd8922065c9b2,,,,jhy,jsoup,7/5/15 22:05,"Merge pull request #582 from fazerish/handle_unclosed_tag_on_eof
+
+Keep tag that have not been closed by > before reaching EOF.",3a7f39c507ed2b6809dc3a8bcc0a28ad19aab2f3:b86beca8feb26f9a3181e87fe36382f8ab4bdb98
+VULAS,CVE-2015-7521,https://github.com/apache/hive,98f933f269e6b528ef84912b3d701ca3272ec04b,,,,apache,hive,1/18/16 20:46,"HIVE-12875 : Verify sem.getInputs() and sem.getOutputs() (Sushanth Sowmyan, reviewed by Alan Gates)",d82409d0d804fa441b7956623ed92719886d2fcd
+VULAS,CVE-2015-8103,https://github.com/jenkinsci/jenkins,5bd9b55a2a3249939fd78c501b8959a804c1164b,,,,jenkinsci,jenkins,11/8/15 5:34,"Merge pull request #44 from jenkinsci-cert/SECURITY-218
+
+[FIXED SECURITY-218]",ed407e66bcd3743a3b458ea8284977e5cac56c2a:cb588f93e57d3c1aa4ac972c7c9a3433d7cf1c79
+VULAS,CVE-2015-8320,https://github.com/apache/cordova-android,032ea8a8d386d8bcffc5de7fd3e4202478effb7d,,,,apache,cordova-android,11/4/14 20:57,CB-7940 Disable exec bridge if bridgeSecret is wrong,fc63f66e8970ab537dda1397a6b58e6d61252c17
+VULAS,CVE-2015-8581,https://github.com/apache/tomee,58cdbbef9c77ab2b44870f9d606593b49cde76d9,,,,apache,tomee,3/1/16 15:13,switching tomee.serialization.class.blacklist defaults to * in our packaged distributions,5689b25ac70a243c4d838962e068856f889ea87f
+VULAS,CVE-2016-0731,https://github.com/apache/ambari,eaf8cc4cd2015456307ff3fcf98e49f2826fa270,,,,apache,ambari,1/25/16 12:03,AMBARI-14780. Make the property validator for File Browser more restrictive. (yusaku via rlevas),e94362c35e0a046dcd7ab802cbf258ce603780c6
+VULAS,CVE-2016-0768,https://github.com/tada/pljava,675254b0f17b76f05e72cba2e3b8d3e548ae7a43,,,,tada,pljava,1/24/16 3:54,"Change default USAGE grant for 'java'.
+
+Ok, it seems that another change to the PostgreSQL large object APIs
+happened in PG 9.0: large objects got ACLs. Before that, anybody could
+access them. In PL/Java, anybody still can. :(
+
+The ideal accommodation on PL/Java's side will be to retarget PL/Java's
+LargeObject code from the PG inv_api.c layer to the be-fsstubs.c layer
+(if something doesn't make that prohibitively difficult), because that's
+where the 9.0+ access checks happen. Otherwise, the checking code needs
+to be duplicated in PL/Java.
+
+The fsstubs layer has only-good-within-one-transaction semantics.
+Happily, that's all that's expected for the JDBC *LOB interfaces,
+which presumably are the public API this stuff should ultimately have.
+
+Too involved for 1.5.0. However, this is a good argument for a least-
+privilege, no-public-by-default installation of the 'java' language,
+documenting how GRANT USAGE can then be used to allow specific
+users/roles to make PL/Java functions.
+
+Moral: this wasn't a problem before 9.0, when everybody knew LOBs had
+no access controls. It became a problem when PG added access controls
+for them, and PL/Java didn't follow suit. What's a trusted language
+today could need adjustments tomorrow, so no-public-usage-by-default
+really seems like the best posture; the user/installer should always be
+encouraged to follow the least privilege principle.",d2f6ef84e46765822f92cd8f403a7e4c1f8bb198
+VULAS,CVE-2016-0779,https://github.com/apache/tomee,58cdbbef9c77ab2b44870f9d606593b49cde76d9,,,,apache,tomee,3/1/16 15:13,switching tomee.serialization.class.blacklist defaults to * in our packaged distributions,5689b25ac70a243c4d838962e068856f889ea87f
+VULAS,CVE-2016-0785,https://github.com/apache/struts,15857a69e7baf3675804495a5954cd0756ac8364,,,,apache,struts,3/6/16 9:07,Reduces expression evaluation if there is no expression,f7364a50dc6a82b51a57dab9b3efd6303e2295b6
+VULAS,CVE-2016-1000338,https://github.com/bcgit/bc-java,843c2e60f67d71faf81d236f448ebbe56c62c647,,,,bcgit,bc-java,10/15/16 0:21,"Added header validation for INTEGER/ENUMERATED
+Added additional validations for DSA/ECDSA signature parsing.",b0c3ce99d43d73a096268831d0d120ffc89eac7f
+VULAS,CVE-2016-1000339,https://github.com/bcgit/bc-java,413b42f4d770456508585c830cfcde95f9b0e93b,,,,bcgit,bc-java,10/31/16 22:51,"added better support for DH domain parameters
+added s box allocation to AESEngine
+reduced use of AESFastEngine.",1127131c89021612c6eefa26dbe5714c194e7495
+VULAS,CVE-2016-1000340,https://github.com/bcgit/bc-java,790642084c4e0cadd47352054f868cc8397e2c00,,,,bcgit,bc-java,11/29/16 2:56,Fix carry propagation bug in Nat???.square methods,02417ceb88ad4207aebe0e696df8bb2b65a43e8d
+VULAS,CVE-2016-1000341,https://github.com/bcgit/bc-java,acaac81f96fec91ab45bd0412beaf9c3acd8defa,,,,bcgit,bc-java,10/15/16 2:44,added randomizer to DSA signature generation,bf5cc6146f0d8e7cc1f5dded319f300c27f7c179
+VULAS,CVE-2016-1000342,https://github.com/bcgit/bc-java,843c2e60f67d71faf81d236f448ebbe56c62c647,,,,bcgit,bc-java,10/15/16 0:21,"Added header validation for INTEGER/ENUMERATED
+Added additional validations for DSA/ECDSA signature parsing.",b0c3ce99d43d73a096268831d0d120ffc89eac7f
+VULAS,CVE-2016-1000343,https://github.com/bcgit/bc-java,50a53068c094d6cff37659da33c9b4505becd389,,,,bcgit,bc-java,11/3/16 23:04,updated default DSA parameters to follow 186-4,f03bb051b9c22ba66c87e436c6f17e07ac81f442
+VULAS,CVE-2016-1000344,https://github.com/bcgit/bc-java,9385b0ebd277724b167fe1d1456e3c112112be1f,,,,bcgit,bc-java,8/27/16 1:41,removed support for non-cbc mode ciphers in IES/ECIES,7acfa2fbb86f5d061ed03fdf1a4a8f0876c94cab
+VULAS,CVE-2016-1000345,https://github.com/bcgit/bc-java,21dcb3d9744c83dcf2ff8fcee06dbca7bfa4ef35,,,,bcgit,bc-java,8/27/16 3:20,"modified IESEngine so that MAC check is the primary one
+added general BadBlockException class for asymmetric ciphers.",9385b0ebd277724b167fe1d1456e3c112112be1f
+VULAS,CVE-2016-1000346,https://github.com/bcgit/bc-java,1127131c89021612c6eefa26dbe5714c194e7495,,,,bcgit,bc-java,10/29/16 3:10,"Added TLS validation check for DH keys
+Added further agreement result checks",63c5f15d8a26b66cbff0503e28ac945a6899a85c
+VULAS,CVE-2016-1000352,https://github.com/bcgit/bc-java,9385b0ebd277724b167fe1d1456e3c112112be1f,,,,bcgit,bc-java,8/27/16 1:41,removed support for non-cbc mode ciphers in IES/ECIES,7acfa2fbb86f5d061ed03fdf1a4a8f0876c94cab
+VULAS,CVE-2016-10006,https://github.com/nahsra/antisamy,7313931dc3c0d1377b010f07faef2063dd359a36,,,,nahsra,antisamy,12/19/16 16:47,"Updated for proper <style> tag validation
+
+Validated <style> tag attributes to fix style tag XSS in MagixSAXFilter.java",90550e42b39972fce0db4bcab0e1ce4359b94661
+VULAS,CVE-2016-1181,https://github.com/kawasima/struts1-forever,eda3a79907ed8fcb0387a0496d0cb14332f250e8,,,,kawasima,struts1-forever,6/8/16 2:38,Fixed CVE-2016-1181 and CVE-2016-1182,fdd9eb8f94ca75eb9effac9602b9d4ee0cb904b5
+VULAS,CVE-2016-1182,https://github.com/kawasima/struts1-forever,eda3a79907ed8fcb0387a0496d0cb14332f250e8,,,,kawasima,struts1-forever,6/8/16 2:38,Fixed CVE-2016-1181 and CVE-2016-1182,fdd9eb8f94ca75eb9effac9602b9d4ee0cb904b5
+VULAS,CVE-2016-2162,https://github.com/apache/struts,fc2179cf1ac9fbfb61e3430fa88b641d87253327,,,,apache,struts,3/11/16 10:03,Narrows possible locale to those from available locales,3c68a3def6f85570ee5a931f82e5d53f442f0928
+VULAS,CVE-2016-2173,https://github.com/spring-projects/spring-amqp,4150f107e60cac4a7735fcf7cb4c1889a0cbab6c,,,,spring-projects,spring-amqp,3/15/16 15:50,"AMQP-590: Java Deserialization White List
+
+JIRA: https://jira.spring.io/browse/AMQP-590
+
+Polishing - PR Comments
+
+Verify Mock
+(cherry picked from commit 462dcb6)",06689e778e62aa35a7c8dd5552a2f74fefd5747b
+VULAS,CVE-2016-2175,https://github.com/apache/pdfbox,6f4a1fa0cd894ba3bbbe4a97ce11e23ec64f0d3a,,,,apache,pdfbox,4/17/16 9:35,"PDFBOX-2852: improve factory config
+
+git-svn-id: https://svn.apache.org/repos/asf/pdfbox/branches/1.8@1739564 13f79535-47bb-0310-9956-ffa450edef68",7c9e799d145c2fb8096a6842a854e731ef262b92
+VULAS,CVE-2016-2192,https://github.com/tada/pljava,f0a41359ede67335c5ef3fe73a9f10da96d71760,,,,tada,pljava,3/19/16 23:47,"Merge branch 'bug/REL1_5_STABLE/typmapchk' into REL1_5_STABLE
+
+Addresses CVE-2016-2192.",ad4e051a548a1874e2a469a6078ef7dbb18828ec:a27f51704c019880178af9776e76810cf9d82b5c
+VULAS,CVE-2016-3081,https://github.com/apache/struts,f238cf4f1091be19fbcfd086b042c86a1bcaa7fc,,,,apache,struts,4/18/16 18:38,Uses isSequence flag to block chained expressions,016b8eedd5ca47fce95e2a16069e640e3842906d
+VULAS,CVE-2016-3082,https://github.com/apache/struts,6bd694b7980494c12d49ca1bf39f12aec3e03e2f,,,,apache,struts,4/18/16 18:39,Drops defining location via request,c9c21378f2fb2ff21355c128c45e106ebd87ad7c
+VULAS,CVE-2016-3088,https://github.com/apache/activemq,3dd86d04e8b90ba309819317d19e7260d414d9e7,,,,apache,activemq,5/3/16 10:37,https://issues.apache.org/jira/browse/AMQ-6276 - remove fileserver webapp,4f43a2121264152b09166b8a09403ee0c205233d
+VULAS,CVE-2016-3092-FU,https://github.com/apache/commons-fileupload,774ef160d591b579f703c694002e080f99bcd28b,,,,apache,commons-fileupload,5/12/16 8:13,"Fix a performance issue with large boundaries leading to a Denial of Service (CVE-2016-3092)
+
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/fileupload/trunk@1743480 13f79535-47bb-0310-9956-ffa450edef68",8bf965a49a39521018c587d59dcc943278c4aee7
+VULAS,CVE-2016-3093,https://github.com/jkuhnert/ognl,ae43073fbf38db8371ff4f8bf2a966ee3b5f7e92,,,,jkuhnert,ognl,5/17/15 8:09,"Merge pull request #12 from danielfernandez/cachekey
+
+Improved performance of getter/setter method caching in OgnlRuntime",0192a5d03ee88e723effa8d525d54164c487008a:b899f088b7e25a091de6565cbca5602170852229
+VULAS,CVE-2016-3720,https://github.com/FasterXML/jackson-dataformat-xml,f0f19a4c924d9db9a1e2830434061c8640092cc0,,,,FasterXML,jackson-dataformat-xml,4/15/16 5:11,Fix #190,c2ccf8d4eb1c9ae3372dd0e689c4fe34a8c65a00
+VULAS,CVE-2016-4000,https://github.com/jythontools/jython,4c337213bd2964bb36cef2d31509b49647ca6f2a,,,,jythontools,jython,2/2/16 3:37,"Do not deserialize PyFunction objects. Fixes #2454
+
+Instead use standard Python pickling; or subclass PyFunction.",d59902416064ed849da3059af7b239290e9f00b2
+VULAS,CVE-2016-4430,https://github.com/apache/struts,b28b78c062f0bf3c79793a25aab8c9b6c12bce6e,,,,apache,struts,6/3/16 11:10,Introduces new callMethod() function to be used to execute actions,8d172b8e9bf0beb1ed08a915737646e432b75e00
+VULAS,CVE-2016-4431,https://github.com/apache/struts,b28b78c062f0bf3c79793a25aab8c9b6c12bce6e,,,,apache,struts,6/3/16 11:10,Introduces new callMethod() function to be used to execute actions,8d172b8e9bf0beb1ed08a915737646e432b75e00
+VULAS,CVE-2016-4433,https://github.com/apache/struts,b28b78c062f0bf3c79793a25aab8c9b6c12bce6e,,,,apache,struts,6/3/16 11:10,Introduces new callMethod() function to be used to execute actions,8d172b8e9bf0beb1ed08a915737646e432b75e00
+VULAS,CVE-2016-4437,https://github.com/apache/shiro,64d9f8341e1aa7ef1a29744e16ea7c578ca5deee,,,,apache,shiro,5/6/16 20:22,"Force RememberMe cipher to be set to survive JVM restart.
+
+If the property is not set, a new cipher will be generated.",1460419cc7e4eacbcef7ccc17c75e74d058b73c1
+VULAS,CVE-2016-4438,https://github.com/apache/struts,76eb8f38a33ad0f1f48464ee1311559c8d52dd6d,,,,apache,struts,4/29/16 6:40,Cleans up method name,deefeffd11425f0cd0b797cd86a9b3550234262b
+VULAS,CVE-2016-4464,https://github.com/apache/cxf-fediz,0006581e9cacbeef46381a223e5671e524d416b6,,,,apache,cxf-fediz,6/3/16 12:59,Adding some audience restriction tests,d30ea588c63b896be10171382e6f2a0d10f0022d
+VULAS,CVE-2016-4800,https://github.com/eclipse/jetty.project,97af3d663fd22343129e8364d601640649d9eaea,,,,eclipse,jetty.project,5/13/16 18:57,"Fixes #556 - Improve Resource.getAlias() checks on Windows
+
++ Reworks PathResource and FileResource alias checking to
+  use originally passed paths, before Windows JVM has a
+  chance to normalize and ""correct"" the bad paths.",0a1f4ac98c8ae614e0bf1a33936627161258dbe1
+VULAS,CVE-2016-4977,https://github.com/spring-projects/spring-security-oauth,fff77d3fea477b566bcacfbfc95f85821a2bdc2d,,,,spring-projects,spring-security-oauth,3/12/16 10:07,"Prevent recursive placeholders in whitelabel views
+
+This change prevents placeholders in model values from being
+recursively replaced (which is a feature of the placeholder
+utilities in Spring Core), so that user-provided data
+(e.g. an invalid response_type or a leaky exception message)
+cannot be used to inject SpEL into the view.
+
+N.B. this only affects apps that are using the whitelabel views
+for approval and error pages (i.e. probably nothing in
+production).",4f01e4a950e6fd61d9e34981a6acbb5eb513577a
+VULAS,CVE-2016-5007,https://github.com/spring-projects/spring-framework,a30ab30e4e9ae021fdda04e9abfc228476b846b5,,,,spring-projects,spring-framework,4/26/16 1:33,"Introduce HandlerMapping introspection API
+
+Issue: SPR-14321",a25c43f695b1e527cdc8d7c987534fcb1029bb2c
+VULAS,CVE-2016-5007-SEC,https://github.com/spring-projects/spring-security,e4c13e3c0ee7f06f59d3b43ca6734215ad7d8974,,,,spring-projects,spring-security,7/1/16 21:30,"Add MvcRequestMatcher
+
+Fixes gh-3964",13bc70f693e1b5c6c44d0da5ee46b9e5634ed293
+VULAS,CVE-2016-5394,https://github.com/apache/sling,7d2365a248943071a44d8495655186e4f14ea294,,,,apache,sling,8/4/16 8:43,"SLING-5946 - XSSAPI#encodeForJSString is not restrictive enough
+
+Submitted-By: Vlad Bailescu
+
+git-svn-id: https://svn.apache.org/repos/asf/sling/trunk@1755147 13f79535-47bb-0310-9956-ffa450edef68",7a988f5f36f4c186a9331a809dbb787521ba6c64
+VULAS,CVE-2016-6194,https://github.com/rabbitmq/rabbitmq-jms-client,95ae7401c0f007d5c8e6618ab009c171ce633916,,,,rabbitmq,rabbitmq-jms-client,7/14/16 9:51,"Merge pull request #4 from rabbitmq/rabbitmq-jms-client-3
+
+Limit ObjectMessage deserialization with a package white list",3b907c4baea8ef9eb9f3fd73dd209d12948689fd:aad012b246a7c4604ee48d61cc548563fe002dd4
+VULAS,CVE-2016-6652,https://github.com/spring-projects/spring-data-jpa,b8e7fecccc7dc8edcabb4704656a7abe6352c08f,,,,spring-projects,spring-data-jpa,9/6/16 11:34,"DATAJPA-965 - Fix potential blind SQL injection in Sort when used in combination with @Query.
+
+We now decline sort expressions that contain functions such as ORDER BY LENGTH(name) when used with repository having a String query defined via the @Query annotation.
+
+Think of a query method as follows:
+
+@Query(""select p from Person p where LOWER(p.lastname) = LOWER(:lastname)"")
+List<Person> findByLastname(@Param(""lastname"") String lastname, Sort sort);
+
+Calls to findByLastname(""lannister"", new Sort(""LENGTH(firstname)"")) from now on throw an Exception indicating function calls are not allowed within the _ORDER BY_ clause. However you still can use JpaSort.unsafe(""LENGTH(firstname)"") to restore the behavior.
+
+Kudos to Niklas Särökaari, Joona Immonen, Arto Santala, Antti Virtanen, Michael Holopainen and Antti Ahola who brought this to our attention.",c227c6753047b262b83ed7623433a1d65d9308b8
+VULAS,CVE-2016-6793,https://github.com/apache/wicket,134686ef7185d3f96fec953136ab4847cd36b68,,,,apache,wicket,6/8/16 20:25,"Do not (de)serialize DiskFileItem.
+
+X-Ref: https://github.com/apache/commons-fileupload/commit/7b201e44962c99cf4019e137aee9ccc0273c3ab1",4e20930c7a47f0b2fbb0cbaa7d26a7c4760f0657
+VULAS,CVE-2016-6798,https://github.com/apache/sling,fb2719e8299fadddae62245482de112052a0e08c,,,,apache,sling,8/10/16 9:57,"SLING-5954 - Disable non-essential features in XML parser
+
+git-svn-id: https://svn.apache.org/repos/asf/sling/trunk@1755704 13f79535-47bb-0310-9956-ffa450edef68",2e8c7a1aeebacd275f21d88edede79117f84b4f7
+VULAS,CVE-2016-6802,https://github.com/apache/shiro,b15ab927709ca18ea4a02538be01919a19ab65af,,,,apache,shiro,9/9/16 20:26,"Added fix to adjust how the servlet context path is handled
+
+Based on a thread from the Servlet Expert Group",d41afcc6e722ec112918c2cc56a386dd6267a1d5
+VULAS,CVE-2016-6809,https://github.com/apache/tika,8a68b5d474205cc91cbbb610d4a1c05af57f0610,,,,apache,tika,8/11/16 18:46,clean up MatParser,85e53850026aadce49bc99c1ef2de9d5c7be0451
+VULAS,CVE-2016-6814,https://github.com/apache/groovy,4df8b652aa018a5d5d1cda8fba938bf3422db31c,,,,apache,groovy,10/3/16 16:22,fix possible deserialization exploit by overriding readObject,675a04eab7ea1754502caa365f7d251a9ae97493
+VULAS,CVE-2016-7051,https://github.com/FasterXML/jackson-dataformat-xml,eeff2c312e9d4caa8c9f27b8f740c7529d00524a,,,,FasterXML,jackson-dataformat-xml,9/27/16 3:11,prepare for 2.7.8,48759e9822db9d7cbdf69faf519836e4c92ab5b1
+VULAS,CVE-2016-8629,https://github.com/keycloak/keycloak,a78cfa4b2ca979a1981fb371cfdf2c7212f7b6e2,,,,keycloak,keycloak,10/28/16 8:13,"Merge pull request #3440 from stianst/KEYCLOAK-3667
+
+KEYCLOAK-3667",c6caeb3bec809177e8695c5bf7de2100aa44ac41:3d46b4c425d39b004566cc78164e1ffbe37d647c
+VULAS,CVE-2016-8738,https://github.com/apache/struts,554b9dddb0fbd1e581ef577dd62a7c22955ad0f6,,,,apache,struts,11/16/16 6:30,Trims input value,a245226b7f1fa2a2cd94508b132f0220989c1e5b
+VULAS,CVE-2016-8744,https://github.com/apache/brooklyn-server,3ae4a4d156341a53e54a2fe07192f46b15763d06,,,,apache,brooklyn-server,12/8/16 16:43,"Use SnakeYAML SafeConstructor by default
+
+Overridable by setting a system property.",9f8a3aae0714aceeb72dee99bb09f3b1001de92a
+VULAS,CVE-2016-9879,https://github.com/spring-projects/spring-security,666e356ebc479194ba51e43bb99fc42f849b6175,,,,spring-projects,spring-security,12/7/16 20:32,"Block URL Encoded ""/"" in DefaultHttpFirewall
+
+Fixes gh-4169",fc516b55a647277f58d679b8040fe5a15711338b
+VULAS,CVE-2017-1000242,https://github.com/jenkinsci/git-client-plugin,75ea3fe05650fc6ca09046a72493e2b3f066fb98,,,,jenkinsci,git-client-plugin,4/13/17 4:38,"[Fix SECURITY-445] better protect temporary files
+
+Temporary files were previously written to the system temporary directory
+with default permissions.  A malicious actor could have captured sensitive
+information by reading files from the temporary directory.  The temporary
+files typically are only on the file system for the duration of a single
+command line git invocation, but cloning a large git repo could require
+an extended time with those sensitive files in the temporary directory.
+
+This change sets permissions on the temporary files to be readable only by
+the file owner. If a workspace is available, a temporary directory adjacent
+to the workspace is used instead of the system temporary directory.",716e3ff56074c018c76cb35826269b976540e7e7
+VULAS,CVE-2017-1000243,https://github.com/jenkinsci/favorite-plugin,b6359532fe085d9ea6b7894e997e797806480777,,,,jenkinsci,favorite-plugin,6/5/17 0:13,JENKINS-44643 - remove the ability to toggle favorites of specific user via URL param (#16),a5537f3e0da6594a474df2325ca89acbcb704425
+VULAS,CVE-2017-1000354,https://github.com/jenkinsci/jenkins,02d24053bdfeb219d2387a19885a60bdab510479,,,,jenkinsci,jenkins,3/14/17 19:04,[SECURITY-466] Use more tamperproof storage for ClientAuthenticationCache.,20b0a131446fc0d3edd08ba0889a55334020b169
+VULAS,CVE-2017-1000355,https://github.com/jenkinsci/jenkins,701ea95a52afe53bee28f76a3f96eb0e578852e9,,,,jenkinsci,jenkins,4/16/17 8:06,[SECURITY-503] Prevent deserialization of void/Void,d5dd69bee210e0073ce8fa880ae5ab7829cb7bdb
+VULAS,CVE-2017-1000388,https://github.com/jenkinsci/depgraph-view-plugin,d442ff671965c279770b28e37dc63a6ab73c0f0e,,,,jenkinsci,depgraph-view-plugin,10/2/17 21:17,Fix security vulnerability,28b8dee53a9e10415c1b49c7f9350b9574a6e131
+VULAS,CVE-2017-1000391,https://github.com/jenkinsci/jenkins,566a8ddb885f0bef9bc848e60455c0aabbf0c1d3,,,,jenkinsci,jenkins,10/19/17 16:14,[SECURITY-499] Sanitize user id <-> filename conversion,ea981a029cb985b71f3a0dc0f9ce3b3e3e6c001b
+VULAS,CVE-2017-1000393,https://github.com/jenkinsci/jenkins,d7ea3f40efedd50541a57b943d5f7bbed046d091,,,,jenkinsci,jenkins,9/13/17 13:30,[SECURITY-478] Require RUN_SCRIPTS before configuring CommandLauncher or CommandConnector.,1b9034669a691462d58b7a0d120d6bfb8514aa6d
+VULAS,CVE-2017-1000395,https://github.com/jenkinsci/jenkins,7b1f8e96a8d97dd09e5e093fcdb010b3295acc77,,,,jenkinsci,jenkins,9/7/17 20:32,[SECURITY-514] Restrict access to user properties via the api to admins,61781a6d4dfa7d829cc194d3fb7e50972ac150de
+VULAS,CVE-2017-1000398,https://github.com/jenkinsci/jenkins,da06fd471cea79123821c778228eeb08e1cedcc7,,,,jenkinsci,jenkins,9/28/17 14:15,[SECURITY-611] Do not export hidden projects via Executor.currentExecutable.,09d60462b9edf775f08568601bb3e2cfd8075368
+VULAS,CVE-2017-1000400,https://github.com/jenkinsci/jenkins,b2083a387a5bdb6f7ee7f7c81a1f6312aca2a558,,,,jenkinsci,jenkins,9/28/17 14:15,[SECURITY-617] Do not export information about hidden upstream or downstream projects.,da06fd471cea79123821c778228eeb08e1cedcc7
+VULAS,CVE-2017-1000487,https://github.com/codehaus-plexus/plexus-utils,b38a1b3a4352303e4312b2bb601a0d7ec6e28f41,,,,codehaus-plexus,plexus-utils,10/8/13 16:21,"[PLXUTILS-161] Commandline shell injection problems
+
+Patch by Charles Duffy, applied unmodified",86c37983bb2bd92b1df43fe73f321ffbfa155070
+VULAS,CVE-2017-1000498,https://github.com/BigBadaboom/androidsvg,44e4fbf1d0f6db295df34601972741d4cf706cbd,,,,BigBadaboom,androidsvg,1/31/18 11:11,"Issue #122: Changed parser so that it starts out using the XmlPullParser, but switches to the SAXParser if entity declarations are found.",1c9dcb152130b0b8de59f9df4256fa349c695f25
+VULAS,CVE-2017-1000502,https://github.com/jenkinsci/ec2-plugin,180f7d0eae6031d67259a5d86d9d7d382f9eb05b,,,,jenkinsci,ec2-plugin,12/16/17 7:03,"Jenkins 47593 avoid script block (#253)
+
+* [JENKINS-47593][SECURITY-643] Allow command to be run without approval
+- use the second constructor of CommandLauncher to avoid being blocked by the security fix
+
+* - adding permission check on unsafe parameter modification
+- adding warning message in case someone is modifying the unsafe parameters
+
+* - also put the right check on the readResolve
+- regroup the permission error message
+
+* - change name of the required permission
+
+* [SECURITY-643] Fix exception during start of cloud config
+
+* [maven-release-plugin] prepare release ec2-1.38
+
+* [maven-release-plugin] prepare for next development iteration",fd172822632ddb36ddd16e7e5102e68e8b156215
+VULAS,CVE-2017-12159,https://github.com/keycloak/keycloak,9b75b603e3a5f5ba6deff13cbb45b070bf2d2239,,,,keycloak,keycloak,10/23/17 14:13,KEYCLOAK-5234 (#4585),20d0fa1b4ec32dbb037ccfc44e1909174ac9e11d
+VULAS,CVE-2017-12197,https://github.com/letonez/libpam4j,84f32f4001fc6bdcc125ccc959081de022d18b6d,,,,letonez,libpam4j,9/8/17 18:55,"Fix for: libpam4j authenticates invalid accounts
+[https://github.com/kohsuke/libpam4j/issues/18]
+
+Change-Id: I5052cd0d9f617239a63fb036daa697cbae5bb9d7",bf826bbb48a118b8e42c45cd87abb1cf415d4239
+VULAS,CVE-2017-12616,https://github.com/apache/tomcat,07dc0ea2745f0afab6415f22b16a29f1c6de5727,,,,apache,tomcat,8/10/17 21:09,"Correct regression in r1804604 that broke WebDAV.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/tc7.0.x/trunk@1804729 13f79535-47bb-0310-9956-ffa450edef68",f098807674b942f27216db7debae18854115b207
+VULAS,CVE-2017-13098,https://github.com/bcgit/bc-java,a00b684465b38d722ca9a3543b8af8568e6bad5c,,,,bcgit,bc-java,12/12/17 1:41,Confirm size of decrypted PMS before using,199be1bdc892dcb3360af1b5a887a7e133d2cdac
+VULAS,CVE-2017-13309,https://github.com/google/conscrypt,e56958e7dea05c1784317f139e2216e2e707d391,,,,google,conscrypt,5/10/18 3:24,"Fix SSLEngine bug with multiple heap buffer inputs. (#485)
+
+When the SSLEngine overload that accepts an array of ByteBuffers is
+called with heap buffers for both the source and destination, those
+heap buffers are converted to direct buffers for passing to JNI by way
+of copying them to a single temporary direct buffer.  A bug in the
+reading of the encrypted data out of BoringSSL resulted in the data
+being placed at the wrong offset of the temporary buffer, meaning that
+the output data was prefixed in the worst case by the plaintext.
+
+Fixes CVE-2017-13309.",4e3eee474dc9ad633e4f5dd21142f4da0eeeb866
+VULAS,CVE-2017-14063,https://github.com/AsyncHttpClient/async-http-client,eb9e3347e45319be494db24d285a2aee4396f5d3,,,,AsyncHttpClient,async-http-client,8/28/17 8:50,"Don't be tricked by anchors containing a question mark, close #1455
+
+Motivation:
+
+AHC can be tricked into connecting to a different host.
+
+Modification:
+
+* Make sure we don’t interpret `?` in the anchor as the beginning of
+the query and the end of the path.
+* Update tests to check org.asynchttpclient.uri.Uri returns the same
+results as java.net.URI.
+
+Result:
+
+AHC no longer tricked by anchors containing question mark.",62b5a1d2307dc9be5734a9e7adb43471a1a972e2
+VULAS,CVE-2017-14735,https://github.com/nahsra/antisamy,82da009e733a989a57190cd6aa1b6824724f6d36,,,,nahsra,antisamy,9/25/17 17:37,"Issue #10 (#15)
+
+* upgraded batik-css version
+removed redundant regex beginning/end markers
+updated policies to contain new url validation which is sensitive to
+html5 colon entity
+
+* removed test code",c48ed190a8e8e374444588ef43bb058dced3b93f
+VULAS,CVE-2017-15691,https://github.com/apache/uima-uimaj,39909bf21fd694f4fb792d1de8adc72562ead25e,,,,apache,uima-uimaj,9/21/17 15:32,"no Jira - fix various xml reader factories missing feature setups
+
+git-svn-id: https://svn.apache.org/repos/asf/uima/uimaj/trunk@1809174 13f79535-47bb-0310-9956-ffa450edef68",6fb3c8532a28709246c4b74d373aef6bbe871527
+VULAS,CVE-2017-15717,https://github.com/apache/sling-org-apache-sling-xss,ec6764d165abc4df8cffd8439761bb2228887db9,,,,apache,sling-org-apache-sling-xss,12/28/17 12:58,"SLING-7323 - Optimise URL handling
+
+* added better decoding for URLs",11011d55eb929415b781c1bd79a11bb8d0f599e8
+VULAS,CVE-2017-17485,https://github.com/FasterXML/jackson-databind,2235894210c75f624a3d0cd60bfb0434a20a18bf,,,,FasterXML,jackson-databind,12/19/17 5:41,Fix #1855,f031f27a31625d07922bdd090664c69544200a5d
+VULAS,CVE-2017-2617,https://github.com/hawtio/hawtio,8cf6848f4d4d4917a4551c9aa49dc00f699eb569,,,,hawtio,hawtio,10/4/17 7:05,ENTESB-6558 - Implement a filter to prevent arbitrary file upload to hawtio,3e9abef36a91f93742be4daf68e98619d44b9689
+VULAS,CVE-2017-2638,https://github.com/infinispan/infinispan,f2d54c4ecb75c7264d4160ca7c461135712201a9,,,,infinispan,infinispan,3/3/17 10:57,"ISPN-7485 Restore REST authentication
+
+- support BASIC authentication
+- works with the server's SecurityRealms instead of SecurityDomin
+- drops support for some attributes (virtual-server, security-mode)",f727ba69f26e068801b7811cab3a307f9578d9bc
+VULAS,CVE-2017-2654,https://github.com/jenkinsci/email-ext-plugin,af2cc9bf649781c3c84c6891298db0d8601b193d,,,,jenkinsci,email-ext-plugin,1/23/17 21:56,[SECURITY-372] Do not send mail to unrecognized or unauthorized users.,e26368bd0e39a4405f40a7358ca012c3d5e568d3
+VULAS,CVE-2017-2670,https://github.com/undertow-io/undertow,9bfe9fbbb595d51157b61693f072895f7dbadd1d,,,,undertow-io,undertow,6/12/17 20:50,UNDERTOW-1035 Websocket non clean close can cause IO thread to get stuck in a loop,1e72647818c9fb31b693a953b1ae595a6c82eb7f
+VULAS,CVE-2017-3154,https://github.com/apache/atlas,0dcfd21bbfaac6f037f46b7aaaab0e5546fd2a7,,,,apache,atlas,1/3/17 13:42,"ATLAS-1424 : Avoid stack-trace in REST API error response
+
+Signed-off-by: Madhan Neethiraj <madhan@apache.org>
+(cherry picked from commit ac80b8b61b122abe57a644cbfe3868f07c301914)",340e1a5ff664cb70a599997fb5187d020e8458fa
+VULAS,CVE-2017-5644,https://github.com/apache/poi,3a328aa220f6979f9805f658ae33244d153beaa7,,,,apache,poi,3/9/16 0:41,"#57031 - Out of Memory when extracting text from attached files
+
+git-svn-id: https://svn.apache.org/repos/asf/poi/trunk@1734182 13f79535-47bb-0310-9956-ffa450edef68",e444b4b01afbacf37537257b9ba8dabe0fea6691
+VULAS,CVE-2017-5645,https://github.com/apache/logging-log4j2,5dcc19215827db29c993d0305ee2b0d8dd05939d,,,,apache,logging-log4j2,3/11/17 22:01,"[LOG4J2-1863] Add class filtering to AbstractSocketServer
+
+This allows a whitelist of class names to be specified to configure
+which classes are allowed to be deserialized in both TcpSocketServer and
+UdpSocketServer.",5aff929bb44e63c0dbf0cdc7cfb5d5fbd50660ef
+VULAS,CVE-2017-5653,https://github.com/apache/cxf,fade9b81dabe27f864ca38e7b40f28fb44d6f165,,,,apache,cxf,3/27/17 21:10,Finalizing XmlSecInInterceptor updates,d3b88b5f4090b75273697d8ba7c79e281aba305e
+VULAS,CVE-2017-5656,https://github.com/apache/cxf,66c2c5b9,,,,apache,cxf,4/5/17 10:01,"Refactor how we extract ""IDs"" from delegation tokens when used for caching",631ac6ba0765022a0f53500ac986b61cbabca60c
+VULAS,CVE-2017-5929,https://github.com/qos-ch/logback,f46044b805bca91efe5fd6afe52257cd02f775f8,,,,qos-ch,logback,2/7/17 22:12,harden serialization,909afb9d677cbe35c5f92c4f802e6d6c30f85da3
+VULAS,CVE-2017-7656,https://github.com/eclipse/jetty.project,a285deea42fcab60d9edcf994e458c238a348b55,,,,eclipse,jetty.project,5/16/18 22:00,"Issue #2529 RFC2616 vs RFC7230 cleanup
+
+Signed-off-by: Greg Wilkins <gregw@webtide.com>",d7ce334f8fd19e08410a79c0bc60ff0a3a5d1489
+VULAS,CVE-2017-7657,https://github.com/eclipse/jetty.project,a285deea42fcab60d9edcf994e458c238a348b55,,,,eclipse,jetty.project,5/16/18 22:00,"Issue #2529 RFC2616 vs RFC7230 cleanup
+
+Signed-off-by: Greg Wilkins <gregw@webtide.com>",d7ce334f8fd19e08410a79c0bc60ff0a3a5d1489
+VULAS,CVE-2017-7658,https://github.com/eclipse/jetty.project,a285deea42fcab60d9edcf994e458c238a348b55,,,,eclipse,jetty.project,5/16/18 22:00,"Issue #2529 RFC2616 vs RFC7230 cleanup
+
+Signed-off-by: Greg Wilkins <gregw@webtide.com>",d7ce334f8fd19e08410a79c0bc60ff0a3a5d1489
+VULAS,CVE-2017-7661,https://github.com/apache/cxf-fediz,acdbe8c213576792dd95d87315bcc181ea61b57f,,,,apache,cxf-fediz,12/19/16 13:20,Fixing Spring plugins,c6aa62c1e20627c1d6d40f90d6a3a828b73883f7
+VULAS,CVE-2017-7662,https://github.com/apache/cxf-fediz,c68e4820816c19241568f4a8fe8600bffb0243cd,,,,apache,cxf-fediz,4/18/17 16:22,Adding CSRF support to the OIDC client reg webapp,02df115e99a02dde43079e4fac10ed9d0d5ec69c
+VULAS,CVE-2017-7672,https://github.com/apache/struts,931df54ab379bf4eb5a625bf05066b8563c3737b,,,,apache,struts,11/16/16 6:46,Optimises validator to reduce number of compiling pattern,eb71d8869648fdd6418d10f4fc07ef83f9180792
+VULAS,CVE-2017-8028,https://github.com/spring-projects/spring-ldap,08e8ae289bbd1b581986c7238604a147119c1336,,,,spring-projects,spring-ldap,11/25/16 14:53,"Force reconnect with credentials on DefaultTlsDirContextAuthenticationStrategy
+
+refs #430",9d8f9fb1882b99a71d510097bb9c32cd1b2331cb
+VULAS,CVE-2017-9096,https://github.com/itext/itext7,930a1c81f8ea4952df540f041befbfa2d6757838,,,,itext,itext7,5/24/17 9:18,"Prevent XXE vulnerability
+
+DEVSIX-1273",03c809e0a3bf70308f7b37c9920c4bebaca913f2
+VULAS,CVE-2017-9096-2,https://github.com/itext/itextpdf,ad38371c396ac5ffbfb28056809e8ffaa5a18ccd,,,,itext,itextpdf,7/27/17 15:07,"Prevent XXE-vulnerability
+
+DEV-1863",f8f6d321d8b84d582007b460107e54bf7556b183
+VULAS,CVE-2017-9803,https://github.com/apache/lucene-solr,b091934f9e98568b848d0584a1145c8e514cbd21,,,,apache,lucene-solr,8/9/17 10:46,Create znode upfront and fix chroot handling in delegation token feature,8e2dab7315739a0f5194600ee524f6a2ea616af6
+VULAS,CVE-2018-1000008,https://github.com/jenkinsci/pmd-plugin,f88399a021c22e30cb8fbac5200471d69f1b6224,,,,jenkinsci,pmd-plugin,1/4/18 16:33,[SECURITY-655] Do not resolve external entities.,4443efe03bbc96a910bde544c462b2eb1b547dbb
+VULAS,CVE-2018-1000009,https://github.com/jenkinsci/checkstyle-plugin,365d6164ebce7b65ae010c71016924ef8b98c1a0,,,,jenkinsci,checkstyle-plugin,1/23/18 11:46,"Merge pull request #13 from Wadeck/SECURITY-656_ADD_TEST
+
+[SECURITY-656] Add test for the XXE correction",b371c8873f2089d0c9d5ffb7ea7951c625442513:2dbd978b8cde6f63c7da8c123b5e6e80193d4fa3
+VULAS,CVE-2018-1000054,https://github.com/jenkinsci/ccm-plugin,066cb43b4413b3490d822ec8b8a32072ebd213ca,,,,jenkinsci,ccm-plugin,1/30/18 14:34,[SECURITY-659] XML External Entity processing vulnerability,fed6ee7435429b7f6a4576acb823a84277c669fc
+VULAS,CVE-2018-1000055,https://github.com/jenkinsci/android-lint-plugin,4a19f962ebde3f705880b0e8148731d8dac9db2d,,,,jenkinsci,android-lint-plugin,1/30/18 21:02,"[FIXED SECURITY-660] Switch to using secure XML parser.
+
+This prevents XXE processing attacks.",b558715472a80821cf394aba8ee44ed4359780e8
+VULAS,CVE-2018-1000056,https://github.com/jenkinsci/junit-plugin,15f39fc49d9f25bca872badb48e708a8bb815ea7,,,,jenkinsci,junit-plugin,2/2/18 12:30,[SECURITY-521] Avoid XXE when parsing test results,2c26482bf35ed697f6d1411ff92342ad86a622c8
+VULAS,CVE-2018-1000067,https://github.com/jenkinsci/jenkins,2d16b459205730d85e51499c2457109b234ca9d9,,,,jenkinsci,jenkins,1/30/18 17:15,[SECURITY-506] Require admin permission to validate proxy config.,ccc374a7176d7704941fb494589790b7673efe2e
+VULAS,CVE-2018-1000068,https://github.com/jenkinsci/jenkins,8830d68f5fe21f344be3496984bc4470bfcd0564,,,,jenkinsci,jenkins,2/8/18 14:37,[SECURITY-717] Plugin.doDynamic check for WEB-INF or META-INF should be case-insensitive.,38249b561b61564830dcfe937351e54d53f5d394
+VULAS,CVE-2018-1000089,https://github.com/jenkinsci/pipeline-build-step-plugin,3dfefdec1f7b2a4ee0ef8902afdea720b1572cb3,,,,jenkinsci,pipeline-build-step-plugin,5/9/17 22:18,[SECURITY-433] Check Item.BUILD permission.,c82f48fb270ec96a3f6a84d6ad61ae214f572fe4
+VULAS,CVE-2018-1000104,https://github.com/jenkinsci/coverity-plugin,34b7c2b07014b8e1e708361170146600db172491,,,,jenkinsci,coverity-plugin,1/10/18 18:52,"Fix Jenkins issue SECURITY-260 - credentials stored in plaintext. Removed the ""user"" and ""password"" which were stored as plain text. If the previous configuration still contains plaintext user and password, these information will be migrated into Credentials once.
+
+Fix: 109522, 108097",6e3729f9af2595749b9e7354e20510ab50308a90
+VULAS,CVE-2018-1000107,https://github.com/jenkinsci/ownership-plugin,42487df17cd272e504d3cd3e09abb4904f80dba2,,,,jenkinsci,ownership-plugin,2/20/18 19:29,[SECURITY-498] - Prevent users from modifying ownership via REST or CLI,5e83dc828899332f6e2d076ee554ffccea6e5f12
+VULAS,CVE-2018-1000109,https://github.com/jenkinsci/google-play-android-publisher-plugin,f81b058289caf3332ae40d599a36a3665b1fa13c,,,,jenkinsci,google-play-android-publisher-plugin,2/3/18 13:02,"[FIXED SECURITY-715] Guard credential enumeration with permission check.
+
+Previously, users who were not allowed to read credentials, or job
+configs, could list the available Google OAuth credentials in the
+system, and validate whether the credentials were valid.",ca8abcc23c29625996c70fa7e53eb69dafa9f527
+VULAS,CVE-2018-1000110,https://github.com/jenkinsci/git-plugin,a3d3a7eb7f75bfe97a0291e3b6d074aafafa86c9,,,,jenkinsci,git-plugin,2/9/18 23:40,"Fix SECURITY-723 - info disclosure over http
+
+Prior to this change, the /git/search/ URL responded to queries for
+user name information with the user names of system users which match
+the query parameters, even if the query is not authenticated.
+
+This removes the ability to search through the /git/search/ URL.  The
+/git/search/ URL is an accident of implementation from the 2011
+addition of the GitStatus object.",2656c35f36974fc2cf1e64343d3764c4cb57432b
+VULAS,CVE-2018-1000111,https://github.com/jenkinsci/subversion-plugin,25f6afbb02a5863f363b0a2f664ac717ace743b4,,,,jenkinsci,subversion-plugin,2/19/18 14:05,[SECURITY-724] Fix data disclosure using search,6826814479b2b6b77ab31bf9bab85b01e060da5b
+VULAS,CVE-2018-1000112,https://github.com/jenkinsci/mercurial-plugin,54b4f82e80c89d51b12bc64258f6b59e98b0c16a,,,,jenkinsci,mercurial-plugin,2/19/18 14:06,[SECURITY-726] Data disclosure using search.,f6e5f0bff2d8678c0e7cb13d0db031b45c7a0437
+VULAS,CVE-2018-1000114,https://github.com/jenkinsci/promoted-builds-plugin,9b99b9427cc4f692644f929e70f3e7b2180b11c5,,,,jenkinsci,promoted-builds-plugin,2/20/18 19:43,"[SECURITY-190][SECURITY-676] Make permissions consistent for approvals, re-executions, and force promotions",fbb7dda57a2e192653910f8ea4d395850b48ce08
+VULAS,CVE-2018-1000125,https://github.com/inversoft/prime-jwt,0d94dcef0133d699f21d217e922564adbb83a227,,,,inversoft,prime-jwt,1/30/18 16:38,"Fixes Issue #2, bug exists that allows a JWT to be decoded even when no signature is provided.",7c9474a493e00ba184df370fc87d8f87ac00904a
+VULAS,CVE-2018-1000129,https://github.com/rhuss/jolokia,5895d5c137c335e6b473e9dcb9baf748851bbc5f,,,,rhuss,jolokia,1/24/18 9:35,"fix: Verify a given 'mimeType' and/or 'callback' request parameter
+
+So that only fixed values are possible, in order to avoid XSS attack
+vectors.",557c23edec6b1321fac9bf73239e6cadfda77a07
+VULAS,CVE-2018-1000134,https://github.com/pingidentity/ldapsdk,8471904a02438c03965d21367890276bc25fa5a6,,,,pingidentity,ldapsdk,3/9/18 17:29,"Fix a SimpleBindRequest bug
+
+Fixed a bug in SimpleBindRequest that prevented it from rejecting a
+bind request that includes a DN without a password (when it is
+appropriate to do so, based on the
+LDAPConnectionOptions.bindWithDNRequiresPassword() setting) when
+operating in synchronous mode.  The setting was properly honored in
+the default asynchronous mode.",41df75887cd26ee936d4d1e824ee1da77ed77e6d
+VULAS,CVE-2018-1000149,https://github.com/jenkinsci/ansible-plugin,06d30e5b626a978e258a7f4ab473cd7f53a7cba7,,,,jenkinsci,ansible-plugin,3/21/18 12:32,[SECURITY-630] hostKey is secure by default now. Old hostKeyChecking value is ignored and deprecated. Currently you will need to disabled the checking.,02694ea4c4f08d1ace78afd5116ad76db8ddb458
+VULAS,CVE-2018-1000406,https://github.com/jenkinsci/jenkins,c3351d2e7c3edfee82b9470e9aa1168982296072,,,,jenkinsci,jenkins,9/27/18 9:31,[SECURITY-1074],01157a699f611ca7492e872103ac01526a982cf2
+VULAS,CVE-2018-1000407,https://github.com/jenkinsci/jenkins,df87e12ddcfeafdba6e0de0e07b3e21f8473ece6,,,,jenkinsci,jenkins,9/27/18 9:15,[SECURITY-1129],517da6ed389f0a606dd9bb8595bc79fc93f4331c
+VULAS,CVE-2018-1000531,https://github.com/inversoft/prime-jwt,abb0d479389a2509f939452a6767dc424bb5e6ba,,,,inversoft,prime-jwt,5/2/18 15:31,Fixing issue #3 and adding tests to confirm.,8d73248b7e4c8bdeed807a9be89ea51d348764e0
+VULAS,CVE-2018-1000548,https://github.com/umlet/umlet,e1c4cc6ae692cc8d1c367460dbf79343e996f9bd,,,,umlet,umlet,4/6/18 8:00,#500 secure xml parsing; new cfg secure_xml_processing,66984741d0ca00d8c94d5329c9344157b51bc380
+VULAS,CVE-2018-1000614,https://github.com/opennetworkinglab/onos,d59f36ce062b31be67221f6b668abaeb54011d49,,,,opennetworkinglab,onos,6/14/18 12:42,"Fixing XXE attacks through NETCONF Alarms
+
+Change-Id: I3426ebfe4ede9e4a13f753be6ba2b73e3db70876",2bd11b79bf5e11943b124f88e4e9c5268613ad0d
+VULAS,CVE-2018-1000615,https://github.com/opennetworkinglab/onos,1a783729a1d7e0cd59d59a8dd3a73cdd6ac0f30d,,,,opennetworkinglab,onos,6/27/18 20:21,"Fix for OS-12, NumberFormatException on badly formatted version string
+
+Change-Id: I7d667b12bcc00e8a8135c367cb9463f266130d31",eb42a733464fcad5b94204e05cbec4e271fd3cd0
+VULAS,CVE-2018-1000616,https://github.com/opennetworkinglab/onos,af1fa39a53c0016e92c1de246807879c16f507d6,,,,opennetworkinglab,onos,6/26/18 9:16,"[OS] Fix for XXE in netconf drivers xml utils
+
+Change-Id: Ie38901decb59712c7cf6c717f42bbb746c1e1921",021d2eb175b8e46d4690cd9e1243301ddd903bcc
+VULAS,CVE-2018-1000632,https://github.com/dom4j/dom4j,e598eb43d418744c4dbf62f647dd2381c9ce9387,,,,dom4j,dom4j,7/1/18 9:27,#48 Validate QName inputs - throw IllegalArgumentException when qualified name contains disallowed character.,565f4f4a400216ed763760eb8ec803c79fbc830b
+VULAS,CVE-2018-1000844,https://github.com/square/retrofit,97057aaae42e54bfbee8acfa8af7dcf37e812342,,,,square,retrofit,4/17/18 17:59,"Merge pull request #2735 from square/jwilson.0417.lock_down_jaxb
+
+Lock down JAXB. Don't load remote entities.",ce787ed52be1eb881e5375aaf14100c1800e4037:4a693c5aeeef2be6c7ecf80e7b5ec79f6ab59437
+VULAS,CVE-2018-1000850,https://github.com/square/retrofit,b9a7f6ad72073ddd40254c0058710e87a073047d,,,,square,retrofit,10/21/18 20:45,"Forbid path traversal ('.' and '..') as @Path parameters.
+
+They're likely to have the unintended effect. For example, passing ""..""
+to @DELETE /account/book/{isbn}/ yields @DELETE /account/.",5088b0df6f2c52fcead426dafbb04214225e0cc7
+VULAS,CVE-2018-1000861,https://github.com/jenkinsci/jenkins,47f38d714c99e1841fb737ad1005618eb26ed852,,,,jenkinsci,jenkins,11/21/18 14:09,"[SECURITY-595]
+
+Co-Authored-By: Wadeck Follonier <wadeck.follonier@gmail.com>",73afa0ca786a87f05b5433e2e38f863826fcad17
+VULAS,CVE-2018-1000862,https://github.com/jenkinsci/jenkins,c19cc705688cfffa4fe735e0edbe84862b6c135f,,,,jenkinsci,jenkins,11/21/18 12:41,[SECURITY-904],82f55553ca56b8f58294705c969bbaf275fe63b2
+VULAS,CVE-2018-1000863,https://github.com/jenkinsci/jenkins,4ed66e5838476e575a83c3cd13fffb37eefa2f48,,,,jenkinsci,jenkins,11/21/18 12:46,[SECURITY-1072],c19cc705688cfffa4fe735e0edbe84862b6c135f
+VULAS,CVE-2018-1000864,https://github.com/jenkinsci/jenkins,73afa0ca786a87f05b5433e2e38f863826fcad17,,,,jenkinsci,jenkins,11/21/18 12:47,[SECURITY-1193],4ed66e5838476e575a83c3cd13fffb37eefa2f48
+VULAS,CVE-2018-1000865,https://github.com/jenkinsci/groovy-sandbox,0cd7ec12b7c56cfa3167d99c5f43147ce05449d3,,,,jenkinsci,groovy-sandbox,10/18/18 0:14,[SECURITY-1186] Forbid sandboxed classes from overriding finalize.,26ffba44156996da347c66a38cc7b056a4d243d3
+VULAS,CVE-2018-1000866,https://github.com/jenkinsci/groovy-sandbox,0cd7ec12b7c56cfa3167d99c5f43147ce05449d3,,,,jenkinsci,groovy-sandbox,10/18/18 0:14,[SECURITY-1186] Forbid sandboxed classes from overriding finalize.,26ffba44156996da347c66a38cc7b056a4d243d3
+VULAS,CVE-2018-1002200,https://github.com/codehaus-plexus/plexus-archiver,58bc24e465c0842981692adbf6d75680298989de,,,,codehaus-plexus,plexus-archiver,5/5/18 22:16,"fix: fail when trying to extract outside of dest dir
+
+A well crafted zip file may cause the code to extract outside of the destination dir.
+This PR fails when that happens so that no unexpected behaviour happens.",97c0d97504632a2a80b7d847bccdd9b37d27aea1
+VULAS,CVE-2018-1002201,https://github.com/zeroturnaround/zt-zip,759b72f33bc8f4d69f84f09fcb7f010ad45d6fff,,,,zeroturnaround,zt-zip,4/26/18 14:52,"Fixed potential security vulnerability reported by Snyk Security Research Team
+
+This is an arbitrary file write vulnerability, that can be achieved using a specially crafted zip archive, that holds path traversal filenames. So when the filename gets concatenated to the target extraction directory, the final path ends up outside of the target folder.",d1c40776d2ff18550d95db2609d3d154692dea93
+VULAS,CVE-2018-10237,https://github.com/google/guava,f89ece5721b2f637fe754937ff1f3c86d80bb196,,,,google,guava,4/24/18 18:05,"Avoid presizing arrays.
+
+RELNOTES=Fixed Denial of Service vulnerability for servers that use Guava and deserialize attacker data: [CVE-2018-10237](https://github.com/google/guava/wiki/CVE-2018-10237).
+
+-------------
+Created by MOE: https://github.com/google/moe
+MOE_MIGRATED_REVID=194113840",5d8209c28d83a7bc6e3153970efe4b795e8ad88d
+VULAS,CVE-2018-10862,https://github.com/wildfly/wildfly-core,40996ae6d5d3b6c1602a15f96b86a8d8a39b53eb,,,,wildfly,wildfly-core,6/20/18 7:29,[WFCORE-3938]: Checking target paths when unzipping deployements.,c9950d0a7f72236fb7ca68aa8f46afbc32081da1
+VULAS,CVE-2018-10936,https://github.com/pgjdbc/pgjdbc,cdeeaca47dc3bc6f727c79a582c9e4123099526e,,,,pgjdbc,pgjdbc,8/12/18 15:15,"security: implement SSL hostname verification for non-default (LibPQFactory) SSL factories (CVE-2018-10936)
+
+In order to configure full SLL verification, `sslmode=verify-full` should be used.
+However, previous versions of pgjdbc missed hostname verification for non-default SSL factories,
+so `sslmode=verify-full` was effectively the same as `sslmode=verify-ca`.
+
+Default sslfactory (which is LibPQFactory) is not impacted.
+
+Extra changes:
+- support for sslmode=allow/prefer/require
+- ssl=true is treated as verify-full
+- sslfactoryarg and socketFactoryArg are deprecated (as constructors with Properties) can be used.",c2885dd0cfc793f81e5dd3ed2300bb32476eb14a
+VULAS,CVE-2018-11248,https://github.com/lingochamp/FileDownloader,ff240b883490a84744705f9b4165719d7633f902,,,,lingochamp,FileDownloader,5/18/18 6:01,"chore: fix typo on the directory traversal vulnerability message
+refs #1028",e8dd7724c9243b21181eb3d27a1715ed811ccfde
+VULAS,CVE-2018-11758,https://github.com/apache/cayenne,6fc896b65ed871be33dcf453cde924bf73cf83db,,,,apache,cayenne,7/9/18 8:16,Disable external entities in XML reader,0b1f5af0f4b4349a8266c97d6423f44058101b65
+VULAS,CVE-2018-11761,https://github.com/apache/tika,4e67928412ad56333d400f3728ecdb59d07d9d63,,,,apache,tika,9/6/18 12:57,improve xml parsing,705b79ccb6c0ad0f92a3a185bf7e66cacf899931
+VULAS,CVE-2018-11762,https://github.com/apache/tika,a09d853dbed712f644e274b497cce254f3189d57,,,,apache,tika,7/13/18 20:16,"TIKA-2687
+
+# Conflicts:
+#	tika-app/src/main/java/org/apache/tika/cli/TikaCLI.java",525889a4f928d1d448c6aaf6b1ddc19081e07404
+VULAS,CVE-2018-11771,https://github.com/apache/commons-compress,a41ce6892cb0590b2e658704434ac0dbcb6834c8,,,,apache,commons-compress,8/9/18 18:39,COMPRESS-463 throw exception when detecting a truncated stored entry,64ed6dde03afbef6715fdfdeab5fc04be6192899
+VULAS,CVE-2018-11775,https://github.com/apache/activemq,bde7097fb8173cf871827df7811b3865679b963d,,,,apache,activemq,8/21/18 13:05,"Add support for hostname verification
+
+(cherry picked from commit 69fad2a135689f6c31fbada1c397f2e0dfd90d3c)",2373aa1320dec90a60d69001adcb0ce856d61d10
+VULAS,CVE-2018-11784,https://github.com/apache/tomcat,efb860b3ff8ebcf606199b8d0d432f76898040da,,,,apache,tomcat,9/4/18 18:19,"When generating a redirect to a directory in the Default Servlet, avoid generating a protocol relative redirect.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1840055 13f79535-47bb-0310-9956-ffa450edef68",94155efccd19fc3338433c63cfa5430e2d1ae00a
+VULAS,CVE-2018-11786,https://github.com/apache/karaf,24fb477ea886e8f294dedbad98d2a2c4cb2a44f9,,,,apache,karaf,10/24/17 18:38,[KARAF-5427] Add RBAC support for reflection invocation and redirections in the console,540adc3e5fca1f22a05791366f52fe3308d20a35
+VULAS,CVE-2018-11799,https://github.com/apache/oozie,d50df341432df1049c6c85bf2dcda9eb0be04d73,,,,apache,oozie,10/17/18 17:08,OOZIE-3370 Property filtering is not consistent across job submission (andras.piros),a74e4bd1b2f16730d7ab6e2470ac27c666536178
+VULAS,CVE-2018-1190,https://github.com/cloudfoundry/uaa,96fe26711f8f8855d2994a531447f730afd61844,,,,cloudfoundry,uaa,12/7/17 18:46,"Escape output
+
+[#153420213] https://www.pivotaltracker.com/story/show/153420213
+
+Signed-off-by: Filip Hanik <fhanik@pivotal.io>",a6c6f3687137d387b080de59228fa52bf92c7680
+VULAS,CVE-2018-12036,https://github.com/jeremylong/DependencyCheck,c106ca919aa343b95cca0ffff0a0b5dc20b2baf7,,,,jeremylong,DependencyCheck,5/7/18 11:01,"Merge pull request #1265 from jeremylong/snyk_report
+
+Fix Possible Path Traversal from Archive Files",c5418506af1fe3a4f5d18752e272e783a46386f8:cfa994ddc46d333366054a0c41c5d99ae5e0d64f
+VULAS,CVE-2018-12418,https://github.com/junrar/junrar,ad8d0ba8e155630da8a1215cee3f253e0af45817,,,,junrar,junrar,5/31/18 2:22,"make Archive slightly more robust against corrupt files.  Add (#8)
+
+unit test file from Apache Tika.",00610e6ee75d5fd6be8cdfc1936a294295026469
+VULAS,CVE-2018-12537,https://github.com/eclipse/vert.x,1bb6445226c39a95e7d07ce3caaf56828e8aab72,,,,eclipse,vert.x,5/23/18 10:31,Http header CR / LF validation - fixes #2470,513b18b909a144b75ff755414cd0625150149a3d
+VULAS,CVE-2018-12538,https://github.com/eclipse/jetty.project,a0b8321ef452dddff9bc6c14e3ac0108239bfa2c,,,,eclipse,jetty.project,1/10/18 15:40,"Jetty 9.4.x 2038 slow filesessiondatastore (#2102)
+
+* Issue #2038 Speed up FileSessionDataStore
+
+Signed-off-by: Jan Bartel <janb@webtide.com>",356bf2e06f1a0f3b79a1fe30af0fb92a9ed8f74f
+VULAS,CVE-2018-12541,https://github.com/eclipse-vertx/vert.x,269a583330695d1418a4f5578f7169350b2e1332,,,,eclipse-vertx,vert.x,9/20/18 7:36,CVE-2018-12541: When a WebSocket upgrade has a body > 8192 send an appropriate response immediately and close the connection afterward. - fixes #2648,616a034d59a8fcdb264b4bfcf3ec34bd83175ab0
+VULAS,CVE-2018-12542,https://github.com/vert-x3/vertx-web,57a65dce6f4c5aa5e3ce7288685e7f3447eb8f3b,,,,vert-x3,vertx-web,9/20/18 7:42,"CVE-2018-12542: The StaticHandler uses external input to construct a pathname that should be within a restricted directory, but it does not properly neutralize '\' (forward slashes) sequences that can resolve to a location that is outside of that directory when running on Windows Operating Systems. - fixes #1025",3fcb0036dc11f22ea232f61cfff31b29a6b6eca4
+VULAS,CVE-2018-1256,https://github.com/pivotal-cf/spring-cloud-sso-connector,ef647a2acf2363c6018e8543d665ac8862593372,,,,pivotal-cf,spring-cloud-sso-connector,4/24/18 23:03,"Revert commit c594317337457a7f19166244f6acc66b476be856
+
+* Above commit creates a regression for when we make the Issuer check
+without binding to a SSO service
+
+[#157069100]
+
+Signed-off-by: Alex Jackson <ajackson@pivotal.io>",9531430217eb95f9c70e1728d0213b605ffbaa2c
+VULAS,CVE-2018-12585,https://github.com/OPCFoundation/UA-Java,83fe7a9f9a510f35e3903bef907d22889f99b08b,,,,OPCFoundation,UA-Java,6/4/18 13:08,Disabled DTD processing for XML parsing,1c4a3b1e10e23b7dc1dfa01b115c6d159c0cfb59
+VULAS,CVE-2018-1259,https://github.com/SvenEwald/xmlbeam,f8e943f44961c14cf1316deb56280f7878702ee1,,,,SvenEwald,xmlbeam,4/11/18 16:05,Security fixes,e570eadb1526f0ccb764f3783d74c8f21b2691b2
+VULAS,CVE-2018-1261,https://github.com/spring-projects/spring-integration-extensions,a5573eb232ff85199ff9bb28993df715d9a19a25,,,,spring-projects,spring-integration-extensions,5/3/18 1:12,"Disallow traversal entity in zip
+
+When the file name holds path traversal file names it gets
+concatenated to the target extraction directory,
+the final path ends up outside of the target folder.",c5602c4223fa2726a8c0ad70f8f0cb9deb6ac57d
+VULAS,CVE-2018-1263,https://github.com/spring-projects/spring-integration-extensions,d10f537283d90eabd28af57ac97f860a3913bf9b,,,,spring-projects,spring-integration-extensions,5/10/18 13:58,"Dissallow traversal entry even for byte[]
+
+The previous change prevents the transformer from writing a file outside of
+the working directory.
+
+However it still produced an entry for an errant file when producing just contents,
+and not writing to the file system. However, the errant path would be added to the
+message and might be used by subsequent components to write to the file system.
+
+This situation is present in the `UnZip2FileTests`.
+
+While this vulnerability is not directly exposed by the framework, user applications
+could be affected by it.",8c4e18fde994f3794c266824575ccb8c6bd9469d
+VULAS,CVE-2018-1284,https://github.com/apache/hive,b0a58d245875dc1b3ac58a7cf1a61d3b17805e96,,,,apache,hive,3/7/18 21:37,"HIVE-18879: Disallow embedded element in UDFXPathUtil needs to work if xercesImpl.jar in classpath (Daniel Dai, reviewed by Thejas Nair)",0cfd4feadd1b7dba206025cc20c5b8235231e8c5
+VULAS,CVE-2018-1295,https://github.com/apache/ignite,340569b8f4e14a4cb61a9407ed2d9aa4a20bdf49,,,,apache,ignite,1/22/18 19:41,ignite-6643 Marshalling improvements,ce96e4f3ed7c151b7f3e845981d7470d707c4050
+VULAS,CVE-2018-12972,https://github.com/OpenTSDB/opentsdb,a6a9ec4bc8a526951bc25bb19a145782bafaa8b0,,,,OpenTSDB,opentsdb,1/28/17 23:05,"Avoid double computing the expressions for the /query/exp endpoint.
+Also make sure both versions of next() handle booleans.
+
+Signed-off-by: Chris Larsen <clarsen@yahoo-inc.com>",cac608ad7bfaf6315fd2319a8af37da307abdeb9
+VULAS,CVE-2018-1304,https://github.com/apache/tomcat,723ea6a5bc5e7bc49e5ef84273c3b3c164a6a4fd,,,,apache,tomcat,2/6/18 11:38,"Fix https://bz.apache.org/bugzilla/show_bug.cgi?id=62067
+Correctly apply security constraints mapped to the context root using a
+URL pattern of """"
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1823306 13f79535-47bb-0310-9956-ffa450edef68",a8b0e84dc703025f7d1b3ae4ed554a3c589feed4
+VULAS,CVE-2018-1306,https://github.com/apache/portals-pluto,89f6a59a740d0a8318640ca6015e9a381c5c6b50,,,,apache,portals-pluto,2/8/18 8:32,Changed the temp directory used by the demo portlet.,13a67911ead04ccbb80a492d567c5a2878fa8a8f
+VULAS,CVE-2018-1309,https://github.com/apache/nifi,28067a29fd13cdf8e21b440fc65c6dd67872522f,,,,apache,nifi,2/13/18 5:10,"NIFI-4869 Added SAX utility method for SplitXML processor.
+Added unit tests.
+Added test resources to RAT exclude list.
+This closes #2466",a3edd34db031d5d5efc83a90e99368a1dfd20a4f
+VULAS,CVE-2018-1320,https://github.com/apache/thrift,d973409661f820d80d72c0034d06a12348c8705e,,,,apache,thrift,3/5/18 16:34,"THRIFT-4506: fix use of assert for correctness in Java SASL negotiation
+Client: java",9e0c9272140ea91ea4b3f042d207acbbaa15c093
+VULAS,CVE-2018-1324,https://github.com/apache/commons-compress,2a2f1dc48e22a34ddb72321a4db211da91aa933b,,,,apache,commons-compress,12/22/17 18:34,COMPRESS-432 make sure code doesn't get stuck in infinite loop,dcb0486fb4cb2b6592c04d6ec2edbd3f690df5f2
+VULAS,CVE-2018-1327,https://github.com/apache/struts,67ecf3a21608e20449bcb7895b22204b400fecd4,,,,apache,struts,2/20/18 5:49,Defines a new handler using Jackson XML,4260bee634cb606be6071bce2383fddb510608aa
+VULAS,CVE-2018-1336,https://github.com/apache/tomcat,92cd494555598e99dd691712e8ee426a2f9c2e93,,,,apache,tomcat,4/27/18 17:26,"Improve handing of overflow in the UTF-8 decoder with supplementary characters.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1830373 13f79535-47bb-0310-9956-ffa450edef68",c6e1958637dddc04ef3367d1f0ba233fe45747fe
+VULAS,CVE-2018-14371,https://github.com/eclipse-ee4j/mojarra,1b434748d9239f42eae8aa7d37d7a0930c061e24,,,,eclipse-ee4j,mojarra,5/11/18 8:02,fixing CTS failure issue in master branch,6f612e6797ad8d2e6a54d2fcfd15cbb8c75286b1
+VULAS,CVE-2018-14627,https://github.com/wildfly/wildfly,883115ea2168343e870745f538a80b1ddc360914,,,,wildfly,wildfly,8/10/18 1:28,"Merge pull request #10675 from tadamski/WFLY-9107
+
+[WFLY-9107] IIOP security configuration and tests refactor",6aeecf1c7a354020e1f90e52324cd36109f60be2:abeb783bed01b1586a0541e3f80cd3d2c47bcd2b
+VULAS,CVE-2018-14637,https://github.com/keycloak/keycloak,0fe0b875d63cce3d2855d85d25bb8757bce13eb1,,,,keycloak,keycloak,10/12/18 15:36,KEYCLOAK-8260 Improve SAML conditions handling,021e48aea4a5db0f128de7d9281dc37e648f9d09
+VULAS,CVE-2018-14658,https://github.com/keycloak/keycloak,a957e118e6efb35fe7ef3a62acd66341a6523cb7,,,,keycloak,keycloak,9/13/18 4:20,Redirect URLs are not normalized,0897d969b1327d07ad9a9411cbb8ba6aec8d5ded
+VULAS,CVE-2018-15531,https://github.com/javamelody/javamelody,ef111822562d0b9365bd3e671a75b65bd0613353,,,,javamelody,javamelody,9/4/18 6:31,fix for security,00dd8d51a6483cb3a5b4c8ae9c24197028401c58
+VULAS,CVE-2018-15801,https://github.com/spring-projects/spring-security,c70b65c5df0e170a2d34d812b83db0b7bc71ea25,,,,spring-projects,spring-security,11/13/18 5:00,"Favor URL.toExternalForm
+
+Converts URLs to Strings before comparing them. Uses toString(),
+which delegates to toExternalForm().
+
+Fixes: gh-6073",a32d19ec7dfcd9dd2b51e37f1adc3d8f1bf23490
+VULAS,CVE-2018-17187,https://github.com/apache/qpid-proton-j,0cb8ca03cec42120dcfc434561592d89a89a805e,,,,apache,qpid-proton-j,11/6/18 12:17,PROTON-1962: update some defaults and related handling,31f5fc97bbf60a73ba913b7dc16851cf7e2a150b
+VULAS,CVE-2018-17192,https://github.com/apache/nifi,dbf259508c2b8e176d8cb837177aaadbf44f0670,,,,apache,nifi,6/13/18 21:05,"NIFI-5258 - Changed addHeader to setHeader which stops X-Frame-Options being added twice to responses. Added unit test.
+
+This closes #2791.
+
+Signed-off-by: Andy LoPresto <alopresto@apache.org>",275b8cbf231f2c41aa2d79d69d8abf6dbaabd278
+VULAS,CVE-2018-17193,https://github.com/apache/nifi,e62aa0252dfcf34dff0c3a9c51265b1d0f9dfc9f,,,,apache,nifi,7/18/18 23:08,"NIFI-5442 Get X-ProxyContextPath value from request attributes rather than directly from headers.
+NIFI-5442 Populate request contextPath attribute during AccessResource before displaying on message-page.jsp.
+Refactored shared code from CatchAllFilter to WebUtils.
+NIFI-5442 Refactored filter and context path code to shared parent filter and subclass.
+NIFI-5442 Removed unnecessary initParams from nifi-web-ui web.xml.
+NIFI-5442 Added explicit dispatchers to nifi-web-ui web.xml and removed unnecessary code from AccessResource.
+
+This closes #2908",9742dd2fac42d4afb8b1e009535ed50c02373493
+VULAS,CVE-2018-17194,https://github.com/apache/nifi,748cf745628dab20b7e71f12b5dcfe6ed0bbf134,,,,apache,nifi,9/27/18 1:18,"NIFI-5628 Added content length check to OkHttpReplicationClient.
+Added unit tests.
+
+This closes #3035",0dd382370bf139e0f8c1b22761e4aa306943dd77
+VULAS,CVE-2018-17195,https://github.com/apache/nifi,246c090526143943557b15868db6e8fe3fb30cf6,,,,apache,nifi,9/14/18 1:45,"NIFI-5595 - Added the CORS filter to the templates/upload endpoint using a URL matcher.
+Explicitly allow methods GET, HEAD. These are the Spring defaults when the allowedMethods is empty but now it is explicit. This will require other methods like POST etc to be from the same origin (for the template/upload URL).
+
+This closes #3024.
+
+Signed-off-by: Andy LoPresto <alopresto@apache.org>",c6572f042bf1637f6faaa2b2ffe4a56e297c6d1a
+VULAS,CVE-2018-17197,https://github.com/apache/tika,0c49c851979163334ea05cbebdd11ff87feba62d,,,,apache,tika,11/8/18 18:48,TIKA-2773 upgrade sqlite version,33d960c24dd9f7e97cd11f18295cfd347cfdb1d4
+VULAS,CVE-2018-17228,https://github.com/narkisr/nmap4j,06b58aa3345d2f977553685a026b93e61f0c491e,,,,narkisr,nmap4j,9/27/18 11:40,Adding hosts validation fixing https://github.com/narkisr/nmap4j/issues/9,3be15623bc9b253d91578a7038d00fdc3d27cb05
+VULAS,CVE-2018-17785,https://github.com/blynkkk/blynk-server,806bc7847a687203a904d24feb1a0278de889e62,,,,blynkkk,blynk-server,10/3/18 8:07,"#1256 no need for replace, just check for ""/.."" in path",4fb0d986d7f18a36fecef31b3714b7a1ae0d23b3
+VULAS,CVE-2018-18389,https://github.com/neo4j/neo4j,46de5d01ae2741ffe04c36270fc62c6d490f65c9,,,,neo4j,neo4j,10/8/18 18:46,"Fix authentication verification for starttls
+
+This fixes a bug that was introduced that makes it so password isn't
+checked when authenticating if server is configured to use starttls
+
+Also adds tests for this case.",7c427b08211400cb3900ae7d6846d66cbd76be9a
+VULAS,CVE-2018-18628,https://github.com/pippo-java/pippo,c6b26551a82d2dd32097fcb17c13c3b830916296,,,,pippo-java,pippo,10/26/18 17:00,"Fix 458 (#470)
+
+Thanks! I will come with small changes after merge.",aff3d736775a247f6c54876e8a50d0789ac8a7b1
+VULAS,CVE-2018-19413,https://github.com/SonarSource/sonarqube,7b567ba3d15ed7dd0b0bba0330686487e35af85c,,,,SonarSource,sonarqube,9/24/18 14:00,SONAR-11305 Return external identity only to sys admin in api/users/search,4a70f91143e2073d38dfd690e190c40b61c5817e
+VULAS,CVE-2018-19859,https://github.com/OpenRefine/OpenRefine,e243e73e4064de87a913946bd320fbbe246da656,,,,OpenRefine,OpenRefine,12/9/18 1:41,Fix zip slip vulnerability. Closes #1840.,de86a162fa639af34f5f17e0ed840bd5d9ef4c9b
+VULAS,CVE-2018-1999020,https://github.com/opennetworkinglab/onos,4b19da6ce94de4865a365c200d6e8169ffb2184f,,,,opennetworkinglab,onos,7/8/18 17:06,"Fix for OS-13 - don't allow app pathnames to leave the app root
+
+Change-Id: I6bb7be6df8be3dced903f72cef4600532cb118a3
+(cherry picked from commit 10e606aab45365b15f2533e0e92d5047ac6a84fe)",5b66ce0da32ce62d71868558b6229da190343676
+VULAS,CVE-2018-1999027,https://github.com/jenkinsci/saltstack-plugin,5306bcc438ff989e4b1999a0208fd6854979999b,,,,jenkinsci,saltstack-plugin,7/25/18 23:08,[SECURITY-1009],1775a33860d8eb0e7c5f335ee93153d1cc675a1c
+VULAS,CVE-2018-1999036,https://github.com/jenkinsci/ssh-agent-plugin,3a8abe1889d25f9a73cdba202cf27212b273de4d,,,,jenkinsci,ssh-agent-plugin,7/23/18 8:20,[SECURITY-704],57a30b0a7498370a0c79f58b6f52b9cb228abfa4
+VULAS,CVE-2018-1999040,https://github.com/jenkinsci/kubernetes-plugin,bf7a47847dfb5ef2d1e2a537e2eb9f28063988c6,,,,jenkinsci,kubernetes-plugin,7/23/18 8:01,[SECURITY-1016],d475ed6b56278c78895b3b694a97b2cce23b8e12
+VULAS,CVE-2018-1999042,https://github.com/jenkinsci/jenkins,727d58f690abf64f543407e1de3545eca76ad30e,,,,jenkinsci,jenkins,8/1/18 16:19,[SECURITY-637],832144e32297fea7734a44bd2064f6ddd4562874
+VULAS,CVE-2018-1999044,https://github.com/jenkinsci/jenkins,e5046911c57e60a1d6d8aca9b21bd9093b0f3763,,,,jenkinsci,jenkins,7/31/18 22:56,[SECURITY-790],8697bdff0342421e22230028d84aaa265719e86c
+VULAS,CVE-2018-1999045,https://github.com/jenkinsci/jenkins,ef9583a24abc4de157e1570cb32d7a273d327f36,,,,jenkinsci,jenkins,7/31/18 22:58,[SECURITY-996],e5046911c57e60a1d6d8aca9b21bd9093b0f3763
+VULAS,CVE-2018-1999046,https://github.com/jenkinsci/jenkins,6867e4469525d16319b1bae9c840b933fe4e23c4,,,,jenkinsci,jenkins,8/1/18 23:33,[SECURITY-1071],727d58f690abf64f543407e1de3545eca76ad30e
+VULAS,CVE-2018-20059,https://github.com/pippo-java/pippo,9f36e5891c0b11f840e1e1561ae96d83ba9ce759,,,,pippo-java,pippo,12/11/18 20:00,Fix #486,8531461923c325063473fa73a864a73676482ed0
+VULAS,CVE-2018-20157,https://github.com/OpenRefine/OpenRefine,6a0d7d56e4ffb420316ce7849fde881344fbf881,,,,OpenRefine,OpenRefine,12/31/18 15:02,Disable DTDs in XML importer. Closes #1907.,ddd9bf9aa80a43c68bf6d8fb4dc9d0b8bb29dcd5
+VULAS,CVE-2018-20227,https://github.com/eclipse/rdf4j,df15a4d7a8f2789c043b27c9eafe1b30316cfa79,,,,eclipse,rdf4j,12/18/18 19:01,"Verify that zip file entries don't try to escape the parent dir + test
+
+Signed-off-by: Bart Hanssens <bart.hanssens@bosa.fgov.be>",f63510ba14910fee4a5489f584fd2fd2da5b42e5
+VULAS,CVE-2018-20318,https://github.com/Wechat-Group/WxJava,6272639f02e397fed40828a2d0da66c30264bc0e,,,,Wechat-Group,WxJava,12/20/18 8:47,#889 修复一些潜在的XXE漏洞代码,9b6893161a459688d99b737d916ccacbc6bf34c7
+VULAS,CVE-2018-5382,https://github.com/bcgit/bc-java,81b00861cd5711e85fe8dce2a0e119f684120255,,,,bcgit,bc-java,3/6/13 23:47,"Added BKS-V1 keystore.
+Some extra UTF-8 tests.",8825b2c2a3b341783322153136394007d39b718a
+VULAS,CVE-2018-5968,https://github.com/FasterXML/jackson-databind,038b471e2efde2e8f96b4e0be958d3e5a1ff1d0,,,,FasterXML,jackson-databind,1/22/18 5:01,Fix #1899,b744bf378c9fcc25c69244dcd4133f150813aa3a
+VULAS,CVE-2018-6331,https://github.com/facebook/buck,8c5500981812564877bd122c0f8fab48d3528ddf,,,,facebook,buck,3/28/18 18:24,"Prevent deserialization of random objects
+
+Summary:
+Fixed security issue with buck parser-cache command.
+This diff prevent deserialization of random objects.
+
+Reviewed By: jtorkkola
+
+fbshipit-source-id: 24e8221",8ce226cd2da6ac107d7db9535d6db4a1ac16211a
+VULAS,CVE-2018-8013,https://github.com/apache/batik,f91125b26a6ca2b7a1195f1842360bed03629839,,,,apache,batik,5/9/18 9:59,"BATIK-1222: Only call DOMImplementation in deserialization
+
+git-svn-id: https://svn.apache.org/repos/asf/xmlgraphics/batik/trunk@1831241 13f79535-47bb-0310-9956-ffa450edef68",23df647cf944b6c33ab23f0433305c153e247839
+VULAS,CVE-2018-8014,https://github.com/apache/tomcat,d83a76732e6804739b81d8b2056365307637b42d,,,,apache,tomcat,5/16/18 14:53,"Fix https://bz.apache.org/bugzilla/show_bug.cgi?id=62343
+Make CORS filter defaults more secure.
+This is the fix for CVE-2018-8014.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1831726 13f79535-47bb-0310-9956-ffa450edef68",6513dbd4a1751fdabfba97c97a60f7086ebb3082
+VULAS,CVE-2018-8016,https://github.com/beobal/cassandra,28ee665b3c0c9238b61a871064f024d54cddcc79,,,,beobal,cassandra,1/26/18 17:42,"Remove dependencies on JVM internals for JMX support
+
+Patch by Sam Tunnicliffe; reviewed by Jason Brown for CASSANDRA-14173",6b00767427706124e016e4f471c2266899387163
+VULAS,CVE-2018-8030,https://github.com/apache/qpid-broker-j,025b48f3193e2b10b1c41d2bc3bcfc9cfc238a27,,,,apache,qpid-broker-j,6/5/18 19:01,QPID-8203: [Broker-J][AMQP 0-9] Fix maximum message size check,560d4a3b3a51deb4cb79303976cd87a16b8e0997
+VULAS,CVE-2018-8032,https://github.com/apache/axis1-java,e7ce8a92bc02be54da102efb64c99aeee21a2106,,,,apache,axis1-java,5/20/18 20:10,"Correctly escape namespace URIs in namespace declarations.
+
+git-svn-id: https://svn.apache.org/repos/asf/axis/axis1/java/trunk@1831943 13f79535-47bb-0310-9956-ffa450edef68",beeaefaf0be6fdfac60faac0a851e51f348fd210
+VULAS,CVE-2018-8034,https://github.com/apache/tomcat,2835bb4e030c1c741ed0847bb3b9c3822e4fbc8a,,,,apache,tomcat,6/18/18 19:35,"Enable host name verification for secure WebSocket client connections by
+default.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1833757 13f79535-47bb-0310-9956-ffa450edef68",43e1c5d08f8eaf25bc5d7e706c4c52688d36b021
+VULAS,CVE-2018-8037,https://github.com/apache/tomcat,ed4b9d791f9470e4c3de691dd0153a9ce431701b,,,,apache,tomcat,6/20/18 11:27,"Improve tracking of connection closure.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1833906 13f79535-47bb-0310-9956-ffa450edef68",332877b4a6bc1d6fff287bc380111db28cea3030
+VULAS,CVE-2018-8038,https://github.com/apache/cxf-fediz,b6ed9865d0614332fa419fe4b6d0fe81bc2e660d,,,,apache,cxf-fediz,3/7/18 17:26,Make sure DocTypes are disallowed,84b4d31adc6feaa1d2659f87edd1a2b5a88e9fef
+VULAS,CVE-2018-8718,https://github.com/jenkinsci/mailer-plugin,98e79cf904769907f83894e29f50ed6b3e7eb135,,,,jenkinsci,mailer-plugin,3/17/18 14:03,[SECURITY-774] Only allow admins to send test email,18b8274e1a31b60d7e20492f1ecfa39483b90b37
+VULAS,CVE-2019-3772,https://github.com/spring-projects/spring-integration,59c69ed40d3755ef59f80872e0ea711adbb13620,,,,spring-projects,spring-integration,12/10/18 23:43,"Allow XML components injection
+
+**Cherry-pick to 5.0.x & 4.3.x**
+
+* Polishing after rebase
+* Copyright to 2019
+
+* Rebase and update according upstream deps",0d1312874cad56f09d2f06e2d285730de3cbc111
+VULAS,GEODE-4270,https://github.com/apache/geode,80ad2d70435fb255a8a2d08c8866fbb30a7bedd3,,,,apache,geode,2/2/18 19:50,"GEODE-4270: remove race condition where CacheClientProxy could be asked to (#1378)
+
+authorize a message prior to receiving its security subject.",6011e094432c2e528d1c04912d63a7f51fa7c6f4
+VULAS,HTTPCLIENT-1803,https://github.com/apache/httpcomponents-client,0554271750599756d4946c0d7ba43d04b1a7b22,,,,apache,httpcomponents-client,1/21/17 14:43,"HTTPCLIENT-1803: Improved handling of malformed paths by URIBuilder
+
+git-svn-id: https://svn.apache.org/repos/asf/httpcomponents/httpclient/branches/4.5.x@1779735 13f79535-47bb-0310-9956-ffa450edef68",6e4759800fe8a82ee1e9f860c7b8f570dc503913
+VULAS,JAVAMELODY-252,https://github.com/javamelody/javamelody,00ff3490878e78f3f8c9eb65efb054f85f6058f8,,,,javamelody,javamelody,9/16/12 10:05,fix for issue 252: Add XSS protection,5accb6003ff7ed56c74d0a21ae40a1a8c38a42ca
+VULAS,JAVAMELODY-631,https://github.com/javamelody/javamelody,dd8816863d8d943f819a3fa797c349236e7546d4,,,,javamelody,javamelody,5/10/17 22:02,fix #631 xstream serialization issue,3589fb58b320f7d3999d8be8cad0c6cae69178da
+VULAS,JETTY-1042,https://github.com/eclipse/jetty.project,02dd1975ec61052cb9a17342c9bbec289257b701,,,,eclipse,jetty.project,6/26/09 0:33,"JETTY-1042
+
+git-svn-id: svn+ssh://dev.eclipse.org/svnroot/rt/org.eclipse.jetty/jetty/trunk@438 7e9141cc-0065-0410-87d8-b60c137991c4",05f730be812d0cbf7b8ef49cc5c1a36751c1c3e9
+VULAS,ND4J-001,https://github.com/deeplearning4j/deeplearning4j,f51f4242d67eed9c97a46051cc0c6c72d0830a27,,,,deeplearning4j,deeplearning4j,10/24/18 0:23,"Mitigating ZipSlip vulnerability  (#6630)
+
+* patched org/nd4j/util/ArchiveUtils.java to mitigate ZipSlip vulnerability
+
+* log nitpick",72ce4be844606a87f52f15acdf9375f8221feb34
+VULAS,S2-043,https://github.com/apache/struts,ba0563183b128dcef88b469f46e528a12e0179e7,,,,apache,struts,9/28/16 9:32,Fixes issues in config-browse plugin,b348fc552c3265707181db4a42a41abc72b98488
+VULAS,SONARQUBE-001,https://github.com/SonarSource/sonarqube,08438a2c47112f2fce1e512f6c843c908abed4c7,,,,SonarSource,sonarqube,5/4/18 7:15,SONAR-10661 fix vulnerability in ZipUtils#unzip(),78cddc366251909c34cddbd777630260fc38d2b2
+VULAS,SPR-7779,https://github.com/spring-projects/spring-framework,f4a2282d9d9f6e58029022c58311a1db07f7defc,,,,spring-projects,spring-framework,1/26/11 20:30,LocaleChangeInterceptor validates locale values in order to prevent XSS vulnerability (SPR-7779),b3f039ae5f0b54a325cdb23f6720e5002b054cee
+VULAS,ZEPPELIN-2769,https://github.com/apache/zeppelin,709c5a70a8f37277c9eea0a1c0c9195b5eb21a74,,,,apache,zeppelin,7/12/17 7:25,"[ZEPPELIN-2769] Prevent SQL injection for GetUserList.getUserList.
+
+### What is this PR for?
+Prevent SQL injection for ```GetUserList.getUserList```.
+
+### What type of PR is it?
+Improvement
+
+### What is the Jira issue?
+https://issues.apache.org/jira/browse/ZEPPELIN-2769
+
+Author: Yanbo Liang <ybliang8@gmail.com>
+
+Closes #2487 from yanboliang/zeppelin-2769 and squashes the following commits:
+
+d1a7ff9b [Yanbo Liang] Prevent SQL injection for GetUserList.getUserList.",3a57fc2933eef0bcbec1679f06acc3c659d62dff

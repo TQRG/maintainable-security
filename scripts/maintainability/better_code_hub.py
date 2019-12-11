@@ -280,7 +280,7 @@ def _bch_request_post(url, data=None):
     )
 
 def _get_temporary_branch_name(commit_sha):
-    return "energy_test_{}".format(commit_sha[:7])
+    return "security_test_{}".format(commit_sha[:7])
 
 class BetterCodeHubException(Exception):
     """Base Class for BCH exceptions."""

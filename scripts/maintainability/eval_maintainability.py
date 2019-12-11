@@ -12,7 +12,7 @@ import maintainability.better_code_hub as bch
 RETRY_ATTEMPTS = 10
 
 @click.command()
-@click.option('--dataset', prompt=True, default="../dataset/commits_patterns_sec.csv",
+@click.option('--dataset', prompt=True, default="../dataset/db_icpc20_single_fix.csv",
               help="Dataset with commits for comparison.")
 def tool(dataset):
     """CLI to evaluate maintainability."""
@@ -29,8 +29,8 @@ def collect_maintainability(rows):
     for row in rows:
         user = row['owner']
         project = row['project']
-        if user == 'torvalds' and project == 'linux':
-            continue
+        # if user == 'torvalds' and project == 'linux':
+        #     continue
         commit_sha = row['sha']
         parent_commit_sha = row['sha-p']
         try:
