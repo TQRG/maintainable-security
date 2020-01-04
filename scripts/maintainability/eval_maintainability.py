@@ -12,7 +12,7 @@ import maintainability.better_code_hub as bch
 RETRY_ATTEMPTS = 10
 
 @click.command()
-@click.option('--dataset', prompt=True, default="../dataset/db_icpc20_single_fix.csv",
+@click.option('--dataset', prompt=True, default="../dataset/db_icpc20_multi_fix.csv",
               help="Dataset with commits for comparison.")
 def tool(dataset):
     """CLI to evaluate maintainability."""
