@@ -130,20 +130,20 @@
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-Security is a requirement of utmost importance to produce software of high
-quality. However, there is still a considerable amount of zero-day
-vulnerabilities being discovered and fixed, almost weekly. We suspect that 
-when developers address these vulnerabilities on their code bases, they actually
-affect the maintainability and, potentially, the reliability of software through the
-introduction of new vulnerabilities. This paper evaluates the impact 
-of refactorings to improve security on the maintainability of open-source software. 
-Maintainability is measured based on the \emph{Better Code Hub}'s model of 10 guidelines 
-using a dataset including 607 security commits. Results show that fixing software
-vulnerabilities hinders the maintainability of open-source software. This is,
-particularly, the case for refactorings that address \emph{Broken Authentication
-and Session Management} issues, \emph{Memory Leaks} and \emph{Denial-of-Service}
-attacks. Furthermore, we conclude that changes to code bases to fix vulnerabilities
-need to be performed with extra care in open-source software.
+	
+Security is a requirement of utmost importance to produce software with 
+high quality. However, there is still a considerable amount of 
+vulnerabilities being discovered and fixed, almost weekly. We suspect 
+that when developers address these vulnerabilities on their codebases, 
+they actually affect the maintainability of software, potentially 
+introducing other vulnerabilities. This paper evaluates the impact of 
+patches to improve security on the maintainability of open-source software. 
+Maintainability is measured based on the Better Code Hub’s model of 10 
+guidelines using a dataset including 1020 security commits. Results show 
+that fixing software vulnerabilities hinders the maintainability of 
+open-source software. We conclude that changes to codebases 
+to fix vulnerabilities need to be performed with extra care.
+	
 \end{abstract}
 
 
@@ -477,18 +477,22 @@ separately for each pattern.\\
 
 \section{Methodology}\label{sec:methodology}
 %
-The methodology used to measure the impact of security refactorings on the
+The methodology used to measure the impact of security patches on the
 maintainability of open-source software is discussed in this section.
 The methodology comprises the following steps, as illustrated in
 Figure~\ref{fig:met}:
 
 \begin{enumerate}
-	\item Extract relevant data (e.g., sha, owner of the project, name of 
-	the repository) and code bases from a dataset containing $711$ security
+	\item Combine the datasets from related work that classifies
+the activities of developers addressing security-oriented patches~\cite{Reis:2017:IJSSE, 10.1109/MSR.2019.00064}.
+	\item
+	Extract relevant data (e.g., sha, sha of the parent commit, owner of the project, name of 
+	the repository) and code bases from the combined dataset containing $1325$ security
 	refactorings collected from open-source software available on
-	GitHub~\cite{Reis:2017:IJSSE}.
+	GitHub. We consider the previous version of the patch as a vulnerable version
+	of the software.
 	\item A baseline of regular commits was randomly collected from the list of
-	projects of the main dataset to evaluate the impact of regular commits on the
+	projects of the final dataset to evaluate the impact of regular commits on the
 	maintainability of open-source software.
   \item Use the Software Improvement Group's\footnote{SIG's website: \url{https://www.sig.eu/} 
   (Accessed on \today{})} web-based source code analysis
@@ -503,18 +507,19 @@ Figure~\ref{fig:met}:
 %
 \begin{figure}[h]
  	\centering 	\includegraphics[width=0.4\textwidth]{figures/methodology.pdf}
- 	\caption{Study Methodology}
+ 	\caption{Study Methodology\Sof{Needs to be updated. Add Vulas.}}
 	\label{fig:met}
 	
 \end{figure}
 	\vspace{-0.2cm}
 
 %
-\subsection{Dataset}
+\subsection{Datasets}
 %
 To evaluate the impact of security refactorings on the maintainability of
-open-source software, we use a dataset of security flaws which is the outcome of
-mining $94$ GitHub projects. Reis and Abreu ($2017$) mined open-source
+open-source software, we use a combined dataset of security flaws which is 
+the outcome of mining/manually inspect $301$ GitHub projects. Reis and Abreu 
+($2017$) mined open-source
 software aiming at the extraction of real examples --- created by real
 developers --- to test and assess the performance of static analysis tools since
 using hand-seeded test cases or mutations could lead to misleading assessments
@@ -528,114 +533,140 @@ another (typically, called \textit{diffs}) --- where one can easily review the
 code used to fix the security flaw. In this study, we focus on computing the
 maintainability of the commits before and after the security refactoring to
 evaluate if the impact was positive, negative or none.
-\vspace{-0.2cm}
 
-\begin{figure}[h]
- 	\centering 	\includegraphics[width=0.5\textwidth]{figures/language_dist.pdf}
- 	\caption{Distribution of Security Refactorings per Language}
-	\label{fig:lang}
-\end{figure}
-\vspace{-0.2cm}
-
-\begin{figure}[h]
- 	\centering 	\includegraphics[width=0.5\textwidth]{figures/type_dist.pdf}
- 	\caption{Distribution of the Domain of Projects}
-	\label{fig:domain}
-\end{figure}
-
-The $711$ refactorings in the dataset were run against the BCH toolset to
+Ponta et al. ($2019$) tracked the \url{pivotal.io} website for vulnerabilities 
+from $2014$ to $2019$. For each new vulnerability, the authors manually searched 
+for references to commits involved in the patch on the NVD's website. However, $70\%$
+of the vulnerabilities did not have any references to commits. Thus, the authors
+used their expertise to locate the commits in the repositories. This technique 
+yielded a database of $624$ patches. The original dataset contained $1282$ commits. 
+However, for some vulnerabilities, one commit was not enough to patch the vulnerability. 
+Thus, many of the entries were parts of the patch. For our purpose, we shrank the dataset 
+and only considered the first and last commit used to patch the vulnerability. The $1325$ 
+patches in the dataset were run against the BCH toolset to
 calculate their maintainability reports. However, there are refactorings
 discarded from our study due to limitations of BCH: in particular, lack of
 language support and project size. The final dataset used in this paper comprises
-$607$ security refactorings labeled as one of the following categories (we
-have decided to change the label to \textit{Miscellaneous} of the patterns in
-the dataset containing less than $20$ instances):
+$1020$ security patches. $547$ of these patches are identified with Common Weakness
+Enumeration IDs (CWE). Some of the most prevailing categories are the following (categories
+with less than $20$ instances were merged in a bigger category named \textit{Miscellaneous}):
+
+% \begin{figure}[h]
+%  	\centering 	\includegraphics[width=0.5\textwidth]{figures/language_dist.pdf}
+%  	\caption{Distribution of Security Refactorings per Language}
+% 	\label{fig:lang}
+% \end{figure}
+% \vspace{-0.2cm}
+%
+% \begin{figure}[h]
+%  	\centering 	\includegraphics[width=0.5\textwidth]{figures/type_dist.pdf}
+%  	\caption{Distribution of the Domain of Projects}
+% 	\label{fig:domain}
+% \end{figure}
+
+The $1325$ patches in the dataset were run against the BCH toolset to
+calculate their maintainability reports. However, there are refactorings
+discarded from our study due to limitations of BCH: in particular, lack of
+language support and project size. The final dataset used in this paper comprises
+$1020$ security patches. $547$ of these patches are identified with Common Weakness
+Enumeration IDs (CWE). Some of the most prevailing categories are the following (categories
+with less than $20$ instances were merged in a bigger category named \textit{Miscellaneous}):
+
 
 \begin{itemize}
-    \item \textbf{Using Components with Known Vulnerabilities (21 cases).} The majority of
-    software produced today integrates several components, such as libraries and
-    frameworks, which may affect the software if developers use vulnerable
-    versions - usually known and disclosed somewhere on the Internet.
-    \textit{Based on the OWASP Top $10$ of $2017$.}
+    \item \textbf{CW-89: Improper Neutralization of Special Elements used in an SQL Command/
+	SQL Injection (23 cases).} When developers do not keep untrusted data
+    separate from SQL queries. If an attacker sends a command that
+    exploits the syntax of the SQL interpreter, then SQL injection attack is possible.
 
-    \item \textbf{Broken Authentication \& Session Management (38 cases).} Incorrectly
-    implemented functionalities related to authentication and session
-    management, allowing an attacker to gain access to session tokens,
-    passwords, keys, and other sensitive data. \textit{Based on the OWASP Top
-    $10$ of $2013$.}
-
-    \item \textbf{Cross-Site Request Forgery (30 cases).} Poor session tokens generation
+    \item \textbf{CWE-611: Improper Restriction of XML External Entity Reference (24 cases).} 
+	XML documents are exchanged through the web containing entities with URIs
+	that resolve to local/external files. Thus, when XML parsers are not well configured, 
+	attackers have allowed to directly those files.
+	
+    \item \textbf{CWE-20: Improper Input Validation (75 cases).} When developers
+	forget to validate the inputs of an application, attackers may have control
+	of the control/data flow of the program.
+	
+    \item \textbf{CWE-200: Information Exposure (38 cases).} 
+	
+	Application's logs are one way of intentional/unintentional disclosure information
+	to attackers. Many times attackers get access to logs when sould not be authorized to.
+	
+	\item \textbf{CWE-352: Cross-Site Request Forgery (CSRF) (20 cases).} Poor session tokens generation
     and management usually allow attackers to send forged HTTP requests
     including authentication information from the victim to the vulnerable web
-    application. \textit{Based on the OWASP Top $10$ of $2013$.}
+    application.
 
-    \item \textbf{Denial-of-Service (40 cases).} Security flaws that can allow an attacker
-    to flood or crashing services. This attacks usually occur when the system
-    receives much traffic causing it to slow down and eventually crash. For
-    example, flaws allowing attackers to trigger memory allocations
-    corresponding to large length values (Listing~\ref{lst:vuln}).
+	\item \textbf{CWE-264: Permissions, Privileges, and Access Controls (36 cases).} 
+	
+	Incorrectly
+	    implemented functionalities related to authentication and session
+	    management, allowing an attacker to gain access to session tokens,
+	    passwords, keys, and other sensitive data.
+	
+	\item \textbf{CWE-399: Resource Management Errors (20 cases).} 
+	Resource management issues are found more frequently
+		in programming languages that do not manage memory automatically (e.g., C/C++
+	    and Objective-C), i.e., where developers are responsible for
+	    handling it instead. It is one of the main causes of DoS attacks.
+	
+	\item \textbf{CWE-79: Improper Neutralization of Input During Web Page Generation/Cross-site Scripting (62 cases)}
+	Lack of proper validation or escaping
+	    allows attackers to submit untrusted data to web browsers through malicious
+	    scripts that can hijack the user sessions or redirect the user to malicious
+	    sites.
+	
+	\item \textbf{CWE-22: Improper Limitation of a Pathname to a Restricted Directory/Path Traversal (36 cases).} 
+	When developers forget to neutralize special elements within the pathnames to files/directories, attackers 
+	may leverage this flaw to resolve to a location outside of the restricted directory and gain access to documents
+	or entire repositories.
+	
+	
+	\item \textbf{Miscellaneous (473 cases)} This pattern comprises
+		several other security refactorings that do not have a CWE assigned and patterns that
+		do not satisfy the Wilcoxon test size requirement of more than $20$ refactorings.
 
-    \item \textbf{Cross-Site Scripting (114 cases).} Lack of proper validation or escaping
-    allows attackers to submit untrusted data to web browsers through malicious
-    scripts that can hijack the user sessions or redirect the user to malicious
-    sites. \textit{Based on the OWASP Top $10$ of $2017$.}
 
-    \item \textbf{Injection (89 cases).} When developers do not keep untrusted data
-    separate from commands and queries. If an attacker sends a string that
-    exploits the syntax of the interpreter, then an injection attack is possible
-    (e.g., SQL and LDAP injection). \textit{Based on the OWASP Top $10$ of
-    $2017$.}
+\end{itemize}
 
-    \item \textbf{Memory Leak (80 cases).} Memory management issues are found more frequently
-	in programming languages that do not manage memory automatically (e.g., C/C++
-    and Objective-C), i.e., where developers are responsible for
-    handling it instead. It is one of the main causes of DoS attacks.
+% \begin{table*}[h]
+% 	\centering
+% 	\caption{Descriptive statistics of the projects in the dataset}
+% \begin{tabular}{@{}rrrrrrrrrrr@{}}
+% \toprule
+%       & Forks   & Stars   & Watchers & Contributors & Commits  & Branches & Releases & Size      & Issues & Pull Requests  \\ \midrule
+% mean  & 1763 & 5448 & 401   & 153       & 14834 & 45    & 129   & 122973 & 3768   & 1941 \\
+% std   & 2434 & 6215 & 486   & 123       & 22234 & 150   & 189   & 209732 & 5933   & 3603 \\
+% min   & 1       & 3       & 1        & 0            & 103      & 1        & 0        & 108       & 0         & 0       \\
+% 25\%  & 391  & 1581    & 117   & 49           & 1440  & 4        & 19       & 8466   & 313    & 143  \\
+% median  & 838  & 2836 & 248      & 99           & 5504  & 9        & 59       & 37372  & 1792   & 650     \\
+% 75\%  & 2155    & 6828 & 459   & 261          & 18579 & 20       & 142   & 117699 & 4087   & 1907 \\
+% max   & 16366   & 31841   & 3446     & 413          & 114378   & 1227     & 1114     & 995790    & 33970     & 19329   \\
+% Total & 165771  & 512182  & 37729    & 14413        & 1394412  & 4246     & 12168    & 11559485  & 354283    & 182511  \\ \bottomrule
+% \end{tabular}
+% \vspace{-0.3cm}
+% \label{tab:dataset}
+% \end{table*}
 
-    \item \textbf{Miscellaneous (195 cases)} This pattern comprises
-	several other security refactorings that do not have their own pattern yet and patterns that
-	do not satisfy the Wilcoxon test size requirement of more than $20$ refactorings:
-    \textit{Resource Leak} (19), \textit{SHA-1 Hash Function} (1),
-    \textit{Broken Access Control} (2), \textit{Sensitive Data Exposure} (18),
-    \textit{Insufficient Attack Protection} (4), \textit{Overflow} (18),
-    \textit{Path Traversal} (19). \end{itemize}
-
-\begin{table*}[h]
-	\centering
-	\caption{Descriptive statistics of the projects in the dataset}
-\begin{tabular}{@{}rrrrrrrrrrr@{}}
-\toprule
-      & Forks   & Stars   & Watchers & Contributors & Commits  & Branches & Releases & Size      & Issues & Pull Requests  \\ \midrule
-mean  & 1763 & 5448 & 401   & 153       & 14834 & 45    & 129   & 122973 & 3768   & 1941 \\
-std   & 2434 & 6215 & 486   & 123       & 22234 & 150   & 189   & 209732 & 5933   & 3603 \\
-min   & 1       & 3       & 1        & 0            & 103      & 1        & 0        & 108       & 0         & 0       \\
-25\%  & 391  & 1581    & 117   & 49           & 1440  & 4        & 19       & 8466   & 313    & 143  \\
-median  & 838  & 2836 & 248      & 99           & 5504  & 9        & 59       & 37372  & 1792   & 650     \\
-75\%  & 2155    & 6828 & 459   & 261          & 18579 & 20       & 142   & 117699 & 4087   & 1907 \\
-max   & 16366   & 31841   & 3446     & 413          & 114378   & 1227     & 1114     & 995790    & 33970     & 19329   \\
-Total & 165771  & 512182  & 37729    & 14413        & 1394412  & 4246     & 12168    & 11559485  & 354283    & 182511  \\ \bottomrule
-\end{tabular}
-\vspace{-0.3cm}
-\label{tab:dataset}
-\end{table*}
-
-The dataset contains security flaws for more than $13$ different languages,
-being PHP ($39\%$) and C ($24\%$) the most prevalent ones (cf. Figure~\ref{fig:lang}).
-To classify the applications in the dataset, we use a taxonomy for open-source
-software from previous work~\cite{7816479}. Figure~\ref{fig:domain}
-presents the projects domain distribution: \textit{Application Software} ($25$),
-software that provides end-users with functional systems; \textit{Web libraries
-and frameworks} ($20$); \textit{System Software} ($18$), software that provides
-services and infrastructures (e.g., operating systems, servers and databases);
-\textit{Software Tool} ($13$), software that supports development (e.g.,
-programming languages, compilers, package managers, IDEs); and, \textit{Non-web
-libraries and frameworks} ($18$), for desktop and mobile software.
-%
-Table~\ref{tab:dataset} presents the descriptive statistics of the $94$
-open-source projects involved in this study, including the number of forks, the
-number of stars, the number of watchers, the number of contributors, the number
-of commits, the number of branches, the number of releases, size (cf. GitHub, it
-is the size of the whole repository, including all of its history, in
-kilobytes), the number of issues, and the number of pull requests.
+% The dataset contains security flaws for more than $13$ different languages,
+% being PHP ($39\%$) and C ($24\%$) the most prevalent ones (cf. Figure~\ref{fig:lang}).
+% To classify the applications in the dataset, we use a taxonomy for open-source
+% software from previous work~\cite{7816479}. Figure~\ref{fig:domain}
+% presents the projects domain distribution: \textit{Application Software} ($25$),
+% software that provides end-users with functional systems; \textit{Web libraries
+% and frameworks} ($20$); \textit{System Software} ($18$), software that provides
+% services and infrastructures (e.g., operating systems, servers and databases);
+% \textit{Software Tool} ($13$), software that supports development (e.g.,
+% programming languages, compilers, package managers, IDEs); and, \textit{Non-web
+% libraries and frameworks} ($18$), for desktop and mobile software.
+% %
+% Table~\ref{tab:dataset} presents the descriptive statistics of the $94$
+% open-source projects involved in this study, including the number of forks, the
+% number of stars, the number of watchers, the number of contributors, the number
+% of commits, the number of branches, the number of releases, size (cf. GitHub, it
+% is the size of the whole repository, including all of its history, in
+% kilobytes), the number of issues, and the number of pull requests.
 
 
 %
@@ -650,11 +681,28 @@ to security fixes) and use them as a baseline.
 
 The baseline dataset uses the security commits dataset as input.
 Both datasets have the same size. For each
-security commit, one random commit is selected from the list of all commits of
-that particular project. We originate the regular commits from the security
-commits to ensure that differences in maintainability are not a consequence of
+security commit, a commit with an approximate size is searched (due to the complexity 
+of some patches, it was not possible to find patches with the same amount of added and 
+deleted sizes). Our search uses the patch diff to look for a new similar diff. The 
+algorithm follows the following steps:
+
+\begin{enumerate}
+\item Diff comparison between the patch commit and its parent.
+\item Selects a random commit from the security patch project.
+\item Diff comparison between the random commit and its parent.
+\item Check if the diff from the regular change has the same/approximated size to 
+the security patch.
+\end{enumerate}
+
+Our approximation was calculated using a step of 1. Every 10 attempts to search for 
+a change with the same diff the step increased. Thus, if a change suffered 20 deletions 
+and 10 additions. Then, in the first 10 attempts, the algorithm searches for a diff with 
+deletions between 19 and 21 and additions between 9 and 11. After the 10 first attempts, 
+the algorithm searches for a diff with deletions between 18 and 22 and additions between 
+8 and 10. We originate the regular commits from the security
+commits to ensuring that differences in maintainability are not a consequence of
 characteristics of different projects.
-%
+
 \subsection{Maintainability Analysis}
 
 As said before, the web-based source code analysis service \emph{Better Code
@@ -781,11 +829,16 @@ maintainability of two different versions of the project (cf. Figure~\ref{fig:co
 	refactoring;
 \end{itemize}
 
+\Sof{wip - made the connection to Luis work, dropped two of the formulas. But at the
+same time I think we should present the first one. - conflicted}
+
 The BCH tool does not compute the final score that our study needs to compare
-maintainability amongst different project versions. Thus, our work proposes an
-equation to capture the distance between the current state of the project and
-the standard thresholds based on previous work~\cite{Olivari:2018}. The equation
-considers the following:
+maintainability amongst different project versions. For this, we
+follow previous work on measuring the impact of energy-oriented refactorings
+~\cite{cruz2019energyoriented}. Luis et al. ($2019$) proposed an equation
+to capture the distance between the current state of the project and
+the standard thresholds based on the insights provided in ~\cite{Olivari:2018}. 
+The equation considers the following:
 \begin{itemize}
 	\item \textbf{Size of project changes does not affect the maintainability
 	difference between two versions, $\Delta M (v_{s-1},v_{s})$.} We
@@ -797,7 +850,7 @@ considers the following:
 	severity level to count lines of code that violate maintainability guidelines.
 \end{itemize}
 
-Given the violations for the BCH guidelines, we compute the maintainability score
+Given the violations for the BCH guidelines, the maintainability score is computed
 $M(v)$ as follows:
 
 \begin{equation}
@@ -821,32 +874,42 @@ of a project is computed with the following equation:
 \noindent
 where $C$ is the compliance with the maintainability guideline for the given
 severity level (medium, high, and very high) and $L$ is the group of severity
-levels of maintainability infractions. The compliance $C$ for a given severity
-level $l$ is derived by:
+levels of maintainability infractions. The compliance $C$ for a severity level
+is calculated based on the number of lines of code that comply and not comply
+with the guideline at a given severity level $l$ and $w(l)$ as explained in more
+detail in previous work~\cite{cruz2019energyoriented}.  
 
-\begin{equation}\label{eq:3}
-    C(l) = LOC_{compliant}(l) - w(l) * LOC_{\neg compliant}(l)
-\end{equation}
-
-\noindent
-where $LOC_{compliant}(l)$ are the lines of code that comply with the guideline
-at the given severity level $l$, $LOC_{\neg compliant}(l)$ are the lines of code
-that do not comply with the guideline at the given severity level $l$ and $w(l)$
-is the weight factor to heighten the impact of non-compliant lines in comparison to
-compliant lines. Finally, the term $w(l)$ is calculated as follows:
-
-\begin{equation}
-    w(l) = \frac{1 - \theta(l)}{\theta(l)}
-\end{equation}
-
-\noindent
-where $\theta(l)$ is the threshold in percentage of the lines of code that are
-accepted to be non-compliant with the guideline for the severity level $l$. This
-is a standard value defined by BCH. In other words, the factor $w$ is used in
-Equation~\ref{eq:3} to highlight the lines of code that are not complying with
-the guideline. Then, we compute the difference of maintainability between the
+In our analysis, we compute the difference of maintainability between the
 security commit ($v_{s}$) and its parent commit ($v_{s-1}$), as illustrated in
-Figure~\ref{fig:commit}.
+Figure~\ref{fig:commit}. Thus, we can determine which patches had a positive, negative
+or null impact on the project maintainability.
+
+% The compliance $C$ for a given severity
+% level $l$ is derived by:
+%
+% \begin{equation}\label{eq:3}
+%     C(l) = LOC_{compliant}(l) - w(l) * LOC_{\neg compliant}(l)
+% \end{equation}
+%
+% \noindent
+% where $LOC_{compliant}(l)$ are the lines of code that comply with the guideline
+% at the given severity level $l$, $LOC_{\neg compliant}(l)$ are the lines of code
+% that do not comply with the guideline at the given severity level $l$ and $w(l)$
+% is the weight factor to heighten the impact of non-compliant lines in comparison to
+% compliant lines. Finally, the term $w(l)$ is calculated as follows:
+%
+% \begin{equation}
+%     w(l) = \frac{1 - \theta(l)}{\theta(l)}
+% \end{equation}
+%
+% \noindent
+% where $\theta(l)$ is the threshold in percentage of the lines of code that are
+% accepted to be non-compliant with the guideline for the severity level $l$. This
+% is a standard value defined by BCH. In other words, the factor $w$ is used in
+% Equation~\ref{eq:3} to highlight the lines of code that are not complying with
+% the guideline. Then, we compute the difference of maintainability between the
+% security commit ($v_{s}$) and its parent commit ($v_{s-1}$), as illustrated in
+% Figure~\ref{fig:commit}.
 
 \subsection{Statistical Validation}\label{sec:statsval}
 %
