@@ -487,10 +487,9 @@ Figure~\ref{fig:met}:
 the activities of developers addressing security-oriented patches~\cite{Reis:2017:IJSSE, 10.1109/MSR.2019.00064}.
 	\item
 	Extract relevant data (e.g., sha, sha of the parent commit, owner of the project, name of 
-	the repository) and code bases from the combined dataset containing $1325$ security
+	the repository) and code bases from the combined dataset containing $1335$ security
 	refactorings collected from open-source software available on
-	GitHub. We consider the previous version of the patch as a vulnerable version
-	of the software.
+	GitHub.
 	\item A baseline of regular commits was randomly collected from the list of
 	projects of the final dataset to evaluate the impact of regular commits on the
 	maintainability of open-source software.
@@ -517,38 +516,39 @@ the activities of developers addressing security-oriented patches~\cite{Reis:201
 \subsection{Datasets}
 %
 To evaluate the impact of security refactorings on the maintainability of
-open-source software, we use a combined dataset of security flaws which is 
-the outcome of mining/manually inspect $301$ GitHub projects. Reis and Abreu 
+open-source software, we use a combined dataset of security vulnerabilities which is 
+the outcome of mining/manually inspect $267$ GitHub projects. Reis and Abreu 
 ($2017$) mined open-source
 software aiming at the extraction of real examples --- created by real
-developers --- to test and assess the performance of static analysis tools since
+developers --- to test and assess the performance of static analysis tools~\cite{Reis:2017:IJSSE} since
 using hand-seeded test cases or mutations could lead to misleading assessments
 of the capabilities of the tools~\cite{just2014mutants}. The study yielded a
-dataset with $711$ test cases for $16$ security patterns. Some of the patterns
+dataset of $711$ test cases for $16$ security patterns. Some of the patterns
 are based in the OWASP Top $10$ of $2013$~\cite{oswap:2013} and OWASP Top $10$ of
 $2017$~\cite{oswap:2017}. Each test case of the
-dataset is a triplet: the commit before the refactoring, the commit responsible
-for the refactoring, and the snippets of code that differ from one version to
+dataset is a triplet: the commit before the patching, the commit responsible
+for the patching, and the snippets of code that differ from one version to
 another (typically, called \textit{diffs}) --- where one can easily review the
 code used to fix the security flaw. In this study, we focus on computing the
-maintainability of the commits before and after the security refactoring to
-evaluate if the impact was positive, negative or none.
+maintainability of the commits before and after the security patching to
+evaluate if its impact was positive, negative or none.
 
 Ponta et al. ($2019$) tracked the \url{pivotal.io} website for vulnerabilities 
 from $2014$ to $2019$. For each new vulnerability, the authors manually searched 
 for references to commits involved in the patch on the NVD's website. However, $70\%$
 of the vulnerabilities did not have any references to commits. Thus, the authors
 used their expertise to locate the commits in the repositories. This technique 
-yielded a database of $624$ patches. The original dataset contained $1282$ commits. 
-However, for some vulnerabilities, one commit was not enough to patch the vulnerability. 
-Thus, many of the entries were parts of the patch. For our purpose, we shrank the dataset 
-and only considered the first and last commit used to patch the vulnerability. The $1325$ 
-patches in the dataset were run against the BCH toolset to
+yielded a database of $624$ patches~\cite{10.1109/MSR.2019.00064}. The original dataset contains $1282$ commits. One patch can have multiple commits assigned.
+To fit the dataset in our methodology, we search for the first and last commits
+used to patch the vulnerability. We assumed that the last commit of the patch as the fix (\emph{sha}) and the parent of the first commit as the vulnerable version (\emph{sha-p}).
+
+
+The $1335$ patches in the dataset were run against the BCH toolset to
 calculate their maintainability reports. However, there are refactorings
 discarded from our study due to limitations of BCH: in particular, lack of
 language support and project size. The final dataset used in this paper comprises
-$1020$ security patches. $547$ of these patches are identified with Common Weakness
-Enumeration IDs (CWE). Some of the most prevailing categories are the following (categories
+$1038$ security patches. $556$ of these patches are identified with Common Weakness
+Enumeration IDs (CWE). The most prevailing categories are the following (categories
 with less than $20$ instances were merged in a bigger category named \textit{Miscellaneous}):
 
 % \begin{figure}[h]
@@ -563,14 +563,6 @@ with less than $20$ instances were merged in a bigger category named \textit{Mis
 %  	\caption{Distribution of the Domain of Projects}
 % 	\label{fig:domain}
 % \end{figure}
-
-The $1325$ patches in the dataset were run against the BCH toolset to
-calculate their maintainability reports. However, there are refactorings
-discarded from our study due to limitations of BCH: in particular, lack of
-language support and project size. The final dataset used in this paper comprises
-$1020$ security patches. $547$ of these patches are identified with Common Weakness
-Enumeration IDs (CWE). Some of the most prevailing categories are the following (categories
-with less than $20$ instances were merged in a bigger category named \textit{Miscellaneous}):
 
 
 \begin{itemize}
@@ -590,7 +582,7 @@ with less than $20$ instances were merged in a bigger category named \textit{Mis
     \item \textbf{CWE-200: Information Exposure (39 cases).} Application's logs are one way of intentional/unintentional disclosure information
 	to attackers. Many times attackers get access to logs when sould not be authorized to.
 	
-	\item \textbf{CWE-352: Cross-Site Request Forgery (CSRF) (22 cases).} Poor session tokens generation
+	\item \textbf{CWE-352: Cross-Site Request Forgery/CSRF (22 cases).} Poor session tokens generation
     and management usually allow attackers to send forged HTTP requests
     including authentication information from the victim to the vulnerable web
     application.
@@ -615,7 +607,7 @@ with less than $20$ instances were merged in a bigger category named \textit{Mis
 	or entire repositories.
 	
 	
-	\item \textbf{Miscellaneous (473 cases)} This pattern comprises
+	\item \textbf{Miscellaneous (674 cases)} This pattern comprises
 		several other security refactorings that do not have a CWE assigned and patterns that
 		do not satisfy the Wilcoxon test size requirement of more than $20$ refactorings.
 
@@ -673,26 +665,25 @@ to security fixes) and use them as a baseline.
 
 The baseline dataset uses the security commits dataset as input.
 Both datasets have the same size. For each
-security commit, a commit with an approximate size is searched (due to the complexity 
-of some patches, it was not possible to find patches with the same amount of added and 
-deleted sizes). Our search uses the patch diff to look for a new similar diff. The 
-algorithm follows the following steps:
+security commit, a commit with an approximate size is searched. Due to the complexity 
+of some patches, it was not possible to find patches with the exact number of added and 
+deleted lines. Our search uses the patch \emph{diff} to look for a new similar \emph{diff}. The algorithm follows the following steps:
 
 \begin{enumerate}
-\item Diff comparison between the patch commit and its parent.
-\item Selects a random commit from the security patch project.
-\item Diff comparison between the random commit and its parent.
-\item Check if the diff from the regular change has the same/approximated size to 
+\item Diff comparison between the security patch commit (\emph{sha}) and its parent(\emph{sha-p}).
+\item Selects a random commit from the security patch project (\emph{sha-reg}).
+\item Diff comparison between the random commit (\emph{sha-reg}) and its parent (\emph{sha-reg-p}).
+\item Check if the size from the regular change has the same/approximated size to 
 the security patch.
 \end{enumerate}
 
-Our approximation was calculated using a step of 1. Every 10 attempts to search for 
-a change with the same diff the step increased. Thus, if a change suffered 20 deletions 
-and 10 additions. Then, in the first 10 attempts, the algorithm searches for a diff with 
-deletions between 19 and 21 and additions between 9 and 11. After the 10 first attempts, 
-the algorithm searches for a diff with deletions between 18 and 22 and additions between 
-8 and 10. We originate the regular commits from the security
-commits to ensuring that differences in maintainability are not a consequence of
+Our approximation was calculated using an initial step of $1$. Every $10$ attempts to search for 
+a change with the same \emph{diff} the step increased. Thus, if a change suffered $20$ deletions 
+and $10$ additions. Then, in the first $10$ attempts, the algorithm searches for a \emph{diff} with 
+deletions between $19$ and $21$ and additions between $9$ and $11$. After the $10$ first attempts, 
+the algorithm increase the step for $2$ and searches for a \emph{diff} with deletions between $18$ and $22$ and additions between 
+$8$ and $10$. We originate the regular commits from the security
+commits to ensure that differences in maintainability are not a consequence of
 characteristics of different projects.
 
 \subsection{Maintainability Analysis}
@@ -708,8 +699,8 @@ determines the compliance towards one guideline by establishing limits for the
 percentage of code allowed to be in each of the $4$ risk severity levels
 (\emph{low risk}, \emph{medium risk}, \emph{high risk}, and \emph{very high
 risk}). If the project does not violate the thresholds, then it is compliant
-with the guideline. These thresholds are calibrated by BCH using their own
-data/experience --- using open-source and closed software systems. If a project is
+with the guideline. \textbf{These thresholds are calibrated by BCH using their own
+data/experience --- using open-source and closed software systems}. If a project is
 compliant with a guideline, it means that it is at least $65\%$ better than the
 software used by BCH to calculate the thresholds\footnote{Check the answer to
 \emph{How can I adjust the threshold for passing/not passing a guideline?} at
@@ -725,14 +716,7 @@ example only complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean Code}).
 	\label{fig:bchrep}
 \end{figure}
 
-Figure~\ref{fig:bchrep} shows an example of the report
-provided by BCH for a project after finishing its evaluation. The example
-refers to the OpenSSL CVE-$2014$-$3506$ vulnerability refactoring ---
-as described as motivating example in Section~\ref{sec:motivation}. This
-version of OpenSSL only complies with $1$ out of $10$ guidelines: \emph{Write
-Clean Code}.
-
-\begin{table}[h]
+\begin{table}[H]
 	\caption{Guidelines to produce maintainable code}
 \begin{tabular}{L{1.66cm}L{3.25cm}L{2.65cm}}
 
@@ -783,9 +767,17 @@ it is more likely to be maintainable in the future & \textbf{Code Smells:}
 identifier names) \\
 \bottomrule
 \end{tabular}
-\vspace{-0.5cm}
 \label{tab:guidelines}
 \end{table}
+
+
+Figure~\ref{fig:bchrep} shows an example of the report
+provided by BCH for a project after finishing its evaluation. The example
+refers to the OpenSSL CVE-$2014$-$3506$ vulnerability refactoring ---
+as described as motivating example in Section~\ref{sec:motivation}. This
+version of OpenSSL only complies with $1$ out of $10$ guidelines: \emph{Write
+Clean Code}.
+
 
 
 SIG defines \emph{Units} as the smallest groups of code that can be maintained
@@ -799,7 +791,7 @@ violate the guideline, sorted by severity. The violation severities are
 indicated using colors, and there is a legend to help to interpret them. The
 green bar represents the number of compliant branch points per unit (\emph{at
 most $5$}), i.e., the number of units are compliant with ISO
-25010~\cite{iso:2011}. Yellow, orange and red bars represent units that do not
+$25010$~\cite{iso:2011}. Yellow, orange and red bars represent units that do not
 comply with medium (\emph{above $5$}), high (\emph{above $10$}) and very high
 (\emph{above $25$}) severity levels. In the bar, there are marks that pinpoint
 the compliance thresholds for each severity level. If the green mark is
@@ -812,28 +804,25 @@ severity.
 	\label{fig:commit}
 \end{figure}
 
-Aiming to analyze the impact of security refactorings, we use BCH to compute the
+Aiming to analyze the impact of security patches, we use BCH to compute the
 maintainability of two different versions of the project (cf. Figure~\ref{fig:commit}):
 \begin{itemize}
 	\item $v_{s-1}$, the version containing the security flaw, i.e., before the
-	refactoring;
+	patch (\emph{sha-p});
 	\item $v_{s}$, the version free of the security flaw, i.e., after the
-	refactoring;
+	patch (\emph{sha});
 \end{itemize}
-
-\Sof{wip - made the connection to Luis work, dropped two of the formulas. But at the
-same time I think we should present the first one. - conflicted}
 
 The BCH tool does not compute the final score that our study needs to compare
 maintainability amongst different project versions. For this, we
 follow previous work on measuring the impact of energy-oriented refactorings
 ~\cite{cruz2019energyoriented}. Luis et al. ($2019$) proposed an equation
 to capture the distance between the current state of the project and
-the standard thresholds based on the insights provided in ~\cite{Olivari:2018}. 
+the standard thresholds calculated by the BCH based on the insights provided in ~\cite{Olivari:2018}. 
 The equation considers the following:
 \begin{itemize}
 	\item \textbf{Size of project changes does not affect the maintainability
-	difference between two versions, $\Delta M (v_{s-1},v_{s})$.} We
+	difference between two versions, $\Delta M (v_{s-1},v_{s}) = M(v_{s}) - M(v_{s-1})$.} We
 	aim at evaluating security patterns occurring in different projects similarly.
 	Thus, the derived metric uses the \textit{raw} number of lines of code rather
   percentages for normalization purposes.
@@ -854,28 +843,18 @@ where $G$ is the group of maintainability guidelines from BCH
 (Table~\ref{tab:guidelines}) and $v$ is the version of the software under
 evaluation. $M(v) < 0$ indicates that version $v$ is violating (some of) the
 guidelines, while $M(v) > 0$ indicates that version $v$ is following
-the BCH guidelines.
-
-The maintenance for the guideline $g$, $M_g$ for a given version
-of a project is computed with the following equation:
-
-\begin{equation}
-    M_{g} = \frac{1}{|L|} \sum_{l \in L}^{} C(l) , L = \{medium, high, veryHigh\}
-\end{equation}
-
-\noindent
-where $C$ is the compliance with the maintainability guideline for the given
-severity level (medium, high, and very high) and $L$ is the group of severity
-levels of maintainability infractions. The compliance $C$ for a severity level
+the BCH guidelines. The maintenance for the guideline $g$, $M_g$ for a given version
+of a project is computed as the summation of the compliance with the 
+maintainability guideline for the given severity level (medium, high, and very high).
+The compliance for a severity level
 is calculated based on the number of lines of code that comply and not comply
-with the guideline at a given severity level $l$ and $w(l)$ as explained in more
+with the guideline at a given severity level as explained in more
 detail in previous work~\cite{cruz2019energyoriented}.  
 
 In our analysis, we compute the difference of maintainability between the
 security commit ($v_{s}$) and its parent commit ($v_{s-1}$), as illustrated in
 Figure~\ref{fig:commit}. Thus, we can determine which patches had a positive, negative
-or null impact on the project maintainability.
-
+or null impact on the project maintainability. 
 % The compliance $C$ for a given severity
 % level $l$ is derived by:
 %
@@ -922,9 +901,8 @@ reduce maintainability.
 %
 \section{Results}\label{sec:results}
 
-As mentioned before, this study evaluates $607$ security and baseline commits
-from $94$ distinct open-source projects, distributed amongst $5$ main
-types of software applications. The following section presents the
+As mentioned before, this study evaluates $1038$ security and baseline commits
+from $267$ distinct open-source projects. The following section presents the
 results obtained for each research question.
 
 \begin{framed}
