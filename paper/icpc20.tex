@@ -124,7 +124,7 @@
     Anonymou(s) Author(s)
 }
 
-\renewcommand{\shortauthors}{Reis et al.}
+\renewcommand{\shortauthors}{Anon. et al.}
 
 %%
 %% The abstract is a short summary of the work to be presented in the
@@ -574,8 +574,7 @@ with less than $20$ instances were merged in a bigger category named \textit{Mis
 
 
 \begin{itemize}
-    \item \textbf{CW-89: Improper Neutralization of Special Elements used in an SQL Command/
-	SQL Injection (23 cases).} When developers do not keep untrusted data
+    \item \textbf{CW-89: Improper Neutralization of Special Elements used in an SQL Command/SQL Injection (23 cases).} When developers do not keep untrusted data
     separate from SQL queries. If an attacker sends a command that
     exploits the syntax of the SQL interpreter, then SQL injection attack is possible.
 
@@ -584,41 +583,34 @@ with less than $20$ instances were merged in a bigger category named \textit{Mis
 	that resolve to local/external files. Thus, when XML parsers are not well configured, 
 	attackers have allowed to directly those files.
 	
-    \item \textbf{CWE-20: Improper Input Validation (75 cases).} When developers
+    \item \textbf{CWE-20: Improper Input Validation (76 cases).} When developers
 	forget to validate the inputs of an application, attackers may have control
 	of the control/data flow of the program.
 	
-    \item \textbf{CWE-200: Information Exposure (38 cases).} 
-	
-	Application's logs are one way of intentional/unintentional disclosure information
+    \item \textbf{CWE-200: Information Exposure (39 cases).} Application's logs are one way of intentional/unintentional disclosure information
 	to attackers. Many times attackers get access to logs when sould not be authorized to.
 	
-	\item \textbf{CWE-352: Cross-Site Request Forgery (CSRF) (20 cases).} Poor session tokens generation
+	\item \textbf{CWE-352: Cross-Site Request Forgery (CSRF) (22 cases).} Poor session tokens generation
     and management usually allow attackers to send forged HTTP requests
     including authentication information from the victim to the vulnerable web
     application.
 
-	\item \textbf{CWE-264: Permissions, Privileges, and Access Controls (36 cases).} 
-	
-	Incorrectly
+	\item \textbf{CWE-264: Permissions, Privileges, and Access Controls (59 cases).} Incorrectly
 	    implemented functionalities related to authentication and session
 	    management, allowing an attacker to gain access to session tokens,
 	    passwords, keys, and other sensitive data.
 	
-	\item \textbf{CWE-399: Resource Management Errors (20 cases).} 
-	Resource management issues are found more frequently
+	\item \textbf{CWE-399: Resource Management Errors (22 cases).} Resource management issues are found more frequently
 		in programming languages that do not manage memory automatically (e.g., C/C++
 	    and Objective-C), i.e., where developers are responsible for
 	    handling it instead. It is one of the main causes of DoS attacks.
 	
-	\item \textbf{CWE-79: Improper Neutralization of Input During Web Page Generation/Cross-site Scripting (62 cases)}
-	Lack of proper validation or escaping
+	\item \textbf{CWE-79: Improper Neutralization of Input During Web Page Generation/Cross-site Scripting (62 cases)} Lack of proper validation or escaping
 	    allows attackers to submit untrusted data to web browsers through malicious
 	    scripts that can hijack the user sessions or redirect the user to malicious
 	    sites.
 	
-	\item \textbf{CWE-22: Improper Limitation of a Pathname to a Restricted Directory/Path Traversal (36 cases).} 
-	When developers forget to neutralize special elements within the pathnames to files/directories, attackers 
+	\item \textbf{CWE-22: Improper Limitation of a Pathname to a Restricted Directory/Path Traversal (37 cases).}  When developers forget to neutralize special elements within the pathnames to files/directories, attackers 
 	may leverage this flaw to resolve to a location outside of the restricted directory and gain access to documents
 	or entire repositories.
 	
@@ -953,13 +945,26 @@ of the maintainability difference and the p-value resulting from the
 Paired Wilcoxon signed-rank test.
 
 
-\begin{figure}[h]
-	\vspace{-0.2cm}
-	
- 	\centering 	\includegraphics[width=0.46\textwidth]{figures/maintainability.pdf}
- 	\caption{Maintainability difference for security and baseline refactorings}
+\begin{figure}[h]	
+ 	\centering 	\includegraphics[width=0.46\textwidth]{figures/maintainability_sec_vs_reg.pdf}
+ 	\caption{Maintainability difference for security and baseline patches}
 	\label{fig:secvsreg}
-	\vspace{-0.2cm}
+	
+\end{figure}
+
+\begin{figure}[h]
+ 	\centering
+ 	\includegraphics[width=0.57\textwidth]{figures/impact_per_guideline.pdf}
+ 	\caption{Impact of a security patch in 8 out of the 10 guidelines.}
+	\label{fig:guidelines}
+	
+\end{figure}
+
+\begin{figure}[h]
+ 	\centering
+ 	\includegraphics[width=0.5\textwidth]{figures/maintainability_severity.pdf}
+ 	\caption{Maintainability difference by the vulnerabilities severity.}
+	\label{fig:severity}
 	
 \end{figure}
 
@@ -982,10 +987,9 @@ positive impact in the maintainability of open-source software}.
 \begin{figure}[h]
 \vspace{-0.2cm}
   \centering
-  \includegraphics[width=0.5\textwidth]{figures/language.pdf}
+  \includegraphics[width=0.5\textwidth]{figures/maintainability_language.pdf}
   \caption{Maintainability difference by language after security refactorings.}
   \label{fig:lang_main}
-  \vspace{-0.2cm}
   
 \end{figure}
 
@@ -1059,14 +1063,14 @@ maintainability.
 
 
 \begin{figure}[h]
-	\vspace{-0.2cm}
  	\centering
- 	\includegraphics[width=0.57\textwidth]{figures/category.pdf}
- 	\caption{Maintainability difference by pattern after security refactorings.}
+ 	\includegraphics[width=0.5\textwidth]{figures/maintainability_cwe.pdf}
+ 	\caption{Maintainability difference by pattern after security patches.}
 	\label{fig:pat}
-	\vspace{-0.2cm}
 	
 \end{figure}
+
+
 
 \section{Discussion}\label{sec:discussion}
 
