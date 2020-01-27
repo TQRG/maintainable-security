@@ -138,8 +138,8 @@ that when developers address these vulnerabilities on their codebases,
 they actually affect the maintainability of software, potentially 
 introducing other vulnerabilities. This paper evaluates the impact of 
 patches to improve security on the maintainability of open-source software. 
-Maintainability is measured based on the Better Code Hub’s model of 10 
-guidelines using a dataset including 1020 security commits. Results show 
+Maintainability is measured based on the Better Code Hub’s model of $10$ 
+guidelines using a dataset including $1037$ security commits. Results show 
 that fixing software vulnerabilities hinders the maintainability of 
 open-source software. We conclude that changes to codebases 
 to fix vulnerabilities need to be performed with extra care.
@@ -453,11 +453,10 @@ maintainability issues is one step forward to bring awareness to security
 engineers of what patterns need more attention. The taxonomy of security
 patterns used to answer this question is the same as the one provided by the
 authors of the dataset~\cite{Reis:2017:IJSSE}. Maintainability is measured
-separately for each pattern.\\
+separately for each pattern.
 
 \setcounter{lstannotation}{0}
 \begin{lstlisting}[style={PHPStyle}, caption={Fix provided by \texttt{nextcloud/server} developers to a \\Cross-Site Scripting vulnerability},label={lst:fix}]
- <ul>
   <li class='error'>
    <?php echo $l->t('Cloud not found');?>
    <p class='hint'>
@@ -471,8 +470,6 @@ separately for each pattern.\\
     ?>
    </p>
   </li>
- </ul>
-
 \end{lstlisting}
 
 \section{Methodology}\label{sec:methodology}
@@ -501,17 +498,12 @@ the activities of developers addressing security-oriented patches~\cite{Reis:201
   of our datasets are collected before the analysis performed by BCH.
   
 \end{enumerate}
-\vspace{-0.3cm}
-
 %
 \begin{figure}[h]
- 	\centering 	\includegraphics[width=0.4\textwidth]{figures/methodology.pdf}
- 	\caption{Study Methodology\Sof{Needs to be updated. Add Vulas.}}
+ 	\centering 	\includegraphics[width=0.45\textwidth]{figures/methodology.pdf}
+ 	\caption{Study Methodology}
 	\label{fig:met}
-	
 \end{figure}
-	\vspace{-0.2cm}
-
 %
 \subsection{Datasets}
 %
@@ -547,7 +539,7 @@ The $1335$ patches in the dataset were run against the BCH toolset to
 calculate their maintainability reports. However, there are refactorings
 discarded from our study due to limitations of BCH: in particular, lack of
 language support and project size. The final dataset used in this paper comprises
-$1038$ security patches. $556$ of these patches are identified with Common Weakness
+$1037$ security patches. $556$ of these patches are identified with Common Weakness
 Enumeration IDs (CWE). The most prevailing categories are the following (categories
 with less than $20$ instances were merged in a bigger category named \textit{Miscellaneous}):
 
@@ -778,8 +770,6 @@ as described as motivating example in Section~\ref{sec:motivation}. This
 version of OpenSSL only complies with $1$ out of $10$ guidelines: \emph{Write
 Clean Code}.
 
-
-
 SIG defines \emph{Units} as the smallest groups of code that can be maintained
 and executed independently~\cite{Visser:2016:OREILLY} (e.g., methods and
 constructors in Java). One of the guidelines with which the project does not
@@ -818,7 +808,7 @@ maintainability amongst different project versions. For this, we
 follow previous work on measuring the impact of energy-oriented refactorings
 ~\cite{cruz2019energyoriented}. Luis et al. ($2019$) proposed an equation
 to capture the distance between the current state of the project and
-the standard thresholds calculated by the BCH based on the insights provided in ~\cite{Olivari:2018}. 
+the standard thresholds calculated by the BCH based on the insights provided in~\cite{Olivari:2018}. 
 The equation considers the following:
 \begin{itemize}
 	\item \textbf{Size of project changes does not affect the maintainability
@@ -849,12 +839,10 @@ maintainability guideline for the given severity level (medium, high, and very h
 The compliance for a severity level
 is calculated based on the number of lines of code that comply and not comply
 with the guideline at a given severity level as explained in more
-detail in previous work~\cite{cruz2019energyoriented}.  
-
-In our analysis, we compute the difference of maintainability between the
-security commit ($v_{s}$) and its parent commit ($v_{s-1}$), as illustrated in
-Figure~\ref{fig:commit}. Thus, we can determine which patches had a positive, negative
-or null impact on the project maintainability. 
+detail in previous work~\cite{cruz2019energyoriented}. In our analysis, we compute 
+the difference of maintainability between the security commit ($v_{s}$) and its parent 
+commit ($v_{s-1}$), as illustrated in Figure~\ref{fig:commit}. Thus, we can determine 
+which patches had a positive, negative or null impact on the project maintainability. 
 % The compliance $C$ for a given severity
 % level $l$ is derived by:
 %
@@ -901,7 +889,7 @@ reduce maintainability.
 %
 \section{Results}\label{sec:results}
 
-As mentioned before, this study evaluates $1038$ security and baseline commits
+As mentioned before, this study evaluates $1037$ security and baseline commits
 from $267$ distinct open-source projects. The following section presents the
 results obtained for each research question.
 
@@ -923,14 +911,36 @@ of the maintainability difference and the p-value resulting from the
 Paired Wilcoxon signed-rank test.
 
 
-\begin{figure}[h]	
+\begin{figure}[H]	
  	\centering 	\includegraphics[width=0.46\textwidth]{figures/maintainability_sec_vs_reg.pdf}
  	\caption{Maintainability difference for security and baseline patches}
 	\label{fig:secvsreg}
 	
 \end{figure}
 
-\begin{figure}[h]
+
+Regarding security commits results, we observe that maintainability decreases in
+$41.76\%$ ($433$), remains the same in $19.67\%$ ($204$) and increases in $38.57\%$
+($400$) of the cases after security refactorings are applied. The resulting
+p-value of the Paired Wilcoxon signed-rank test is $4.78$x$10^{-2}$.
+Since the p-value is below the significance level of $0.05$, we argue that
+\emph{security pacthes have a negative impact in the maintainability of
+open-source software}.
+
+\Sof{Skip, it will be updated soon} For regular commits, we observe that the maintainability decreases in \Sof{<todo>} %$41.35\%$ ($251$) 
+of the cases after regular refactorings are applied. But in contrast
+to security commits, it increases in \Sof{<todo>} %$58.16\%$ ($353$) 
+and remains the same in \Sof{<todo>}
+%$0.5\%$ ($3$) 
+of the cases. The resulting p-value of the Paired Wilcoxon signed-rank
+test is \Sof{<todo>}
+%$1.54$x$10^{-6}$
+. Since the p-value is below the significance level of $0.05$
+, we argue that \emph{regular refactorings have a
+positive impact in the maintainability of open-source software}.
+
+
+\begin{figure}[H]
  	\centering
  	\includegraphics[width=0.57\textwidth]{figures/impact_per_guideline.pdf}
  	\caption{Impact of a security patch in 8 out of the 10 guidelines.}
@@ -938,7 +948,9 @@ Paired Wilcoxon signed-rank test.
 	
 \end{figure}
 
-\begin{figure}[h]
+
+
+\begin{figure}[H]
  	\centering
  	\includegraphics[width=0.5\textwidth]{figures/maintainability_severity.pdf}
  	\caption{Maintainability difference by the vulnerabilities severity.}
@@ -946,49 +958,42 @@ Paired Wilcoxon signed-rank test.
 	
 \end{figure}
 
-Regarding security commits results, we observe that maintainability decreases in
-$40.20\%$ ($244$), remains the same in $30.5\%$ ($185$) and increases in $29.33\%$
-($178$) of the cases after security refactorings are applied. The resulting
-p-value of the Paired Wilcoxon signed-rank test is $1.21$x$10^{-10}$.
-Since the p-value is below the significance level of $0.05$, we argue that
-\emph{security refactorings have a negative impact in the maintainability of
-open-source software}.
 
-For regular commits, we observe that the maintainability decreases in $41.35\%$
-($251$) of the cases after regular refactorings are applied. But in contrast
-to security commits, it increases in $58.16\%$ ($353$) and remains the same in
-$0.5\%$ ($3$) of the cases. The resulting p-value of the Paired Wilcoxon signed-rank
-test is $1.54$x$10^{-6}$. Since the p-value is below the significance level of
-$0.05$, we argue that \emph{regular refactorings have a
-positive impact in the maintainability of open-source software}.
 
-\begin{figure}[h]
-\vspace{-0.2cm}
+
+
+
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.5\textwidth]{figures/maintainability_language.pdf}
-  \caption{Maintainability difference by language after security refactorings.}
-  \label{fig:lang_main}
-  
+  \caption{Maintainability difference by language after security patches.}
+  \label{fig:lang_main}  
 \end{figure}
+
 
 We have also evaluated the impact on the maintainability per programming language
 of open-source software, Figure~\ref{fig:lang_main}. Although
-the dataset contains security refactorings for more than $13$ languages, we only
-present the results for \emph{Java}, \emph{Python}, \emph{C}, \emph{Ruby}, and \emph{PHP}
+the dataset contains security patches for more languages, we only
+present the results for \emph{Python}, \emph{C/C++}, \emph{Ruby}, \emph{PHP}, 
+\emph{Objective-C/C++}, and \emph{Java}
 because of the Paired Wilcoxon signed-rank test requirement: input sample has to have more 
 than $20$ samples. The other languages were
 integrated into \emph{Others}. The results of the Paired Wilcoxon signed-rank
-test by pattern indicate that there is statistical evidence to support that the
-maintainability of open-source software decreases for security refactorings in
-$3$ different languages: \emph{C} (p-value = $5.72$x$10^{-9}$), Ruby (p-value = $0.057$) and
-PHP (p-value = $3.54$x$10^{-6}$). Following the \textit{American Statistical Association} 
-recommendations~\cite{doi:10.1080/00031305.2016.1154108}, we consider the results for 
-Ruby as statistically significant because its p-value is on the borderline.
-The results also exhibit statistical significance for when security refactorings 
-are performed in \emph{Java} (p-value = $3.61$x$10^{-2}$). \emph{Python} and the 
-languages that integrate the \emph{Others} set contain more cases where the 
-maintainability increases. However, the results obtained for these patterns are 
-not statistically significant.
+test by language indicate that there is statistical evidence to support that the
+maintainability of open-source software decreases for security patches for \emph{C/C++} 
+(p-value = $2.5$x$10^{-5}$).
+% Following the \textit{American Statistical Association}
+% recommendations~\cite{doi:10.1080/00031305.2016.1154108}, we consider the results for
+% Ruby as statistically significant because its p-value is on the borderline.
+If we considered a significance level of $0.1$, we could also conclude that security 
+patches in \emph{PHP} (p-value = $0.072$) also have a negative impact
+on the maintainability of software.
+However, to the rest of the languages presented in Figure~\ref{fig:lang_main}, it is
+not possible to make conclusions with statistical significance. But it is important
+to notice that overall there is a very significant number of patches that
+hinder the maintainability of software (e.g., \emph{Python}, \emph{Ruby}, 
+\emph{Objective-C/C++}, \emph{Java}), even if the number of negative cases does not 
+surpass the number of positive or none. 
 
 \begin{framed}
 \textit{\textbf{RQ2} Which patterns of security refactorings are more likely to
@@ -1273,10 +1278,12 @@ the popularity of a software project; expand our methodology with other
 software quality properties; validate these findings with closed or private
 software; and, expand this analysis to other quality standards.
 
-\begin{acks}
-We thank the Software Improvement Group (SIG) team for all the support and
-help in validating the methodology.
-\end{acks}
+% \begin{acks}
+% This work was supported by national funds through FCT, Fundação para a Ciência 
+% e a Tecnologia, under project UIDB/50021/2020 and…
+% We thank the Software Improvement Group (SIG) team for all the support and
+% help in validating the methodology.
+% \end{acks}
 
 \bibliographystyle{ACM-Reference-Format}
 \bibliography{icpc20}
