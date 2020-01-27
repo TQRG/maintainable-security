@@ -968,20 +968,31 @@ that overall our patches have a significant positive impact in $5$ guidelines:
 Components Balanced} (p-value = $5.26$x$10^{-71}$), \emph{Couple Architecture 
 Components Loosely} (p-value = $2.43$x$10^{-07}$), \emph{Keep Unit Interfaces 
 Small} (p-value = $2.25$x$10^{-13}$), \emph{ Write Code Once} (p-value = 
-$7.9$x$10^{-35}$). However, each of the previous guidelines also suffer a negative 
-impact from $10\%$ to $35\%$. \emph{Separate Concerns in Module} guideline also follows the same results but without any statistical significance since the p-value is higher than $0.05$. According with the results, \emph{Write Simple Units of Code} (p-value=$0.015$ and $38.2\%$/$396$ of negative cases) and \emph{Write Short Units of Code} (p-value=$0.029$ and $38.3\%$/$397$ of negative cases) are the guidelines which suffered more impact from security patches. 
+$7.9$x$10^{-35}$). However, each of the previous guidelines also suffer a 
+negative impact from $10\%$ to $35\%$. \emph{Separate Concerns in Module} 
+guideline also follows the same results but without any statistical 
+significance since the p-value is higher than $0.05$. According with the 
+results, \emph{Write Simple Units of Code} (p-value=$0.015$ and $38.2\%$/$396$ 
+of negative cases) and \emph{Write Short Units of Code} (p-value=$0.029$ and 
+$38.3\%$/$397$ of negative cases) are the guidelines which suffered more 
+impact from security patches. 
  
 
 \begin{figure}[h]
- 	\centering
- 	\includegraphics[width=0.5\textwidth]{figures/maintainability_severity.pdf}
+ 	\centering 	\includegraphics[width=0.45\textwidth]{figures/maintainability_severity.pdf}
  	\caption{Maintainability difference by the vulnerabilities severity.}
 	\label{fig:severity}
 	
 \end{figure}
 
-
-
+For the vulnerabilities identified with CVE(s), we scraped NVD to retrieve 
+their severity levels. In total, we obtained severity scores for $574$ 
+vulnerabilities: $121$ \emph{HIGH}, $423$ \emph{MEDIUM} and $30$ \emph{LOW}. 
+Figure~\ref{fig:severity} presents the impact
+of security patches per severity level on the maintainability of open-source 
+software. Although with no statistical significance, we observe that 
+vulnerabilities with higher severity levels (\emph{HIGH} and \emph{MEDIUM}) have more negative impact than the \emph{LOW} severity level on the
+maintainability of software.
 
 
 \begin{figure}[h]
