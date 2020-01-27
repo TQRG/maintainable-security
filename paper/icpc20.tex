@@ -303,10 +303,10 @@ concludes the main findings and elaborates on future work.
 Due to time-to-market pressure and the lack of security expertise~\cite{8077802}, code-related
 security flaws are generally detected \textit{after the fact}, i.e., when
 hackers exploit them. It turns out that fixing these issues is as simple as
-modifying the software code base. However, these refactorings may have a
+modifying the software code base. However, these patches may have a
 negative impact on software maintenance --- e.g., developers might follow the
 quickest solution to fix the problem and not necessarily the most elegant and
-performant one. Thus, we want to understand how security refactorings impact
+performant one. Thus, we want to understand how security patches impact
 the maintainability of software. 
 As an example, consider the refactoring of the Datagram Transport Layer Security
 (DTLS) protocol implementation in OpenSSL\footnoteref{openssl} to address a vulnerability where an attacker could cause a Denial-of-Service
@@ -420,45 +420,42 @@ dataset of security refactorings~\cite{Reis:2017:IJSSE} to measure the impact of
 the changes in the maintainability of open-source software.
 
 \begin{framed}
-\textit{\textbf{RQ1} What is the impact of security refactorings on the
+\textit{\textbf{RQ1} What is the impact of security patches on the
 maintainability of open-source software?}
 \end{framed}
 \vspace{-0.1cm}
 
-Often security flaws require refactoring code to make software more secure.
-However, there is no evidence yet of how security refactorings impact the
-maintainability of open-source software. Our suspicion is that developers tend
-to introduce technical debt in their software when refactoring the code base to
+Often security flaws require patching code to make software more secure.
+However, \textbf{there is no evidence yet of how security patches impact the
+maintainability of open-source software}. Our suspicion is that developers tend
+to introduce technical debt in their software when patching the code base to
 address a security flaw because they tend to choose the easiest path to solve
-it. To address it, we compute the maintainability of $607$ commits using the
+it. To address it, we compute the maintainability of $1037$ commits using the
 \emph{Better Code Hub} tool. The same approach is applied to a randomly generated
 dataset of regular commits --- baseline --- that we use to understand how
-maintainability evolves when security refactorings are performed versus when
+maintainability evolves when security patches are performed versus when
 they are not.
 
 \begin{framed}
-\textit{\textbf{RQ2} Which patterns of security refactorings are more likely to
+\textit{\textbf{RQ2} Which patterns of security patches are more likely to
 affect open-source software maintainability?}
 \end{framed}
 \vspace{-0.1cm}
 % here
-There are security flaws that are more difficult to refactor than others. For
+There are security flaws that are more difficult to patch than others. For
 instance, implementing secure authentication is not as easy as fixing a
 cross-site scripting vulnerability since usually the last one can be fixed
-without adding new lines of code. A typical fix for the cross-site scripting
-vulnerability is presented in Listing~\ref{lst:fix}. The developer added the
-function \texttt{htmlentities} to \textit{escape} the data given by the variable
-\texttt{\$\_['file']}. Knowing which patterns are more likely to increase
+without adding new lines of code/complexity to the code. A typical fix for 
+the cross-site scripting vulnerability is presented in Listing~\ref{lst:fix}. The developer added the function \texttt{htmlentities} to \textit{escape} the data given by the variable
+\texttt{\$\_['file']}. \textbf{Knowing which patterns are more likely to increase
 maintainability issues is one step forward to bring awareness to security
-engineers of what patterns need more attention. The taxonomy of security
-patterns used to answer this question is the same as the one provided by the
-authors of the dataset~\cite{Reis:2017:IJSSE}. Maintainability is measured
+engineers of what patterns need more attention}. The taxonomy of security
+patterns used to answer this question is the one provided by the Common Weakness Enumeration
+(CWE). Maintainability is measured
 separately for each pattern.
 
 \setcounter{lstannotation}{0}
 \begin{lstlisting}[style={PHPStyle}, caption={Fix provided by \texttt{nextcloud/server} developers to a \\Cross-Site Scripting vulnerability},label={lst:fix}]
-  <li class='error'>
-   <?php echo $l->t('Cloud not found');?>
    <p class='hint'>
     <?php
 -   if(isset($_['file'])) echo $_['file']
@@ -469,7 +466,6 @@ separately for each pattern.
 +   if(isset($_['file'])) echo htmlentities($_['file'])
     ?>
    </p>
-  </li>
 \end{lstlisting}
 
 \section{Methodology}\label{sec:methodology}
