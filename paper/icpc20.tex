@@ -599,7 +599,7 @@ with less than $20$ instances were merged in a bigger category named \textit{Mis
 	or entire repositories.
 	
 	
-	\item \textbf{Miscellaneous (674 cases)} This pattern comprises
+	\item \textbf{Miscellaneous (673 cases)} This pattern comprises
 		several other security refactorings that do not have a CWE assigned and patterns that
 		do not satisfy the Wilcoxon test size requirement of more than $20$ refactorings.
 
@@ -662,7 +662,7 @@ of some patches, it was not possible to find patches with the exact number of ad
 deleted lines. Our search uses the patch \emph{diff} to look for a new similar \emph{diff}. The algorithm follows the following steps:
 
 \begin{enumerate}
-\item Diff comparison between the security patch commit (\emph{sha}) and its parent(\emph{sha-p}).
+\item Diff comparison between the security patch commit (\emph{sha}) and its parent (\emph{sha-p}).
 \item Selects a random commit from the security patch project (\emph{sha-reg}).
 \item Diff comparison between the random commit (\emph{sha-reg}) and its parent (\emph{sha-reg-p}).
 \item Check if the size from the regular change has the same/approximated size to 
@@ -911,9 +911,9 @@ of the maintainability difference and the p-value resulting from the
 Paired Wilcoxon signed-rank test.
 
 
-\begin{figure}[H]	
+\begin{figure}[h]	
  	\centering 	\includegraphics[width=0.46\textwidth]{figures/maintainability_sec_vs_reg.pdf}
- 	\caption{Maintainability difference for security and baseline patches}
+ 	\caption{Maintainability difference for security and baseline patches.}
 	\label{fig:secvsreg}
 	
 \end{figure}
@@ -940,17 +940,39 @@ test is \Sof{<todo>}
 positive impact in the maintainability of open-source software}.
 
 
-\begin{figure}[H]
+\begin{figure}[h]
  	\centering
- 	\includegraphics[width=0.57\textwidth]{figures/impact_per_guideline.pdf}
- 	\caption{Impact of a security patch in 8 out of the 10 guidelines.}
+ 	\includegraphics[width=0.5\textwidth]{figures/impact_per_guideline.pdf}
+ 	\caption{Impact of the security patches for each guideline.}
 	\label{fig:guidelines}
-	
+	\scalebox{0.5}{
+	\begin{tabular}{r@{: }l r@{: }l}
+	$WCC$ & Write Clean Code & $KACB$ & Keep Architecture Components Balanced\\
+	$CACL$ & Couple Architecture Components Loosely & $SCM$ & Separate Concerns in Modules \\
+	$KUIS$ & Keep Unit Interfaces Small & $WCO$ & Write Code Once \\
+	$WSimpleUC$ & Write Simple Units of Code & $WShortUC$ & Write Short Units of Code
+	\end{tabular}
+	}
 \end{figure}
 
 
+Maintainability is being calculated as the mean of the guidelines computed
+by BCH. Figure~\ref{fig:guidelines} shows the impact of security patches on each 
+guideline individually. For projects with large 
+codebases, the results retrieved for \emph{Keep Your Codebase Small} were not 
+viable due to limitations of BCH. Thus, we decided to not consider this guideline 
+in our analysis.
+Regarding the impact of security patches in each guideline, we observe
+that overall our patches have a significant positive impact in $5$ guidelines: 
+\emph{Write Clean Code} (p-value = $4.9$x$10^{-54}$), \emph{Keep Architecture 
+Components Balanced} (p-value = $5.26$x$10^{-71}$), \emph{Couple Architecture 
+Components Loosely} (p-value = $2.43$x$10^{-07}$), \emph{Keep Unit Interfaces 
+Small} (p-value = $2.25$x$10^{-13}$), \emph{ Write Code Once} (p-value = 
+$7.9$x$10^{-35}$). However, each of the previous guidelines also suffer a negative 
+impact from $10\%$ to $35\%$. \emph{Separate Concerns in Module} guideline also follows the same results but without any statistical significance since the p-value is higher than $0.05$. According with the results, \emph{Write Simple Units of Code} (p-value=$0.015$ and $38.2\%$/$396$ of negative cases) and \emph{Write Short Units of Code} (p-value=$0.029$ and $38.3\%$/$397$ of negative cases) are the guidelines which suffered more impact from security patches. 
+ 
 
-\begin{figure}[H]
+\begin{figure}[h]
  	\centering
  	\includegraphics[width=0.5\textwidth]{figures/maintainability_severity.pdf}
  	\caption{Maintainability difference by the vulnerabilities severity.}
@@ -962,8 +984,7 @@ positive impact in the maintainability of open-source software}.
 
 
 
-
-\begin{figure}[H]
+\begin{figure}[h]
   \centering
   \includegraphics[width=0.5\textwidth]{figures/maintainability_language.pdf}
   \caption{Maintainability difference by language after security patches.}
