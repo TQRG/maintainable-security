@@ -139,7 +139,7 @@ they actually affect the maintainability of software, potentially
 introducing other vulnerabilities. This paper evaluates the impact of 
 patches to improve security on the maintainability of open-source software. 
 Maintainability is measured based on the Better Code Hub’s model of $10$ 
-guidelines using a dataset including $1037$ security commits. Results show 
+guidelines using a dataset including $1037$ security commits. \Rui{Add numbers} Results show 
 that fixing software vulnerabilities hinders the maintainability of 
 open-source software. We conclude that changes to codebases 
 to fix vulnerabilities need to be performed with extra care.
@@ -261,7 +261,7 @@ From a methodological
 perspective, we leveraged a dataset of $607$ security refactorings collected from open-source 
 software. We calculate software maintainability before and after the refactoring to measure its 
 impact. This empirical study exhibits proof that changes 
-applied in the code bases to fix vulnerabilities affect code maintainability. 
+applied in the code bases to patch vulnerabilities affect code maintainability. 
 Especially, for refactorings that address \emph{Broken Authentication and Session Management} 
 issues, \emph{Memory Leaks} and \emph{Denial-of-Service} attacks. This is important work
 because there is still little information about the impact of security patches on the software
@@ -408,7 +408,7 @@ code base by introducing a smaller unit
 \texttt{dtls1\_max\_handshake\_message\_len} (\ref{lst:func1}), this change disrupts
 one of the guidelines proposed by the Software Improvement Group (SIG) for
 building maintainable software~\cite{Visser:2016:OREILLY}. It adds a new branch
-point to the \texttt{dtls1\_process\_out\_of\_seq\_message} unit
+point to the \sloppy\texttt{dtls1\_process\_out\_of\_seq\_message} unit
 (\ref{lst:func5}) increasing the cyclomatic complexity and breaking the
 \emph{Write Simple Units of Code} guideline which resulted in a negative impact on the
 OpenSSL maintainability.
@@ -541,7 +541,7 @@ Enumeration IDs (CWE). The most prevailing categories are the following (categor
 with less than $20$ instances were merged in a bigger category named \textit{Miscellaneous}):
 %
 \begin{itemize}
-    \item \textbf{CW-89: Improper Neutralization of Special Elements used in an SQL Command/SQL Injection (23 cases).} When developers do not keep untrusted data
+    \item \textbf{CWE-89: Improper Neutralization of Special Elements used in an SQL Command/SQL Injection (23 cases).} When developers do not keep untrusted data
     separate from SQL queries. If an attacker sends a command that
     exploits the syntax of the SQL interpreter, then SQL injection attack is possible.
 %
@@ -625,7 +625,7 @@ Hub} (BCH) is used to collect the maintainability reports of the refactorings of
 each project. Table~\ref{tab:guidelines} presents the $10$ guidelines $-$ proposed
 by BCH's authors for delivering software that is not difficult to
 maintain~\cite{Visser:2016:OREILLY} $-$ and maps each guideline to the metric 
-calculated by BCH. Some of theses guidelines are calculated using the metrics 
+calculated by BCH. Theses guidelines are calculated using the metrics 
 presented in~\cite{criteria:2017}. During each guideline evaluation, the tool
 determines the compliance towards one guideline by establishing limits for the
 percentage of code allowed to be in each of the $4$ risk severity levels
