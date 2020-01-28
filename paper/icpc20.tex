@@ -308,7 +308,8 @@ negative impact on software maintenance --- e.g., developers might follow the
 quickest solution to fix the problem and not necessarily the most elegant and
 performant one. Thus, we want to understand how security patches impact
 the maintainability of software. 
-As an example, consider the refactoring of the Datagram Transport Layer Security
+%%%%% NEEDS REVIEW
+\Sof{After dropping Keep Your Codebase Small the example changed to a positive impact - the example needs to be changed} As an example, consider the refactoring of the Datagram Transport Layer Security
 (DTLS) protocol implementation in OpenSSL\footnoteref{openssl} to address a vulnerability where an attacker could cause a Denial-of-Service
 (DoS) attack by crafting DTLS handshake messages to trigger memory allocations
 corresponding to large length values. This vulnerability is listed at the Common
@@ -394,12 +395,11 @@ than the maximum length (\texttt{max\_len}). If that condition holds, the functi
 returns the size of the certificate list, otherwise, it returns the maximum length. 
 This function replaces lines $17$--$21$.
 
-
 ~\ref{lst:func5} and~\ref{lst:func4} are guards added to different functions to
 ascertain that the message and the fragment length are never higher than the
 maximum allowed by DTLS. In particular, \ref{lst:func5} is responsible for patching
 the vulnerability.
-
+%
 Although checking the maximum size of a handshake message seems an elementary
 problem to repair, the example shows that there was a significant amount of
 changes performed in the code base which produced a negative impact in the
@@ -412,19 +412,19 @@ point to the \texttt{dtls1\_process\_out\_of\_seq\_message} unit
 (\ref{lst:func5}) increasing the cyclomatic complexity and breaking the
 \emph{Write Simple Units of Code} guideline which resulted in a negative impact on the
 OpenSSL maintainability.
-
+%%%%%%% 
 In this paper, our concern is to study whether, while improving software
 security, developers are also negatively impacting the maintainability of their
-software applications. To answer the following two research questions, we use a
-dataset of security refactorings~\cite{Reis:2017:IJSSE} to measure the impact of
-the changes in the maintainability of open-source software.
-
+software applications. To answer the following two research questions, we use two datasets
+of security patches~\cite{Reis:2017:IJSSE, 10.1109/MSR.2019.00064} to measure the impact of
+security patches on the maintainability of open-source software.
+%
 \begin{framed}
 \textit{\textbf{RQ1} What is the impact of security patches on the
 maintainability of open-source software?}
 \end{framed}
 \vspace{-0.1cm}
-
+%
 Often security flaws require patching code to make software more secure.
 However, \textbf{there is no evidence yet of how security patches impact the
 maintainability of open-source software}. Our suspicion is that developers tend
@@ -435,13 +435,13 @@ it. To address it, we compute the maintainability of $1037$ commits using the
 dataset of regular commits --- baseline --- that we use to understand how
 maintainability evolves when security patches are performed versus when
 they are not.
-
+%
 \begin{framed}
 \textit{\textbf{RQ2} Which patterns of security patches are more likely to
 affect open-source software maintainability?}
 \end{framed}
 \vspace{-0.1cm}
-% here
+% 
 There are security flaws that are more difficult to patch than others. For
 instance, implementing secure authentication is not as easy as fixing a
 cross-site scripting vulnerability since usually the last one can be fixed
@@ -453,7 +453,7 @@ engineers of what patterns need more attention}. The taxonomy of security
 patterns used to answer this question is the one provided by the Common Weakness Enumeration
 (CWE). Maintainability is measured
 separately for each pattern.
-
+%
 \setcounter{lstannotation}{0}
 \begin{lstlisting}[style={PHPStyle}, caption={Fix provided by \texttt{nextcloud/server} developers to a \\Cross-Site Scripting vulnerability},label={lst:fix}]
    <p class='hint'>
@@ -467,32 +467,34 @@ separately for each pattern.
     ?>
    </p>
 \end{lstlisting}
-
+%
 \section{Methodology}\label{sec:methodology}
 %
 The methodology used to measure the impact of security patches on the
 maintainability of open-source software is discussed in this section.
 The methodology comprises the following steps, as illustrated in
 Figure~\ref{fig:met}:
-
+%
 \begin{enumerate}
 	\item Combine the datasets from related work that classifies
 the activities of developers addressing security-oriented patches~\cite{Reis:2017:IJSSE, 10.1109/MSR.2019.00064}.
+%
 	\item
 	Extract relevant data (e.g., sha, sha of the parent commit, owner of the project, name of 
 	the repository) and code bases from the combined dataset containing $1335$ security
 	refactorings collected from open-source software available on
 	GitHub.
+%
 	\item A baseline of regular commits was randomly collected from the list of
 	projects of the final dataset to evaluate the impact of regular commits on the
 	maintainability of open-source software.
+%
   \item Use the Software Improvement Group's\footnote{SIG's website: \url{https://www.sig.eu/} 
   (Accessed on \today{})} web-based source code analysis
   service \emph{Better Code Hub} (BCH)\footnote{BCH's website:
   \url{https://bettercodehub.com/} (Accessed on \today{})} to quantify maintainability
   for both security and regular commits. The code bases that resemble to the commits
-  of our datasets are collected before the analysis performed by BCH.
-  
+  of our datasets are collected before the analysis performed by BCH.s
 \end{enumerate}
 %
 \begin{figure}[h]
@@ -520,7 +522,7 @@ another (typically, called \textit{diffs}) --- where one can easily review the
 code used to fix the security flaw. In this study, we focus on computing the
 maintainability of the commits before and after the security patching to
 evaluate if its impact was positive, negative or none.
-
+%
 Ponta et al. ($2019$) tracked the \url{pivotal.io} website for vulnerabilities 
 from $2014$ to $2019$. For each new vulnerability, the authors manually searched 
 for references to commits involved in the patch on the NVD's website. However, $70\%$
@@ -529,8 +531,7 @@ used their expertise to locate the commits in the repositories. This technique
 yielded a database of $624$ patches~\cite{10.1109/MSR.2019.00064}. The original dataset contains $1282$ commits. One patch can have multiple commits assigned.
 To fit the dataset in our methodology, we search for the first and last commits
 used to patch the vulnerability. We assumed that the last commit of the patch as the fix (\emph{sha}) and the parent of the first commit as the vulnerable version (\emph{sha-p}).
-
-
+%
 The $1335$ patches in the dataset were run against the BCH toolset to
 calculate their maintainability reports. However, there are refactorings
 discarded from our study due to limitations of BCH: in particular, lack of
@@ -538,109 +539,52 @@ language support and project size. The final dataset used in this paper comprise
 $1037$ security patches. $556$ of these patches are identified with Common Weakness
 Enumeration IDs (CWE). The most prevailing categories are the following (categories
 with less than $20$ instances were merged in a bigger category named \textit{Miscellaneous}):
-
-% \begin{figure}[h]
-%  	\centering 	\includegraphics[width=0.5\textwidth]{figures/language_dist.pdf}
-%  	\caption{Distribution of Security Refactorings per Language}
-% 	\label{fig:lang}
-% \end{figure}
-% \vspace{-0.2cm}
 %
-% \begin{figure}[h]
-%  	\centering 	\includegraphics[width=0.5\textwidth]{figures/type_dist.pdf}
-%  	\caption{Distribution of the Domain of Projects}
-% 	\label{fig:domain}
-% \end{figure}
-
-
 \begin{itemize}
     \item \textbf{CW-89: Improper Neutralization of Special Elements used in an SQL Command/SQL Injection (23 cases).} When developers do not keep untrusted data
     separate from SQL queries. If an attacker sends a command that
     exploits the syntax of the SQL interpreter, then SQL injection attack is possible.
-
+%
     \item \textbf{CWE-611: Improper Restriction of XML External Entity Reference (24 cases).} 
 	XML documents are exchanged through the web containing entities with URIs
 	that resolve to local/external files. Thus, when XML parsers are not well configured, 
 	attackers have allowed to directly those files.
-	
+%	
     \item \textbf{CWE-20: Improper Input Validation (76 cases).} When developers
 	forget to validate the inputs of an application, attackers may have control
 	of the control/data flow of the program.
-	
+%	
     \item \textbf{CWE-200: Information Exposure (39 cases).} Application's logs are one way of intentional/unintentional disclosure information
 	to attackers. Many times attackers get access to logs when sould not be authorized to.
-	
+%	
 	\item \textbf{CWE-352: Cross-Site Request Forgery/CSRF (22 cases).} Poor session tokens generation
     and management usually allow attackers to send forged HTTP requests
     including authentication information from the victim to the vulnerable web
     application.
-
+%
 	\item \textbf{CWE-264: Permissions, Privileges, and Access Controls (59 cases).} Incorrectly
 	    implemented functionalities related to authentication and session
 	    management, allowing an attacker to gain access to session tokens,
 	    passwords, keys, and other sensitive data.
-	
+%	
 	\item \textbf{CWE-399: Resource Management Errors (22 cases).} Resource management issues are found more frequently
 		in programming languages that do not manage memory automatically (e.g., C/C++
 	    and Objective-C), i.e., where developers are responsible for
 	    handling it instead. It is one of the main causes of DoS attacks.
-	
+%	
 	\item \textbf{CWE-79: Improper Neutralization of Input During Web Page Generation/Cross-site Scripting (62 cases)} Lack of proper validation or escaping
 	    allows attackers to submit untrusted data to web browsers through malicious
 	    scripts that can hijack the user sessions or redirect the user to malicious
 	    sites.
-	
+%	
 	\item \textbf{CWE-22: Improper Limitation of a Pathname to a Restricted Directory/Path Traversal (37 cases).}  When developers forget to neutralize special elements within the pathnames to files/directories, attackers 
 	may leverage this flaw to resolve to a location outside of the restricted directory and gain access to documents
 	or entire repositories.
-	
-	
+%
 	\item \textbf{Miscellaneous (673 cases)} This pattern comprises
 		several other security refactorings that do not have a CWE assigned and patterns that
 		do not satisfy the Wilcoxon test size requirement of more than $20$ refactorings.
-
-
 \end{itemize}
-
-% \begin{table*}[h]
-% 	\centering
-% 	\caption{Descriptive statistics of the projects in the dataset}
-% \begin{tabular}{@{}rrrrrrrrrrr@{}}
-% \toprule
-%       & Forks   & Stars   & Watchers & Contributors & Commits  & Branches & Releases & Size      & Issues & Pull Requests  \\ \midrule
-% mean  & 1763 & 5448 & 401   & 153       & 14834 & 45    & 129   & 122973 & 3768   & 1941 \\
-% std   & 2434 & 6215 & 486   & 123       & 22234 & 150   & 189   & 209732 & 5933   & 3603 \\
-% min   & 1       & 3       & 1        & 0            & 103      & 1        & 0        & 108       & 0         & 0       \\
-% 25\%  & 391  & 1581    & 117   & 49           & 1440  & 4        & 19       & 8466   & 313    & 143  \\
-% median  & 838  & 2836 & 248      & 99           & 5504  & 9        & 59       & 37372  & 1792   & 650     \\
-% 75\%  & 2155    & 6828 & 459   & 261          & 18579 & 20       & 142   & 117699 & 4087   & 1907 \\
-% max   & 16366   & 31841   & 3446     & 413          & 114378   & 1227     & 1114     & 995790    & 33970     & 19329   \\
-% Total & 165771  & 512182  & 37729    & 14413        & 1394412  & 4246     & 12168    & 11559485  & 354283    & 182511  \\ \bottomrule
-% \end{tabular}
-% \vspace{-0.3cm}
-% \label{tab:dataset}
-% \end{table*}
-
-% The dataset contains security flaws for more than $13$ different languages,
-% being PHP ($39\%$) and C ($24\%$) the most prevalent ones (cf. Figure~\ref{fig:lang}).
-% To classify the applications in the dataset, we use a taxonomy for open-source
-% software from previous work~\cite{7816479}. Figure~\ref{fig:domain}
-% presents the projects domain distribution: \textit{Application Software} ($25$),
-% software that provides end-users with functional systems; \textit{Web libraries
-% and frameworks} ($20$); \textit{System Software} ($18$), software that provides
-% services and infrastructures (e.g., operating systems, servers and databases);
-% \textit{Software Tool} ($13$), software that supports development (e.g.,
-% programming languages, compilers, package managers, IDEs); and, \textit{Non-web
-% libraries and frameworks} ($18$), for desktop and mobile software.
-% %
-% Table~\ref{tab:dataset} presents the descriptive statistics of the $94$
-% open-source projects involved in this study, including the number of forks, the
-% number of stars, the number of watchers, the number of contributors, the number
-% of commits, the number of branches, the number of releases, size (cf. GitHub, it
-% is the size of the whole repository, including all of its history, in
-% kilobytes), the number of issues, and the number of pull requests.
-
-
 %
 \subsection{Security vs. Baseline Commits}
 %
@@ -890,7 +834,7 @@ from $267$ distinct open-source projects. The following section presents the
 results obtained for each research question.
 
 \begin{framed}
-\textit{\textbf{RQ1} What is the impact of security refactorings on the
+\textit{\textbf{RQ1} What is the impact of security patches on the
 maintainability of open-source software?}
 \vspace{-0.1cm}
 \end{framed}
@@ -931,8 +875,8 @@ and remains the same in \Sof{<todo>}
 of the cases. The resulting p-value of the Paired Wilcoxon signed-rank
 test is \Sof{<todo>}
 %$1.54$x$10^{-6}$
-. Since the p-value is below the significance level of $0.05$
-, we argue that \emph{regular refactorings have a
+. Since the p-value is below the significance level of $0.05$, 
+we argue that \emph{regular refactorings have a
 positive impact in the maintainability of open-source software}.
 
 
@@ -1024,61 +968,52 @@ hinder the maintainability of software (e.g., \emph{Python}, \emph{Ruby},
 surpass the number of positive or none. 
 
 \begin{framed}
-\textit{\textbf{RQ2} Which patterns of security refactorings are more likely to
+\textit{\textbf{RQ2} Which patterns of security patches are more likely to
 affect open-source software maintainability?}
 \vspace{-0.1cm}
 \end{framed}
 \vspace{-0.1cm}
 
-The impact of each type of security refactoring on the maintainability of
+The impact of each type of security patches on the maintainability of
 open-source software is presented in Figure~\ref{fig:pat}. The results of the
 Paired Wilcoxon signed-rank per pattern exhibited statistical
-evidence supporting that the maintainability of open-source software decreases
-for $4$ different patterns: \emph{Broken Autentication} (p-value = $0.018$),
-\emph{Denial-of-Service} (p-value = $0.029$), \emph{Memory Leak} (p-value = $0.009$) and
-\emph{Miscellaneous} (p-value = $3.07$x$10^{-4}$). With statistical
-significance, results demonstrate evidence that maintainability is not
-negatively impacted when removing \emph{Components with Known Vulnerabilities}
-(p-value = $7.96$x$10^{-4}$) and fixing \emph{Cross-Site Scripting
-Vulnerabilities} (p-value = $0.001$). \emph{Injection} and \emph{Cross-Site
-Request Forgery} produced more cases where refactorings had a negative
-impact in the maintainability. However, the results obtained for these patterns
-are not statistically significant.
+evidence supporting that the maintainability of open-source software decreases for
+only one category: \emph{Miscellaneous} (p-value = $0.033$). Although without 
+statistical significance, we also observe that the maintainability of open-source software decreases $3$ different patterns: \emph{Improper Limitation of a Pathname to a Restricted Directory/Path Traversal (CWE-22)}, \emph{Information Exposure (CWE-200)} and \emph{Resource Management Errors (CWE-399)}.
 
-Projects with \emph{Broken Authentication} flaws are the most affected ones by
-security refactorings: $55.3\%$ ($21$) of the refactorings had a negative impact
-in the maintainability while $35.0\%$ ($11$) yielded a positive impact, and only
-$13.8\%$ ($6$) did not suffer any change. The results also show that fixing
-\emph{Memory Leak}s affects the maintainability of $51.3\%$ ($41$) of the cases
-and leaves only $13.8\%$ ($11$) of the cases unaffected. In $35\%$ ($28$) of the
-cases, maintainability increased. Refactoring vulnerabilities that allow
-\emph{Denial-of-Service} attacks (e.g., CVE-$2014$-$3506$) have a negative
-impact of $47.5\%$ ($19$) in the maintainability of open-source software while
-$30.0\%$ ($12$) of the cases exhibit maintainability improvement and $22.5\%$
-($9$) show that maintainability does not suffer any change. The
+Also with no statistical
+significance, results demonstrate evidence that maintainability is less
+negatively impacted when patching \emph{SQL Injection (CWE-89)}, \emph{Improper Restriction of XML External Entity Reference (CWE-611)}, \emph{Improper Input Validation (CWE-20)}, \emph{Cross-Site Request Forgery (CWE-352)}, \emph{Permissions, Privileges, and Access Controls (CWE-264)}. However,
+for all the previous patterns there is a percentage of security patches that hinder maintainability between $30\%$ and $50\%$ which is very significant. \emph{Cross-Site Scripting (CWE-79)} is the pattern that suffers less positive/negative impact from security patches. As the mean shows, the security
+patches of this type of vulnerability usually have no impact on the maintainability of open-source software. 
+
+Software with \emph{Resource Management Errors (CWE-399)} flaws are the most affected ones by security patches: $54.5\%$ ($12$) of the patches had a negative impact
+in the maintainability while $36.4\%$ ($8$) yielded a positive impact, and only
+$9.1\%$ ($2$) did not suffer any change. The results also show that fixing
+\emph{Information Exposure (CWE-200)} vulnerabilities affects the maintainability of $51.2\%$ ($20$) of the cases
+and leaves only $2.6\%$ ($1$) of the cases unaffected. In $46.2\%$ ($18$) of the
+cases, maintainability increased. 
+Patching \emph{Improper Limitation of a Pathname to a Restricted Directory/Path Traversal (CWE-22)} vulnerabilities has a negative
+impact of $48.6\%$ ($18$) in the maintainability of open-source software while
+$46.0\%$ ($17$) of the cases exhibit maintainability improvement and $5.4\%$
+($2$) show that maintainability does not suffer any change. The
 \emph{Miscellaneous} refactorings pattern integrates several types of security
-flaws. These type of refactorings harm maintainability in $43.1\%$ ($84$) of the
-cases. In $31.8\%$ ($62$), there is no impact and for the
-other $25.1\%$ ($49$) maintainability increases.
+flaws. These type of refactorings harm maintainability in $41.3\%$ ($673$) of the
+cases. In $22.7\%$ ($153$), there is no impact and for the
+other $36.0\%$ ($242$) maintainability increases.
 
 It is also important to notice that overall the maintainability of open-source
-software is not affected by \emph{Cross-Site Scripting} vulnerabilities and by
-\emph{Using Components with Known Vulnerabilities}. \emph{Cross-Site Scripting}
-does not suffer any decrease in the maintainability of $55.3\%$ ($63$) of cases
-and $21.1\%$ ($24$) have a positive effect on it. Only $23.7\%$ ($27$) of the
-cases hinder the software maintainability. From the $21$ cases evaluated for
-\emph{Using Componentes with Known Vulnerabilities}, only $4.8\%$ ($1$) have a
-positive effect in the maintainability of software while $14.3\%$ ($3$) harms
-maintainability software, and $81\%$ ($17$) have no effect in the
-maintainability.
+software is not affected by \emph{Cross-Site Scripting (CWE-79)} vulnerabilities. \emph{Cross-Site Scripting (CWE-79)}
+does not suffer any decrease in the maintainability of $38.7\%$ ($24$) of cases
+and $35.5\%$ ($22$) have a negative effect on it. Only $25.8\%$ ($16$) of the
+cases improve the software maintainability. 
 
 
 \begin{figure}[h]
  	\centering
- 	\includegraphics[width=0.5\textwidth]{figures/maintainability_cwe.pdf}
+ 	\includegraphics[width=0.45\textwidth]{figures/maintainability_cwe.pdf}
  	\caption{Maintainability difference by pattern after security patches.}
-	\label{fig:pat}
-	
+	\label{fig:pat}	
 \end{figure}
 
 
@@ -1094,9 +1029,9 @@ of open-source software?}
 \end{framed}
 \vspace{-0.1cm}
 
-\textbf{\textit{Security refactorings harm the maintainability of open-source software.}}
+\textbf{\textit{Security patches harm the maintainability of open-source software.}}
 %
-We found that $40.2\%$ of the security refactoring have a negative impact on the
+We found that $41.76\%$ of the security patches have a negative impact on the
 maintainability of open-source software (cf. Figure~\ref{fig:secvsreg}). This raises
 a new tradeoff when developers need to fix vulnerabilities on their projects
 because they might be affecting the software maintainability or even introducing
@@ -1132,10 +1067,8 @@ We would expect that the negative impact of programming languages on
 maintainability to be more severe, as arguably poor design of programming
 languages and lack of using the best practices lead to more buggy and vulnerable
 code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. However,
-Figure~\ref{fig:lang_main} shows that only \emph{C} has a negative impact of
-more than $50\%$ on software maintainability. We suspect that these values are
-the result of projects contributions policies. Nine of the top-10 of dataset projects  --- the
-equivalent to $31.8\%$ of the commits ---
+Figure~\ref{fig:lang_main} shows that only \emph{C/C++} and \emph{Python} have a negative impact approximate to $50\%$ on software maintainability. We suspect that these values are
+the result of projects contributions policies. Nine of the top-10 of dataset projects 
 with more contributors have restrict contribution policies regarding code
 standards. Some examples are the \texttt{laravel/framework},
 \texttt{php/php-src}, \texttt{openssl/openssl} and \texttt{cakephp/cakephp}. For
@@ -1144,20 +1077,16 @@ Standard}\footnote{PSR-2 Standard available at
 \url{https://www.php-fig.org/psr/psr-2/} (Accessed on \today{})} that is a coding style guide for \texttt{PHP}.
 
 \begin{framed}
-\textit{\textbf{RQ2} Which patterns of security refactorings are more likely to
+\textit{\textbf{RQ2} Which patterns of security patches are more likely to
 affect open-source software maintainability?}
 \vspace{-0.1cm}
 \end{framed}
 \vspace{-0.1cm}
 
-\textbf{\textit{Broken Authentication \& Session Management, Denial-of-Service
-attacks, and Memory Leaks, and Miscellaneous patterns are more likely to affect
-open-source software maintainability.}} Although there are a few refactorings
-that harm software maintainability in the \emph{Cross-Site Scripting} and
-\emph{Using Components with Known Vulnerabilities}, overall maintainability does
-not suffer any changes for these patterns. For the remaining patterns,
-\emph{Injection} and \emph{Cross-Site Request Forgery}, results are not
-statistically significant.
+\textbf{\textit{Improper Limitation of a Pathname to a Restricted Directory/Path Traversal (CWE-22), Information Exposure (CWE-200) and Resource Management Errors (CWE-399), and Miscellaneous patterns are more likely to affect
+open-source software maintainability.}}\Sof{Posso responder isto sem significancia estatistica?} Although there are a few refactorings
+that harm software maintainability in the \emph{Cross-Site Scripting}, overall maintainability does
+not suffer any changes for these patterns. 
 
 The impact of a refactoring depends on its complexity, i.e., if the refactoring
 adds complexity to the code base it is probably affecting the software
