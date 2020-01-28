@@ -494,7 +494,7 @@ the activities of developers addressing security-oriented patches~\cite{Reis:201
   service \emph{Better Code Hub} (BCH)\footnote{BCH's website:
   \url{https://bettercodehub.com/} (Accessed on \today{})} to quantify maintainability
   for both security and regular commits. The code bases that resemble to the commits
-  of our datasets are collected before the analysis performed by BCH.s
+  of our datasets are collected before the analysis performed by BCH.
 \end{enumerate}
 %
 \begin{figure}[h]
@@ -528,63 +528,143 @@ from $2014$ to $2019$. For each new vulnerability, the authors manually searched
 for references to commits involved in the patch on the NVD's website. However, $70\%$
 of the vulnerabilities did not have any references to commits. Thus, the authors
 used their expertise to locate the commits in the repositories. This technique 
-yielded a database of $624$ patches~\cite{10.1109/MSR.2019.00064}. The original dataset contains $1282$ commits. One patch can have multiple commits assigned.
+yielded a database of $624$ patches~\cite{10.1109/MSR.2019.00064}. The original 
+dataset contains $1282$ commits. One patch can have multiple commits assigned.
 To fit the dataset in our methodology, we search for the first and last commits
-used to patch the vulnerability. We assumed that the last commit of the patch as the fix (\emph{sha}) and the parent of the first commit as the vulnerable version (\emph{sha-p}).
+used to patch the vulnerability. We assumed that the last commit of the patch as 
+the fix (\emph{sha}) and the parent of the first commit as the vulnerable version 
+(\emph{sha-p}).
 %
 The $1335$ patches in the dataset were run against the BCH toolset to
 calculate their maintainability reports. However, there are refactorings
 discarded from our study due to limitations of BCH: in particular, lack of
 language support and project size. The final dataset used in this paper comprises
 $1037$ security patches. $556$ of these patches are identified with Common Weakness
-Enumeration IDs (CWE). The most prevailing categories are the following (categories
-with less than $20$ instances were merged in a bigger category named \textit{Miscellaneous}):
-%
-\begin{itemize}
-    \item \textbf{CWE-89: Improper Neutralization of Special Elements used in an SQL Command/SQL Injection (23 cases).} When developers do not keep untrusted data
-    separate from SQL queries. If an attacker sends a command that
-    exploits the syntax of the SQL interpreter, then SQL injection attack is possible.
-%
-    \item \textbf{CWE-611: Improper Restriction of XML External Entity Reference (24 cases).} 
+Enumeration IDs (CWE). In Table~\ref{tab:patterns}, the most prevailing categories are presented. Patterns
+with less than $20$ instances were merged in a bigger pattern named \textit{Miscellaneous}.
+
+\begin{table}[h]
+\footnotesize
+	\caption{Guidelines to produce maintainable code}
+\begin{tabular}{L{1.1cm}L{2.1cm}L{4.3cm}}
+
+\toprule
+\textbf{Pattern} & \textbf{Name} & \textbf{Description}\\
+\midrule
+
+\textbf{CWE-89} & 
+ Improper Neutralization of Special Elements used in an SQL Command/SQL Injection (23 cases) & 
+ When developers do not keep untrusted data
+     separate from SQL queries. If an attacker sends a command that
+     exploits the syntax of the SQL interpreter, then SQL injection attack is possible.\\\midrule
+
+\textbf{CWE-611} & 
+ Improper Restriction of XML External Entity Reference (24 cases) & 
 	XML documents are exchanged through the web containing entities with URIs
-	that resolve to local/external files. Thus, when XML parsers are not well configured, 
-	attackers have allowed to directly those files.
-%	
-    \item \textbf{CWE-20: Improper Input Validation (76 cases).} When developers
-	forget to validate the inputs of an application, attackers may have control
-	of the control/data flow of the program.
-%	
-    \item \textbf{CWE-200: Information Exposure (39 cases).} Application's logs are one way of intentional/unintentional disclosure information
-	to attackers. Many times attackers get access to logs when sould not be authorized to.
-%	
-	\item \textbf{CWE-352: Cross-Site Request Forgery/CSRF (22 cases).} Poor session tokens generation
-    and management usually allow attackers to send forged HTTP requests
-    including authentication information from the victim to the vulnerable web
-    application.
+ 	that resolve to local/external files. Thus, when XML parsers are not well configured,
+ 	attackers have allowed to directly those files.\\\midrule
+ 
+ \textbf{CWE-20} & 
+ Improper Input Validation (76 cases) & 
+	When developers
+ 	forget to validate the inputs of an application, attackers may have control
+ 	of the control/data flow of the program.\\\midrule
+ 
+  \textbf{CWE-200} & 
+Information Exposure (39 cases)& 
+Application's logs are one way of intentional/unintentional disclosure information
+ 	to attackers. Many times attackers get access to logs when sould not be authorized to.\\\midrule
+ 
+   \textbf{CWE-352} & 
+Cross-Site Request Forgery/CSRF (22 cases)& 
+Poor session tokens generation
+     and management usually allow attackers to send forged HTTP requests
+     including authentication information from the victim to the vulnerable web
+     application.\\\midrule
+     
+       \textbf{CWE-264} & 
+Permissions, Privileges, and Access Controls (59 cases)& 
+Incorrectly
+ 	    implemented functionalities related to authentication and session
+ 	    management, allowing an attacker to gain access to session tokens,
+ 	    passwords, keys, and other sensitive data.\\\midrule
+ 	    
+ 	           \textbf{CWE-399} & 
+Resource Management Errors (22 cases)& 
+Resource management issues are found more frequently
+ 		in programming languages that do not manage memory automatically (e.g., C/C++
+ 	    and Objective-C), i.e., where developers are responsible for
+ 	    handling it instead. It is one of the main causes of Denial-of-Service attacks.\\\midrule
+ 	    
+ 	     	           \textbf{CWE-79} & 
+Improper Neutralization of Input During Web Page Generation/Cross-site Scripting (62 cases)& 
+Lack of proper validation or escaping
+ 	    allows attackers to submit untrusted data to web browsers through malicious
+ 	    scripts that can hijack the user sessions or redirect the user to malicious
+ 	    sites.\\\midrule
+
+ 	     	           \textbf{CWE-22} & 
+Improper Limitation of a Pathname to a Restricted Directory/Path Traversal (37 cases) & 
+When developers forget to neutralize special elements within the path names to files/directories, attackers
+ 	may leverage this flaw to resolve to a location outside of the restricted directory and gain access to documents
+ 	or entire repositories.\\\midrule
+ 	
+ 	 	     	           \textbf{MISC} & 
+Miscellaneous (673 cases) & 
+This pattern comprises
+ 		several other security refactorings that do not have a CWE assigned and patterns that
+ 		do not satisfy the Wilcoxon test size requirement of more than $20$ refactorings.\\
+\bottomrule
+\end{tabular}
+\label{tab:patterns}
+\end{table}
+
 %
-	\item \textbf{CWE-264: Permissions, Privileges, and Access Controls (59 cases).} Incorrectly
-	    implemented functionalities related to authentication and session
-	    management, allowing an attacker to gain access to session tokens,
-	    passwords, keys, and other sensitive data.
-%	
-	\item \textbf{CWE-399: Resource Management Errors (22 cases).} Resource management issues are found more frequently
-		in programming languages that do not manage memory automatically (e.g., C/C++
-	    and Objective-C), i.e., where developers are responsible for
-	    handling it instead. It is one of the main causes of DoS attacks.
-%	
-	\item \textbf{CWE-79: Improper Neutralization of Input During Web Page Generation/Cross-site Scripting (62 cases)} Lack of proper validation or escaping
-	    allows attackers to submit untrusted data to web browsers through malicious
-	    scripts that can hijack the user sessions or redirect the user to malicious
-	    sites.
-%	
-	\item \textbf{CWE-22: Improper Limitation of a Pathname to a Restricted Directory/Path Traversal (37 cases).}  When developers forget to neutralize special elements within the pathnames to files/directories, attackers 
-	may leverage this flaw to resolve to a location outside of the restricted directory and gain access to documents
-	or entire repositories.
-%
-	\item \textbf{Miscellaneous (673 cases)} This pattern comprises
-		several other security refactorings that do not have a CWE assigned and patterns that
-		do not satisfy the Wilcoxon test size requirement of more than $20$ refactorings.
-\end{itemize}
+% \begin{itemize}
+%     \item \textbf{CWE-89: Improper Neutralization of Special Elements used in an SQL Command/SQL Injection (23 cases).} When developers do not keep untrusted data
+%     separate from SQL queries. If an attacker sends a command that
+%     exploits the syntax of the SQL interpreter, then SQL injection attack is possible.
+% %
+%     \item \textbf{CWE-611: Improper Restriction of XML External Entity Reference (24 cases).}
+% 	XML documents are exchanged through the web containing entities with URIs
+% 	that resolve to local/external files. Thus, when XML parsers are not well configured,
+% 	attackers have allowed to directly those files.
+% %
+%     \item \textbf{CWE-20: Improper Input Validation (76 cases).} When developers
+% 	forget to validate the inputs of an application, attackers may have control
+% 	of the control/data flow of the program.
+% %
+%     \item \textbf{CWE-200: Information Exposure (39 cases).} Application's logs are one way of intentional/unintentional disclosure information
+% 	to attackers. Many times attackers get access to logs when sould not be authorized to.
+% %
+% 	\item \textbf{CWE-352: Cross-Site Request Forgery/CSRF (22 cases).} Poor session tokens generation
+%     and management usually allow attackers to send forged HTTP requests
+%     including authentication information from the victim to the vulnerable web
+%     application.
+% %
+% 	\item \textbf{CWE-264: Permissions, Privileges, and Access Controls (59 cases).} Incorrectly
+% 	    implemented functionalities related to authentication and session
+% 	    management, allowing an attacker to gain access to session tokens,
+% 	    passwords, keys, and other sensitive data.
+% %
+% 	\item \textbf{CWE-399: Resource Management Errors (22 cases).} Resource management issues are found more frequently
+% 		in programming languages that do not manage memory automatically (e.g., C/C++
+% 	    and Objective-C), i.e., where developers are responsible for
+% 	    handling it instead. It is one of the main causes of DoS attacks.
+% %
+% 	\item \textbf{CWE-79: Improper Neutralization of Input During Web Page Generation/Cross-site Scripting (62 cases)} Lack of proper validation or escaping
+% 	    allows attackers to submit untrusted data to web browsers through malicious
+% 	    scripts that can hijack the user sessions or redirect the user to malicious
+% 	    sites.
+% %
+% 	\item \textbf{CWE-22: Improper Limitation of a Pathname to a Restricted Directory/Path Traversal (37 cases).}  When developers forget to neutralize special elements within the pathnames to files/directories, attackers
+% 	may leverage this flaw to resolve to a location outside of the restricted directory and gain access to documents
+% 	or entire repositories.
+% %
+% 	\item \textbf{Miscellaneous (673 cases)} This pattern comprises
+% 		several other security refactorings that do not have a CWE assigned and patterns that
+% 		do not satisfy the Wilcoxon test size requirement of more than $20$ refactorings.
+% \end{itemize}
 %
 \subsection{Security vs. Baseline Commits}
 %
@@ -648,9 +728,10 @@ example only complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean Code}).
 	\label{fig:bchrep}
 \end{figure}
 
-\begin{table}[H]
+\begin{table}[h]
+\footnotesize
 	\caption{Guidelines to produce maintainable code}
-\begin{tabular}{L{1.66cm}L{3.25cm}L{2.65cm}}
+\begin{tabular}{L{1.66cm}L{3.3cm}L{2.7cm}}
 
 \toprule
 \textbf{10 Guidelines} & \textbf{Description} & \textbf{Metric}\\
