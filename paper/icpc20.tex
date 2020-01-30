@@ -55,6 +55,26 @@
     moredelim=*[l][\color{red}]{-\ }
 }
 
+\lstdefinestyle{JavaStyle} {
+    language=Java,
+    backgroundcolor=\color{white},   % choose the background color
+    basicstyle=\ttfamily\scriptsize,        % size of fonts used for the code
+    breaklines=true,                 % automatic line breaking only at whitespace
+    captionpos=b,                    % sets the caption-position to bottom
+    commentstyle=\color{mygray}\bfseries,    % comment style
+    escapeinside={\%*}{*)},          % if you want to add LaTeX within your code
+    keywordstyle=\color{blue},       % keyword style
+    stringstyle=\color{mymauve},     % string literal style
+    frame=single,
+    numbers=left,
+    stepnumber=1,
+    xleftmargin=2em,
+    escapeinside={/*!}{!*/},
+    moredelim=**[l][\color{mygreen}]{+\ },
+    moredelim=*[l][\color{red}]{-\ }
+}
+
+
 \lstdefinestyle{PHPStyle} {
     language=PHP,
     alsolanguage=HTML,
@@ -192,10 +212,10 @@ to fix vulnerabilities need to be performed with extra care.
 %
 Software quality is important because it is ultimately related to the overall
 cost of developing, extending and maintaining software applications~\cite{slaughter1998evaluating}. 
-Software quality characteristics include, but are not limited to functional correctnes,
+Software quality characteristics include, but are not limited to functional correctness,
 reliability, usability, maintainability, and security. Security is an 
 important non-functional requirement during the development of software systems. 
-However, there is still a considerable amount of zero-day vulnerabilities being
+However, there is still a considerable amount of vulnerabilities being
 discovered, and fixed, almost weekly as disclosed by the Zero Day Initiative
 website\footnote{Zero Day Initiative website available at
 \url{https://www.zerodayinitiative.com/advisories/published/} (Accessed on \today{})}.
@@ -204,7 +224,7 @@ exploit their resources. As an example, in the last week of January $2019$,
 a severe vulnerability in Apple FaceTime was revealed\footnote{FaceTime vulnerability 
 details available at \url{https://thehackernews.com/2019/01/apple-facetime-
 privacy-hack.html} (Accessed on \today{})} --- the outcome of a design/logical
-flaw that allowed callers to see and hear others without them picking up the call.
+flaw that allowed callers to see and hear others without them picking up the call.%\cite{cacheOut}.
 %
 In $2011$, the International Organization for Standardization (ISO) issued an
 update for software product quality ISO/IEC 25010 considering
@@ -309,7 +329,7 @@ quickest solution to fix the problem and not necessarily the most elegant and
 performant one. Thus, we want to understand how security patches impact
 the maintainability of software. 
 %%%%% NEEDS REVIEW
-\Sof{After dropping Keep Your Codebase Small the example changed to a positive impact - the example needs to be changed} As an example, consider the refactoring of the Datagram Transport Layer Security
+As an example, consider the refactoring of the Datagram Transport Layer Security
 (DTLS) protocol implementation in OpenSSL\footnoteref{openssl} to address a vulnerability where an attacker could cause a Denial-of-Service
 (DoS) attack by crafting DTLS handshake messages to trigger memory allocations
 corresponding to large length values. This vulnerability is listed at the Common
@@ -330,60 +350,104 @@ attacker has access to one of these packages, he can change the
 handshake message size and trigger unnecessary memory allocations of large
 length which can lead to memory exhaustion that could end in a DoS attack.
 
+
 \medskip
 \setcounter{lstannotation}{0}
-\begin{lstlisting}[style={CStyle}, caption={Fix provided by OpenSSL developers to the
-\\CVE-$2014$-$3506$ vulnerability},label={lst:vuln}]
-+ static unsigned long dtls1_max_handshake_message_len(const SSL *s){ /*!\annotation{lst:func1}!*/
-+  unsigned long max_len = DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH;
-+  if(max_len < (unsigned long)s->max_cert_list)
-+     return s->max_cert_list;
-+  return max_len;
-+ }
-
-  static int dtls1_reassemble_fragment(
-     SSL *s, struct hm_header_st* msg_hdr, int *ok){
+\begin{lstlisting}[style={JavaStyle}, caption={Fix provided by Netty developers to the
+\\CVE-$2014$-$3488$ vulnerability},label={lst:vuln}]
 
 // [snip]
+   for (;;) {
++       final int outAppBufSize = engine.getSession().getApplicationBufferSize();
++       final ByteBuffer outAppBuf;
++       if (nioOutAppBuf.capacity() < outAppBufSize) {
++              outAppBuf = ByteBuffer.allocate(outAppBufSize);
++       } else {
++              outAppBuf = nioOutAppBuf;
++       }
 
-- unsigned long frag_len = msg_hdr->frag_len, max_len;
-- if((msg_hdr->frag_off+frag_len) > msg_hdr->msg_len)
--    goto err;
-
-- if(DTLS1_HM_HEADER_LENGTH +
--    	SSL3_RT_MAX_ENCRYPTED_LENGTH < s->max_cert_list)
--    max_len = s->max_cert_list;
-- else
--    max_len = DTLS1_HM_HEADER_LENGTH +
--   		SSL3_RT_MAX_ENCRYPTED_LENGTH;
-
-+ unsigned long frag_len = msg_hdr->frag_len;
-
-- if((msg_hdr->frag_off+frag_len) > max_len)
-+ if((msg_hdr->frag_off+frag_len) > msg_hdr->msg_len ||
-+ msg_hdr->msg_len > dtls1_max_handshake_message_len(s))
-     goto err; /*!\annotation{lst:func5}!*/
-
-  memset(seq64be,0,sizeof(seq64be));
-  seq64be[6] = (unsigned char) (msg_hdr->seq>>8);
-  seq64be[7] = (unsigned char) msg_hdr->seq;
-  item = pqueue_find(s->d1->buffered_messages, seq64be);
-  if(item == NULL){
-     frag = dtls1_hm_fragment_new(msg_hdr->msg_len, 1);
-
+         try {
+-               result = engine.unwrap(nioInNetBuf, nioOutAppBuf);
+-               result = engine.unwrap(nioInNetBuf, outAppBuf);
 // [snip]
+                 break;
+         } finally {
+-               nioOutAppBuf.flip();
++              outAppBuf.flip();
 
- static int dtls1_process_out_of_seq_message(
-     SSL *s, struct hm_header_st* msg_hdr, int *ok){
+                nettyInNetBuf.readerIndex(nettyInNetBufStartOffset + nioInNetBuf.position() - nioInNetBufStartOffset);
 
-// [snip]
+-               if (nioOutAppBuf.hasRemaining()) {
++              if (outAppBuf.hasRemaining()) {
+                       if (nettyOutAppBuf == null) {
+                              ChannelBufferFactory factory = ctx.getChannel().getConfig().getBufferFactory();
+                              nettyOutAppBuf = factory.getBuffer(initialNettyOutAppBufCapacity);
+                       }
+-                    nettyOutAppBuf.writeBytes(nioOutAppBuf);
++                    nettyOutAppBuf.writeBytes(outAppBuf);
+                 }
+-              nioOutAppBuf.clear();
++              outAppBuf.clear();
+          }
+     }
 
-+ if(frag_len > dtls1_max_handshake_message_len(s))
-+    goto err; /*!\annotation{lst:func4}!*/
-
-  frag = dtls1_hm_fragment_new(frag_len, 0);
 
 \end{lstlisting}
+
+%\medskip
+%\setcounter{lstannotation}{0}
+%\begin{lstlisting}[style={JavaStyle}, caption={Fix provided by OpenSSL developers to the
+%\\CVE-$2014$-$3506$ vulnerability},label={lst:vuln}]
+%+ static unsigned long dtls1_max_handshake_message_len(const SSL *s){ /*!\annotation{lst:func1}!*/
+%+  unsigned long max_len = DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH;
+%+  if(max_len < (unsigned long)s->max_cert_list)
+%+     return s->max_cert_list;
+%+  return max_len;
+%+ }
+%
+%  static int dtls1_reassemble_fragment(
+%     SSL *s, struct hm_header_st* msg_hdr, int *ok){
+%
+%// [snip]
+%
+%- unsigned long frag_len = msg_hdr->frag_len, max_len;
+%- if((msg_hdr->frag_off+frag_len) > msg_hdr->msg_len)
+%-    goto err;
+%
+%- if(DTLS1_HM_HEADER_LENGTH +
+%-    	SSL3_RT_MAX_ENCRYPTED_LENGTH < s->max_cert_list)
+%-    max_len = s->max_cert_list;
+%- else
+%-    max_len = DTLS1_HM_HEADER_LENGTH +
+%-   		SSL3_RT_MAX_ENCRYPTED_LENGTH;
+%
+%+ unsigned long frag_len = msg_hdr->frag_len;
+%
+%- if((msg_hdr->frag_off+frag_len) > max_len)
+%+ if((msg_hdr->frag_off+frag_len) > msg_hdr->msg_len ||
+%+ msg_hdr->msg_len > dtls1_max_handshake_message_len(s))
+%     goto err; /*!\annotation{lst:func5}!*/
+%
+%  memset(seq64be,0,sizeof(seq64be));
+%  seq64be[6] = (unsigned char) (msg_hdr->seq>>8);
+%  seq64be[7] = (unsigned char) msg_hdr->seq;
+%  item = pqueue_find(s->d1->buffered_messages, seq64be);
+%  if(item == NULL){
+%     frag = dtls1_hm_fragment_new(msg_hdr->msg_len, 1);
+%
+%// [snip]
+%
+% static int dtls1_process_out_of_seq_message(
+%     SSL *s, struct hm_header_st* msg_hdr, int *ok){
+%
+%// [snip]
+%
+%+ if(frag_len > dtls1_max_handshake_message_len(s))
+%+    goto err; /*!\annotation{lst:func4}!*/
+%
+%  frag = dtls1_hm_fragment_new(frag_len, 0);
+%
+%\end{lstlisting}
 
 The code changes performed to fix the vulnerability are:
 
@@ -1286,14 +1350,14 @@ maintainability.
 
 \section{Conclusion and Future Work}\label{sec:conclusions}
 
-This work presents an empirical study on the impact of $607$ security
-refactorings on the maintainability of $94$ open-source projects. We leveraged
-Better Code Hub reports to calculate maintainability based on a model proposed in previous work~\cite{Olivari:2018}. Security refactorings 
+This work presents an empirical study on the impact of $1037$ security
+patches on the maintainability of $267$ open-source projects. We leveraged
+Better Code Hub reports to calculate maintainability based on a model proposed in previous work~\cite{Olivari:2018}. Security patches 
 significantly affect the software maintainability of open-source software, i.e., 
-developers hinder maintainability when fixing vulnerabilities. We found this evidence in
-$40.2\%$ of the studied cases. Regarding regular commits, it seems that overall
-maintainability increases ($50.16\%$). However, there is still a very
-considerable amount of cases that harm maintainability ($41.35\%$).
+developers hinder maintainability when patching vulnerabilities. We found this evidence in
+$41.76\%$ of the studied cases. Regarding regular commits, it seems that overall
+maintainability increases (\Sof{Complete}). However, there is still a very
+considerable amount of cases that harm maintainability (\Sof{Complete}).
 
 This study also shows evidence that there are security patterns that need more
 attention than others. \emph{Broken Autentication} issues,
