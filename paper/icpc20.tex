@@ -1195,7 +1195,17 @@ of open-source software?}
 \vspace{-0.1cm}
 
 \textbf{\textit{Security patches harm the maintainability of open-source software.}}
+
+The guideline analysis suggests that all guidelines are affected by security patches. Being the
+\emph{Write Short Units of Code}, \emph{Write Simple Units of Code} and \emph{Separate Concerns in Modules} the guidelines with higher negative impact on the maintainability ($>30\%$ of cases). \emph{Keep Architecture Components Balanced} is the guideline with lower negative impact on 
+the maintainability (approx. $10\%$). This might imply that developers should give different
+levels of attention to the guidelines when patching vulnerabilities.
 %
+As expected, vulnerabilities with higher severity are more likely to impact negatively
+the maintainability of software. This suggests that high/medium severity vulnerabilities may
+need more attention than low severity when patching vulnerabilities.
+%
+
 We would expect that the negative impact of programming languages on
 maintainability to be more severe, as arguably poor design of programming
 languages and lack of using the best practices lead to more buggy and vulnerable
