@@ -307,8 +307,8 @@ The main contributions of the present work are:
 \end{itemize}
 %
 This paper is structured as follows: section~\ref{sec:motivation} introduces an
-example of a security refactoring of a known vulnerability found in
-OpenSSL\footnote{\label{openssl}OpenSSL is a toolkit that
+example of a security refactoring of a known vulnerability found in the
+PHP interpreter\footnote{\label{openssl}OpenSSL is a toolkit that
 contains open-source implementations of the SSL and TLS cryptographic
 protocols. Repository available at \url{https://github.com/openssl/openssl}
 (Accessed on \today{})}; section~\ref{sec:methodology} describes the
@@ -329,10 +329,10 @@ negative impact on software maintenance --- e.g., developers might follow the
 quickest solution to fix the problem and not necessarily the most elegant and
 performant one. Thus, we want to understand how security patches impact
 the maintainability of software. 
+
 %%%%% NEEDS REVIEW
-As an example, consider the refactoring of the Datagram Transport Layer Security
-(DTLS) protocol implementation in OpenSSL\footnoteref{openssl} to address a vulnerability where an attacker could cause a Denial-of-Service
-(DoS) attack by crafting DTLS handshake messages to trigger memory allocations
+As an example, consider the patch of the state-machine implementation in OpenSSL\footnoteref{openssl} to address a vulnerability where an attacker could cause a Denial-of-Service
+(DoS) attack by crafting TLS messages to trigger memory allocations
 corresponding to large length values. This vulnerability is listed at the Common
 Vulnerabilities and Exposures dictionary as CVE-$2014$-$3506$\footnote{CVE-$2014$-$3506$
 details available at \url{http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3506}
@@ -352,104 +352,42 @@ handshake message size and trigger unnecessary memory allocations of large
 length which can lead to memory exhaustion that could end in a DoS attack.
 
 
+
 \medskip
 \setcounter{lstannotation}{0}
-\begin{lstlisting}[style={JavaStyle}, caption={Fix provided by Netty developers to the
-\\CVE-$2014$-$3488$ vulnerability},label={lst:vuln}]
-// [snip]
-   for (;;) {
-+       final int outAppBufSize = engine.getSession().getApplicationBufferSize();
-+       final ByteBuffer outAppBuf;
-+       if (nioOutAppBuf.capacity() < outAppBufSize) {
-+              outAppBuf = ByteBuffer.allocate(outAppBufSize);
-+       } else {
-+              outAppBuf = nioOutAppBuf;
-+       }
-
-         try {
--               result = engine.unwrap(nioInNetBuf, nioOutAppBuf);
--               result = engine.unwrap(nioInNetBuf, outAppBuf);
-// [snip]
-                 break;
-         } finally {
--               nioOutAppBuf.flip();
-+              outAppBuf.flip();
-
-                nettyInNetBuf.readerIndex(nettyInNetBufStartOffset + nioInNetBuf.position() - nioInNetBufStartOffset);
-
--               if (nioOutAppBuf.hasRemaining()) {
-+              if (outAppBuf.hasRemaining()) {
-                       if (nettyOutAppBuf == null) {
-                              ChannelBufferFactory factory = ctx.getChannel().getConfig().getBufferFactory();
-                              nettyOutAppBuf = factory.getBuffer(initialNettyOutAppBufCapacity);
-                       }
--                    nettyOutAppBuf.writeBytes(nioOutAppBuf);
-+                    nettyOutAppBuf.writeBytes(outAppBuf);
-                 }
--              nioOutAppBuf.clear();
-+              outAppBuf.clear();
-          }
-     }
-
-
+\begin{lstlisting}[style={CStyle}, caption={Fix provided by OpenSSL developers to the
+\\CVE-2016-6307 vulnerability for file ssl/statem/statem.c},label={lst:vuln}]
+ static SUB_STATE_RETURN read_state_machine(SSL *s){ /*!\annotation{lst:func1}!*/
+ // [snip]
++   if (!SSL_IS_DTLS(s) && s->s3->tmp.message_size > 0
++        && !BUF_MEM_grow_clean(s->init_buf, 
++                                (int)s->s3->tmp.message_size
++                                + SSL3_HM_HEADER_LENGTH)) {
++         ssl3_send_alert(s, SSL3_AL_FATAL, SSL_AD_INTERNAL_ERROR);
++         SSLerr(SSL_F_TLS_GET_MESSAGE_HEADER, ERR_R_BUF_LIB);
++          return SUB_STATE_ERROR;
+ // [snip]
+ }
 \end{lstlisting}
-
+%
 %\medskip
 %\setcounter{lstannotation}{0}
-%\begin{lstlisting}[style={JavaStyle}, caption={Fix provided by OpenSSL developers to the
-%\\CVE-$2014$-$3506$ vulnerability},label={lst:vuln}]
-%+ static unsigned long dtls1_max_handshake_message_len(const SSL *s){ /*!\annotation{lst:func1}!*/
-%+  unsigned long max_len = DTLS1_HM_HEADER_LENGTH + SSL3_RT_MAX_ENCRYPTED_LENGTH;
-%+  if(max_len < (unsigned long)s->max_cert_list)
-%+     return s->max_cert_list;
-%+  return max_len;
-%+ }
-%
-%  static int dtls1_reassemble_fragment(
-%     SSL *s, struct hm_header_st* msg_hdr, int *ok){
-%
-%// [snip]
-%
-%- unsigned long frag_len = msg_hdr->frag_len, max_len;
-%- if((msg_hdr->frag_off+frag_len) > msg_hdr->msg_len)
-%-    goto err;
-%
-%- if(DTLS1_HM_HEADER_LENGTH +
-%-    	SSL3_RT_MAX_ENCRYPTED_LENGTH < s->max_cert_list)
-%-    max_len = s->max_cert_list;
-%- else
-%-    max_len = DTLS1_HM_HEADER_LENGTH +
-%-   		SSL3_RT_MAX_ENCRYPTED_LENGTH;
-%
-%+ unsigned long frag_len = msg_hdr->frag_len;
-%
-%- if((msg_hdr->frag_off+frag_len) > max_len)
-%+ if((msg_hdr->frag_off+frag_len) > msg_hdr->msg_len ||
-%+ msg_hdr->msg_len > dtls1_max_handshake_message_len(s))
-%     goto err; /*!\annotation{lst:func5}!*/
-%
-%  memset(seq64be,0,sizeof(seq64be));
-%  seq64be[6] = (unsigned char) (msg_hdr->seq>>8);
-%  seq64be[7] = (unsigned char) msg_hdr->seq;
-%  item = pqueue_find(s->d1->buffered_messages, seq64be);
-%  if(item == NULL){
-%     frag = dtls1_hm_fragment_new(msg_hdr->msg_len, 1);
-%
-%// [snip]
-%
-% static int dtls1_process_out_of_seq_message(
-%     SSL *s, struct hm_header_st* msg_hdr, int *ok){
-%
-%// [snip]
-%
-%+ if(frag_len > dtls1_max_handshake_message_len(s))
-%+    goto err; /*!\annotation{lst:func4}!*/
-%
-%  frag = dtls1_hm_fragment_new(frag_len, 0);
-%
+%\begin{lstlisting}[style={CStyle}, caption={Fix provided by OpenSSL developers to the
+%\\CVE-2016-6307 vulnerability for file ssl/statem/statem_lib.c },label={lst:vuln}]
+% int tls_get_message_header(SSL *s, int *mt){
+% // [snip]
+%+   if (!SSL_IS_DTLS(s) && s->s3->tmp.message_size > 0
+%+        && !BUF_MEM_grow_clean(s->init_buf, 
+%+                                (int)s->s3->tmp.message_size
+%+                                + SSL3_HM_HEADER_LENGTH)) {
+%+         ssl3_send_alert(s, SSL3_AL_FATAL, SSL_AD_INTERNAL_ERROR);
+%+         SSLerr(SSL_F_TLS_GET_MESSAGE_HEADER, ERR_R_BUF_LIB);
+%+          return SUB_STATE_ERROR;
+% // [snip]
+% }
 %\end{lstlisting}
 
-The code changes performed to fix the vulnerability are:
+%The code changes performed to fix the vulnerability are:
 
 ~\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was
 inserted to return the maximum number of bytes allowed in a DTLS
