@@ -1015,7 +1015,14 @@ by BCH. Figure~\ref{fig:guidelines} shows the impact of security patches on each
 guideline individually. For projects with large 
 codebases, the results retrieved for \emph{Keep Your Codebase Small} were not 
 viable due to limitations of BCH. Thus, we decided to not consider this guideline 
-in our analysis.
+in our analysis. For each type of
+guideline, three types of impact of patches in the software maintainability
+are presented: \emph{negative}, maintainability decreases (\emph{red});
+\emph{none}, maintainability remains the same (\emph{yellow}); and,
+\emph{positive}, maintainability increases (\emph{green}). Next to each
+type of change, it is shown the mean ($\overline{x}$) and median (M)
+of the maintainability difference and the p-value resulting from the
+Paired Wilcoxon signed-rank test.
 Regarding the impact of security patches in each guideline, we observe
 that overall our patches have a significant positive impact in $5$ guidelines: 
 \emph{Write Clean Code} (p-value = $4.9$x$10^{-54}$), \emph{Keep Architecture 
@@ -1111,11 +1118,10 @@ Patching \emph{Improper Limitation of a Pathname to a Restricted Directory/Path 
 impact of $48.6\%$ ($18$) in the maintainability of open-source software while
 $46.0\%$ ($17$) of the cases exhibit maintainability improvement and $5.4\%$
 ($2$) show that maintainability does not suffer any change. The
-\emph{Miscellaneous} refactorings pattern integrates several types of security
-flaws. These type of refactorings harm maintainability in $41.3\%$ ($673$) of the
+\emph{Miscellaneous} patches pattern integrates several types of security
+flaws. These type of patches harm maintainability in $41.3\%$ ($673$) of the
 cases. In $22.7\%$ ($153$), there is no impact and for the
 other $36.0\%$ ($242$) maintainability increases.
-
 It is also important to notice that overall the maintainability of open-source
 software is not affected by \emph{Cross-Site Scripting (CWE-79)} vulnerabilities. \emph{Cross-Site Scripting (CWE-79)}
 does not suffer any decrease in the maintainability of $38.7\%$ ($24$) of cases
@@ -1138,15 +1144,7 @@ maintainability of open-source software?}
 \vspace{-0.1cm}
 
 The impact of security and baseline commits in the maintainability of
-open-source software is presented in Figure~\ref{fig:secvsreg}. For each type of
-change, three types of impact of refactorings in the software maintainability
-are presented: \emph{negative}, maintainability decreases (\emph{red});
-\emph{none}, maintainability remains the same (\emph{yellow}); and,
-\emph{positive}, maintainability increases (\emph{green}). Next to each
-type of change, it is shown the mean ($\overline{x}$) and median (M)
-of the maintainability difference and the p-value resulting from the
-Paired Wilcoxon signed-rank test.
-
+open-source software is presented in Figure~\ref{fig:secvsreg}. 
 
 \begin{figure}[h]	
  	\centering 	\includegraphics[width=0.43\textwidth]{figures/maintainability_sec_vs_reg.pdf}
@@ -1171,9 +1169,13 @@ and remains the same in \Sof{<todo>}
 of the cases. The resulting p-value of the Paired Wilcoxon signed-rank
 test is \Sof{<todo>}
 %$1.54$x$10^{-6}$
-. The baseline is still being computed by BCH but we can already see
+. The baseline is still being computed by BCH but we can see already 
 that regular changes usually have no impact on the maintainability of
-software.
+software which seems to contradict research performed in the past. However,
+we inspected a considerable amount of cases where this happens and
+found that considering the size of the \emph{diff} to generate the random
+regular commit may limit the type of commit obtained. There are several
+cases which size is small due to the high amount of 
 
 %Since the p-value is below the significance level of $0.05$, 
 %we argue that \emph{regular refactorings have a
@@ -1192,9 +1194,6 @@ of open-source software?}
 
 \textbf{\textit{Security patches harm the maintainability of open-source software.}}
 %
-
-
-
 We would expect that the negative impact of programming languages on
 maintainability to be more severe, as arguably poor design of programming
 languages and lack of using the best practices lead to more buggy and vulnerable
@@ -1219,7 +1218,6 @@ affect open-source software maintainability?}
 open-source software maintainability.}}
 
 Overall, the results obtained for the maintainability per CWE are no statistical significance 
-
 The impact of a patch depends on its complexity, i.e., if the patchs
 adds complexity to the code base it is probably affecting the software
 maintainability. One evidence of that is the fact of \emph{Cross-Site Scripting} (CWE-79)
@@ -1293,6 +1291,8 @@ their projects. But there are still some concerns that need to be addressed:
 	and avoid common issues such as code duplication.
 
 \end{itemize}
+
+
 
 \section{Threats to Validity}\label{sec:threats}
 %
