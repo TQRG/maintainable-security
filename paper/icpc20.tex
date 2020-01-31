@@ -733,22 +733,22 @@ determines the compliance towards one guideline by establishing limits for the
 percentage of code allowed to be in each of the $4$ risk severity levels
 (\emph{low risk}, \emph{medium risk}, \emph{high risk}, and \emph{very high
 risk}). If the project does not violate the thresholds, then it is compliant
-with the guideline. \textbf{These thresholds are calibrated by BCH using their own
-data/experience --- using open-source and closed software systems}. If a project is
+with the guideline. These thresholds are calibrated by BCH using their own
+data/experience --- using open-source and closed software systems. If a project is
 compliant with a guideline, it means that it is at least $65\%$ better than the
 software used by BCH to calculate the thresholds\footnote{Check the answer to
 \emph{How can I adjust the threshold for passing/not passing a guideline?} at
 \url{https://bettercodehub.com/docs/faq} (Accessed on \today{})}.
 
 \begin{figure}[h]
- 	\centering 	\includegraphics[width=0.45\textwidth]{figures/bch_report.png}
+ 	\centering 	\includegraphics[width=0.44\textwidth]{figures/bch_report.png}
  	\caption{Maintainability report of OpenSSL's CVE-$2014$-$3506$ vulnerability
 refactoring for the guideline \emph{Write Simple Units of Code} provided by
 \emph{Better Code Hub}. This version of OpenSSL does not comply with the
 guideline in the example since the bars do not reach the threshold points. This
 example only complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean Code}).}
 	\label{fig:bchrep}
-	\vspace{-0.8cm}
+	\vspace{-0.6cm}
 \end{figure}
 
 \begin{table}[h]
@@ -804,7 +804,7 @@ identifier names) \\
 \bottomrule
 \end{tabular}
 \label{tab:guidelines}
-\vspace{-0.3cm}
+\vspace{-0.2cm}
 \end{table}
 
 
@@ -834,7 +834,7 @@ somewhere in the green bar it means it is compliant with a low level of
 severity.
 
 \begin{figure}[h]
- 	\centering 	\includegraphics[width=0.75\linewidth]{figures/commit.pdf}
+ 	\centering 	\includegraphics[width=0.6\linewidth]{figures/commit.pdf}
  	\caption{Maintainability difference for security commits}
 	\label{fig:commit}
 	\vspace{-0.5cm}
@@ -972,7 +972,14 @@ are presented: \emph{negative}, maintainability decreases (\emph{red});
 type of guideline, it is shown the mean ($\overline{x}$) and median (M)
 of the maintainability difference and the p-value resulting from the
 Paired Wilcoxon signed-rank test.
-Regarding the impact of security patches in each guideline, we observe
+Regarding security commits results, we observe that maintainability decreases in
+$41.76\%$ ($433$), remains the same in $19.67\%$ ($204$) and increases in $38.57\%$
+($400$) of the cases after security patches are applied. The resulting
+p-value of the Paired Wilcoxon signed-rank test is $4.78$x$10^{-2}$.
+Since the p-value is below the significance level of $0.05$, we argue that
+\emph{security patches have a negative impact in the maintainability of
+open-source software}.
+Regarding the impact of security patches for each guideline, we observe
 that overall patches have a significant positive impact in $5$ guidelines: 
 \emph{Write Clean Code} (p-value = $4.9$x$10^{-54}$), \emph{Keep Arschitecture 
 Components Balanced} (p-value = $5.26$x$10^{-71}$), \emph{Couple Architecture 
@@ -1082,7 +1089,7 @@ significance was found to the other patterns. Thus, results should be read with 
 
 \begin{figure}[h]
  	\centering
- 	\includegraphics[width=0.45\textwidth]{figures/maintainability_cwe.pdf}
+ 	\includegraphics[width=0.43\textwidth]{figures/maintainability_cwe.pdf}
  	\caption{Maintainability difference by pattern after security patches.}
 	\label{fig:pat}	
 	\vspace{-0.5cm}
@@ -1092,7 +1099,7 @@ significance was found to the other patterns. Thus, results should be read with 
 maintainability of open-source software?}}}
 
 The impact of security and baseline commits in the maintainability of
-open-source software is presented in Figure~\ref{fig:secvsreg}. 
+open-source software is presented in Figure~\ref{fig:secvsreg}.  
 
 \begin{figure}[h]	
  	\centering 	\includegraphics[width=0.43\textwidth]{figures/maintainability_sec_vs_reg.pdf}
@@ -1101,22 +1108,13 @@ open-source software is presented in Figure~\ref{fig:secvsreg}.
 	\vspace{-0.5cm}
 \end{figure}
 
-
-
-Regarding security commits results, we observe that maintainability decreases in
-$41.76\%$ ($433$), remains the same in $19.67\%$ ($204$) and increases in $38.57\%$
-($400$) of the cases after security patches are applied. The resulting
-p-value of the Paired Wilcoxon signed-rank test is $4.78$x$10^{-2}$.
-Since the p-value is below the significance level of $0.05$, we argue that
-\emph{security patches have a negative impact in the maintainability of
-open-source software}.
-
+We have seen previously a deterioration in maintainability when patching security vulnerabilities. 
 For regular commits, we observe that the maintainability decreases in $21.04\%$ ($133$) 
 of the cases after regular changes are applied. But in contrast
 to security commits, it increases in $26.90\%$ ($170$) 
 and remains the same in $52.06\%$ ($329$) 
 of the cases. The resulting p-value of the Paired Wilcoxon signed-rank
-test is $5.74x10^{-78}$. The baseline is still being computed by BCH but it is possible to observe 
+test is $5.74x10^{-78}$. The baseline is still being computed at the time of submission (it is computationally very expensive, and will be concluded soon) but it is possible to observe 
 that regular changes typically have little impact on the maintainability which contradicts research performed in the past. However,
 we manually inspected a considerable amount of cases where this happens and
 found that identifying regular commits as similar in size as the security-related commit is limiting the type of regular commits (e.g, input refactorings, renaming variables or functions)\footnote{Example of a random regular commit generated with our methodology (Accessed on \today{}):
@@ -1342,7 +1340,7 @@ produce secure and maintainable code; new and better programming languages; new
 academic curricula in the fields of security and software quality; and, tools
 such as BCH to help developers predict the effect of their patches.
 
-As future work, this study may be extended in many directions: 
+As future work, this study may be extended in several directions: 
 investigate what are the most frequent vulnerabilities in each programming
 language; investigate how patches impact maintainability for each
 vulnerability and programming language;
