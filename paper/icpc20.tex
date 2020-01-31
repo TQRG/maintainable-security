@@ -935,7 +935,7 @@ reduce maintainability.
 %
 \section{Results}\label{sec:results}
 
-As mentioned before, this study evaluates $1037$ security and baseline commits
+This study evaluates $1037$ security and baseline commits
 from $267$ distinct open-source projects. The following section presents the
 results obtained for each research question.
 
@@ -972,6 +972,7 @@ are presented: \emph{negative}, maintainability decreases (\emph{red});
 type of guideline, it is shown the mean ($\overline{x}$) and median (M)
 of the maintainability difference and the p-value resulting from the
 Paired Wilcoxon signed-rank test.
+
 Regarding security commits results, we observe that maintainability decreases in
 $41.76\%$ ($433$), remains the same in $19.67\%$ ($204$) and increases in $38.57\%$
 ($400$) of the cases after security patches are applied. The resulting
@@ -981,17 +982,16 @@ Since the p-value is below the significance level of $0.05$, we argue that
 open-source software}.
 Regarding the impact of security patches for each guideline, we observe
 that overall patches have a significant positive impact in $5$ guidelines: 
-\emph{Write Clean Code} (p-value = $4.9$x$10^{-54}$), \emph{Keep Arschitecture 
+\emph{Write Clean Code} (p-value = $4.9$x$10^{-54}$), \emph{Keep Architecture 
 Components Balanced} (p-value = $5.26$x$10^{-71}$), \emph{Couple Architecture 
 Components Loosely} (p-value = $2.43$x$10^{-07}$), \emph{Keep Unit Interfaces 
 Small} (p-value = $2.25$x$10^{-13}$), \emph{ Write Code Once} (p-value = 
 $7.9$x$10^{-35}$). However, for each of these guidelines we also observe a substantial number of cases where the maintainability suffers a negative impact $-$ from $10\%$ to $35\%$ $-$ which highlights the need of better practices/techniques/tools to produce software. \emph{Separate Concerns in Module} 
 guideline also follows the same results but without any statistical 
-significance since the p-value is higher than $0.05$. According with the 
+significance since the p-value is higher than $0.05$. According to the 
 results, \emph{Write Simple Units of Code} (p-value=$0.015$ and $38.2\%$/$396$ 
 of negative cases) and \emph{Write Short Units of Code} (p-value=$0.029$ and 
-$38.3\%$/$397$ of negative cases) are the guidelines which suffered more 
-impact from security patches. 
+$38.3\%$/$397$ of negative cases) are the most affected affected guidelines.
  
 
 \begin{figure}[h]
@@ -1001,7 +1001,7 @@ impact from security patches.
 	\vspace{-0.4cm}
 \end{figure}
 
-For the vulnerabilities identified with CVE(s), we scraped NVD to retrieve 
+For the vulnerabilities identified with CVE(s), we scraped the National Vulnerability Database (NVD) Website to retrieve 
 their severity levels. In total, we obtained severity scores for $574$ 
 vulnerabilities: $121$ \emph{HIGH}, $423$ \emph{MEDIUM} and $30$ \emph{LOW}. 
 Figure~\ref{fig:severity} presents the impact
@@ -1021,12 +1021,8 @@ maintainability of software.
 
 
 We have also evaluated the impact on the maintainability per programming language
-of open-source software, Figure~\ref{fig:lang_main}. Although
-the dataset contains security patches for more languages, we only
-present the results for \emph{Python}, \emph{C/C++}, \emph{Ruby}, \emph{PHP}, 
-\emph{Objective-C/C++}, and \emph{Java}
-because of the Paired Wilcoxon signed-rank test requirement: input sample has to have more 
-than $20$ samples. The other languages were
+of open-source software, Figure~\ref{fig:lang_main}. We restrict this analysis to programming languages with at least $20$ data points, as this is a requirement for our hypothesis tests. Thus, we compare the results for \emph{Python}, \emph{C/C++}, \emph{Ruby}, \emph{PHP}, 
+\emph{Objective-C/C++}, and \emph{Java}. The other languages were
 integrated into \emph{Others}. The results of the Paired Wilcoxon signed-rank
 test by language indicate that there is statistical evidence to support that the
 maintainability of open-source software decreases for security patches for \emph{C/C++} 
@@ -1034,11 +1030,7 @@ maintainability of open-source software decreases for security patches for \emph
 % Following the \textit{American Statistical Association}
 % recommendations~\cite{doi:10.1080/00031305.2016.1154108}, we consider the results for
 % Ruby as statistically significant because its p-value is on the borderline.
-We could also conclude that security 
-patches in \emph{PHP} (p-value = $0.072$) also have a negative impact
-on the maintainability of software, if we considered a significance level of $0.1$. 
-Another programming language which impacts negatively the maintainability of software
-is \emph{Ruby} (30 in 71 vulnerabilities, $42.3\%$).
+\emph{Ruby} and \emph{PHP} languages also impact negatively the maintainability of software. Despite not having statistical significance, there are a considerable number of \emph{Ruby} and \emph{PHP} patches hindering maintainability that should not be disregarded
 
 Overall, it is important to notice that there is a very significant number of patches that
 hinder the maintainability of software $-$ even if the number of negative cases does not 
@@ -1075,7 +1067,7 @@ cases. In $22.7\%$ ($153$), there is no impact and for the
 other $36.0\%$ ($242$) maintainability increases.
 It is also important to notice that overall the maintainability of open-source
 software is not affected by \emph{Cross-Site Scripting (CWE-79)} vulnerabilities. \emph{Cross-Site Scripting (CWE-79)}
-does not suffer any decrease in the maintainability of $38.7\%$ ($24$) of cases
+does not suffer any decrease in the maintainability of $38.7\%$ ($24$) of the cases
 and $35.5\%$ ($22$) have a negative effect on it. Only $25.8\%$ ($16$) of the
 cases improve the software maintainability. 
 
@@ -1087,9 +1079,11 @@ significance was found to the other patterns. Thus, results should be read with 
 
 
 
+
+
 \begin{figure}[h]
  	\centering
- 	\includegraphics[width=0.43\textwidth]{figures/maintainability_cwe.pdf}
+ 	\includegraphics[width=0.4\textwidth]{figures/maintainability_cwe.pdf}
  	\caption{Maintainability difference by pattern after security patches.}
 	\label{fig:pat}	
 	\vspace{-0.5cm}
@@ -1193,7 +1187,6 @@ and fixing vulnerabilities might hinder software maintainability. Thus, it is
 not only important to provide tool support to developers to help them apply these
 patterns without harming software maintainability, but also to create and redesign
 programming languages to facilitate developers improving software maintainability.
-
 
 We measured the effect sizes between both distribution -- before and after
 patches --- per language and security patterns using the Common Language Effect
