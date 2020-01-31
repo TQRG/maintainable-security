@@ -163,7 +163,7 @@ guidelines using a dataset including $1037$ security commits. Results show
 that fixing software vulnerabilities hinders the maintainability of 
 open-source software. This is particularly the case for patches that address Path Traversal (CWE-22),
 Information Exposure (CWE-200) and Resource Management Errors (CWE-399) . We conclude that changes to code bases 
-to fix vulnerabilities need to be performed with extra care.
+to fix vulnerabilities need to be performed with extra care and that security-related code evolution should be subject in computer curricula.
 	
 \end{abstract}
 
@@ -247,7 +247,7 @@ Our suspiciousness is that some of the these patches may have a negative
 impact on the software maintainability and, possibly, even be the cause of the 
 introduction of new vulnerabilities $-$ harming software reliability. Therefore, 
 in this paper, we present an empirical study on the impact of patches of 
-vulnerabilities in software maintenance accross open-source software.
+vulnerabilities in software maintenance across open-source software.
 %
 % Software maintainability can also be defined as 
 % the property of software that reveals how easily the software system can be 
@@ -1014,23 +1014,22 @@ Maintainability is being calculated as the mean of the guidelines computed
 by BCH. Figure~\ref{fig:guidelines} shows the impact of security patches on each 
 guideline individually. For projects with large 
 codebases, the results retrieved for \emph{Keep Your Codebase Small} were not 
-viable due to limitations of BCH. Thus, we decided to not consider this guideline 
+viable due to limitations of BCH. For this guideline, the tool sets a limit of 20 Person-years. However, a large amount of projects of our database surpass this limit. Thus, we decided to not consider this guideline 
 in our analysis. For each type of
 guideline, three types of impact of patches in the software maintainability
 are presented: \emph{negative}, maintainability decreases (\emph{red});
 \emph{none}, maintainability remains the same (\emph{yellow}); and,
 \emph{positive}, maintainability increases (\emph{green}). Next to each
-type of change, it is shown the mean ($\overline{x}$) and median (M)
+type of guideline, it is shown the mean ($\overline{x}$) and median (M)
 of the maintainability difference and the p-value resulting from the
 Paired Wilcoxon signed-rank test.
 Regarding the impact of security patches in each guideline, we observe
-that overall our patches have a significant positive impact in $5$ guidelines: 
-\emph{Write Clean Code} (p-value = $4.9$x$10^{-54}$), \emph{Keep Architecture 
+that overall patches have a significant positive impact in $5$ guidelines: 
+\emph{Write Clean Code} (p-value = $4.9$x$10^{-54}$), \emph{Keep Arschitecture 
 Components Balanced} (p-value = $5.26$x$10^{-71}$), \emph{Couple Architecture 
 Components Loosely} (p-value = $2.43$x$10^{-07}$), \emph{Keep Unit Interfaces 
 Small} (p-value = $2.25$x$10^{-13}$), \emph{ Write Code Once} (p-value = 
-$7.9$x$10^{-35}$). However, each of the previous guidelines also suffer a 
-negative impact from $10\%$ to $35\%$. \emph{Separate Concerns in Module} 
+$7.9$x$10^{-35}$). However, for each of these guidelines we also observe a substantial number of cases where the maintainability suffers a negative impact $-$ from $10\%$ to $35\%$ $-$ which highlights the need of better practices/techniques/tools to produce software. \emph{Separate Concerns in Module} 
 guideline also follows the same results but without any statistical 
 significance since the p-value is higher than $0.05$. According with the 
 results, \emph{Write Simple Units of Code} (p-value=$0.015$ and $38.2\%$/$396$ 
@@ -1074,19 +1073,23 @@ than $20$ samples. The other languages were
 integrated into \emph{Others}. The results of the Paired Wilcoxon signed-rank
 test by language indicate that there is statistical evidence to support that the
 maintainability of open-source software decreases for security patches for \emph{C/C++} 
-(p-value = $2.5$x$10^{-5}$).
+(p-value = $2.5$x$10^{-5}$). 
 % Following the \textit{American Statistical Association}
 % recommendations~\cite{doi:10.1080/00031305.2016.1154108}, we consider the results for
 % Ruby as statistically significant because its p-value is on the borderline.
-If we considered a significance level of $0.1$, we could also conclude that security 
+We could also conclude that security 
 patches in \emph{PHP} (p-value = $0.072$) also have a negative impact
-on the maintainability of software.
-However, to the rest of the languages presented in Figure~\ref{fig:lang_main}, it is
-not possible to make conclusions with statistical significance. But it is important
-to notice that overall there is a very significant number of patches that
-hinder the maintainability of software (e.g., \emph{Python}, \emph{Ruby}, 
-\emph{Objective-C/C++}, \emph{Java}), even if the number of negative cases does not 
-surpass the number of positive or none. 
+on the maintainability of software, if we considered a significance level of $0.1$. 
+Another programming language which impacts negatively the maintainability of software
+is \emph{Ruby} (30 in 71 vulnerabilities, $42.3\%$).
+
+Overall, it is important to notice that there is a very significant number of patches that
+hinder the maintainability of software $-$ even if the number of negative cases does not 
+surpass the number of positive or none $-$ for  $3$ different languages: \emph{Python},
+\emph{Objective-C/C++} and \emph{Java}. For those languages, the negative impact is between $35\%$ and $50\%$ which highlights the need for better and secure programming languages. 
+Results should be read with care for the languages where statistical significance was not found. However, 
+data reports very interesting hints about the impact of programming languages in 
+security patches.
 
 \begin{framed}
 \textit{\textbf{RQ2} Which patterns of security patches are more likely to
@@ -1096,17 +1099,12 @@ affect open-source software maintainability?}
 \vspace{-0.1cm}
 
 The impact of each type of security patches on the maintainability of
-open-source software is presented in Figure~\ref{fig:pat}. The results of the
-Paired Wilcoxon signed-rank per pattern exhibited statistical
-evidence supporting that the maintainability of open-source software decreases for
-only one category: \emph{Miscellaneous} (p-value = $0.033$). Although without 
-statistical significance, we also observe that the maintainability of open-source software decreases in $3$ different patterns: \emph{Improper Limitation of a Pathname to a Restricted Directory/Path Traversal (CWE-22)}, \emph{Information Exposure (CWE-200)} and \emph{Resource Management Errors (CWE-399)}.
+open-source software is presented in Figure~\ref{fig:pat}. Results demonstrate evidence that the maintainability of open-source software decreases in $3$ different patterns: \emph{Improper Limitation of a Pathname to a Restricted Directory/Path Traversal (CWE-22)}, \emph{Information Exposure (CWE-200)} and \emph{Resource Management Errors (CWE-399)}.
 
-Also with no statistical
-significance, results demonstrate evidence that maintainability is less
+We also observe that maintainability is less
 negatively impacted when patching \emph{SQL Injection (CWE-89)}, \emph{Improper Restriction of XML External Entity Reference (CWE-611)}, \emph{Improper Input Validation (CWE-20)}, \emph{Cross-Site Request Forgery (CWE-352)}, \emph{Permissions, Privileges, and Access Controls (CWE-264)}. However,
-for all the previous patterns there is a percentage of security patches that hinder maintainability between $30\%$ and $50\%$ which is very significant. \emph{Cross-Site Scripting (CWE-79)} is the pattern that suffers less positive/negative impact from security patches. As the mean shows, the security
-patches of this type of vulnerability usually have no impact on the maintainability of open-source software. 
+for all the previous patterns there is a percentage of security patches that hinder maintainability between $30\%$ and $50\%$ which is very significant. \emph{Cross-Site Scripting (CWE-79)} is the pattern that suffers less positive/negative impact from security patches, i.e., security
+patches of this type of vulnerability typically have no impact on the maintainability of open-source software. 
 
 Software with \emph{Resource Management Errors (CWE-399)} flaws are the most affected ones by security patches: $54.5\%$ ($12$) of the patches had a negative impact
 in the maintainability while $36.4\%$ ($8$) yielded a positive impact, and only
@@ -1127,6 +1125,13 @@ software is not affected by \emph{Cross-Site Scripting (CWE-79)} vulnerabilities
 does not suffer any decrease in the maintainability of $38.7\%$ ($24$) of cases
 and $35.5\%$ ($22$) have a negative effect on it. Only $25.8\%$ ($16$) of the
 cases improve the software maintainability. 
+
+The results of the
+Paired Wilcoxon signed-rank per pattern exhibited statistical
+evidence supporting that the maintainability of open-source software decreases for
+only one category: \emph{Miscellaneous} (p-value = $0.033$). However, no statistical
+significance was found to the other patterns. Thus, results should be read with care. 
+
 
 
 \begin{figure}[h]
@@ -1161,21 +1166,18 @@ Since the p-value is below the significance level of $0.05$, we argue that
 \emph{security patches have a negative impact in the maintainability of
 open-source software}.
 
-\Sof{Skip, it will be updated soon} For regular commits, we observe that the maintainability decreases in \Sof{<todo>} %$41.35\%$ ($251$) 
-of the cases after regular refactorings are applied. But in contrast
-to security commits, it increases in \Sof{<todo>} %$58.16\%$ ($353$) 
-and remains the same in \Sof{<todo>}
-%$0.5\%$ ($3$) 
+For regular commits, we observe that the maintainability decreases in $21.04\%$ ($133$) 
+of the cases after regular changes are applied. But in contrast
+to security commits, it increases in $26.90\%$ ($170$) 
+and remains the same in $52.06\%$ ($329$) 
 of the cases. The resulting p-value of the Paired Wilcoxon signed-rank
-test is \Sof{<todo>}
-%$1.54$x$10^{-6}$
-. The baseline is still being computed by BCH but we can see already 
-that regular changes usually have no impact on the maintainability of
-software which seems to contradict research performed in the past. However,
-we inspected a considerable amount of cases where this happens and
-found that considering the size of the \emph{diff} to generate the random
-regular commit may limit the type of commit obtained. There are several
-cases which size is small due to the high amount of 
+test is $5.74x10^{-78}$. The baseline is still being computed by BCH but it is possible to observe 
+that regular changes typically have little impact on the maintainability which contradicts research performed in the past. However,
+we manually inspected a considerable amount of cases where this happens and
+found that identifying regular commits as similar in size as the security-related commit is limiting the type of regular commits (e.g, input refactorings, renaming variables or functions)\footnote{Example of a random regular commit generated with our methodology (Accessed on \today{}):
+\url{https://github.com/AFNetworking/AFNetworking/compare/9cde4e45845486bdb46ad322448f93df3b8479bf...3486a008a1fd1348d0f2fe748a5e23933d94647a}}.
+
+
 
 %Since the p-value is below the significance level of $0.05$, 
 %we argue that \emph{regular refactorings have a
