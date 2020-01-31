@@ -331,26 +331,33 @@ performant one. Thus, we want to understand how security patches impact
 the maintainability of software. 
 
 %%%%% NEEDS REVIEW
-As an example, consider the patch of the state-machine implementation in OpenSSL\footnoteref{openssl} to address a vulnerability where an attacker could cause a Denial-of-Service
+As an example, consider the patch of the TLS state-machine protocol implementation in OpenSSL\footnoteref{openssl} to address a vulnerability where an attacker could cause a Denial-of-Service
 (DoS) attack by crafting TLS messages to trigger memory allocations
 corresponding to large length values. This vulnerability is listed at the Common
-Vulnerabilities and Exposures dictionary as CVE-$2014$-$3506$\footnote{CVE-$2014$-$3506$
-details available at \url{http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2014-3506}
+Vulnerabilities and Exposures dictionary as CVE-$2016$-$6307$ \footnote{CVE-$2016$-$6307$
+details available at \url{http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6307}
 (Accessed on \today{})}. It is amongst the vulnerabilities studied in our
 evaluation. The snippet, in Listing~\ref{lst:vuln}, presents the changes performed on the
-\emph{ssl/d1\_both.c} file\footnote{CVE-$2014$-$3506$ fix available  at
-\url{https://github.com/openssl/openssl/commit/1250f12613b61758675848f6600ebd914ccd7636}
+\emph{ssl/statem/statem.c} file\footnote{CVE-$2016$-$6307$ fix available  at
+\url{https://github.com/openssl/openssl/commit/c1ef7c971d0bbf117c3c80f65b5875e2e7b024b1}
 (Accessed on \today{})} by the OpenSSL developers to patch the vulnerability. Every SSL/TLS connection begins with a handshake which is responsible by the
-negotiation between the two parties. DTLS provides a mechanism for fragmenting
-a handshake message over a number of packets, each of which can be transmitted
-separately over the internet from one party to another. The problem in
-CVE-$2014$-$3506$ is that the size of the handshake message collected by the
-receiver is not verified against the maximum size allowed by DTLS. It is then
-allocated to a new fragment (cf. Listing~\ref{lst:vuln}, line~36). Thus, if an
-attacker has access to one of these packages, he can change the
-handshake message size and trigger unnecessary memory allocations of large
-length which can lead to memory exhaustion that could end in a DoS attack.
-
+negotiation between the two parties. The problem in
+CVE-$2016$-$6307$ is that due to a flaw in the logic of version $1.1.0$,
+memory for a message is allocated too early, prior to the excessive
+message length check which can lead to a Denial of Service through memory
+exhaustion if an attacker triggers up a certain message length to be allocated to service a
+connection. In this case, there is only a security impact if the application does not call  \texttt{SSL\_free()} in a timely manner in the
+event that the connection fails;
+or, the application is working in a constrained environment where there
+is very little free memory;
+or, the attacker initiates multiple connection attempts such that there
+are multiple connections in a state where memory has been allocated for
+the connection, \texttt{SSL\_free()} has not yet been called, and there is
+insufficient memory to service the multiple requests. Except in the instance of $1$ above, any Denial Of Service is likely to
+be transitory because as soon as the connection fails the memory is
+subsequently freed again in the \texttt{SSL\_free()} call. However there is an
+increased risk during this period of application crashes due to the lack
+of memory - which would then mean a more serious Denial of Service.
 
 
 \medskip
@@ -362,12 +369,33 @@ length which can lead to memory exhaustion that could end in a DoS attack.
 +   if (!SSL_IS_DTLS(s) && s->s3->tmp.message_size > 0
 +        && !BUF_MEM_grow_clean(s->init_buf, 
 +                                (int)s->s3->tmp.message_size
-+                                + SSL3_HM_HEADER_LENGTH)) {
++                                + SSL3_HM_HEADER_LENGTH)) { /*!\annotation{lst:func2}!*/
 +         ssl3_send_alert(s, SSL3_AL_FATAL, SSL_AD_INTERNAL_ERROR);
 +         SSLerr(SSL_F_TLS_GET_MESSAGE_HEADER, ERR_R_BUF_LIB);
 +          return SUB_STATE_ERROR;
  // [snip]
  }
+\end{lstlisting}
+
+\medskip
+\setcounter{lstannotation}{0}
+\begin{lstlisting}[style={CStyle}, caption={Fix provided by OpenSSL developers to the
+\\CVE-2016-6307 vulnerability for file ssl/statem/statem\_lib.c},label={lst:vuln2}]
+ int tls_get_message_header(SSL *s, int *mt){  /*!\annotation{lst:func3}!*/
+ // [snip]
+  l = RECORD_LAYER_get_rrec_length(&s->rlayer) + 
+        SSL3_HM_HEADER_LENGTH;
+- if (l && !BUF_MEM_grow_clean(s->init_buf, (int)l)) { /*!\annotation{lst:func4}!*/
+-      SSLerr(SSL_F_TLS_GET_MESSAGE_HEADER, ERR_R_BUF_LIB);
+-      goto err;
+   }
+ // [snip]
+ 
+- if (l && !BUF_MEM_grow_clean(s->init_buf, (int)l +SSL3_HM_HEADER_LENGTH)) {  /*!\annotation{lst:func5}!*/  
+-     SSLerr(SSL_F_TLS_GET_MESSAGE_HEADER, ERR_R_BUF_LIB);
+-     goto err;
+- }
+ 
 \end{lstlisting}
 %
 %\medskip
@@ -389,31 +417,22 @@ length which can lead to memory exhaustion that could end in a DoS attack.
 
 %The code changes performed to fix the vulnerability are:
 
-~\ref{lst:func1} \texttt{dtls1\_max\_handshake\_message\_len} function was
-inserted to return the maximum number of bytes allowed in a DTLS
-handshake message for \texttt{s}. The minimum is $16$KB but it might be greater if
-the maximum certificate list size (\texttt{s-$>$max\_cert\_list}) requires it. More
-specifically, it checks if the maximum certificate list size requires more length 
-than the maximum length (\texttt{max\_len}). If that condition holds, the function 
-returns the size of the certificate list, otherwise, it returns the maximum length. 
-This function replaces lines $17$--$21$.
+~\ref{lst:func1} \texttt{read\_state\_machine} function abstracts a sub-state-machine
+to handle the messages exchanged between peers. When messages are larger than
+what is defined by default for TLS, it may trigger a memory corruption issue since the allocation
+of this resource was being verified very early in the application's flow.  Listing ~\ref{lst:vuln2} presents those verifications (lines $5$-$7$ and line $11$-$13$).
+These verifications of size allocation were substituted by the one presented in Listing~\ref{lst:vuln}.
 
-~\ref{lst:func5} and~\ref{lst:func4} are guards added to different functions to
-ascertain that the message and the fragment length are never higher than the
-maximum allowed by DTLS. In particular, \ref{lst:func5} is responsible for patching
-the vulnerability.
 %
-Although checking the maximum size of a handshake message seems an elementary
+Although checking the maximum size of a message seems an elementary
 problem to repair, the example shows that there was a significant amount of
 changes performed in the code base which produced a negative impact in the
-maintainability. Even though the developer tries to simplify the
-code base by introducing a smaller unit
-\texttt{dtls1\_max\_handshake\_message\_len} (\ref{lst:func1}), this change disrupts
+maintainability. The developer tries to patch the
+code base by introducing a new branch point to the function \texttt{read\_state\_machine}~\ref{lst:func1} which adds complexity to the software
+and disrupts
 one of the guidelines proposed by the Software Improvement Group (SIG) for
-building maintainable software~\cite{Visser:2016:OREILLY}. It adds a new branch
-point to the \sloppy\texttt{dtls1\_process\_out\_of\_seq\_message} unit
-(\ref{lst:func5}) increasing the cyclomatic complexity and breaking the
-\emph{Write Simple Units of Code} guideline which resulted in a negative impact on the
+building maintainable software~\cite{Visser:2016:OREILLY} $-$
+the \emph{Write Simple Units of Code} guideline $-$ which resulted in a negative impact on the
 OpenSSL maintainability.
 %%%%%%% 
 Software maintainability is designed as the degree to which an application is understood, repaired or enhanced. In this paper, our concern is to study whether, while improving software
