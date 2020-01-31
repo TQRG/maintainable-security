@@ -1272,10 +1272,12 @@ on the maintainability of open-source software?}
 \vspace{-0.1cm}
 \end{framed}
 \vspace{-0.1cm}
+\textbf{\textit{Patching security vulnerabilities has a larger negative and positive impact
+than when fixing regular commits.}}
 
 We found that $41.76\%$ of the security patches have a negative impact on the
-maintainability of open-source software (cf. Figure~\ref{fig:secvsreg}). This raises
-a new trade-off when developers need to fix vulnerabilities on their projects
+maintainability of open-source software (cf. Figure~\ref{fig:secvsreg}). While $21.04\%$ of regular commits have a negative impact on the maintainability. This raises
+a new trade-off when developers need to patch vulnerabilities on their projects
 because they might be affecting the software maintainability or even introducing
 new vulnerabilities. This study exhibits evidence that developers may have to
 reduce maintainability for the sake of security. We understand that developers
@@ -1317,11 +1319,15 @@ maintainability standards. However, BCH does use a representative benchmark of
 closed and open-source software projects to compute the
 thresholds for each maintainability guideline~\cite{Visser:2016:OREILLY, Baggen2012}.
 %
-\\\textit{\textbf{Internal:}} The security patches dataset provided by the previous
+\\\textit{\textbf{Internal:}} The security patches dataset provided by previous
 work~\cite{Reis:2017:IJSSE} was collected based on the messages of GitHub
 commits produced by project developers to classify the changes performed by them
 to fix security flaws. This approach discards security patches that were
-not explicit in commits messages. Baseline commits are retrieved randomly by selecting one commit from the same
+not explicit in commits messages. Pontas et. al\cite{10.1109/MSR.2019.00064} dataset
+has patches that were manually mined in software repositories. Being a manual technique,
+the search might led to
+wrong associations between vulnerabilities and code snippets.
+Baseline commits are retrieved randomly by selecting one commit from the same
 project of a given security patch. This approach softens the differences
 that may result from the characteristics of each project. However,
 maintainability may still be affected by the developers' experience, coding
@@ -1356,8 +1362,9 @@ the development of Android apps, Malavolta et al. ($2018$)~\cite{8530041}
 discovered that maintainability decreases over time. Palomba et al.
 ($2018$)~\cite{Palomba:2018:DIM:3231288.3231337} exhibits proof that code smells
 should be carefully monitored by programmers since there is a high correlation
-between maintainability aspects and proneness to changes and faults. The present
-work uses a model proposed by BCH and focuses solely on evaluating the impact of
+between maintainability aspects and proneness to changes and faults. In 2019, Luis et al.~\cite{cruz2019energyoriented} proposed a formula to calculate maintainability based on the BCH's guidelines and measured the impact of energy-oriented fixes on the maintainability of software.
+The present
+work uses the same model (BCH) and focuses solely on evaluating the impact of
 patching vulnerabilities on software maintainability.
 
 Researchers investigated the relationship between design patterns and software
@@ -1388,8 +1395,8 @@ Better Code Hub reports to calculate maintainability based on a model proposed i
 significantly affect the software maintainability of open-source software, i.e., 
 developers hinder maintainability when patching vulnerabilities. We found this evidence in
 $41.76\%$ of the studied cases. Regarding regular commits, it seems that overall
-maintainability increases (\Sof{Complete}). However, there is still a very
-considerable amount of cases that harm maintainability (\Sof{Complete}).
+maintainability stays the same ($52.06\%$). However, there is still a 
+considerable amount of cases that harm maintainability ($21.04\%$).
 
 This study also shows evidence that there are security patterns that need more
 attention than others. \emph{Path Traversal} (CWE-22),
