@@ -376,7 +376,7 @@ of memory - which would then mean a more serious Denial of Service.
  // [snip]
  }
 \end{lstlisting}
-
+ \vspace{-0.5cm}
 \medskip
 \setcounter{lstannotation}{0}
 \begin{lstlisting}[style={CStyle}, caption={Fix provided by OpenSSL developers to the
@@ -395,7 +395,7 @@ of memory - which would then mean a more serious Denial of Service.
 -     SSLerr(SSL_F_TLS_GET_MESSAGE_HEADER, ERR_R_BUF_LIB);
 -     goto err;
 - }
- 
+
 \end{lstlisting}
 %
 %\medskip
@@ -441,12 +441,10 @@ software applications. This is important because software maintainability is app
 of security patches~\cite{Reis:2017:IJSSE, 10.1109/MSR.2019.00064} to measure the impact of
 security patches on the maintainability of open-source software. 
 %
-\begin{framed}
-\textit{\textbf{RQ1} What is the impact of security patches on the
-maintainability of open-source software?}
-\end{framed}
-\vspace{-0.1cm}
-%
+
+\subsubsection*{\textit{\textbf{RQ1} What is the impact of security patches on the
+maintainability of open-source software?}}
+
 Often security flaws require patching code to make software more secure.
 However, \textbf{there is no evidence yet of how security patches impact the
 maintainability of open-source software}. Our suspicion is that developers tend
@@ -455,11 +453,9 @@ address a security flaw because they tend to choose the easiest path to solve
 it. To address it, we compute the maintainability of $1037$ commits using the
 \emph{Better Code Hub} tool. 
 %
-\begin{framed}
-\textit{\textbf{RQ2} Which patterns of security patches are more likely to
-affect open-source software maintainability?}
-\end{framed}
-\vspace{-0.1cm}
+\subsubsection*{\textit{\textbf{RQ2}  Which patterns of security patches are more likely to
+affect open-source software maintainability?}}
+
 There are security flaws that are more difficult to patch than others. For
 instance, implementing secure authentication is not as easy as fixing a
 cross-site scripting vulnerability since usually the last one can be fixed
@@ -481,12 +477,10 @@ separately for each pattern.
     ?>
    </p>
 \end{lstlisting}
+\vspace{-0.3cm}
 %
-\begin{framed}
-\textit{\textbf{RQ3} What is the impact of security patches versus regular changes on the
-maintainability of open-source software?}
-\end{framed}
-\vspace{-0.1cm}
+\subsubsection*{\textit{\textbf{RQ3} What is the impact of security patches versus regular changes on the
+maintainability of open-source software?}}
 %
 We also compute the maintainability of $1037$ random regular commits using the
 \emph{Better Code Hub} tool --- baseline.  We use them to understand \textbf{how
@@ -526,6 +520,7 @@ the activities of developers addressing security-oriented patches~\cite{Reis:201
  	\centering 	\includegraphics[width=0.45\textwidth]{figures/methodology.pdf}
  	\caption{Study Methodology}
 	\label{fig:met}
+	\vspace{-0.5cm}
 \end{figure}
 %
 \subsection{Datasets}
@@ -642,6 +637,7 @@ This pattern comprises
 \bottomrule
 \end{tabular}
 \label{tab:patterns}
+\vspace{-0.5cm}
 \end{table}
 
 %
@@ -752,6 +748,7 @@ refactoring for the guideline \emph{Write Simple Units of Code} provided by
 guideline in the example since the bars do not reach the threshold points. This
 example only complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean Code}).}
 	\label{fig:bchrep}
+	\vspace{-0.8cm}
 \end{figure}
 
 \begin{table}[h]
@@ -807,6 +804,7 @@ identifier names) \\
 \bottomrule
 \end{tabular}
 \label{tab:guidelines}
+\vspace{-0.3cm}
 \end{table}
 
 
@@ -839,6 +837,7 @@ severity.
  	\centering 	\includegraphics[width=0.75\linewidth]{figures/commit.pdf}
  	\caption{Maintainability difference for security commits}
 	\label{fig:commit}
+	\vspace{-0.5cm}
 \end{figure}
 
 Aiming to analyze the impact of security patches, we use BCH to compute the
@@ -940,16 +939,8 @@ As mentioned before, this study evaluates $1037$ security and baseline commits
 from $267$ distinct open-source projects. The following section presents the
 results obtained for each research question.
 
-\begin{framed}
-\textit{\textbf{RQ1} What is the impact of security patches on the
-maintainability of open-source software?}
-\vspace{-0.1cm}
-\end{framed}
-\vspace{-0.1cm}
-
-
-
-
+\subsubsection*{\textit{\textbf{RQ1} What is the impact of security patches on the
+maintainability of open-source software?}}
 
 \begin{figure}[h]
  	\centering
@@ -964,6 +955,7 @@ maintainability of open-source software?}
 	$WSimpleUC$ & Write Simple Units of Code & $WShortUC$ & Write Short Units of Code
 	\end{tabular}
 	}
+	\vspace{-0.3cm}
 \end{figure}
 
 
@@ -999,7 +991,7 @@ impact from security patches.
  	\centering 	\includegraphics[width=0.45\textwidth]{figures/maintainability_severity.pdf}
  	\caption{Maintainability difference by the vulnerabilities severity.}
 	\label{fig:severity}
-	
+	\vspace{-0.4cm}
 \end{figure}
 
 For the vulnerabilities identified with CVE(s), we scraped NVD to retrieve 
@@ -1017,6 +1009,7 @@ maintainability of software.
   \includegraphics[width=0.5\textwidth]{figures/maintainability_language.pdf}
   \caption{Maintainability difference by language after security patches.}
   \label{fig:lang_main}  
+  \vspace{-0.5cm}
 \end{figure}
 
 
@@ -1048,12 +1041,8 @@ Results should be read with care for the languages where statistical significanc
 data reports very interesting hints about the impact of programming languages in 
 security patches.
 
-\begin{framed}
-\textit{\textbf{RQ2} Which patterns of security patches are more likely to
-affect open-source software maintainability?}
-\vspace{-0.1cm}
-\end{framed}
-\vspace{-0.1cm}
+\subsubsection*{\textit{\textbf{RQ2} Which patterns of security patches are more likely to
+affect open-source software maintainability?}}
 
 The impact of each type of security patches on the maintainability of
 open-source software is presented in Figure~\ref{fig:pat}. Results demonstrate evidence that the maintainability of open-source software decreases in $3$ different patterns: \emph{Improper Limitation of a Pathname to a Restricted Directory/Path Traversal (CWE-22)}, \emph{Information Exposure (CWE-200)} and \emph{Resource Management Errors (CWE-399)}.
@@ -1096,14 +1085,11 @@ significance was found to the other patterns. Thus, results should be read with 
  	\includegraphics[width=0.45\textwidth]{figures/maintainability_cwe.pdf}
  	\caption{Maintainability difference by pattern after security patches.}
 	\label{fig:pat}	
+	\vspace{-0.5cm}
 \end{figure}
 
-\begin{framed}
-\textit{\textbf{RQ3} What is the impact of security patches versus regular changes on the
-maintainability of open-source software?}
-\vspace{-0.1cm}
-\end{framed}
-\vspace{-0.1cm}
+\subsubsection*{\textit{\textbf{RQ3} What is the impact of security patches versus regular changes on the
+maintainability of open-source software?}}
 
 The impact of security and baseline commits in the maintainability of
 open-source software is presented in Figure~\ref{fig:secvsreg}. 
@@ -1112,7 +1098,9 @@ open-source software is presented in Figure~\ref{fig:secvsreg}.
  	\centering 	\includegraphics[width=0.43\textwidth]{figures/maintainability_sec_vs_reg.pdf}
  	\caption{Maintainability difference for security and baseline patches.}
 	\label{fig:secvsreg}
+	\vspace{-0.5cm}
 \end{figure}
+
 
 
 Regarding security commits results, we observe that maintainability decreases in
@@ -1144,14 +1132,11 @@ found that identifying regular commits as similar in size as the security-relate
 
 In this section, we discuss the results and answer the proposed research questions.
 
-\begin{framed}
-\textit{\textbf{RQ1} What is the impact of security patches on the maintainability
-of open-source software?}
-\vspace{-0.1cm}
-\end{framed}
-\vspace{-0.1cm}
+\subsubsection*{\textit{\textbf{RQ1} \textbf{What is the impact of security patches on the maintainability
+of open-source software?}}}
 
-\textbf{\textit{Security patches harm the maintainability of open-source software.}}
+
+\textit{Security patches harm the maintainability of open-source software.}
 
 The guideline analysis suggests that all guidelines are affected by security patches. Being the
 \emph{Write Short Units of Code}, \emph{Write Simple Units of Code} and \emph{Separate Concerns in Modules} the guidelines with higher negative impact on the maintainability ($>30\%$ of cases). \emph{Keep Architecture Components Balanced} is the guideline with lower negative impact on 
@@ -1176,15 +1161,12 @@ instance, \texttt{laravel/framework} requires the \texttt{PSR-2
 Standard}\footnote{PSR-2 Standard available at
 \url{https://www.php-fig.org/psr/psr-2/} (Accessed on \today{})} that is a coding style guide for \texttt{PHP}.
 
-\begin{framed}
-\textit{\textbf{RQ2} Which patterns of security patches are more likely to
-affect open-source software maintainability?}
-\vspace{-0.1cm}
-\end{framed}
-\vspace{-0.1cm}
+\subsubsection*{\textit{\textbf{RQ2} \textbf{Which patterns of security patches are more likely to
+affect open-source software maintainability?}}}
 
-\textbf{\textit{Path Traversal (CWE-22), Information Exposure (CWE-200), Resource Management Errors (CWE-399) are more likely to affect
-open-source software maintainability.}}
+
+\textit{Path Traversal (CWE-22), Information Exposure (CWE-200), Resource Management Errors (CWE-399) are more likely to affect
+open-source software maintainability.}
 
 Overall, the results obtained for the maintainability per CWE are no statistical significance 
 The impact of a patch depends on its complexity, i.e., if the patchs
@@ -1223,14 +1205,10 @@ to affirm that there is a significant effect but it might only be
 recognized after a thoughtful data analysis.
 
 
-\begin{framed}
-\textit{\textbf{RQ3} What is the impact of security patches versus regular changes
-on the maintainability of open-source software?}
-\vspace{-0.1cm}
-\end{framed}
-\vspace{-0.1cm}
-\textbf{\textit{Patching security vulnerabilities has a larger negative and positive impact
-than when fixing regular commits.}}
+\subsubsection*{\textit{\textbf{RQ3} \textbf{What is the impact of security patches versus regular changes
+on the maintainability of open-source software?}}}
+\textit{Patching security vulnerabilities has a larger negative and positive impact
+than when fixing regular commits.}
 
 We found that $41.76\%$ of the security patches have a negative impact on the
 maintainability of open-source software (cf. Figure~\ref{fig:secvsreg}). While $21.04\%$ of regular commits have a negative impact on the maintainability. This raises
