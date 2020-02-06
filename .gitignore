@@ -1,5 +1,5 @@
 config/*.json
-paper/issre19.pdf
+paper/icpc20.pdf
 *.aux
 *.bbl
 *.blg
@@ -7,6 +7,7 @@ paper/issre19.pdf
 *.fls
 *.synctex.gz
 *.out
+*.cut
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

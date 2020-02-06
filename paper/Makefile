@@ -1,4 +1,4 @@
-NAME:=issre19
+NAME:=icpc20
 
 # To update, run: latex-process-inputs -makefilelist main.tex
 TEX_FILES = \
@@ -17,10 +17,10 @@ final: pdf
 	pdffonts $(NAME).pdf; fi
 
 clean:
-	-rm -f *aux *bbl *blg *log *.dvi $(NAME).pdf *.fdb_latexmk *.synctex.gz *.fls *.out *.spl
+	-rm -f *aux *bbl *blg *log *.dvi $(NAME).pdf *.fdb_latexmk *.synctex.gz *.fls *.out *.spl *.cut
 
 read:
-	evince issre18.pdf
+	evince icpc20.pdf
 
 tags: TAGS
 TAGS: ${TEX_FILES}
