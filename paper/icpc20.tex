@@ -162,7 +162,7 @@ Maintainability is measured based on the Better Code Hub’s model of $10$
 guidelines using a dataset including $1037$ security commits. Results show 
 that fixing software vulnerabilities hinders the maintainability of 
 open-source software. This is particularly the case for patches that address Path Traversal (CWE-22),
-Information Exposure (CWE-200) and Resource Management Errors (CWE-399) . We conclude that changes to code bases 
+Information Exposure (CWE-200) and Resource Management Errors (CWE-399). We conclude that changes to code bases 
 to fix vulnerabilities need to be performed with extra care and that security-related code evolution should be subject in computer curricula.
 	
 \end{abstract}
@@ -221,7 +221,7 @@ discovered, and fixed, almost weekly as disclosed by the Zero Day Initiative
 website\footnote{Zero Day Initiative website available at
 \url{https://www.zerodayinitiative.com/advisories/published/} (Accessed on \today{})}.
 These vulnerabilities are gateways for attackers to penetrate systems and 
-exploit their resources. As an example, in the last week of January $2019$, 
+exploit their resources. \Sof{Improve example - outdated}As an example, in the last week of January $2019$, 
 a severe vulnerability in Apple FaceTime was revealed\footnote{FaceTime vulnerability 
 details available at \url{https://thehackernews.com/2019/01/apple-facetime-
 privacy-hack.html} (Accessed on \today{})} --- the outcome of a design/logical
@@ -267,7 +267,7 @@ maintainability, we resort on Software Improvement Group (SIG)'s web-based sourc
 code analysis service Better Code Hub (BCH) to compute the software compliance 
 with a set of $10$ guidelines/metrics to produce quality software 
 based in ISO/IEC 25010~\cite{Visser:2016:OREILLY}. The code metrics used by BCH 
-were empirically validated in previous work~\cite{Bijlsma:2012:FIR:2317098.2317124, 8530041}. 
+were empirically validated in previous work~\cite{Bijlsma:2012:FIR:2317098.2317124, 8530041, cruz2019energyoriented}. 
 There are other well-known standards and models that have been proposed
 to increase software security: Common Criteria~\cite{common:2009} which received
 negative criticism regarding the costs associated and poor technical evaluation;
@@ -283,8 +283,8 @@ perspective, we leveraged a dataset of $1335$ security patches collected from op
 software. We calculate software maintainability before and after the patch to measure its 
 impact. This empirical study presents evidence that changes 
 applied in the code bases to patch vulnerabilities affect code maintainability. 
-Especially, for patches that address \emph{Broken Authentication and Session Management} 
-issues, \emph{Memory Leaks} and \emph{Denial-of-Service} attacks. This is important work
+Especially, for patches that address Path Traversal (CWE-22),
+Information Exposure (CWE-200) and Resource Management Errors (CWE-399). This is important work
 because there is still little information about the impact of security patches on the software
 maintainability. With this study, 
 we intend to highlight the need for tools to predict the impact of patches on 
@@ -308,7 +308,7 @@ The main contributions of the present work are:
 %
 This paper is structured as follows: section~\ref{sec:motivation} introduces an
 example of a security refactoring of a known vulnerability found in the
-PHP interpreter\footnote{\label{openssl}OpenSSL is a toolkit that
+protocol implementation of OpenSSL\footnote{\label{openssl}OpenSSL is a toolkit that
 contains open-source implementations of the SSL and TLS cryptographic
 protocols. Repository available at \url{https://github.com/openssl/openssl}
 (Accessed on \today{})}; section~\ref{sec:methodology} describes the
