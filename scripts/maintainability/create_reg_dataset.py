@@ -22,7 +22,7 @@ CLONAGE_DIR = "./tmp"
 def tool(security_dataset, regular_dataset):
     """CLI to collect random commits and analyze maintainability."""
     df = pd.read_csv(security_dataset)
-    rows = add_random_regular_commits(df)
+    rows = add_random_regular_commits(df, regular_dataset)
 
 @timer()
 def add_random_regular_commits(rows, regular_dataset):
