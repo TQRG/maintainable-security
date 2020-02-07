@@ -3,59 +3,91 @@
 
 import csv
 import random
+import requests
 
 from contexttimer import timer
 import click
+import time
+import pandas as pd
 
 from maintainability import ghutils, gitutils, log
 
 CLONAGE_DIR = "./tmp"
 
 @click.command()
-@click.option('--security-dataset', prompt=True, default="../dataset/commits_patterns_sec.csv",
+@click.option('--security-dataset', prompt=True, default="../dataset/db_icpc20_release_reg_final.csv",
               help="Input dataset of security commits.")
-@click.option('--regular-dataset', prompt=True, default="../dataset/commits_regular.csv",
+@click.option('--regular-dataset', prompt=True, default="../dataset/db_icpc20_release_reg_final.csv",
               help="Output dataset with regular commits.")
 def tool(security_dataset, regular_dataset):
     """CLI to collect random commits and analyze maintainability."""
-    rows = _collect_rows(security_dataset)
-    add_random_regular_commits(rows)
-    _save_dataset(rows, regular_dataset)
+    df = pd.read_csv(security_dataset)
+    rows = add_random_regular_commits(df)
 
 @timer()
-def add_random_regular_commits(rows):
+def add_random_regular_commits(rows, regular_dataset):
     """Add refactoring commits in the dataset."""
     log.info(f"Will analyze {len(rows)} commits.")
-    for row in rows:
-        if 'random_commit' not in row.keys():
+
+    for i, row in rows.iterrows():        
+        if 'random_commit' not in row.keys() and row['reg'] != 'FOUND':
             user = row['owner']
             project = row['project']
+            sha = row['sha']
+            sha_p = row['sha-p']
+
+            repo = ghutils.get_repo(user, project)
+            print(user, project, sha, sha_p)
+            diff_files = repo.compare(sha_p, sha).files
+            size = len(diff_files)
+            adds = sum([i.additions for i in diff_files])
+            dels = sum([i.deletions for i in diff_files])
+            print(user, project, sha, sha_p, adds, dels)
+
             with ghutils.GithubCloneRepoPersistent(user, project, CLONAGE_DIR):
-                try:
-                    commits = gitutils.get_all_commits('.')
+
+                commits = gitutils.get_all_commits('.')
+                
+                count = 0; step = 1; limit = 301
+                while count < limit:
+
                     regular_commit = random.choice(commits)
-                    row['sha'] = regular_commit
-                    row['sha_p'] = gitutils.resolve_commit('.', f"{regular_commit}^1")
-                except:
-                    row['sha'] = 'Error'
-                    row['sha_p'] = 'Error'
-                    import pdb; pdb.set_trace()
+                    regular_commit_parent = gitutils.resolve_commit('.', f"{regular_commit}^1")
+
+                    if regular_commit_parent == None:
+                        continue
+
+                    diff_files_reg = repo.compare(regular_commit_parent, regular_commit).files
+
+                    size_reg = len(diff_files_reg)
+                    adds_reg = sum([i.additions for i in diff_files_reg])
+                    dels_reg = sum([i.deletions for i in diff_files_reg])
+
+                    adds_reg_n = [adds+i for i in range(-step, 1+step, 1) if adds+i > 0]
+                    dels_reg_n = [dels+i for i in range(-step, 1+step, 1) if dels+i > 0]
+
+                    if adds_reg in adds_reg_n and dels_reg in dels_reg_n and sha != regular_commit:
+                        print('match')
+                        print(user, project, regular_commit, regular_commit_parent, adds_reg, dels_reg)
+                        rows.at[i, 'sha-reg'] = regular_commit
+                        rows.at[i, 'sha-reg-p'] = regular_commit_parent
+                        rows.at[i, 'reg'] = 'FOUND'
+                        break
+                    else:
+                        print('no match', adds_reg, dels_reg)
+
+                    count+=1
+
+                    if count % 5 == 0:
+                        step+=1
+                        print('Step growth. step =', step)
+
+                    if count == limit:
+                        rows.at[i, 'reg'] = 'REPEAT'
+
+        rows.to_csv(regular_dataset, index=False)
+                
     return rows
-
-
-def _collect_rows(dataset):
-    with open(dataset, 'r', newline='') as csvfile:
-        csv_reader = csv.DictReader(csvfile)
-        rows = list(csv_reader)
-    return rows
-
-def _save_dataset(rows, output_file):
-    """Save dataset in a csv format file."""
-    with open(output_file, 'w', newline='') as csvfile:
-        csv_writer = csv.DictWriter(csvfile, rows[0].keys())
-        csv_writer.writeheader()
-        csv_writer.writerows(rows)
-    click.secho("Saved {} refactoring commits to {}.".format(len(rows), output_file, fg='green'))
-
+    
 if __name__ == '__main__':
     tool() # pylint: disable=no-value-for-parameter
