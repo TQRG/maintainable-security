@@ -8,6 +8,8 @@ paper/icpc20.pdf
 *.synctex.gz
 *.out
 *.cut
+*.lb
+*.xcp
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
