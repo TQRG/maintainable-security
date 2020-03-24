@@ -53,6 +53,7 @@ def robust_analyze_commit(user, project, commit_sha):
 def external_analyze_commit_cached(user, project, commit_sha):
     """Analyze project commit without write privileges and cache results."""
     report = CACHE.get_stored_commit_analysis(user, project, commit_sha)
+    log.info("Report completed.")
     if report:
         return report
     report = external_analyze_commit(user, project, commit_sha)
@@ -63,6 +64,7 @@ def external_analyze_commit(user, project, commit_sha):
     """Analyze project commit without write privileges."""
     try:
         forked_repo = ghutils.git_fork(user, project)
+        log.info(f"Repo {user}/{project} Forked")
         result = analyze_commit(forked_repo.owner.login, project, commit_sha)
     except ProjectNotSupported:
         log.error(f"Project {user}/{project} is not supported by BCH. Skipping.")
@@ -166,10 +168,19 @@ def compute_maintainability_score(report):
         )
     return mean(guideline_results)
 
+def compute_maintainability_score_per_guideline(report):
+    """Compute maintainability score per guideline."""
+    total_loc = get_project_loc(report)
+    guideline_results = {}
+    for guideline in report.get("analysisResults"):
+        guideline_results[guideline['guideline']] = _compute_maintainability_for_guideline(guideline, total_loc)
+    return guideline_results
 
 def _compute_maintainability_for_guideline(guideline, total_loc):
     """Computes maintainability for a guideline."""
     if guideline['guideline'] == "Automate Tests":
+        return 0
+    if guideline['guideline'] == "Keep Your Codebase Small":
         return 0
     volumes = guideline.get('qualityProfileVolume')
     if guideline['guideline'] == "Keep Architecture Components Balanced":
@@ -178,7 +189,7 @@ def _compute_maintainability_for_guideline(guideline, total_loc):
             volume*total_loc/total_compoments
             for volume in volumes
         ]
-
+    
     bad_thresholds = guideline['qualityProfileComplianceThresholds'][1:]
     return _compute_distance_to_thresholds(volumes, bad_thresholds)
 
