@@ -50,6 +50,12 @@ class Cache():
             except FileNotFoundError:
                 self._data = {}
         return self._data
+    
+    def get_data(self):
+        return self.data
+    
+    def set_data(self, cache):
+        self._data = cache
 
     def get_value(self, key):
         """Return value for given key."""
@@ -68,6 +74,8 @@ class Cache():
     def save_data(self):
         """Store data in designated json file."""
         self._json_lib.dump(self.data, self.storage_path)
+    
+    
 
 class BCHCache(Cache):
     """Cache for Better Code Hub results"""
