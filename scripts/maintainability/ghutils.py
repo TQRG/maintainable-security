@@ -134,6 +134,12 @@ def get_branch(repo, branch_name):
     except GithubException:
         return None
 
+def paginated_list(repo):
+    return repo.get_commits()
+
+def get_commits(paginated_list, page):
+    return paginated_list.get_page(page)
+
 class GithubCloneRepoPersistent:
     """Context manager for github clones that will be kept in local storage."""
     def __init__(self, user, project, local_dir):

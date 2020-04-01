@@ -10,6 +10,8 @@ from maintainability import log
 def git_clone(url, repo_dir):
     """Clone repo into a directory directory."""
     try:
+        print('url', url)
+        print('repo_dir', repo_dir)
         return Repo.clone_from(url, repo_dir)
     except GitCommandError:
         repo = Repo(repo_dir)
@@ -81,7 +83,6 @@ def create_branch_from_commit(repo_url, branch_name, commit_sha):
 def clone_full(repo_url, tmpdirname):
     """Clone and fetch all content."""
     repo = git_clone(repo_url, tmpdirname)
-    _fetch_all(repo)
     return repo
 
 
@@ -118,4 +119,11 @@ def get_time_between_commits(repo_dir, commit_a, commit_b):
 def resolve_commit(repo_dir, commit_sha_expression):
     """Resolve commit sha with ^~expressions"""
     repo = Repo(repo_dir)
-    return repo.commit(commit_sha_expression).hexsha
+    try:
+        hex_s = repo.commit(commit_sha_expression).hexsha
+        return hex_s
+    except:
+        log.error("Hexsha not resolved {}, repo: {}".format(commit_sha_expression, repo))
+        return None
+        
+    
