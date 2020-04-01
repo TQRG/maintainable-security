@@ -1,8 +1,8 @@
 # security-maintainability
 
-**3rd submission @ICPC20**
+**New submission @ICSME20**
 
-https://conf.researchr.org/home/icpc-2020
+https://icsme2020.github.io/
 
 How to collect maintainability reports from BCH:
 

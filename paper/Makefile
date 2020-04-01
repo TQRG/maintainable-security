@@ -1,13 +1,10 @@
-NAME:=icpc20
+NAME:=icsme20
 
 # To update, run: latex-process-inputs -makefilelist main.tex
 TEX_FILES = \
 $(NAME).tex
 
 .DEFAULT_GOAL := pdf
-
-acmart:
-	latex acmart.ins
 
 pdf:
 	latexmk -bibtex -pdf $(NAME)
@@ -17,10 +14,10 @@ final: pdf
 	pdffonts $(NAME).pdf; fi
 
 clean:
-	-rm -f *aux *bbl *blg *log *.dvi $(NAME).pdf *.fdb_latexmk *.synctex.gz *.fls *.out *.spl *.cut
+	-rm -f *aux *bbl *blg *log *.dvi $(NAME).pdf *.fdb_latexmk *.synctex.gz *.fls *.out *.spl
 
 read:
-	evince icpc20.pdf
+	evince icsme20.pdf
 
 tags: TAGS
 TAGS: ${TEX_FILES}
