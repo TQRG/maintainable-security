@@ -122,7 +122,8 @@ def resolve_commit(repo_dir, commit_sha_expression):
     try:
         hex_s = repo.commit(commit_sha_expression).hexsha
         return hex_s
-    except IndexError as idx_err:
-        log.error("Hexsha not resolved {}, repo: {}".format(commit_sha, repo))
+    except:
+        log.error("Hexsha not resolved {}, repo: {}".format(commit_sha_expression, repo))
         return None
+        
     

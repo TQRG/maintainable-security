@@ -15,9 +15,9 @@ from maintainability import ghutils, gitutils, log
 CLONAGE_DIR = "./tmp"
 
 @click.command()
-@click.option('--security-dataset', prompt=True, default="../dataset/db_icpc20_release_reg_final.csv",
+@click.option('--security-dataset', prompt=True, default="../dataset/db_release_regular_fixes.csv",
               help="Input dataset of security commits.")
-@click.option('--regular-dataset', prompt=True, default="../dataset/db_icpc20_release_reg_final.csv",
+@click.option('--regular-dataset', prompt=True, default="../dataset/db_release_regular_fixes.csv",
               help="Output dataset with regular commits.")
 def tool(security_dataset, regular_dataset):
     """CLI to collect random commits and analyze maintainability."""
