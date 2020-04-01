@@ -1,6 +1,8 @@
 # security-maintainability
 
 **New submission @ICSME20**
+Abstract Submission: May 22, 2020
+Paper Submission: May 28, 2020
 
 https://icsme2020.github.io/
 
