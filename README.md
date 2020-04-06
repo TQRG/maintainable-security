@@ -24,7 +24,7 @@ How to collect maintainability results from BCH:
 
 ```
 cd scripts
-python3 get_maintainability.py --bch-cache maintainability/bch_cache.json --results-filename ../results/maintainability-results.csv  --reports ../reports/
+python3 report.py --report export -secdb ../dataset/db_release_security_fixes.csv -regdb ../dataset/db_release_regular_fixes.csv -results ../results -cache maintainability/bch_cache.json
 ``` 
 
 Reports:
