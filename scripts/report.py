@@ -21,6 +21,8 @@ from collections import OrderedDict
 guidelines = {'Write Short Units of Code':'WShortUC', 'Write Simple Units of Code':'WSimpleUC', 'Write Code Once':'WCO', 'Keep Unit Interfaces Small':'KUIS', 'Separate Concerns in Modules':'SCM',
                 'Couple Architecture Components Loosely':'CACL', 'Keep Architecture Components Balanced':'KACB', 'Write Clean Code':'WCC'}
 
+language_map = {'Java': ['java', 'scala'], 'Python': ['py'], 'Groovy': ['groovy'], 'JavaScript': ['js'] , 'PHP': ['ctp', 'php', 'inc', 'tpl'], 'Objective-C/C++': ['m', 'mm'], 'Ruby': ['rb'], 'C/C++': ['cpp', 'cc', 'h', 'c'], 'Config. Files': ['template', 'gemspec', 'VERSION', 'Gemfile', 'classpath', 'gradle', 'json', 'xml', 'bash', 'lock']}
+
 def readBCHCache(path):
     return bch.BCHCache(path)
     
@@ -199,84 +201,6 @@ def check_if_belongs_to_cwe(key):
         if key in composites[i]:
             return i
     return None
-
-def get_language(key):
-    language_map = {'Java': ['java', 'scala'], 'Python': ['py'], 'Groovy': ['groovy'], 'JavaScript': ['js'] , 'PHP': ['ctp', 'php', 'inc', 'tpl'], 'Objective-C/C++': ['m', 'mm'], 'Ruby': ['rb'], 'C/C++': ['cpp', 'cc', 'h', 'c'], 'Config. Files': ['template', 'gemspec', 'VERSION', 'Gemfile', 'classpath', 'gradle', 'json', 'xml', 'bash', 'lock']}
-    for k, v in language_map.items():
-        if key in language_map[k]:
-            return k
-    return None
-
-def report_maintainability_lang(reports, df, wilcoxon=True, boxes_start=6, text_start=0.67, delta=1, left_padding=0.25, f_size=9):
-                
-    for i, r in df.iterrows():
-        lang = get_language(r['Language'])
-        if lang != None:
-            df.at[i, 'Language'] = lang
-        
-    langs = [i for i in df['Language'].unique() if len(df[df['Language'] == i]) > 19]
-    
-    for i, r in df.iterrows():
-        if r['Language'] not in langs:
-            df.at[i, 'Language'] = 'Others'
-            
-    langs = ['Others'] + langs   
-    results = {}
-    for s in langs:
-        impact = [0, 0, 0]
-        impact[0] = df[(df['diff'] < 0) & (df['Language'] == s)].shape[0]
-        impact[1] = df[(df['diff'] > 0) & (df['Language'] == s)].shape[0]
-        impact[2] = df[(df['diff'] == 0) & (df['Language'] == s)].shape[0]
-        results[s] = impact
-
-    d = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in langs]),
-        'pos': pd.Series([results[i][1]/sum(results[i]) for i in langs]),
-        'nul': pd.Series([results[i][2]/sum(results[i]) for i in langs]),
-        'N': pd.Series([sum(results[i]) for i in langs if wilcoxon]),
-        'test': pd.Series([_print_hypothesis_test(df[df['Language'] == i]['diff'])['test'][0] for i in langs if wilcoxon]),
-        'mean': pd.Series([_print_hypothesis_test(df[df['Language'] == i]['diff'])['mean'][0] for i in langs if wilcoxon]),
-        'med': pd.Series([_print_hypothesis_test(df[df['Language'] == i]['diff'])['med'][0] for i in langs if wilcoxon]),
-        'p': pd.Series([_print_hypothesis_test(df[df['Language'] == i]['diff'])['pvalue'][0] for i in langs if wilcoxon]),
-        'type': pd.Series([i for i in langs])}
-
-    absoluto = {'neg': pd.Series([results[i][0] for i in langs]),
-        'pos': pd.Series([results[i][1] for i in langs]),
-        'nul': pd.Series([results[i][2] for i in langs]),
-        'type': pd.Series([i for i in langs]),
-        'p': pd.Series([_print_hypothesis_test(df[df['Language'] == i]['diff'])['pvalue'][0] for i in langs if wilcoxon])}
-
-    df = pd.DataFrame(d)
-    print(d)
-    abso = pd.DataFrame(absoluto)
-    index = np.arange(len(d['type']))
-
-    fig = plt.figure(figsize=(5,10))
-    ax = fig.add_subplot(111)
-
-    bar_width = 0.25
-    pos = plt.barh(index, df['pos'], bar_width, alpha=0.7, align='center', color='green', label='Positive')
-    nul = plt.barh(index + bar_width, df['nul'], bar_width, alpha=0.7, align='center', color='orange', label='None')
-    neg = plt.barh(index + 2*bar_width, df['neg'], bar_width, alpha=0.7, align='center', color='red', label='Negative')
-
-    plt.yticks(index + bar_width, df['type'], fontsize=9)
-    plt.xticks(fontsize=7)
-    plt.gca().set_xticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_xticks()])
-    plt.subplots_adjust(left=left_padding, right=0.85, top=0.9, bottom=0.06)
-    plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.04), fancybox=True, ncol=3, fontsize=9)
-
-    for l in df[::-1].iterrows():
-        if float('{:.{}f}'.format(l[1]['p'], 3)) <= 0.000:
-            p = '<0.001'
-        else:
-            p = '={:.{}f}'.format(l[1]['p'], 3)
-        box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
-
-        ax.text(text_start, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=f_size)
-        boxes_start -= delta
-
-    plt.gca().xaxis.grid(True, linestyle='--')
-    plt.tight_layout()
-    plt.savefig('{}/{}'.format(reports, 'maintainability_language.pdf'))
 
 def report_maintainability_cwe(reports, df, wilcoxon=True, boxes_start=9, text_start=0.55, delta=1, left_padding=0.25, f_size=9):
                 
@@ -496,8 +420,7 @@ def main_per_guideline_chart(reports, df, wilcoxon = True):
     for g in guidelines:
         results[g] = filter_results_per_guideline(df, g) 
 
-    keys = results.keys()
-        
+    keys = results.keys() 
     d = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in keys]),
         'pos': pd.Series([results[i][1]/sum(results[i]) for i in keys]),
         'nul': pd.Series([results[i][2]/sum(results[i]) for i in keys]),
@@ -510,7 +433,6 @@ def main_per_guideline_chart(reports, df, wilcoxon = True):
 
     df = pd.DataFrame(d)
     index = np.arange(len(d['type']))
-
     fig = plt.figure(figsize=(5,7))
     ax = fig.add_subplot(111)
 
@@ -530,7 +452,6 @@ def main_per_guideline_chart(reports, df, wilcoxon = True):
         for l in df[::-1].iterrows():    
             p = format_p_value(l[1]['p'])
             box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
-            
             ax.text(0.57, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=7)
             boxes_start -= 1
 
@@ -539,11 +460,84 @@ def main_per_guideline_chart(reports, df, wilcoxon = True):
     plt.savefig('{}/{}'.format(reports, 'main_per_guideline.pdf'))
 
 def guideline(secdb, reports):
-    
     df_sec = pd.read_csv(secdb)
     assert len(df_sec) == 1027
-    
     main_per_guideline_chart(reports, df_sec)
+    
+def get_language(key):
+    for k, v in language_map.items():
+        if key in language_map[k]:
+            return k
+    return None
+
+def organize_test_samples(df):
+    langs = [i for i in df['Language'].unique() if len(df[df['Language'] == i]) > 19]
+    for i, r in df.iterrows():
+        if r['Language'] not in langs:
+            df.at[i, 'Language'] = 'Others'
+    return ['Others'] + langs
+
+def filter_results_per_language(df, lang):
+    impact = [0, 0, 0]
+    impact[0] = df[(df['diff'] < 0) & (df['Language'] == lang)].shape[0]
+    impact[1] = df[(df['diff'] > 0) & (df['Language'] == lang)].shape[0]
+    impact[2] = df[(df['diff'] == 0) & (df['Language'] == lang)].shape[0]
+    return impact
+
+def main_per_language_chart(reports, df, wilcoxon=True):
+    
+    for i, r in df.iterrows():
+        lang = get_language(r['Language'])
+        if lang != None:
+            df.at[i, 'Language'] = lang
+    
+    langs = organize_test_samples(df)
+    
+    results = {}
+    for l in langs:
+        results[l] = filter_results_per_language(df, l)
+
+    d = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in langs]),
+        'pos': pd.Series([results[i][1]/sum(results[i]) for i in langs]),
+        'nul': pd.Series([results[i][2]/sum(results[i]) for i in langs]),
+        'N': pd.Series([sum(results[i]) for i in langs if wilcoxon]),
+        'test': pd.Series([hypothesis_test(df[df['Language'] == i]['diff'])['test'][0] for i in langs if wilcoxon]),
+        'mean': pd.Series([hypothesis_test(df[df['Language'] == i]['diff'])['mean'][0] for i in langs if wilcoxon]),
+        'med': pd.Series([hypothesis_test(df[df['Language'] == i]['diff'])['med'][0] for i in langs if wilcoxon]),
+        'p': pd.Series([hypothesis_test(df[df['Language'] == i]['diff'])['pvalue'][0] for i in langs if wilcoxon]),
+        'type': pd.Series([i for i in langs])}
+
+    df = pd.DataFrame(d)
+    index = np.arange(len(d['type']))
+    fig = plt.figure(figsize=(6,8))
+    ax = fig.add_subplot(111)
+
+    bar_width = 0.25
+    pos = plt.barh(index, df['pos'], bar_width, alpha=0.7, align='center', color='green', label='Positive')
+    nul = plt.barh(index + bar_width, df['nul'], bar_width, alpha=0.7, align='center', color='orange', label='None')
+    neg = plt.barh(index + 2*bar_width, df['neg'], bar_width, alpha=0.7, align='center', color='red', label='Negative')                
+
+    plt.yticks(index + bar_width, df['type'], fontsize=7)
+    plt.xticks(fontsize=7)
+    plt.gca().set_xticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_xticks()])
+    plt.subplots_adjust(left=0.25, right=0.85, top=0.9, bottom=0.06)
+    plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.04), fancybox=True, ncol=3, fontsize=8)
+
+    boxes_start = 6
+    for l in df[::-1].iterrows():
+        p = format_p_value(l[1]['p'])
+        box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
+        ax.text(0.67, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=8)
+        boxes_start -= 1
+
+    plt.gca().xaxis.grid(True, linestyle='--')
+    plt.tight_layout()
+    plt.savefig('{}/{}'.format(reports, 'main_per_language.pdf'))
+
+def language(secdb, reports):
+    df_sec = pd.read_csv(secdb)
+    assert len(df_sec) == 1027
+    main_per_language_chart(reports, df_sec)
 
 if __name__ == "__main__":
     
@@ -568,5 +562,8 @@ if __name__ == "__main__":
     elif args.goal == 'guideline':
         if args.secdb != None and args.reports != None:
             guideline(secdb=args.secdb, reports=args.reports)
+    elif args.goal == 'language':
+        if args.secdb != None and args.reports != None:
+            language(secdb=args.secdb, reports=args.reports)
     else:
         print('Something is wrong. Verify your parameters')

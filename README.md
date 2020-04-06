@@ -45,4 +45,12 @@ python3 report.py --report guideline -secdb ../results/maintainability_release_s
 ``` 
 
 
+Get security maintainability report per language:
+
+```
+source venv/bin/activate
+cd scripts
+python3 report.py --report language -secdb ../results/maintainability_release_security_fixes.csv -reports ../reports
+``` 
+
 
