@@ -27,6 +27,13 @@ cd scripts
 python3 report.py --report export -secdb ../dataset/db_release_security_fixes.csv -regdb ../dataset/db_release_regular_fixes.csv -results ../results -cache maintainability/bch_cache.json
 ``` 
 
+Comparison between security and regular commits:
+
+```
+cd scripts
+python3 report.py --report comparison -secdb ../results/maintainability_release_security_fixes.csv -regdb ../results/maintainability_release_regular_fixes.csv -reports ../reports
+``` 
+
 Reports:
 
 ```
