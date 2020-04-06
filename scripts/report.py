@@ -234,15 +234,13 @@ def report_maintainability_severity(reports, df, wilcoxon = True, boxes_start=3,
     plt.tight_layout()
     plt.savefig('{}/{}'.format(reports, 'maintainability_severity.pdf'))
 
-def _print_hypothesis_test(differences):
+def hypothesis_test(differences):
     """Paired Wilcoxon signed-rank test (N should be > 20)"""
     _, pvalue = shapiro(differences)
-    #print("Shapiro-Wilk test for normality: {}".format(pvalue))
     test, pvalue = _hypothesis_test(differences)
     stats = {'test': [test], 'med':[pd.DataFrame({'diff': differences})['diff'].median()],'pvalue': [pvalue], 
                 'mean':[pd.DataFrame({'diff': differences})['diff'].mean()]}
     df = pd.DataFrame(stats)
-    #print("Wilcoxon signed-rank test {}, p-value: {}".format(test,pvalue))
     return df
 
 def _hypothesis_test(differences):
@@ -477,37 +475,34 @@ def export(secdb, regdb, results, cache):
     
     assert len(df_sec) == 1027
     df_reg.to_csv(reg_res_path, index=False)
- 
-def report_maintainability_sec_vs_reg(reports, df_sec, df_reg):    
 
-        result = [_print_hypothesis_test(df_reg['diff']), _print_hypothesis_test(df_sec['diff'])]
+def init_res():
+    return {'neg': 0, 'pos': 0, 'nul': 0}
 
-        total_sec, total_reg = {'neg': 0, 'pos': 0, 'nul': 0}, {'neg': 0, 'pos': 0, 'nul': 0}
+def filter_results(df):
+    df_res = init_res()
+    df_res['neg'] = df[df['diff'] < 0].shape[0]
+    df_res['pos'] = df[df['diff'] > 0].shape[0]
+    df_res['nul'] = df[df['diff'] == 0].shape[0]
+    return df_res
 
-        total_sec['neg'] = df_sec[df_sec['diff'] < 0].shape[0]
-        total_sec['pos'] = df_sec[df_sec['diff'] > 0].shape[0]
-        total_sec['nul'] = df_sec[df_sec['diff'] == 0].shape[0]
-        print('security_patches', total_sec)
+def comparison_chart(reports, df_sec, df_reg):    
 
-        total_reg['neg'] = df_reg[df_reg['diff'] < 0].shape[0]
-        total_reg['pos'] = df_reg[df_reg['diff'] > 0].shape[0]
-        total_reg['nul'] = df_reg[df_reg['diff'] == 0].shape[0]
-        print('reg_patches',total_reg)
+        result = (hypothesis_test(df_sec['diff']), hypothesis_test(df_reg['diff']))
 
+        total_sec = filter_results(df_sec)
+        total_reg = filter_results(df_reg)
 
         sec = sum([value for key,value in total_sec.items()])
         reg = sum([value for key,value in total_reg.items()])
 
         d = {'neg' : pd.Series([total_reg['neg']/reg, total_sec['neg']/sec]),
-        'pos' : pd.Series([total_reg['pos']/reg, total_sec['pos']/sec]),
-        'none' : pd.Series([total_reg['nul']/reg, total_sec['nul']/sec]),
-        'type' : pd.Series(['Regular Change','Security Change'])}
+            'pos' : pd.Series([total_reg['pos']/reg, total_sec['pos']/sec]),
+            'none' : pd.Series([total_reg['nul']/reg, total_sec['nul']/sec]),
+            'type' : pd.Series(['Regular Change','Security Change'])}
 
         index = np.arange(len(d['type']))
-        print(len(d['type']))
-
         df = pd.DataFrame(d)
-
         fig = plt.figure()
         ax = fig.add_subplot(111)
 
@@ -521,20 +516,21 @@ def report_maintainability_sec_vs_reg(reports, df_sec, df_reg):
         plt.subplots_adjust(left=0.2, right=0.85, top=0.9, bottom=0.1)
         plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.1), fancybox=True, ncol=3, fontsize=9)
 
-        y = 1.3
-        for l in result[::-1].iterrows():
-            if float('{:.{}f}'.format(l[1]['pvalue'], 3)) <= 0.000:
+        y = 1.2
+        for l in result:
+            if float('{:.{}f}'.format(l['pvalue'][0], 3)) <= 0.000:
                 p = '<0.001'
             else:
-                p = '={:.{}f}'.format(l[1]['pvalue'], 3)
-            box_text = '$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
-            ax.text(0.49, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':4}, fontsize=9)
+                p = '={:.{}f}'.format(l['pvalue'][0], 3)
+            
+            box_text = '$\overline{x}$='+ '{:.{}f}'.format(l['mean'][0], 2) + '\nM=' + '{:.{}f}'.format(l['med'][0], 2) + '\np' + p
+            ax.text(0.43, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':4}, fontsize=9)
             y -= 1.1
 
         plt.gca().xaxis.grid(True, linestyle='--')
 
         plt.tight_layout()
-        plt.savefig('{}/maintainability_general.pdf'.format(reports))
+        plt.savefig('{}/comparison.pdf'.format(reports))
 
 def comparison(secdb, regdb, reports):
     
@@ -544,7 +540,7 @@ def comparison(secdb, regdb, reports):
     df_reg = pd.read_csv(regdb)
     assert len(df_reg) == 1027
         
-    report_maintainability_sec_vs_reg(reports, df_sec, df_reg)
+    comparison_chart(reports, df_sec, df_reg)
     
 
 if __name__ == "__main__":
