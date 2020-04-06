@@ -476,43 +476,40 @@ def comparison(secdb, regdb, reports):
         
     main_comparison_chart(reports, df_sec, df_reg)
 
-def main_per_guideline_chart(reports, df, wilcoxon = True, boxes_start=7, text_start=0.62, delta=1, left_padding=0.25, f_size=9):
+def init_guideline_results():
+    results = {}
+    for g in guidelines:
+        results[g] = filter_results_per_guideline(g)
+        
+def filter_results_per_guideline(df, g):
+    impact = [0, 0, 0]
+    impact[0] = df[df[g+'-diff'] < 0].shape[0]
+    impact[1] = df[df[g+'-diff'] > 0].shape[0]
+    impact[2] = df[df[g+'-diff'] == 0].shape[0]
+    return impact
+
+def main_per_guideline_chart(reports, df, wilcoxon = True):
     
     results = {}
-    
     for g in guidelines:
-        impact = [0, 0, 0]
-        impact[0] = df[df[g+'-diff'] < 0].shape[0]
-        impact[1] = df[df[g+'-diff'] > 0].shape[0]
-        impact[2] = df[df[g+'-diff'] == 0].shape[0]
-        results[g] = impact 
-    
+        results[g] = filter_results_per_guideline(df, g) 
+
     keys = results.keys()
-    print('results_per_guideline', results)
         
     d = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in keys]),
         'pos': pd.Series([results[i][1]/sum(results[i]) for i in keys]),
         'nul': pd.Series([results[i][2]/sum(results[i]) for i in keys]),
         'N': pd.Series([sum(results[i]) for i in keys if wilcoxon]),
-        'test': pd.Series([_print_hypothesis_test(df[i+'-diff'])['test'][0] for i in keys if wilcoxon]),
-        
-        'mean': pd.Series([_print_hypothesis_test(df[i+'-diff'])['mean'][0] for i in keys if wilcoxon]),
-        'med': pd.Series([_print_hypothesis_test(df[i+'-diff'])['med'][0] for i in keys if wilcoxon]),
-        'p': pd.Series([_print_hypothesis_test(df[i+'-diff'])['pvalue'][0] for i in keys if wilcoxon]),
+        'test': pd.Series([hypothesis_test(df[i+'-diff'])['test'][0] for i in keys if wilcoxon]),
+        'mean': pd.Series([hypothesis_test(df[i+'-diff'])['mean'][0] for i in keys if wilcoxon]),
+        'med': pd.Series([hypothesis_test(df[i+'-diff'])['med'][0] for i in keys if wilcoxon]),
+        'p': pd.Series([hypothesis_test(df[i+'-diff'])['pvalue'][0] for i in keys if wilcoxon]),
         'type': pd.Series([guidelines[i] for i in keys])}
-    print(d)
-    absoluto = {'neg': pd.Series([results[i][0] for i in keys]),
-        'pos': pd.Series([results[i][1] for i in keys]),
-        'nul': pd.Series([results[i][2] for i in keys]),
-        'type': pd.Series([guidelines[i] for i in keys]),
-        'p': pd.Series([_print_hypothesis_test(df[i+'-diff'])['pvalue'][0] for i in keys if wilcoxon])}
 
     df = pd.DataFrame(d)
-    abso = pd.DataFrame(absoluto)
-    print(d['type'])
     index = np.arange(len(d['type']))
 
-    fig = plt.figure(figsize=(8,9))
+    fig = plt.figure(figsize=(5,7))
     ax = fig.add_subplot(111)
 
     bar_width = 0.25
@@ -523,10 +520,11 @@ def main_per_guideline_chart(reports, df, wilcoxon = True, boxes_start=7, text_s
     plt.yticks(index + bar_width, df['type'], fontsize=6.5)
     plt.xticks(fontsize=7)
     plt.gca().set_xticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_xticks()])
-    plt.subplots_adjust(left=left_padding, right=0.85, top=0.9, bottom=0.06)
+    plt.subplots_adjust(left=0.25, right=0.85, top=0.9, bottom=0.06)
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.04), fancybox=True, ncol=3, fontsize=7)
     
     if wilcoxon:
+        boxes_start = 7
         for l in df[::-1].iterrows():
             if float('{:.{}f}'.format(l[1]['p'], 3)) <= 0.000:
                 p = '<0.001'
@@ -534,19 +532,19 @@ def main_per_guideline_chart(reports, df, wilcoxon = True, boxes_start=7, text_s
                 p = '={:.{}f}'.format(l[1]['p'], 3)
             box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
             
-            ax.text(text_start, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=f_size)
-            boxes_start -= delta
+            ax.text(0.57, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=7)
+            boxes_start -= 1
 
     plt.gca().xaxis.grid(True, linestyle='--')
     plt.tight_layout()
-    plt.savefig('{}/{}'.format(reports, 'maintainability_per_guideline.pdf'))
+    plt.savefig('{}/{}'.format(reports, 'main_per_guideline.pdf'))
 
 def guideline(secdb, reports):
     
     df_sec = pd.read_csv(secdb)
     assert len(df_sec) == 1027
     
-    guideline_chart()
+    main_per_guideline_chart(reports, df_sec)
 
 if __name__ == "__main__":
     
@@ -569,7 +567,7 @@ if __name__ == "__main__":
         if args.secdb != None and args.regdb != None and args.reports != None:
             comparison(secdb=args.secdb, regdb=args.regdb, reports=args.reports)
     elif args.goal == 'guideline':
-        if args.secdb != None and args.report != None:
+        if args.secdb != None and args.reports != None:
             guideline(secdb=args.secdb, reports=args.reports)
     else:
         print('Something is wrong. Verify your parameters')
