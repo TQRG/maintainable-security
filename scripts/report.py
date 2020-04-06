@@ -17,7 +17,6 @@ from math import sqrt
 import pandas as pd
 from collections import OrderedDict
 
-# 'Keep Your Codebase Small',
 
 guidelines = {'Write Short Units of Code':'WShortUC', 'Write Simple Units of Code':'WSimpleUC', 'Write Code Once':'WCO', 'Keep Unit Interfaces Small':'KUIS', 'Separate Concerns in Modules':'SCM',
                 'Couple Architecture Components Loosely':'CACL', 'Keep Architecture Components Balanced':'KACB', 'Write Clean Code':'WCC'}
@@ -25,19 +24,24 @@ guidelines = {'Write Short Units of Code':'WShortUC', 'Write Simple Units of Cod
 def readBCHCache(path):
     return bch.BCHCache(path)
     
-def analysis(database, results, CACHE):
+def main_calculation(df, cache, dataset):
     
-    none = 0; error = 0
-            
-    df = pd.read_csv(database)
+    none = 0; error = 0    
+
+    if dataset == 'regular':
+        sha_key = 'sha-reg'
+        sha_p_key = 'sha-reg-p'
+    else:
+        sha_key = 'sha'
+        sha_p_key = 'sha-p'
     
     for i, r in df.iterrows():
 
-        if r['sha-reg'] is np.nan or r['sha-reg-p'] is np.nan:
+        if r[sha_key] is np.nan or r[sha_p_key] is np.nan:
             continue
             
-        info_f = CACHE.get_stored_commit_analysis(r['owner'], r['project'], r['sha-reg'])
-        info_p = CACHE.get_stored_commit_analysis(r['owner'], r['project'], r['sha-reg-p'])
+        info_f = cache.get_stored_commit_analysis(r['owner'], r['project'], r[sha_key])
+        info_p = cache.get_stored_commit_analysis(r['owner'], r['project'], r[sha_p_key])
             
         if info_f is None or info_p is None:
             none+=1
@@ -58,7 +62,6 @@ def analysis(database, results, CACHE):
 
             df.at[i, 'main_fix'] = score_f
             df.at[i, 'main_prev'] = score_p
-
             df.at[i, 'diff'] = score_f - score_p
             
             for k in main_f.keys():
@@ -69,11 +72,8 @@ def analysis(database, results, CACHE):
         except ZeroDivisionError as e:
             df.at[i, 'diff'] = np.nan
             error+=1
-        
-    df.to_csv(results, index=False)
-
-def export_results_csv(database, filename, cache):
-    analysis(database, filename, readBCHCache(cache))
+    
+    return df    
     
 def report_guidelines_violin_plot(reports, filename):
     
@@ -166,69 +166,6 @@ def report_maintainability_per_guideline(reports, df, wilcoxon = True, boxes_sta
     plt.gca().xaxis.grid(True, linestyle='--')
     plt.tight_layout()
     plt.savefig('{}/{}'.format(reports, 'maintainability_per_guideline.pdf'))
-
-def report_maintainability_sec_vs_reg(reports, df_sec, df_reg):    
-
-        stats1 = _print_hypothesis_test(df_sec['diff'])
-        stats = _print_hypothesis_test(df_reg['diff'])
-    
-        result = stats.append([stats1])
-        print(result)
-    
-        total_sec, total_reg = {'neg': 0, 'pos': 0, 'nul': 0}, {'neg': 0, 'pos': 0, 'nul': 0}
-    
-        total_sec['neg'] = df_sec[df_sec['diff'] < 0].shape[0]
-        total_sec['pos'] = df_sec[df_sec['diff'] > 0].shape[0]
-        total_sec['nul'] = df_sec[df_sec['diff'] == 0].shape[0]
-        print('security_patches', total_sec)
-        
-        total_reg['neg'] = df_reg[df_reg['diff'] < 0].shape[0]
-        total_reg['pos'] = df_reg[df_reg['diff'] > 0].shape[0]
-        total_reg['nul'] = df_reg[df_reg['diff'] == 0].shape[0]
-        print('reg_patches',total_reg)
-        
-    
-        sec = sum([value for key,value in total_sec.items()])
-        reg = sum([value for key,value in total_reg.items()])
-    
-        d = {'neg' : pd.Series([total_reg['neg']/reg, total_sec['neg']/sec]),
-        'pos' : pd.Series([total_reg['pos']/reg, total_sec['pos']/sec]),
-        'none' : pd.Series([total_reg['nul']/reg, total_sec['nul']/sec]),
-        'type' : pd.Series(['Regular Change','Security Change'])}
-    
-        index = np.arange(len(d['type']))
-        print(len(d['type']))
-    
-        df = pd.DataFrame(d)
-    
-        fig = plt.figure()
-        ax = fig.add_subplot(111)
-    
-        bar_width = 0.25
-        pos = plt.barh(index, df['pos'], bar_width, alpha=0.7, align='center', color='green', label='Positive')
-        nul = plt.barh(index + bar_width, df['none'], bar_width, alpha=0.7, align='center', color='orange', label='None')
-        neg = plt.barh(index + 2 * bar_width, df['neg'], bar_width, alpha=0.7, align='center', color='red', label='Negative')
-    
-        plt.yticks(index + bar_width, df['type'], fontsize=9)
-        plt.gca().set_xticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_xticks()]) 
-        plt.subplots_adjust(left=0.2, right=0.85, top=0.9, bottom=0.1)
-        plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.1), fancybox=True, ncol=3, fontsize=9)
-
-        y = 1.3
-        for l in result[::-1].iterrows():
-            if float('{:.{}f}'.format(l[1]['pvalue'], 3)) <= 0.000:
-                p = '<0.001'
-            else:
-                p = '={:.{}f}'.format(l[1]['pvalue'], 3)
-            box_text = '$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
-            ax.text(0.49, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':4}, fontsize=9)
-            y -= 1.1
-    
-        plt.gca().xaxis.grid(True, linestyle='--')
-    
-        plt.tight_layout()
-        plt.savefig('{}/maintainability_general.pdf'.format(reports))
- 
 
 def report_maintainability_severity(reports, df, wilcoxon = True, boxes_start=3, text_start=0.55, delta=1, left_padding=0.05, f_size=7.5):
     
@@ -493,32 +430,7 @@ def merge_cache(cache_1_filename, cache_2_filename):
     cache_1.set_data(cache)
     return cache_1
 
-def main(cache, filename, reports, database):
-    
-    
-    # df1 = pd.read_csv('../dataset/db_icpc20_release_reg_tmp_1.csv')
-    # df2 = pd.read_csv('../dataset/db_icpc20_release_reg_tmp_2.csv')
-    #
-    # df = df2.loc[(df2['sha'] == 'd4184aa26cfa4e99b6e36502aee7f685e122facc') & (df2['owner'] == 'realm')]
-    # df2 = df2.drop([df.index[0]], axis=0)
-    #
-    # df3 = df1.append(df2)
-    #
-    # df3.to_csv('../dataset/db_icpc20_release_reg_final_jan_31.csv', index=False)
-    
-    # sec vs reg - delete d4184aa26cfa4e99b6e36502aee7f685e122facc realm-cocoa dup
-    # df_reg = pd.read_csv('../dataset/db_icpc20_release_reg_final.csv')
-    # df_sec = pd.read_csv('../dataset/maintainability_results_sec_icpc20.csv')
-    #
-    # for i, r in df_reg.iterrows():
-    #     df = df_sec.loc[(r['sha'] == df_sec['sha']) & (r['sha-p'] == df_sec['sha-p']) & (r['owner'] == df_sec['owner']) & (r['project'] == df_sec['project'])]
-    #     if len(df) < 1:
-    #         print(r)
-    
-    
-    # cache = readBCHCache('maintainability/bch_cache.json')
-    # print(len(cache.get_data()))
-    
+        
     # cache = merge_cache('maintainability/bch_cache.json', 'maintainability/bch_cache_reg.json')
     # print('Length cache 1: {}'.format(len(cache.get_data())))
     # cache.save_data()
@@ -539,16 +451,121 @@ def main(cache, filename, reports, database):
 
     # report_maintainability_per_guideline(reports, df)
     # report_maintainability_sec_vs_reg(reports, df, df_reg)
+    
+def main_calculation_by_db(db, results, cache, dataset):
+    df = pd.read_csv(db)
+    path = '{}/maintainability_release_{}_fixes.csv'.format(results, dataset)
+    assert len(df) == 1037
+    df = main_calculation(df, cache, dataset)
+    return df, path
 
+def export(secdb, regdb, results, cache):
+    
+    cache = readBCHCache(cache)
+    
+    df_sec, sec_res_path = main_calculation_by_db(secdb, results, cache, 'security')
+    df_reg, reg_res_path = main_calculation_by_db(regdb, results, cache, 'regular')
+    
+    ids = df_reg[~df_reg['diff'].notnull()].index
+    
+    for i in ids:
+        df_reg = df_reg.drop(i)
+        df_sec = df_sec.drop(i)
+        
+    assert len(df_reg) == 1027
+    df_sec.to_csv(sec_res_path, index=False)
+    
+    assert len(df_sec) == 1027
+    df_reg.to_csv(reg_res_path, index=False)
+ 
+def report_maintainability_sec_vs_reg(reports, df_sec, df_reg):    
+
+        result = [_print_hypothesis_test(df_reg['diff']), _print_hypothesis_test(df_sec['diff'])]
+
+        total_sec, total_reg = {'neg': 0, 'pos': 0, 'nul': 0}, {'neg': 0, 'pos': 0, 'nul': 0}
+
+        total_sec['neg'] = df_sec[df_sec['diff'] < 0].shape[0]
+        total_sec['pos'] = df_sec[df_sec['diff'] > 0].shape[0]
+        total_sec['nul'] = df_sec[df_sec['diff'] == 0].shape[0]
+        print('security_patches', total_sec)
+
+        total_reg['neg'] = df_reg[df_reg['diff'] < 0].shape[0]
+        total_reg['pos'] = df_reg[df_reg['diff'] > 0].shape[0]
+        total_reg['nul'] = df_reg[df_reg['diff'] == 0].shape[0]
+        print('reg_patches',total_reg)
+
+
+        sec = sum([value for key,value in total_sec.items()])
+        reg = sum([value for key,value in total_reg.items()])
+
+        d = {'neg' : pd.Series([total_reg['neg']/reg, total_sec['neg']/sec]),
+        'pos' : pd.Series([total_reg['pos']/reg, total_sec['pos']/sec]),
+        'none' : pd.Series([total_reg['nul']/reg, total_sec['nul']/sec]),
+        'type' : pd.Series(['Regular Change','Security Change'])}
+
+        index = np.arange(len(d['type']))
+        print(len(d['type']))
+
+        df = pd.DataFrame(d)
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+
+        bar_width = 0.25
+        pos = plt.barh(index, df['pos'], bar_width, alpha=0.7, align='center', color='green', label='Positive')
+        nul = plt.barh(index + bar_width, df['none'], bar_width, alpha=0.7, align='center', color='orange', label='None')
+        neg = plt.barh(index + 2 * bar_width, df['neg'], bar_width, alpha=0.7, align='center', color='red', label='Negative')
+
+        plt.yticks(index + bar_width, df['type'], fontsize=9)
+        plt.gca().set_xticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_xticks()])
+        plt.subplots_adjust(left=0.2, right=0.85, top=0.9, bottom=0.1)
+        plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.1), fancybox=True, ncol=3, fontsize=9)
+
+        y = 1.3
+        for l in result[::-1].iterrows():
+            if float('{:.{}f}'.format(l[1]['pvalue'], 3)) <= 0.000:
+                p = '<0.001'
+            else:
+                p = '={:.{}f}'.format(l[1]['pvalue'], 3)
+            box_text = '$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
+            ax.text(0.49, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':4}, fontsize=9)
+            y -= 1.1
+
+        plt.gca().xaxis.grid(True, linestyle='--')
+
+        plt.tight_layout()
+        plt.savefig('{}/maintainability_general.pdf'.format(reports))
+
+def comparison(secdb, regdb, reports):
+    
+    df_sec = pd.read_csv(secdb)
+    assert len(df_sec) == 1027
+    
+    df_reg = pd.read_csv(regdb)
+    assert len(df_reg) == 1027
+        
+    report_maintainability_sec_vs_reg(reports, df_sec, df_reg)
+    
 
 if __name__ == "__main__":
     
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--bch-cache',metavar='bch-cache',required=True,help='the bch cache filename')
-    parser.add_argument('--results-filename',metavar='results',required=True,help='the filename to save the maintainability results')
-    parser.add_argument('--reports',metavar='reports',required=True,help='the reports path')   
-    parser.add_argument('--database',metavar='database',required=True,help='the database path')    
-     
-
+    parser = argparse.ArgumentParser(description='Report results')    
+    parser.add_argument('--report', dest='goal', choices=['export', 'comparison', 'severity', 'guideline', 'language', 'cwe'],
+                        help='choose a report goal')
+                        
+    parser.add_argument('-results', type=str, metavar='folder path', help='results folder path')  
+    parser.add_argument('-reports', type=str, metavar='folder path', help='reports folder path')      
+    parser.add_argument('-secdb', type=str, metavar='file path', help='security dataset path')    
+    parser.add_argument('-regdb', type=str, metavar='file path', help='regular dataset path')    
+    parser.add_argument('-cache', type=str, metavar='file path', help='cache path')    
+    
     args = parser.parse_args()
-    main(cache=args.bch_cache, filename=args.results_filename, reports=args.reports, database=args.database)
+    print(args.goal)
+    if args.goal == 'export':  
+        if args.secdb != None and args.regdb != None and args.results != None and args.cache != None:
+            export(secdb=args.secdb, regdb=args.regdb, results=args.results, cache=args.cache)
+    elif args.goal == 'comparison':
+        if args.secdb != None and args.regdb != None and args.reports != None:
+            comparison(secdb=args.secdb, regdb=args.regdb, reports=args.reports)
+    else:
+        print('Something is wrong. Verify your parameters')
