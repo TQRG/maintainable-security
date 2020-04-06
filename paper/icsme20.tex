@@ -213,7 +213,7 @@ Our suspiciousness is that some of the these patches may have a negative
 impact on the software maintainability and, possibly, even be the cause of the 
 introduction of new vulnerabilities $-$ harming software reliability. Therefore, 
 in this paper, we present an empirical study on the impact of patches of 
-vulnerabilities in software maintenance across open-source software.
+vulnerabilities on software maintenance across open-source software.
 %
 % Software maintainability can also be defined as 
 % the property of software that reveals how easily the software system can be 
@@ -229,7 +229,7 @@ vulnerabilities in software maintenance across open-source software.
 % investigate.
 %
 As ISO does not provide any specific guidelines or formulas to calculate 
-maintainability, we resort on Software Improvement Group (SIG)'s web-based source 
+maintainability, we resort to Software Improvement Group (SIG)'s web-based source 
 code analysis service Better Code Hub (BCH) to compute the software compliance 
 with a set of $10$ guidelines/metrics to produce quality software 
 based in ISO/IEC 25010~\cite{Visser:2016:OREILLY}. The code metrics used by BCH 
@@ -498,7 +498,7 @@ developers --- to test and assess the performance of static analysis tools~\cite
 using hand-seeded test cases or mutations could lead to misleading assessments
 of the capabilities of the tools~\cite{just2014mutants}. The study yielded a
 dataset of $711$ test cases for $16$ security patterns. Some of the patterns
-are based in the OWASP Top $10$ of $2013$~\cite{oswap:2013} and OWASP Top $10$ of
+are based on the OWASP Top $10$ of $2013$~\cite{oswap:2013} and OWASP Top $10$ of
 $2017$~\cite{oswap:2017}. Each test case of the
 dataset is a triplet: the commit before the patching, the commit responsible
 for the patching, and the snippets of code that differ from one version to
@@ -675,7 +675,7 @@ the security patch.
 
 Our approximation was calculated using an initial step of $1$. Every $10$ attempts to search for 
 a change with the same \emph{diff} the step increased. Thus, if a change suffered $20$ deletions 
-and $10$ additions. Then, in the first $10$ attempts, the algorithm searches for a \emph{diff} with 
+and $10$ additions, then, in the first $10$ attempts, the algorithm searches for a \emph{diff} with 
 deletions between $19$ and $21$ and additions between $9$ and $11$. After the $10$ first attempts, 
 the algorithm increase the step for $2$ and searches for a \emph{diff} with deletions between $18$ and $22$ and additions between 
 $8$ and $10$. We originate the regular commits from the security
@@ -772,7 +772,7 @@ identifier names) \\
 Figure~\ref{fig:bchrep} shows an example of the report
 provided by BCH for a project after finishing its evaluation. The example
 refers to the OpenSSL CVE-$2014$-$3506$ vulnerability refactoring ---
-as described as motivating example in Section~\ref{sec:motivation}. This
+as described by Section~\ref{sec:motivation}. This
 version of OpenSSL only complies with $1$ out of $10$ guidelines: \emph{Write
 Clean Code}.
 
@@ -937,7 +937,7 @@ $41.76\%$ ($433$), remains the same in $19.67\%$ ($204$) and increases in $38.57
 ($400$) of the cases after security patches are applied. The resulting
 p-value of the Paired Wilcoxon signed-rank test is $4.78$x$10^{-2}$.
 Since the p-value is below the significance level of $0.05$, we argue that
-\emph{security patches have a negative impact in the maintainability of
+\emph{security patches have a negative impact on the maintainability of
 open-source software}.
 Regarding the impact of security patches for each guideline, we observe
 that overall patches have a significant positive impact in $5$ guidelines: 
