@@ -23,6 +23,7 @@ python -m maintainability.eval_maintainability
 How to collect maintainability results from BCH:
 
 ```
+source venv/bin/activate
 cd scripts
 python3 report.py --report export -secdb ../dataset/db_release_security_fixes.csv -regdb ../dataset/db_release_regular_fixes.csv -results ../results -cache maintainability/bch_cache.json
 ``` 
@@ -30,14 +31,18 @@ python3 report.py --report export -secdb ../dataset/db_release_security_fixes.cs
 Comparison between security and regular commits:
 
 ```
+source venv/bin/activate
 cd scripts
 python3 report.py --report comparison -secdb ../results/maintainability_release_security_fixes.csv -regdb ../results/maintainability_release_regular_fixes.csv -reports ../reports
 ``` 
 
-Reports:
+Get security maintainability report per guideline:
 
 ```
 source venv/bin/activate
 cd scripts
-python histogram.py --projects-csv ../results/final_projects.csv --commits-csv ../results/final_results.csv --output ../reports
-```
+python3 report.py --report guideline -secdb ../results/maintainability_release_security_fixes.csv -reports ../reports
+``` 
+
+
+

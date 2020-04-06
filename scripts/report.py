@@ -420,6 +420,12 @@ def filter_results(df):
     df_res['nul'] = df[df['diff'] == 0].shape[0]
     return df_res
 
+def format_p_value(p):
+    if float('{:.{}f}'.format(p, 3)) <= 0.000:
+        return '<0.001'
+    else:
+        return '={:.{}f}'.format(p, 3)
+
 def main_comparison_chart(reports, df_sec, df_reg):    
 
         result = (hypothesis_test(df_sec['diff']), hypothesis_test(df_reg['diff']))
@@ -452,11 +458,7 @@ def main_comparison_chart(reports, df_sec, df_reg):
 
         y = 1.2
         for l in result:
-            if float('{:.{}f}'.format(l['pvalue'][0], 3)) <= 0.000:
-                p = '<0.001'
-            else:
-                p = '={:.{}f}'.format(l['pvalue'][0], 3)
-            
+            p = format_p_value(l['pvalue'][0])
             box_text = '$\overline{x}$='+ '{:.{}f}'.format(l['mean'][0], 2) + '\nM=' + '{:.{}f}'.format(l['med'][0], 2) + '\np' + p
             ax.text(0.43, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':4}, fontsize=9)
             y -= 1.1
@@ -525,11 +527,8 @@ def main_per_guideline_chart(reports, df, wilcoxon = True):
     
     if wilcoxon:
         boxes_start = 7
-        for l in df[::-1].iterrows():
-            if float('{:.{}f}'.format(l[1]['p'], 3)) <= 0.000:
-                p = '<0.001'
-            else:
-                p = '={:.{}f}'.format(l[1]['p'], 3)
+        for l in df[::-1].iterrows():    
+            p = format_p_value(l[1]['p'])
             box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
             
             ax.text(0.57, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=7)
