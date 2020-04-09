@@ -1,4 +1,5 @@
 import maintainability.better_code_hub as bch
+import stats.chart as chart
 import argparse
 import csv
 import collections
@@ -11,17 +12,13 @@ matplotlib.rcParams['font.family'] = 'serif'
 matplotlib.rcParams['mathtext.fontset'] = 'cm'
 
 import matplotlib.pyplot as plt
-from scipy.stats import wilcoxon, shapiro
+from scipy.stats import wilcoxon
 from statistics import mean, stdev
 from math import sqrt
 import pandas as pd
 from collections import OrderedDict
 
 
-guidelines = {'Write Short Units of Code':'WShortUC', 'Write Simple Units of Code':'WSimpleUC', 'Write Code Once':'WCO', 'Keep Unit Interfaces Small':'KUIS', 'Separate Concerns in Modules':'SCM',
-                'Couple Architecture Components Loosely':'CACL', 'Keep Architecture Components Balanced':'KACB', 'Write Clean Code':'WCC'}
-
-language_map = {'Java': ['java', 'scala'], 'Python': ['py'], 'Groovy': ['groovy'], 'JavaScript': ['js'] , 'PHP': ['ctp', 'php', 'inc', 'tpl'], 'Objective-C/C++': ['m', 'mm'], 'Ruby': ['rb'], 'C/C++': ['cpp', 'cc', 'h', 'c'], 'Config. Files': ['template', 'gemspec', 'VERSION', 'Gemfile', 'classpath', 'gradle', 'json', 'xml', 'bash', 'lock']}
 
 def readBCHCache(path):
     return bch.BCHCache(path)
@@ -104,84 +101,7 @@ def report_guidelines_violin_plot(reports, filename):
     fig.tight_layout()
     fig.savefig('{}/{}'.format(reports, "maintainability_per_guideline_sns.pdf"))
 
-def report_maintainability_severity(reports, df, wilcoxon = True, boxes_start=3, text_start=0.55, delta=1, left_padding=0.05, f_size=7.5):
-    
-    results = {};
-    severity = ['LOW', 'MEDIUM', 'HIGH']
-    
-    for i, r in df.iterrows():
-        if r['Severity'] not in severity:
-            df.at[i, 'Severity'] = 'Other'
-    severity = ['Other'] + severity
-    
-    for s in severity:
-        impact = [0, 0, 0]
-        impact[0] = df[(df['diff'] < 0) & (df['Severity'] == s)].shape[0]
-        impact[1] = df[(df['diff'] > 0) & (df['Severity'] == s)].shape[0]
-        impact[2] = df[(df['diff'] == 0) & (df['Severity'] == s)].shape[0]
-        results[s] = impact 
-    
-    print('severity results', results)
-    
-    d = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in severity]),
-        'pos': pd.Series([results[i][1]/sum(results[i]) for i in severity]),
-        'nul': pd.Series([results[i][2]/sum(results[i]) for i in severity]),
-        'N': pd.Series([sum(results[i]) for i in severity if wilcoxon]),
-        'mean': pd.Series([_print_hypothesis_test(df[df['Severity'] == i]['diff'])['mean'][0] for i in severity if wilcoxon]),
-        'med': pd.Series([_print_hypothesis_test(df[df['Severity'] == i]['diff'])['med'][0] for i in severity if wilcoxon]),
-        'p': pd.Series([_print_hypothesis_test(df[df['Severity'] == i]['diff'])['pvalue'][0] for i in severity if wilcoxon]),
-        'type': pd.Series([i for i in severity])}
 
-    
-    absoluto = {'neg': pd.Series([results[i][0] for i in severity]),
-        'pos': pd.Series([results[i][1] for i in severity]),
-        'nul': pd.Series([results[i][2] for i in severity]),
-        'type': pd.Series([i for i in severity]),
-        'p': pd.Series([_print_hypothesis_test(df[df['Severity'] == i]['diff'])['pvalue'][0] for i in severity if wilcoxon])}
-
-    df = pd.DataFrame(d)
-    abso = pd.DataFrame(absoluto)
-    index = np.arange(len(d['type']))
-
-    fig = plt.figure()
-    ax = fig.add_subplot(111)
-
-    bar_width = 0.25
-    pos = plt.barh(index, df['pos'], bar_width, alpha=0.7, align='center', color='green', label='Positive')
-    nul = plt.barh(index + bar_width, df['nul'], bar_width, alpha=0.7, align='center', color='orange', label='None')
-    neg = plt.barh(index + 2*bar_width, df['neg'], bar_width, alpha=0.7, align='center', color='red', label='Negative')
-
-    plt.yticks(index + bar_width, df['type'], fontsize=6.5)
-    plt.xticks(fontsize=7)
-    plt.gca().set_xticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_xticks()])
-    plt.subplots_adjust(left=left_padding, right=0.85, top=0.9, bottom=0.06)
-    plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.08), fancybox=True, ncol=3, fontsize=7)
-    
-    for l in df[::-1].iterrows():
-        if float('{:.{}f}'.format(l[1]['p'], 3)) <= 0.000:
-            p = '<0.001'
-        else:
-            p = '={:.{}f}'.format(l[1]['p'], 3)
-        box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
-            
-        ax.text(text_start, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=f_size)
-        boxes_start -= delta
-        
-    plt.gca().xaxis.grid(True, linestyle='--')
-    plt.tight_layout()
-    plt.savefig('{}/{}'.format(reports, 'maintainability_severity.pdf'))
-
-def hypothesis_test(differences):
-    """Paired Wilcoxon signed-rank test (N should be > 20)"""
-    _, pvalue = shapiro(differences)
-    test, pvalue = _hypothesis_test(differences)
-    stats = {'test': [test], 'med':[pd.DataFrame({'diff': differences})['diff'].median()],'pvalue': [pvalue], 
-                'mean':[pd.DataFrame({'diff': differences})['diff'].mean()]}
-    df = pd.DataFrame(stats)
-    return df
-
-def _hypothesis_test(differences):
-    return wilcoxon(x=differences, zero_method="pratt")
 
 def read_cwe_composites(file):
     composites = dict()
@@ -334,211 +254,27 @@ def export(secdb, regdb, results, cache):
     assert len(df_sec) == 1027
     df_reg.to_csv(reg_res_path, index=False)
 
-def init_res():
-    return {'neg': 0, 'pos': 0, 'nul': 0}
-
-def filter_results(df):
-    df_res = init_res()
-    df_res['neg'] = df[df['diff'] < 0].shape[0]
-    df_res['pos'] = df[df['diff'] > 0].shape[0]
-    df_res['nul'] = df[df['diff'] == 0].shape[0]
-    return df_res
-
-def format_p_value(p):
-    if float('{:.{}f}'.format(p, 3)) <= 0.000:
-        return '<0.001'
-    else:
-        return '={:.{}f}'.format(p, 3)
-
-def main_comparison_chart(reports, df_sec, df_reg):    
-
-        result = (hypothesis_test(df_sec['diff']), hypothesis_test(df_reg['diff']))
-
-        total_sec = filter_results(df_sec)
-        total_reg = filter_results(df_reg)
-
-        sec = sum([value for key,value in total_sec.items()])
-        reg = sum([value for key,value in total_reg.items()])
-
-        d = {'neg' : pd.Series([total_reg['neg']/reg, total_sec['neg']/sec]),
-            'pos' : pd.Series([total_reg['pos']/reg, total_sec['pos']/sec]),
-            'none' : pd.Series([total_reg['nul']/reg, total_sec['nul']/sec]),
-            'type' : pd.Series(['Regular Change','Security Change'])}
-
-        index = np.arange(len(d['type']))
-        df = pd.DataFrame(d)
-        fig = plt.figure()
-        ax = fig.add_subplot(111)
-
-        bar_width = 0.25
-        pos = plt.barh(index, df['pos'], bar_width, alpha=0.7, align='center', color='green', label='Positive')
-        nul = plt.barh(index + bar_width, df['none'], bar_width, alpha=0.7, align='center', color='orange', label='None')
-        neg = plt.barh(index + 2 * bar_width, df['neg'], bar_width, alpha=0.7, align='center', color='red', label='Negative')
-
-        plt.yticks(index + bar_width, df['type'], fontsize=9)
-        plt.gca().set_xticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_xticks()])
-        plt.subplots_adjust(left=0.2, right=0.85, top=0.9, bottom=0.1)
-        plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.1), fancybox=True, ncol=3, fontsize=9)
-
-        y = 1.2
-        for l in result:
-            p = format_p_value(l['pvalue'][0])
-            box_text = '$\overline{x}$='+ '{:.{}f}'.format(l['mean'][0], 2) + '\nM=' + '{:.{}f}'.format(l['med'][0], 2) + '\np' + p
-            ax.text(0.43, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':4}, fontsize=9)
-            y -= 1.1
-
-        plt.gca().xaxis.grid(True, linestyle='--')
-
-        plt.tight_layout()
-        plt.savefig('{}/main_comparison.pdf'.format(reports))
-
-def comparison(secdb, regdb, reports):
-    
+        
+def language(secdb, reports):
     df_sec = pd.read_csv(secdb)
-    assert len(df_sec) == 1027
-    
-    df_reg = pd.read_csv(regdb)
-    assert len(df_reg) == 1027
-        
-    main_comparison_chart(reports, df_sec, df_reg)
+    chart.main_per_language_chart(reports, df_sec)
 
-def init_guideline_results():
-    results = {}
-    for g in guidelines:
-        results[g] = filter_results_per_guideline(g)
-        
-def filter_results_per_guideline(df, g):
-    impact = [0, 0, 0]
-    impact[0] = df[df[g+'-diff'] < 0].shape[0]
-    impact[1] = df[df[g+'-diff'] > 0].shape[0]
-    impact[2] = df[df[g+'-diff'] == 0].shape[0]
-    return impact
-
-def main_per_guideline_chart(reports, df, wilcoxon = True):
-    
-    results = {}
-    for g in guidelines:
-        results[g] = filter_results_per_guideline(df, g) 
-
-    keys = results.keys() 
-    d = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in keys]),
-        'pos': pd.Series([results[i][1]/sum(results[i]) for i in keys]),
-        'nul': pd.Series([results[i][2]/sum(results[i]) for i in keys]),
-        'N': pd.Series([sum(results[i]) for i in keys if wilcoxon]),
-        'test': pd.Series([hypothesis_test(df[i+'-diff'])['test'][0] for i in keys if wilcoxon]),
-        'mean': pd.Series([hypothesis_test(df[i+'-diff'])['mean'][0] for i in keys if wilcoxon]),
-        'med': pd.Series([hypothesis_test(df[i+'-diff'])['med'][0] for i in keys if wilcoxon]),
-        'p': pd.Series([hypothesis_test(df[i+'-diff'])['pvalue'][0] for i in keys if wilcoxon]),
-        'type': pd.Series([guidelines[i] for i in keys])}
-
-    df = pd.DataFrame(d)
-    index = np.arange(len(d['type']))
-    fig = plt.figure(figsize=(5,7))
-    ax = fig.add_subplot(111)
-
-    bar_width = 0.25
-    pos = plt.barh(index, df['pos'], bar_width, alpha=0.7, align='center', color='green', label='Positive')
-    nul = plt.barh(index + bar_width, df['nul'], bar_width, alpha=0.7, align='center', color='orange', label='None')
-    neg = plt.barh(index + 2*bar_width, df['neg'], bar_width, alpha=0.7, align='center', color='red', label='Negative')
-
-    plt.yticks(index + bar_width, df['type'], fontsize=6.5)
-    plt.xticks(fontsize=7)
-    plt.gca().set_xticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_xticks()])
-    plt.subplots_adjust(left=0.25, right=0.85, top=0.9, bottom=0.06)
-    plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.04), fancybox=True, ncol=3, fontsize=7)
-    
-    if wilcoxon:
-        boxes_start = 7
-        for l in df[::-1].iterrows():    
-            p = format_p_value(l[1]['p'])
-            box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
-            ax.text(0.57, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=7)
-            boxes_start -= 1
-
-    plt.gca().xaxis.grid(True, linestyle='--')
-    plt.tight_layout()
-    plt.savefig('{}/{}'.format(reports, 'main_per_guideline.pdf'))
+def severity(secdb, reports):
+    df_sec = pd.read_csv(secdb)
+    chart.main_per_severity(reports, df_sec)
 
 def guideline(secdb, reports):
     df_sec = pd.read_csv(secdb)
     assert len(df_sec) == 1027
-    main_per_guideline_chart(reports, df_sec)
-    
-def get_language(key):
-    for k, v in language_map.items():
-        if key in language_map[k]:
-            return k
-    return None
+    chart.main_per_guideline_chart(reports, df_sec)
 
-def organize_test_samples(df):
-    langs = [i for i in df['Language'].unique() if len(df[df['Language'] == i]) > 19]
-    for i, r in df.iterrows():
-        if r['Language'] not in langs:
-            df.at[i, 'Language'] = 'Others'
-    return ['Others'] + langs
-
-def filter_results_per_language(df, lang):
-    impact = [0, 0, 0]
-    impact[0] = df[(df['diff'] < 0) & (df['Language'] == lang)].shape[0]
-    impact[1] = df[(df['diff'] > 0) & (df['Language'] == lang)].shape[0]
-    impact[2] = df[(df['diff'] == 0) & (df['Language'] == lang)].shape[0]
-    return impact
-
-def main_per_language_chart(reports, df, wilcoxon=True):
-    
-    for i, r in df.iterrows():
-        lang = get_language(r['Language'])
-        if lang != None:
-            df.at[i, 'Language'] = lang
-    
-    langs = organize_test_samples(df)
-    
-    results = {}
-    for l in langs:
-        results[l] = filter_results_per_language(df, l)
-
-    d = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in langs]),
-        'pos': pd.Series([results[i][1]/sum(results[i]) for i in langs]),
-        'nul': pd.Series([results[i][2]/sum(results[i]) for i in langs]),
-        'N': pd.Series([sum(results[i]) for i in langs if wilcoxon]),
-        'test': pd.Series([hypothesis_test(df[df['Language'] == i]['diff'])['test'][0] for i in langs if wilcoxon]),
-        'mean': pd.Series([hypothesis_test(df[df['Language'] == i]['diff'])['mean'][0] for i in langs if wilcoxon]),
-        'med': pd.Series([hypothesis_test(df[df['Language'] == i]['diff'])['med'][0] for i in langs if wilcoxon]),
-        'p': pd.Series([hypothesis_test(df[df['Language'] == i]['diff'])['pvalue'][0] for i in langs if wilcoxon]),
-        'type': pd.Series([i for i in langs])}
-
-    df = pd.DataFrame(d)
-    index = np.arange(len(d['type']))
-    fig = plt.figure(figsize=(6,8))
-    ax = fig.add_subplot(111)
-
-    bar_width = 0.25
-    pos = plt.barh(index, df['pos'], bar_width, alpha=0.7, align='center', color='green', label='Positive')
-    nul = plt.barh(index + bar_width, df['nul'], bar_width, alpha=0.7, align='center', color='orange', label='None')
-    neg = plt.barh(index + 2*bar_width, df['neg'], bar_width, alpha=0.7, align='center', color='red', label='Negative')                
-
-    plt.yticks(index + bar_width, df['type'], fontsize=7)
-    plt.xticks(fontsize=7)
-    plt.gca().set_xticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_xticks()])
-    plt.subplots_adjust(left=0.25, right=0.85, top=0.9, bottom=0.06)
-    plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.04), fancybox=True, ncol=3, fontsize=8)
-
-    boxes_start = 6
-    for l in df[::-1].iterrows():
-        p = format_p_value(l[1]['p'])
-        box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
-        ax.text(0.67, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=8)
-        boxes_start -= 1
-
-    plt.gca().xaxis.grid(True, linestyle='--')
-    plt.tight_layout()
-    plt.savefig('{}/{}'.format(reports, 'main_per_language.pdf'))
-
-def language(secdb, reports):
+def comparison(secdb, regdb, reports):
     df_sec = pd.read_csv(secdb)
-    assert len(df_sec) == 1027
-    main_per_language_chart(reports, df_sec)
-
+    df_reg = pd.read_csv(regdb)
+    assert len(df_sec) == 1027 and len(df_reg) == 1027
+    chart.main_comparison_chart(reports, df_sec, df_reg)
+    
+    
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description='Report results')    
@@ -565,5 +301,8 @@ if __name__ == "__main__":
     elif args.goal == 'language':
         if args.secdb != None and args.reports != None:
             language(secdb=args.secdb, reports=args.reports)
+    elif args.goal == 'severity':
+        if args.secdb != None and args.reports != None:
+            severity(secdb=args.secdb, reports=args.reports)
     else:
         print('Something is wrong. Verify your parameters')

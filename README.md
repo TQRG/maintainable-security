@@ -44,13 +44,20 @@ cd scripts
 python3 report.py --report guideline -secdb ../results/maintainability_release_security_fixes.csv -reports ../reports
 ``` 
 
-
 Get security maintainability report per language:
 
 ```
 source venv/bin/activate
 cd scripts
 python3 report.py --report language -secdb ../results/maintainability_release_security_fixes.csv -reports ../reports
+``` 
+
+Get security maintainability report per severity:
+
+```
+source venv/bin/activate
+cd scripts
+python3 report.py --report severity -secdb ../results/maintainability_release_security_fixes.csv -reports ../reports
 ``` 
 
 
