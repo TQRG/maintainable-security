@@ -60,4 +60,11 @@ cd scripts
 python3 report.py --report severity -secdb ../results/maintainability_release_security_fixes.csv -reports ../reports
 ``` 
 
+Get security maintainability report per cwe:
+
+```
+source venv/bin/activate
+cd scripts
+python3 report.py --report cwe -secdb ../results/maintainability_release_security_fixes.csv -reports ../reports
+``` 
 

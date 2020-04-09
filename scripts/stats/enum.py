@@ -26,3 +26,22 @@ def get_language(key):
         if key in languages[k]:
             return k
     return None
+
+def read_cwe_composites(file):
+    composites = {}
+    with open(file, 'r') as i:
+        f = i.readlines()
+        for group in f:
+            cwes = group.strip().split('\t')
+            if cwes[0] not in composites:
+                composites[cwes[0]] = cwes[1::]
+    return composites
+
+def check_if_belongs_to_cwe(key):
+    composites = read_cwe_composites('stats/cwe')
+    if key in composites.keys():
+        return key
+    for i in composites:
+        if key in composites[i]:
+            return i
+    return None

@@ -15,11 +15,11 @@ def filter_results_per_guideline(df, g):
                 df[df[g+'-diff'] > 0].shape[0],
                 df[df[g+'-diff'] == 0].shape[0]]
 
-def add_others_group(df, group, key):
+def add_others_group(df, group, key, label):
     for i, r in df.iterrows():
         if r[key] not in group:
-            df.at[i, key] = 'Other'
-    return ['Other'] + group
+            df.at[i, key] = label
+    return [label] + group
     
 
     

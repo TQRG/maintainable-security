@@ -10,3 +10,6 @@ def hypothesis_test(diff):
 
 def filter_small_sample_groups(df, key):
     return [i for i in df[key].unique() if len(df[df[key] == i]) > 19]
+
+def filter_small_cwe_groups(df):
+    return [i for i in df['CWE'].unique() if str(i) != 'nan' and (len(df[df['CWE'] == i]) > 19) and 'CWE' in i]

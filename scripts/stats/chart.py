@@ -34,7 +34,6 @@ def save_report(path, name):
     plt.tight_layout()
     plt.savefig('{}/{}'.format(path, name))
 
-# comparison chart
 def main_comparison_chart(reports, df_sec, df_reg):    
 
         test = (tests.hypothesis_test(df_sec['diff']), tests.hypothesis_test(df_reg['diff']))
@@ -63,6 +62,43 @@ def main_comparison_chart(reports, df_sec, df_reg):
             y -= 1.1
         
         save_report(reports, 'main_comparison.pdf')
+
+def main_per_cwe_chart(reports, df, wilcoxon = True):
+                
+    for i, r in df.iterrows():
+        if r['CWE'] is not np.nan:
+            cwe = enum.check_if_belongs_to_cwe(r['CWE'])
+            if cwe != None:
+                df.at[i, 'CWE'] = cwe
+    
+    cwes = data.add_others_group(df, tests.filter_small_cwe_groups(df), 'CWE', 'MISC')    
+    results = {c:data.filter_results_per_field(df, c, 'CWE') for c in cwes}      
+    test_cwe = [tests.hypothesis_test(df[df['CWE'] == c]['diff']) for c in cwes]
+    
+    d = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in cwes]),
+        'pos': pd.Series([results[i][1]/sum(results[i]) for i in cwes]),
+        'nul': pd.Series([results[i][2]/sum(results[i]) for i in cwes]),
+        'N': pd.Series([sum(results[i]) for i in cwes if wilcoxon]),
+        'mean': pd.Series([i['mean'][0] for i in test_cwe if wilcoxon]),
+        'med': pd.Series([i['med'][0] for i in test_cwe if wilcoxon]),
+        'p': pd.Series([i['pvalue'][0] for i in test_cwe if wilcoxon]),
+        'type': pd.Series([i for i in cwes])}
+
+    df, idx, fig, ax = config_report(d, len(d['type']), 5, 10, 111)
+    
+    set_bars(df, idx)
+    set_ticks(df, idx, 7)
+    plt.subplots_adjust(left=0.25, right=0.85, top=0.9, bottom=0.06)
+    plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.04), fancybox=True, ncol=3, fontsize=9)
+
+    boxes_start=9
+    for l in df[::-1].iterrows():
+        p = format_p_value(l[1]['p'])
+        box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
+        ax.text(0.55, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=8)
+        boxes_start -= 1
+    
+    save_report(reports, 'main_per_cwe.pdf')
 
 def main_per_guideline_chart(reports, df, wilcoxon = True):
     
@@ -98,7 +134,7 @@ def main_per_guideline_chart(reports, df, wilcoxon = True):
     
     save_report(reports, 'main_per_guideline.pdf')
 
-def main_per_language_chart(reports, df, wilcoxon=True):
+def main_per_language_chart(reports, df, wilcoxon = True):
     
     for i, r in df.iterrows():
         lang = enum.get_language(r['Language'])
@@ -106,7 +142,7 @@ def main_per_language_chart(reports, df, wilcoxon=True):
             df.at[i, 'Language'] = lang
     
     langs = tests.filter_small_sample_groups(df, 'Language')
-    langs = data.add_others_group(df, langs, 'Language')
+    langs = data.add_others_group(df, langs, 'Language', 'Other')
         
     results = {l:data.filter_results_per_field(df, l, 'Language') for l in langs}
     test_lang = [tests.hypothesis_test(df[df['Language'] == i]['diff']) for i in langs]
@@ -138,7 +174,7 @@ def main_per_language_chart(reports, df, wilcoxon=True):
 
 def main_per_severity(reports, df, wilcoxon = True):
     
-    y_axis = data.add_others_group(df, enum.severity, 'Severity')
+    y_axis = data.add_others_group(df, enum.severity, 'Severity', 'Other')
     
     results = {s:data.filter_results_per_field(df, s, 'Severity') for s in y_axis}        
     test_sev = [tests.hypothesis_test(df[df['Severity'] == i]['diff']) for i in y_axis]
@@ -168,5 +204,33 @@ def main_per_severity(reports, df, wilcoxon = True):
         boxes_start -= 1
         
     save_report(reports, 'main_per_severity.pdf')
+
+
+def report_guidelines_violin_plot(reports, filename):
+    
+    df = pd.read_csv(filename)
+    
+    stats = {'value':[], 'fix': [], 'guideline':[]}
+    for i, r in df.iterrows():
+        for g in guidelines:
+            stats['guideline'].append(g)
+            stats['guideline'].append(g)
+            stats['value'].append(r[g+'-prev'])
+            stats['fix'].append('before')
+            stats['value'].append(r[g+'-fix'])
+            stats['fix'].append('after')
+    
+    f = pd.DataFrame.from_dict(stats)
+    print(f)
+    
+    g = sns.violinplot(x="guideline", y="value", hue="fix", data=f, palette="Set2", split=True)
+    #g.set_yscale("symlog")
+    plt.ylim(-9000000,9000000) 
+    plt.xticks(rotation=90)
+    
+    fig = matplotlib.pyplot.gcf()
+    fig.set_size_inches(18.5, 10.5, forward=True)
+    fig.tight_layout()
+    fig.savefig('{}/{}'.format(reports, "maintainability_per_guideline_sns.pdf"))
 
 
