@@ -52,13 +52,13 @@ def main_comparison_chart(reports, df_sec, df_reg):
         set_ticks(df, idx, 9)
         
         plt.subplots_adjust(left=0.2, right=0.85, top=0.9, bottom=0.1)
-        plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.1), fancybox=True, ncol=3, fontsize=9)
+        plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.07), fancybox=True, ncol=3, fontsize=8)
 
         y = 1.2
         for l in test:
             p = format_p_value(l['pvalue'][0])
             box_text = '$\overline{x}$='+ '{:.{}f}'.format(l['mean'][0], 2) + '\nM=' + '{:.{}f}'.format(l['med'][0], 2) + '\np' + p
-            ax.text(0.43, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':4}, fontsize=9)
+            ax.text(0.4, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':4}, fontsize=10)
             y -= 1.1
         
         save_report(reports, 'main_comparison.pdf')
@@ -87,15 +87,15 @@ def main_per_cwe_chart(reports, df, wilcoxon = True):
     df, idx, fig, ax = config_report(d, len(d['type']), 5, 10, 111)
     
     set_bars(df, idx)
-    set_ticks(df, idx, 7)
+    set_ticks(df, idx, 9)
     plt.subplots_adjust(left=0.25, right=0.85, top=0.9, bottom=0.06)
-    plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.04), fancybox=True, ncol=3, fontsize=9)
+    plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.04), fancybox=True, ncol=3, fontsize=8)
 
     boxes_start=9
     for l in df[::-1].iterrows():
         p = format_p_value(l[1]['p'])
         box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
-        ax.text(0.55, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=8)
+        ax.text(0.55, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=9)
         boxes_start -= 1
     
     save_report(reports, 'main_per_cwe.pdf')
@@ -119,17 +119,17 @@ def main_per_guideline_chart(reports, df, wilcoxon = True):
     df, idx, fig, ax = config_report(d, len(d['type']), 5, 7, 111)
     
     set_bars(df, idx)
-    set_ticks(df, idx, 7)
+    set_ticks(df, idx, 9)
     
     plt.subplots_adjust(left=0.25, right=0.85, top=0.9, bottom=0.06)
-    plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.04), fancybox=True, ncol=3, fontsize=7)
+    plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.05), fancybox=True, ncol=3, fontsize=8)
     
     if wilcoxon:
         boxes_start = 7
         for l in df[::-1].iterrows():    
             p = format_p_value(l[1]['p'])
             box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
-            ax.text(0.57, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=7)
+            ax.text(0.57, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=8)
             boxes_start -= 1
     
     save_report(reports, 'main_per_guideline.pdf')
@@ -159,7 +159,7 @@ def main_per_language_chart(reports, df, wilcoxon = True):
     df, idx, fig, ax = config_report(d, len(d['type']), 6, 8, 111)
     
     set_bars(df, idx)
-    set_ticks(df, idx, 7)    
+    set_ticks(df, idx, 9)    
     plt.subplots_adjust(left=0.25, right=0.85, top=0.9, bottom=0.06)
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.04), fancybox=True, ncol=3, fontsize=8)
 
@@ -167,7 +167,7 @@ def main_per_language_chart(reports, df, wilcoxon = True):
     for l in df[::-1].iterrows():
         p = format_p_value(l[1]['p'])
         box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
-        ax.text(0.67, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=8)
+        ax.text(0.67, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=9)
         boxes_start -= 1
         
     save_report(reports, 'main_per_language.pdf') 
@@ -192,15 +192,15 @@ def main_per_severity(reports, df, wilcoxon = True):
     
     set_bars(df, idx)
     
-    set_ticks(df, idx, 7)
+    set_ticks(df, idx, 9)
     plt.subplots_adjust(left=0.05, right=0.85, top=0.9, bottom=0.06)
-    plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.08), fancybox=True, ncol=3, fontsize=7)
+    plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.08), fancybox=True, ncol=3, fontsize=8)
     
     boxes_start = 3
     for l in df[::-1].iterrows():
         p = format_p_value(l[1]['p'])
         box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
-        ax.text(0.5, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=8)
+        ax.text(0.5, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=9)
         boxes_start -= 1
         
     save_report(reports, 'main_per_severity.pdf')
