@@ -75,6 +75,11 @@ class Cache():
         """Store data in designated json file."""
         self._json_lib.dump(self.data, self.storage_path)
     
+    def merge_cache(self, cache_2):
+        cache = {**self.get_data(), **cache_2.get_data()}
+        self.set_data(cache)
+        return self
+    
     
 
 class BCHCache(Cache):

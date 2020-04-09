@@ -1,0 +1,9 @@
+Java	java	scala
+Python	py
+Groovy	groovy 
+JavaScript	js 
+PHP	ctp	php	inc	pl
+Objective-C/C++	m	mm
+Ruby	rb 
+C/C++	cpp	cc	h	c 
+Config. Files	template	gemspec	VERSION	Gemfile	classpath	gradle	json	xml	bash	lock

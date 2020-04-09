@@ -1,8 +1,12 @@
 # security-maintainability
 
-**3rd submission @ICPC20**
+**New submission @ICSME20**
 
-https://conf.researchr.org/home/icpc-2020
+Abstract Submission: May 22, 2020
+
+Paper Submission: May 28, 2020
+
+https://icsme2020.github.io/
 
 How to collect maintainability reports from BCH:
 
@@ -19,14 +23,48 @@ python -m maintainability.eval_maintainability
 How to collect maintainability results from BCH:
 
 ```
+source venv/bin/activate
 cd scripts
-python3 get_maintainability.py --bch-cache maintainability/bch_cache.json --results-filename ../results/maintainability-results.csv  --reports ../reports/
+python3 report.py --report export -secdb ../dataset/db_release_security_fixes.csv -regdb ../dataset/db_release_regular_fixes.csv -results ../results -cache maintainability/bch_cache.zip
 ``` 
 
-Reports:
+Comparison between security and regular commits:
 
 ```
 source venv/bin/activate
 cd scripts
-python histogram.py --projects-csv ../results/final_projects.csv --commits-csv ../results/final_results.csv --output ../reports
+python3 report.py --report comparison -secdb ../results/maintainability_release_security_fixes.csv -regdb ../results/maintainability_release_regular_fixes.csv -reports ../reports
+``` 
+
+Get security maintainability report per guideline:
+
 ```
+source venv/bin/activate
+cd scripts
+python3 report.py --report guideline -secdb ../results/maintainability_release_security_fixes.csv -reports ../reports
+``` 
+
+Get security maintainability report per language:
+
+```
+source venv/bin/activate
+cd scripts
+python3 report.py --report language -secdb ../results/maintainability_release_security_fixes.csv -reports ../reports
+``` 
+
+Get security maintainability report per severity:
+
+```
+source venv/bin/activate
+cd scripts
+python3 report.py --report severity -secdb ../results/maintainability_release_security_fixes.csv -reports ../reports
+``` 
+
+Get security maintainability report per cwe:
+
+```
+source venv/bin/activate
+cd scripts
+python3 report.py --report cwe -secdb ../results/maintainability_release_security_fixes.csv -reports ../reports
+``` 
+
