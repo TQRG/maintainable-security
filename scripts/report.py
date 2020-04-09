@@ -18,61 +18,6 @@ from math import sqrt
 import pandas as pd
 from collections import OrderedDict
 
-
-
-def readBCHCache(path):
-    return bch.BCHCache(path)
-    
-def main_calculation(df, cache, dataset):
-    
-    none = 0; error = 0    
-
-    if dataset == 'regular':
-        sha_key = 'sha-reg'
-        sha_p_key = 'sha-reg-p'
-    else:
-        sha_key = 'sha'
-        sha_p_key = 'sha-p'
-    
-    for i, r in df.iterrows():
-
-        if r[sha_key] is np.nan or r[sha_p_key] is np.nan:
-            continue
-            
-        info_f = cache.get_stored_commit_analysis(r['owner'], r['project'], r[sha_key])
-        info_p = cache.get_stored_commit_analysis(r['owner'], r['project'], r[sha_p_key])
-            
-        if info_f is None or info_p is None:
-            none+=1
-            df.at[i, 'diff'] = np.nan
-            continue
-            
-        if info_f.get('error') or info_p.get('error'):
-            error+=1
-            df.at[i, 'diff'] = np.nan
-            continue
-        
-        try:
-            main_f = bch.compute_maintainability_score_per_guideline(info_f)
-            main_p = bch.compute_maintainability_score_per_guideline(info_p)
-            
-            score_f = bch.compute_maintainability_score(info_f)
-            score_p = bch.compute_maintainability_score(info_p)
-
-            df.at[i, 'main_fix'] = score_f
-            df.at[i, 'main_prev'] = score_p
-            df.at[i, 'diff'] = score_f - score_p
-            
-            for k in main_f.keys():
-                df.at[i, k+'-fix'] = main_f[k]
-                df.at[i, k+'-prev'] = main_p[k]
-                df.at[i, k+'-diff'] = main_f[k] - main_p[k]
-                
-        except ZeroDivisionError as e:
-            df.at[i, 'diff'] = np.nan
-            error+=1
-    
-    return df    
     
 def report_guidelines_violin_plot(reports, filename):
     
@@ -200,6 +145,7 @@ def report_maintainability_cwe(reports, df, wilcoxon=True, boxes_start=9, text_s
 def merge_cache(cache_1_filename, cache_2_filename):
     cache_1 = readBCHCache(cache_1_filename)
     print('Length cache 1: {}'.format(len(cache_1.get_data())))
+    
     cache_2 = readBCHCache(cache_2_filename)
     print('Length cache 2: {}'.format(len(cache_2.get_data())))
     
@@ -217,43 +163,78 @@ def merge_cache(cache_1_filename, cache_2_filename):
     # df = pd.read_csv('../dataset/maintainability_results_sec_icpc20.csv')
     # print(len(df[df['CWE'].str.contains('CWE', na=False)]))
     # df_reg = pd.read_csv('../dataset/maintainability_results_reg_icpc20.csv')
-    
-    #export_results_csv(database, filename, cache)
-    
-    # print('results: {} fixes'.format(len(df)))
-#
-    # report_maintainability_cwe(reports, df)
-    # report_maintainability_severity(reports, df)
-    # report_maintainability_lang(reports, df)
 
-    # report_maintainability_per_guideline(reports, df)
+def main_calculation(df, cache, dataset):
     
+    none = 0; error = 0    
+
+    if dataset == 'regular':
+        sha_key = 'sha-reg'
+        sha_p_key = 'sha-reg-p'
+    else:
+        sha_key = 'sha'
+        sha_p_key = 'sha-p'
+    
+    for i, r in df.iterrows():
+
+        if r[sha_key] is np.nan or r[sha_p_key] is np.nan:
+            continue
+            
+        info_f = cache.get_stored_commit_analysis(r['owner'], r['project'], r[sha_key])
+        info_p = cache.get_stored_commit_analysis(r['owner'], r['project'], r[sha_p_key])
+            
+        if info_f is None or info_p is None:
+            none+=1
+            df.at[i, 'diff'] = np.nan
+            continue
+            
+        if info_f.get('error') or info_p.get('error'):
+            error+=1
+            df.at[i, 'diff'] = np.nan
+            continue
+        
+        try:
+            main_f = bch.compute_maintainability_score_per_guideline(info_f)
+            main_p = bch.compute_maintainability_score_per_guideline(info_p)
+            
+            score_f = bch.compute_maintainability_score(info_f)
+            score_p = bch.compute_maintainability_score(info_p)
+
+            df.at[i, 'main_fix'] = score_f
+            df.at[i, 'main_prev'] = score_p
+            df.at[i, 'diff'] = score_f - score_p
+            
+            for k in main_f.keys():
+                df.at[i, k+'-fix'] = main_f[k]
+                df.at[i, k+'-prev'] = main_p[k]
+                df.at[i, k+'-diff'] = main_f[k] - main_p[k]
+                
+        except ZeroDivisionError as e:
+            df.at[i, 'diff'] = np.nan
+            error+=1
+    
+    return df    
+        
 def main_calculation_by_db(db, results, cache, dataset):
     df = pd.read_csv(db)
     path = '{}/maintainability_release_{}_fixes.csv'.format(results, dataset)
-    assert len(df) == 1037
     df = main_calculation(df, cache, dataset)
     return df, path
 
-def export(secdb, regdb, results, cache):
+def export(secdb, regdb, results, cache_path):
     
-    cache = readBCHCache(cache)
+    cache = bch.BCHCache(cache_path)
     
     df_sec, sec_res_path = main_calculation_by_db(secdb, results, cache, 'security')
     df_reg, reg_res_path = main_calculation_by_db(regdb, results, cache, 'regular')
     
     ids = df_reg[~df_reg['diff'].notnull()].index
     
-    for i in ids:
-        df_reg = df_reg.drop(i)
-        df_sec = df_sec.drop(i)
+    df_reg = df_reg.drop(ids) 
+    df_sec = df_sec.drop(ids)
         
-    assert len(df_reg) == 1027
     df_sec.to_csv(sec_res_path, index=False)
-    
-    assert len(df_sec) == 1027
     df_reg.to_csv(reg_res_path, index=False)
-
         
 def language(secdb, reports):
     df_sec = pd.read_csv(secdb)
@@ -265,13 +246,11 @@ def severity(secdb, reports):
 
 def guideline(secdb, reports):
     df_sec = pd.read_csv(secdb)
-    assert len(df_sec) == 1027
     chart.main_per_guideline_chart(reports, df_sec)
 
 def comparison(secdb, regdb, reports):
     df_sec = pd.read_csv(secdb)
     df_reg = pd.read_csv(regdb)
-    assert len(df_sec) == 1027 and len(df_reg) == 1027
     chart.main_comparison_chart(reports, df_sec, df_reg)
     
     
@@ -291,7 +270,7 @@ if __name__ == "__main__":
     print(args.goal)
     if args.goal == 'export':  
         if args.secdb != None and args.regdb != None and args.results != None and args.cache != None:
-            export(secdb=args.secdb, regdb=args.regdb, results=args.results, cache=args.cache)
+            export(secdb=args.secdb, regdb=args.regdb, results=args.results, cache_path=args.cache)
     elif args.goal == 'comparison':
         if args.secdb != None and args.regdb != None and args.reports != None:
             comparison(secdb=args.secdb, regdb=args.regdb, reports=args.reports)
