@@ -13,3 +13,6 @@ def filter_small_sample_groups(df, key):
 
 def filter_small_cwe_groups(df):
     return [i for i in df['CWE'].unique() if str(i) != 'nan' and (len(df[df['CWE'] == i]) > 19) and 'CWE' in i]
+
+def filter_cwe_groups(df):
+    return [i for i in df['CWE'].unique() if str(i) != 'nan' and 'CWE' in i]

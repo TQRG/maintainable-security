@@ -37,8 +37,7 @@ def read_cwe_composites(file):
                 composites[cwes[0]] = cwes[1::]
     return composites
 
-def check_if_belongs_to_cwe(key):
-    composites = read_cwe_composites('stats/cwe')
+def check_if_belongs_to_cwe(composites, key):
     if key in composites.keys():
         return key
     for i in composites:

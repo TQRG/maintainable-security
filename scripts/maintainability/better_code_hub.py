@@ -182,6 +182,7 @@ def _compute_maintainability_for_guideline(guideline, total_loc):
         return 0
     if guideline['guideline'] == "Keep Your Codebase Small":
         return 0
+        
     volumes = guideline.get('qualityProfileVolume')
     if guideline['guideline'] == "Keep Architecture Components Balanced":
         total_compoments = sum(volumes)

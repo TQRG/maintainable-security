@@ -9,19 +9,18 @@ from . import tests
 from . import data
 
 
-_BAR_WIDTH = 0.25
-
+BAR_WIDTH = 0.25
 
 def set_bars(df, idx):
-    plt.barh(idx, df['pos'], _BAR_WIDTH, alpha=0.7, align='center', color='green', label='Positive')
-    plt.barh(idx + _BAR_WIDTH, df['nul'], _BAR_WIDTH, alpha=0.7, align='center', color='orange', label='None')
-    plt.barh(idx + 2*_BAR_WIDTH, df['neg'], _BAR_WIDTH, alpha=0.7, align='center', color='red', label='Negative')
+    plt.barh(idx, df['pos'], BAR_WIDTH, alpha=0.7, align='center', color='green', label='Positive')
+    plt.barh(idx + BAR_WIDTH, df['nul'], BAR_WIDTH, alpha=0.7, align='center', color='orange', label='None')
+    plt.barh(idx + 2*BAR_WIDTH, df['neg'], BAR_WIDTH, alpha=0.7, align='center', color='red', label='Negative')
 
 def format_p_value(p):
     return '<0.001' if float('{:.{}f}'.format(p, 3)) <= 0.000 else '={:.{}f}'.format(p, 3)
 
 def set_ticks(df, idx, fontsize=7):
-    plt.yticks(idx + _BAR_WIDTH, df['type'], fontsize=fontsize)
+    plt.yticks(idx + BAR_WIDTH, df['type'], fontsize=fontsize)
     plt.xticks(fontsize=fontsize)
     plt.gca().set_xticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_xticks()])
 
@@ -37,7 +36,10 @@ def save_report(path, name):
 def main_comparison_chart(reports, df_sec, df_reg):    
 
         test = (tests.hypothesis_test(df_sec['diff']), tests.hypothesis_test(df_reg['diff']))
+        print(test)
         total_sec, total_reg = data.filter_results(df_sec), data.filter_results(df_reg)
+        print(total_sec)
+        print(total_reg)
         
         db_size = len(df_sec)        
 
@@ -63,16 +65,61 @@ def main_comparison_chart(reports, df_sec, df_reg):
         
         save_report(reports, 'main_comparison.pdf')
 
+
+def main_per_cwe_spec_chart(reports, cwe, df, wilcoxon = True):
+    
+    composites = enum.read_cwe_composites('stats/{}'.format(cwe))
+    
+    for i, r in df.iterrows():
+        if not enum.check_if_belongs_to_cwe(composites, r['CWE']):
+            df = df.drop(i)
+
+    cwes = data.add_others_group(df, tests.filter_small_cwe_groups(df), 'CWE', 'MISC')
+    results = {c:data.filter_results_per_field(df, c, 'CWE') for c in cwes}
+    print(results)
+    test_cwe = [tests.hypothesis_test(df[df['CWE'] == c]['diff']) for c in cwes if wilcoxon]
+
+    d = {'neg': pd.Series([results[i][0]/sum(results[i]) if sum(results[i]) != 0 else 0 for i in cwes]),
+        'pos': pd.Series([results[i][1]/sum(results[i]) if sum(results[i]) != 0 else 0 for i in cwes]),
+        'nul': pd.Series([results[i][2]/sum(results[i]) if sum(results[i]) != 0 else 0 for i in cwes]),
+        'N': pd.Series([sum(results[i]) for i in cwes if wilcoxon]),
+        'mean': pd.Series([i['mean'][0] for i in test_cwe if wilcoxon]),
+        'med': pd.Series([i['med'][0] for i in test_cwe if wilcoxon]),
+        'p': pd.Series([i['pvalue'][0] for i in test_cwe if wilcoxon]),
+        'type': pd.Series([i for i in cwes])}
+
+    df, idx, fig, ax = config_report(d, len(d['type']), 5, 10, 111)
+
+    set_bars(df, idx)
+    set_ticks(df, idx, 9)
+    plt.subplots_adjust(left=0.25, right=0.85, top=0.9, bottom=0.06)
+    plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.04), fancybox=True, ncol=3, fontsize=8)
+    
+    if wilcoxon:
+        boxes_start=5 
+        for l in df[::-1].iterrows():
+            p = format_p_value(l[1]['p'])
+            box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
+            ax.text(0.5, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=9)
+            boxes_start -= 1.0 
+
+    save_report(reports, 'main_per_cwe_spec.pdf')
+
+
 def main_per_cwe_chart(reports, df, wilcoxon = True):
-                
+    
+    composites = enum.read_cwe_composites('stats/CWE')
+    
     for i, r in df.iterrows():
         if r['CWE'] is not np.nan:
-            cwe = enum.check_if_belongs_to_cwe(r['CWE'])
+            cwe = enum.check_if_belongs_to_cwe(composites, r['CWE'])
             if cwe != None:
                 df.at[i, 'CWE'] = cwe
+        else:
+            df.at[i, 'CWE'] = 'MISC'
     
-    cwes = data.add_others_group(df, tests.filter_small_cwe_groups(df), 'CWE', 'MISC')    
-    results = {c:data.filter_results_per_field(df, c, 'CWE') for c in cwes}      
+    cwes = data.add_others_group(df, tests.filter_small_cwe_groups(df), 'CWE', 'MISC') 
+    results = {c:data.filter_results_per_field(df, c, 'CWE') for c in cwes}          
     test_cwe = [tests.hypothesis_test(df[df['CWE'] == c]['diff']) for c in cwes]
     
     d = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in cwes]),
@@ -91,11 +138,11 @@ def main_per_cwe_chart(reports, df, wilcoxon = True):
     plt.subplots_adjust(left=0.25, right=0.85, top=0.9, bottom=0.06)
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.04), fancybox=True, ncol=3, fontsize=8)
 
-    boxes_start=9
+    boxes_start=7.1
     for l in df[::-1].iterrows():
         p = format_p_value(l[1]['p'])
         box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
-        ax.text(0.55, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=9)
+        ax.text(0.5, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=9)
         boxes_start -= 1
     
     save_report(reports, 'main_per_cwe.pdf')
@@ -174,7 +221,7 @@ def main_per_language_chart(reports, df, wilcoxon = True):
 
 def main_per_severity(reports, df, wilcoxon = True):
     
-    y_axis = data.add_others_group(df, enum.severity, 'Severity', 'Other')
+    y_axis = data.add_others_group(df, enum.severity, 'Severity', 'UNKNOWN')
     
     results = {s:data.filter_results_per_field(df, s, 'Severity') for s in y_axis}        
     test_sev = [tests.hypothesis_test(df[df['Severity'] == i]['diff']) for i in y_axis]
@@ -204,7 +251,6 @@ def main_per_severity(reports, df, wilcoxon = True):
         boxes_start -= 1
         
     save_report(reports, 'main_per_severity.pdf')
-
 
 def report_guidelines_violin_plot(reports, filename):
     

@@ -103,6 +103,10 @@ def guideline(secdb, reports):
 def cwe(secdb, reports):
     df_sec = pd.read_csv(secdb)
     chart.main_per_cwe_chart(reports, df_sec)
+    
+def cwe_spec(secdb, reports, cwe):
+    df_sec = pd.read_csv(secdb)
+    chart.main_per_cwe_spec_chart(reports, cwe, df_sec)
 
 def comparison(secdb, regdb, reports):
     df_sec = pd.read_csv(secdb)
@@ -113,14 +117,16 @@ def comparison(secdb, regdb, reports):
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description='Report results')    
-    parser.add_argument('--report', dest='goal', choices=['export', 'comparison', 'severity', 'guideline', 'language', 'cwe'],
+    parser.add_argument('--report', dest='goal', choices=['export', 'comparison', 'severity', 'guideline', 'language', 'cwe', 'cwe-spec'],
                         help='choose a report goal')
                         
     parser.add_argument('-results', type=str, metavar='folder path', help='results folder path')  
     parser.add_argument('-reports', type=str, metavar='folder path', help='reports folder path')      
     parser.add_argument('-secdb', type=str, metavar='file path', help='security dataset path')    
     parser.add_argument('-regdb', type=str, metavar='file path', help='regular dataset path')    
-    parser.add_argument('-cache', type=str, metavar='file path', help='cache path')    
+    parser.add_argument('-cache', type=str, metavar='file path', help='cache path')   
+    parser.add_argument('-cwe', type=str, metavar='file path', help='cache path')    
+     
     
     args = parser.parse_args()
 
@@ -142,5 +148,8 @@ if __name__ == "__main__":
     elif args.goal == 'cwe':
         if args.secdb != None and args.reports != None:
             cwe(secdb=args.secdb, reports=args.reports)
+    elif args.goal == 'cwe-spec':
+        if args.secdb != None and args.reports != None and args.cwe != None:
+            cwe_spec(secdb=args.secdb, reports=args.reports, cwe=args.cwe)
     else:
         print('Something is wrong. Verify your parameters')
