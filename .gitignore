@@ -1,5 +1,5 @@
 config/*.json
-paper/icpc20.pdf
+paper/icsme20.pdf
 *.aux
 *.bbl
 *.blg
@@ -10,6 +10,7 @@ paper/icpc20.pdf
 *.cut
 *.lb
 *.xcp
+*.watcher_pid
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
