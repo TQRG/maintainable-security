@@ -537,85 +537,87 @@ The $1335$ patches in the dataset were run against the BCH toolset to
 calculate their maintainability reports. However, there are refactorings
 discarded from our study due to limitations of BCH: in particular, lack of
 language support and project size. The final dataset used in this paper comprises
-$1031$ security patches. $539$ of these patches are identified with Common Weakness
-Enumeration IDs (CWE). In Table~\ref{tab:patterns}, the most prevailing categories are presented. To satisfy the Wilcoxon test size requirement, types of vulnerabilities
-with less than $20$ instances were merged in a bigger group named \textit{Miscellaneous}.
+$1031$ security patches. $912$ of these patches are identified with Common Weakness
+Enumeration IDs (CWE) where $59.1\%$ were scraped from the National Vulnerability Dataset (NVD) and the remaining $40.9\%$ were manually classified following the \texttt{Research Concepts} view map from the CWE's list.
 
-\begin{table}[h]
-\scriptsize
-	\caption{Guidelines to produce maintainable code}
-\begin{tabular}{L{1.1cm}L{2.1cm}L{4.3cm}}
+% In Table~\ref{tab:patterns}, the most prevailing categories are presented. To satisfy the Wilcoxon test size requirement, types of vulnerabilities
+% with less than $20$ instances were merged in a bigger group named \textit{Miscellaneous}.
 
-\toprule
-\textbf{Pattern} & \textbf{Name} & \textbf{Description}\\
-\midrule
-
-\textbf{CWE-89} & 
- Improper Neutralization of Special Elements used in an SQL Command/SQL Injection (23 cases) & 
- When developers do not keep untrusted data
-     separate from SQL queries. If an attacker sends a command that
-     exploits the syntax of the SQL interpreter, then SQL injection attack is possible.\\\midrule
-
-\textbf{CWE-611} & 
- Improper Restriction of XML External Entity Reference (24 cases) & 
-	XML documents are exchanged through the web containing entities with URIs
- 	that resolve to local/external files. Thus, when XML parsers are not well configured,
- 	attackers have allowed to directly those files.\\\midrule
- 
- \textbf{CWE-20} & 
- Improper Input Validation (76 cases) & 
-	When developers
- 	forget to validate the inputs of an application, attackers may have control
- 	of the control/data flow of the program.\\\midrule
- 
-  \textbf{CWE-200} & 
-Information Exposure (39 cases)& 
-Application's logs are one way of intentional/unintentional disclosure information
- 	to attackers. Many times attackers get access to logs when sould not be authorized to.\\\midrule
- 
-   \textbf{CWE-352} & 
-Cross-Site Request Forgery/CSRF (22 cases)& 
-Poor session tokens generation
-     and management usually allow attackers to send forged HTTP requests
-     including authentication information from the victim to the vulnerable web
-     application.\\\midrule
-     
-       \textbf{CWE-264} & 
-Permissions, Privileges, and Access Controls (59 cases)& 
-Incorrectly
- 	    implemented functionalities related to authentication and session
- 	    management, allowing an attacker to gain access to session tokens,
- 	    passwords, keys, and other sensitive data.\\\midrule
- 	    
- 	           \textbf{CWE-399} & 
-Resource Management Errors (22 cases)& 
-Resource management issues are found more frequently
- 		in programming languages that do not manage memory automatically (e.g., C/C++
- 	    and Objective-C), i.e., where developers are responsible for
- 	    handling it instead. It is one of the main causes of Denial-of-Service attacks.\\\midrule
- 	    
- 	     	           \textbf{CWE-79} & 
-Improper Neutralization of Input During Web Page Generation/Cross-site Scripting (63 cases)& 
-Lack of proper validation or escaping
- 	    allows attackers to submit untrusted data to web browsers through malicious
- 	    scripts that can hijack the user sessions or redirect the user to malicious
- 	    sites.\\\midrule
-
- 	     	           \textbf{CWE-22} & 
-Improper Limitation of a Pathname to a Restricted Directory/Path Traversal (37 cases) & 
-When developers forget to neutralize special elements within the path names to files/directories, attackers
- 	may leverage this flaw to resolve to a location outside of the restricted directory and gain access to documents
- 	or entire repositories.\\\midrule
- 	
- 	 	     	           \textbf{MISC} & 
-Miscellaneous (666 cases) & 
-This pattern comprises
- 		several other security refactorings that do not have a CWE assigned and patterns that
- 		do not satisfy the Wilcoxon test size requirement of more than $20$ refactorings.\\
-\bottomrule
-\end{tabular}
-\label{tab:patterns}
-\end{table}
+% \begin{table}[h]
+% \scriptsize
+% 	\caption{Guidelines to produce maintainable code}
+% \begin{tabular}{L{1.1cm}L{2.1cm}L{4.3cm}}
+%
+% \toprule
+% \textbf{Pattern} & \textbf{Name} & \textbf{Description}\\
+% \midrule
+%
+% \textbf{CWE-89} &
+%  Improper Neutralization of Special Elements used in an SQL Command/SQL Injection (23 cases) &
+%  When developers do not keep untrusted data
+%      separate from SQL queries. If an attacker sends a command that
+%      exploits the syntax of the SQL interpreter, then SQL injection attack is possible.\\\midrule
+%
+% \textbf{CWE-611} &
+%  Improper Restriction of XML External Entity Reference (24 cases) &
+% 	XML documents are exchanged through the web containing entities with URIs
+%  	that resolve to local/external files. Thus, when XML parsers are not well configured,
+%  	attackers have allowed to directly those files.\\\midrule
+%
+%  \textbf{CWE-20} &
+%  Improper Input Validation (76 cases) &
+% 	When developers
+%  	forget to validate the inputs of an application, attackers may have control
+%  	of the control/data flow of the program.\\\midrule
+%
+%   \textbf{CWE-200} &
+% Information Exposure (39 cases)&
+% Application's logs are one way of intentional/unintentional disclosure information
+%  	to attackers. Many times attackers get access to logs when sould not be authorized to.\\\midrule
+%
+%    \textbf{CWE-352} &
+% Cross-Site Request Forgery/CSRF (22 cases)&
+% Poor session tokens generation
+%      and management usually allow attackers to send forged HTTP requests
+%      including authentication information from the victim to the vulnerable web
+%      application.\\\midrule
+%
+%        \textbf{CWE-264} &
+% Permissions, Privileges, and Access Controls (59 cases)&
+% Incorrectly
+%  	    implemented functionalities related to authentication and session
+%  	    management, allowing an attacker to gain access to session tokens,
+%  	    passwords, keys, and other sensitive data.\\\midrule
+%
+%  	           \textbf{CWE-399} &
+% Resource Management Errors (22 cases)&
+% Resource management issues are found more frequently
+%  		in programming languages that do not manage memory automatically (e.g., C/C++
+%  	    and Objective-C), i.e., where developers are responsible for
+%  	    handling it instead. It is one of the main causes of Denial-of-Service attacks.\\\midrule
+%
+%  	     	           \textbf{CWE-79} &
+% Improper Neutralization of Input During Web Page Generation/Cross-site Scripting (63 cases)&
+% Lack of proper validation or escaping
+%  	    allows attackers to submit untrusted data to web browsers through malicious
+%  	    scripts that can hijack the user sessions or redirect the user to malicious
+%  	    sites.\\\midrule
+%
+%  	     	           \textbf{CWE-22} &
+% Improper Limitation of a Pathname to a Restricted Directory/Path Traversal (37 cases) &
+% When developers forget to neutralize special elements within the path names to files/directories, attackers
+%  	may leverage this flaw to resolve to a location outside of the restricted directory and gain access to documents
+%  	or entire repositories.\\\midrule
+%
+%  	 	     	           \textbf{MISC} &
+% Miscellaneous (666 cases) &
+% This pattern comprises
+%  		several other security refactorings that do not have a CWE assigned and patterns that
+%  		do not satisfy the Wilcoxon test size requirement of more than $20$ refactorings.\\
+% \bottomrule
+% \end{tabular}
+% \label{tab:patterns}
+% \end{table}
 
 %
 % \begin{itemize}
@@ -914,6 +916,7 @@ limitation: it does not consider the groups of commits with a zero-difference
 maintainability. In $1959$, Pratt provided an improvement to the test to solve
 this issue making the test more robust. Thus, we use a version of the Wilcoxon
 test that incorporates the cases where maintainability is different from zero~\cite{10.2307/2282543}.
+The Wilcoxon test requires a distribution size of at leat $20$ instances.
 To understand the effect-size, as
 advocated by the Common-language effect sizes\cite{graw:1992}, we compute the
 mean difference, the median of the difference, and the percentage of cases that
@@ -930,9 +933,12 @@ maintainability of open-source software?}}
 
 \begin{figure}[h]
  	\centering
- 	\includegraphics[width=0.5\textwidth]{figures/main_per_guideline.pdf}
+	\vspace{-0.3 cm}
+ 	\includegraphics[width=0.45\textwidth]{figures/main_per_guideline.pdf}
+	\vspace{-0.3 cm}
  	\caption{Impact of the security patches per guideline.}
 	\label{fig:guidelines}
+	\vspace{0.2 cm}
 	\scalebox{0.5}{
 	\begin{tabular}{r@{: }l r@{: }l}
 	$WCC$ & Write Clean Code & $KACB$ & Keep Architecture Components Balanced\\
@@ -940,25 +946,22 @@ maintainability of open-source software?}}
 	$KUIS$ & Keep Unit Interfaces Small & $WCO$ & Write Code Once \\
 	$WSimpleUC$ & Write Simple Units of Code & $WShortUC$ & Write Short Units of Code
 	\end{tabular}
-	}
+	}	
 \end{figure}
-
 
 Maintainability is being calculated as the mean of the guidelines computed
 by BCH. Figure~\ref{fig:guidelines} shows the impact of security patches on each 
-guideline individually. 
-For each type of
+guideline individually. For each type of
 guideline, three types of impact of patches in the software maintainability
 are presented: \emph{negative}, maintainability decreases (\emph{red});
 \emph{none}, maintainability remains the same (\emph{yellow}); and,
 \emph{positive}, maintainability increases (\emph{green}). Next to each
-type of guideline, it is shown the mean ($\overline{x}$) and median (M)
+type of guideline, it is presented the mean ($\overline{x}$) and median (M)
 of the maintainability difference and the p-value resulting from the
 Paired Wilcoxon signed-rank test.
 
-
 Regarding the impact of security patches for each guideline, we observe
-that overall patches have a significant positive impact in $5$ guidelines: 
+that overall patches have a significant positive impact in $6$ guidelines: 
 \emph{Write Clean Code} (p-value = $4.9$x$10^{-54}$), \emph{Keep Architecture 
 Components Balanced} (p-value = $5.26$x$10^{-71}$), \emph{Couple Architecture 
 Components Loosely} (p-value = $2.43$x$10^{-07}$), \emph{Keep Unit Interfaces 
@@ -974,6 +977,8 @@ of negative cases) and \emph{Write Short Units of Code} (p-value=$0.029$ and
 $38.3\%$/$397$ of negative cases) are the most affected affected guidelines.
  
 
+ %%%%%%%%%%% HERE
+ 
 \begin{figure}[h]
  	\centering 	\includegraphics[width=0.45\textwidth]{figures/main_per_severity.pdf}
  	\caption{Maintainability difference by the vulnerabilities severity.}
