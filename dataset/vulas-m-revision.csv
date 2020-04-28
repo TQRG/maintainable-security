@@ -1,0 +1,466 @@
+﻿Dataset,Code,Project,sha,CWE,Severity,Year,owner,project,Date,Message,sha-p,Language,Score,Delete,Commits,Compare
+VULAS-M,CVE-2016-5641,https://github.com/swagger-api/swagger-codegen,cee45bc9aa0296b35170cb10b5132491c5dbdc88,CWE-138,,2016,swagger-api,swagger-codegen,7/13/16 12:44,"Merge pull request #3360 from wing328/csharp_escape_double_hyphen
+
+[C#] fix double hyphen in c# generator",133c3abc57e7412261e5f1b69b4dbd9a94586b01,java,0,1,198,https://github.com/swagger-api/swagger-codegen/compare/133c3abc57e7412261e5f1b69b4dbd9a94586b01…cee45bc9aa0296b35170cb10b5132491c5dbdc88
+VULAS-M,CVE-2011-2730,https://github.com/spring-projects/spring-framework,9772eb8410e37cd0bdec0d1b133218446c778beb,CWE-16,HIGH,2011,spring-projects,spring-framework,11/25/12 19:50,"Deprecated Spring's own JSP expression evaluation
+
+Since web applications declaring a Servlet 2.3 web.xml become really rare now, we're finally deprecating Spring's own ExpressionEvaluationUtils class. As a consequence, we're also setting ""springJspExpressionSupport"" to false by default, avoiding the potential double EL evaluation problem on pre-Servlet-3.0 containers.
+
+Issue: SPR-5308",bbcf358a9d9c2391955eb21f4fad09a2f101636c,java,7.5,1,1405,https://github.com/spring-projects/spring-framework/compare/bbcf358a9d9c2391955eb21f4fad09a2f101636c…9772eb8410e37cd0bdec0d1b133218446c778beb
+VULAS-M,CVE-2017-12624,https://github.com/apache/cxf,8bd915bfd7735c248ad660059c6b6ad26cdbcdf6,NVD-CWE-noinfo,MEDIUM,2017,apache,cxf,10/3/17 10:53,CXF-7507 - Put a configurable limit on the size of attachment headers,487b5f3f1ad43e4c2f9583b35f1967950dec0cd5,java,4.3,0,1,https://github.com/apache/cxf/compare/487b5f3f1ad43e4c2f9583b35f1967950dec0cd5…8bd915bfd7735c248ad660059c6b6ad26cdbcdf6
+VULAS-M,CVE-2015-6644,https://github.com/bcgit/bc-java,25aca54734b861ef109ac4943c4a5f98c0c1b885,CWE-200,MEDIUM,2015,bcgit,bc-java,1/14/16 17:37,"last block on J0, counter needs to reflect maxlen(p)",b114daa41aa8659bfdb4a1b53f403c2c237d55ca,java,4.3,0,8,https://github.com/bcgit/bc-java/compare/b114daa41aa8659bfdb4a1b53f403c2c237d55ca…25aca54734b861ef109ac4943c4a5f98c0c1b885
+VULAS-M,CVE-2015-5254,https://github.com/apache/activemq,d7a3b9406b8496c3f1508bebf3c7ff5367374b90,CWE-20,HIGH,2015,apache,activemq,11/17/15 14:27,"https://issues.apache.org/jira/browse/AMQ-6029 - make certs available to tunnle servlet - HttpsNeedClientAuthSendAndReceiveTest regression, add javax.security so login exceptions can propogate over http - https://issues.apache.org/jira/browse/AMQ-6013",e8a0d042d8897cffd904697ac8febae7824ddc18,java,7.5,1,45,https://github.com/apache/activemq/compare/e8a0d042d8897cffd904697ac8febae7824ddc18…d7a3b9406b8496c3f1508bebf3c7ff5367374b90
+VULAS-M,COLLECTIONS-580,https://github.com/apache/commons-collections,3eee44cf63b1ebb0da6925e98b3dcc6ef1e4d610,,,2015,apache,commons-collections,11/14/15 20:24,"[COLLECTIONS-580] Add validation to MultiValueMap#ReflectionFactory: only Collection classes are support.
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/collections/trunk@1714360 13f79535-47bb-0310-9956-ffa450edef68",be67139289c7167ed393537543b29041f88ca086,java,,1,1310,https://github.com/apache/commons-collections/compare/be67139289c7167ed393537543b29041f88ca086…3eee44cf63b1ebb0da6925e98b3dcc6ef1e4d610
+VULAS-M,CVE-2012-2098,https://github.com/apache/commons-compress,8f702469cbf4c451b6dea349290bc4af0f6f76c7,CWE-310,MEDIUM,2012,apache,commons-compress,5/20/12 18:50,"[CVE-2012-2098] Actually this shift is supposed to be unsigned.
+
+Kudos to Findbugs:
+http://findbugs.sourceforge.net/bugDescriptions.html#IM_AVERAGE_COMPUTATION_COULD_OVERFLOW
+
+
+git-svn-id: https://svn.apache.org/repos/asf/commons/proper/compress/trunk@1340799 13f79535-47bb-0310-9956-ffa450edef68",bbb461e01f3cc687fd6c3dab71ac215df588d1cc,java,5,0,14,https://github.com/apache/commons-compress/compare/bbb461e01f3cc687fd6c3dab71ac215df588d1cc…8f702469cbf4c451b6dea349290bc4af0f6f76c7
+VULAS-M,CVE-2018-11039,https://github.com/spring-projects/spring-framework,dac97f1b7dac3e70ff603fb6fc9f205b95dd6b01,NVD-CWE-noinfo,MEDIUM,2018,spring-projects,spring-framework,5/18/18 12:35,"Restrict HTTP methods on Reactive HiddenHttpMethodFilter
+
+This commit restricts the allowed HTTP methods on HiddenHttpMethodFilter
+(Reactive variant) to the following: PUT, DELETE, PATCH.
+
+This filter is meant to be used to simulate those methods from HTML
+forms sent by browsers, so no other methods are allowed.
+
+Issue: SPR-16836
+(Cherry-picked from a5cd01a4c8)",82f421bff80535457816bd5cc0c93134e8ed9ed2,java,4.3,0,2,https://github.com/spring-projects/spring-framework/compare/82f421bff80535457816bd5cc0c93134e8ed9ed2…dac97f1b7dac3e70ff603fb6fc9f205b95dd6b01
+VULAS-M,CVE-2011-1184,https://github.com/apache/tomcat,639e20992a66d7a42fb59c974db91c8a0f730a1e,CWE-264,MEDIUM,2011,apache,tomcat,4/1/11 11:36,"Add additional configuration options to the DIGEST authenticator
+This is the fix for CVE-2011-1184
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1087655 13f79535-47bb-0310-9956-ffa450edef68",9d4a4d89de340ff79c036a37864470eca9a734bb,java,5,0,1,https://github.com/apache/tomcat/compare/9d4a4d89de340ff79c036a37864470eca9a734bb…639e20992a66d7a42fb59c974db91c8a0f730a1e
+VULAS-M,CVE-2011-5062,https://github.com/apache/tomcat55,644dfdf96cf82fcd2a2046d93f2b5495f7e94584,CWE-264,MEDIUM,2011,apache,tomcat55,8/18/11 16:49,"Add additional configuration options to the DIGEST authenticator
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/tc5.5.x/trunk@1159309 13f79535-47bb-0310-9956-ffa450edef68",9fb8531aa4c40b1f79371c4f42453075f36c02d0,java,5,0,1,https://github.com/apache/tomcat55/compare/9fb8531aa4c40b1f79371c4f42453075f36c02d0…644dfdf96cf82fcd2a2046d93f2b5495f7e94584
+VULAS-M,CVE-2010-2227,https://github.com/apache/tomcat,4e97b367a97a356d2f8bb9986875e20d0807d32c,CWE-119,MEDIUM,2010,apache,tomcat,7/10/10 16:14,"Add CVE-2010-2227 test case
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@962871 13f79535-47bb-0310-9956-ffa450edef68",80d79eb118ec9d4c97c5387a3274824fd6311b2a,java,6.4,1,51,https://github.com/apache/tomcat/compare/80d79eb118ec9d4c97c5387a3274824fd6311b2a…4e97b367a97a356d2f8bb9986875e20d0807d32c
+VULAS-M,CVE-2015-5175,https://github.com/apache/cxf-fediz,f65c961ea31e3c1851daba8e7e49fc37bbf77b19,CWE-20,MEDIUM,2015,apache,cxf-fediz,7/2/15 16:07,Refactor of DOM parsing,f49716338c3cb6564878ff25ec876e66240d3883,java,5,0,1,https://github.com/apache/cxf-fediz/compare/f49716338c3cb6564878ff25ec876e66240d3883…f65c961ea31e3c1851daba8e7e49fc37bbf77b19
+VULAS-M,CVE-2011-0013,https://github.com/apache/tomcat,58223c5ecc0751c3642c810f291b8f033d33b97f,CWE-79,MEDIUM,2011,apache,tomcat,1/10/11 16:58,"Prevent XSS in Manager application
+This addresses CVE-2011-0013
+
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1057279 13f79535-47bb-0310-9956-ffa450edef68",657b3f752fe4af82db73dc4e8a9cf8fd6ee8c068,java,4.3,0,1,https://github.com/apache/tomcat/compare/657b3f752fe4af82db73dc4e8a9cf8fd6ee8c068…58223c5ecc0751c3642c810f291b8f033d33b97f
+VULAS-M,NIFI-4436,https://github.com/apache/nifi,b6117743d4c1c1a37a16ba746b9edbbdd276d69f,,,2018,apache,nifi,1/4/18 21:09,"NIFI-4436: Ensure that on save, we assign a Versioned Component Identifier to inner process groups that are tracking to remote flows, if they don't have one. This would occur, for instance, if a Process Group was imported into an existing group (or copied/moved into it) and then the existing group was saved.
+
+NIFI-4436: Fixed a bug that caused a flow not to successfully change version if a connection is added to an existing component and that component is running at time of version change
+
+NIFI-4436: Fixed bug with ordering of controller services being enabled and disabled
+
+NIFI-4436: Fixed bug that prevented local input and output ports from being stopped and started as needed
+
+NIFI-4436: Fixed bugs around referencing controller services that are at a higher level than the versioned flow
+
+NIFI-4436: Ensure that we clear components from FlowController's cache when removed and that they are added to cache when created.
+
+NIFI-4436: Fixed error message coming back if component is invalid when trying to be restarted/re-enabled
+
+NIFI-4436: Addressed issue with children of a removed process group not being considered 'affected components' and as a result not being stopped/disabled/restarted/re-enabled
+
+This closes #2219.
+
+Signed-off-by: Matt Gilman <matt.c.gilman@gmail.com>",c5b0931e558f7043b29ae1d2edc38dbd5607d289,java,,0,9,https://github.com/apache/nifi/compare/c5b0931e558f7043b29ae1d2edc38dbd5607d289…b6117743d4c1c1a37a16ba746b9edbbdd276d69f
+VULAS-M,CVE-2014-3558,https://github.com/hibernate/hibernate-validator,f97c2021a03c825abdeca1692f5be51e77e76a8f,CWE-264,MEDIUM,2014,hibernate,hibernate-validator,7/23/14 14:25,HV-912 Removing unused method parameter,e8c42b689df8c6752d635d02c6518da3fece3870,java,5,0,8,https://github.com/hibernate/hibernate-validator/compare/e8c42b689df8c6752d635d02c6518da3fece3870…f97c2021a03c825abdeca1692f5be51e77e76a8f
+VULAS-M,CVE-2009-2693,https://github.com/apache/tomcat,3e1010b1a2f648581fac3d68afbf18f2979f6bf6,CWE-22,MEDIUM,2009,apache,tomcat,12/21/09 12:25,"Various related (un)deploy improvements including:
+ - better handling of failed (un)deployment
+ - adding checking for valid zip file entries that don't make sense in a WAR file
+ - improved validation of WAR file names
+ - make sure error messages match the action
+ - the return from File.getCanonicalPath() may or may not return a final separator for directories
+
+This fixes CVE-2009-2693, CVE-2009-2901 & CVE-2009-2902
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@892795 13f79535-47bb-0310-9956-ffa450edef68",bb09002e33c817791185285d492a092a3c568117,java,5.8,0,1,https://github.com/apache/tomcat/compare/bb09002e33c817791185285d492a092a3c568117…3e1010b1a2f648581fac3d68afbf18f2979f6bf6
+VULAS-M,CVE-2016-6796,https://github.com/apache/tomcat,fb65c5fe6d298195beee11324416a975bea6d701,CWE-254,MEDIUM,2016,apache,tomcat,10/4/16 6:45,"Improve the access checks for linked global resources to handle the case where the current class loader is a child of the web application class loader.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/tc7.0.x/trunk@1763236 13f79535-47bb-0310-9956-ffa450edef68",e23053542332852235711a757359acc6e94ecc51,java,5,1,101,https://github.com/apache/tomcat/compare/e23053542332852235711a757359acc6e94ecc51…fb65c5fe6d298195beee11324416a975bea6d701
+VULAS-M,CVE-2010-0684,https://github.com/apache/activemq,2895197d0dad246757d8d1d9eea181cbf0543ae9,CWE-79,LOW,2010,apache,activemq,4/7/10 13:55,"https://issues.apache.org/activemq/browse/AMQ-2613 - more web console sanitation
+
+git-svn-id: https://svn.apache.org/repos/asf/activemq/trunk@931552 13f79535-47bb-0310-9956-ffa450edef68",d71eefc0bfcb382158e37e168f6b08b92fe5ed98,java,3.5,1,81,https://github.com/apache/activemq/compare/d71eefc0bfcb382158e37e168f6b08b92fe5ed98…2895197d0dad246757d8d1d9eea181cbf0543ae9
+VULAS-M,CVE-2011-2526,https://github.com/apache/tomcat55,e67f6882118f2a8285e4e8acd050dad64a3ef3e4,CWE-20,MEDIUM,2011,apache,tomcat55,8/16/11 12:50,"Fix various sendfile issues
+CVE-2011-2526
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/tc5.5.x/trunk@1158244 13f79535-47bb-0310-9956-ffa450edef68",1669cb24ff2c825ce0e1a7ad1ad18b19e202bbda,java,4.4,0,1,https://github.com/apache/tomcat55/compare/1669cb24ff2c825ce0e1a7ad1ad18b19e202bbda…e67f6882118f2a8285e4e8acd050dad64a3ef3e4
+VULAS-M,CVE-2012-0022,https://github.com/apache/tomcat55,b05497eff4311a9657de6dfc53511d0309eb9db4,CWE-189,MEDIUM,2012,apache,tomcat55,1/6/12 14:02,"* Fix https://issues.apache.org/bugzilla/show_bug.cgi?id=52384
+  Do not fail in Parameter parsing when debug logging is enabled.
+  Also do not flag extra '&' as errors.
+      http://svn.apache.org/viewvc?rev=1224659&view=rev
+
+
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/tc5.5.x/trunk@1228191 13f79535-47bb-0310-9956-ffa450edef68",9bc34aaf471717dde9996806c57f17197d772197,java,5,0,1,https://github.com/apache/tomcat55/compare/9bc34aaf471717dde9996806c57f17197d772197…b05497eff4311a9657de6dfc53511d0309eb9db4
+VULAS-M,CVE-2015-5345,https://github.com/apache/tomcat,7288bc70a14edcfeff0a96e333a858be374cfc64,CWE-22,MEDIUM,2015,apache,tomcat,11/30/15 9:27,"Fix https://bz.apache.org/bugzilla/show_bug.cgi?id=58660
+With mapperContextRootRedirectEnabled ste to false, the redirect needs to be handled elsewhere.
+- Ensure the Mapper does not add the '/' handling the redirect
+- Handle the redirect in the DefaultServlet
+- Add a redirect to FORM auth if auth is occurring at the context root else the login page could be submitted to the wrong web application
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/tc7.0.x/trunk@1717212 13f79535-47bb-0310-9956-ffa450edef68",74b3895d23b2010382880eea081ac353e8d6b01e,java,5,1,39,https://github.com/apache/tomcat/compare/74b3895d23b2010382880eea081ac353e8d6b01e…7288bc70a14edcfeff0a96e333a858be374cfc64
+VULAS-M,CVE-2013-4590,https://github.com/apache/tomcat,05c84ff8304a69a30b251f207a7b93c2c882564d,CWE-200,MEDIUM,2013,apache,tomcat,12/9/13 10:01,"Add an option to the Context to control the blocking of XML external entities when parsing XML configuration files and enable this blocking by default. The block is implemented via a custom resolver to enable the logging of any blocked entities.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1549528 13f79535-47bb-0310-9956-ffa450edef68",70dc3b279f7c99136c2c51bce8812508b4893c8b,java,4.3,0,1,https://github.com/apache/tomcat/compare/70dc3b279f7c99136c2c51bce8812508b4893c8b…05c84ff8304a69a30b251f207a7b93c2c882564d
+VULAS-M,CVE-2016-4003,https://github.com/apache/struts,a89bbe22cd2461748d595a89a254de888a415e6c,CWE-79,MEDIUM,2016,apache,struts,1/14/16 14:24,WW-4507 - adjust Tomcat url decoding code to Log4j 2 logging used in Struts,460faa33d8e87b8adcfd81cc69299553c719f23a,java,4.3,0,2,https://github.com/apache/struts/compare/460faa33d8e87b8adcfd81cc69299553c719f23a…a89bbe22cd2461748d595a89a254de888a415e6c
+VULAS-M,CVE-2011-2481,https://github.com/apache/tomcat,81bb49ad58fc7b1177a86ba82abf0271d07ceeb7,NVD-CWE-Other,MEDIUM,2011,apache,tomcat,6/23/11 9:26,"Fix https://issues.apache.org/bugzilla/show_bug.cgi?id=51395
+Better fix for memory leak that aligns ContextConfig with TldConfig
+Fix part 3 of 3 for CVE-2011-2481
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1138788 13f79535-47bb-0310-9956-ffa450edef68",20b6c666e2b7fb552bc8f8b446bb5d65fa594f93,java,4.6,1,43,https://github.com/apache/tomcat/compare/20b6c666e2b7fb552bc8f8b446bb5d65fa594f93…81bb49ad58fc7b1177a86ba82abf0271d07ceeb7
+VULAS-M,CVE-2011-1088,https://github.com/apache/tomcat,3e5b0455483eed55752047073e92403bfca8d3ec,NVD-CWE-Other,MEDIUM,2011,apache,tomcat,3/9/11 12:20,"CVE-2011-1088
+Fix unit test failures
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1079769 13f79535-47bb-0310-9956-ffa450edef68",4e33387a401deb40d1f6bb8689767d5ff58b0c86,java,5.8,1,55,https://github.com/apache/tomcat/compare/4e33387a401deb40d1f6bb8689767d5ff58b0c86…3e5b0455483eed55752047073e92403bfca8d3ec
+VULAS-M,CVE-2014-3625,https://github.com/spring-projects/spring-framework,9cef8e3001ddd61c734281a7556efd84b6cc2755,CWE-22,MEDIUM,2014,spring-projects,spring-framework,11/11/14 6:12,"Apply extra checks to static resource handling
+
+- remove leading '/' and control chars
+- improve url and relative path checks
+- account for URL encoding
+- add isResourceUnderLocation final verification
+
+Issue: SPR-12354",a831ed524fbc34f4a8a976b1158d5abd1042a006,java,5,0,1,https://github.com/spring-projects/spring-framework/compare/a831ed524fbc34f4a8a976b1158d5abd1042a006…9cef8e3001ddd61c734281a7556efd84b6cc2755
+VULAS-M,CVE-2014-0230,https://github.com/apache/tomcat,e28dd578fad90a6d5726ec34f3245c9f99d909a5,CWE-399,HIGH,2014,apache,tomcat,6/19/14 9:06,"Add a new limit, defaulting to 2MB, for the amount of data Tomcat will swallow for an aborted upload.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1603770 13f79535-47bb-0310-9956-ffa450edef68",c8c7e8d528749ff2968f069e19d19cb0dde07214,java,7.8,0,1,https://github.com/apache/tomcat/compare/c8c7e8d528749ff2968f069e19d19cb0dde07214…e28dd578fad90a6d5726ec34f3245c9f99d909a5
+VULAS-M,CVE-2013-4286,https://github.com/apache/tomcat,bcce3e4997a4ed06fe03e2517443f3ad8ade2dfa,CWE-20,MEDIUM,2013,apache,tomcat,9/11/13 13:41,"Better adherence to RFC2616 for content-length headers
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1521829 13f79535-47bb-0310-9956-ffa450edef68",7960a66affb955dcdb49a3d78d646cdf7a98eb52,java,5.8,0,1,https://github.com/apache/tomcat/compare/7960a66affb955dcdb49a3d78d646cdf7a98eb52…bcce3e4997a4ed06fe03e2517443f3ad8ade2dfa
+VULAS-M,CVE-2013-1768,https://github.com/apache/openjpa,7f14c7df6b7c7ef42f0671138b9b5dd062fe99aa,CWE-264,HIGH,2013,apache,openjpa,3/27/13 22:10,"Disable logging during brokerfactory de-serialization.  Added type checking of plugin values.
+
+git-svn-id: https://svn.apache.org/repos/asf/openjpa/trunk@1461876 13f79535-47bb-0310-9956-ffa450edef68",5c1421cf09d4628064510e6b29c485a749b5f574,java,7.5,0,1,https://github.com/apache/openjpa/compare/5c1421cf09d4628064510e6b29c485a749b5f574…7f14c7df6b7c7ef42f0671138b9b5dd062fe99aa
+VULAS-M,CVE-2017-8046,https://github.com/spring-projects/spring-data-rest,8f269e28fe8038a6c60f31a1c36cfda04795ab45,CWE-20,HIGH,2017,spring-projects,spring-data-rest,9/8/17 9:25,"DATAREST-1127 - Patch operations now always verify paths before operation application.
+
+Previously the SpEL expresssion created from JSON Patch path expressions were executed without double checking whether these paths actually exist on the target object in the first place. This is now in place.",f49b54418d015cf6619ae0cd7cca936407eb47df,java,7.5,0,1,https://github.com/spring-projects/spring-data-rest/compare/f49b54418d015cf6619ae0cd7cca936407eb47df…8f269e28fe8038a6c60f31a1c36cfda04795ab45
+VULAS-M,CVE-2018-1335,https://github.com/apache/tika,d1bc09386405d28d6b0f0a29ce8c3e7efd72d6c7,NVD-CWE-noinfo,HIGH,2018,apache,tika,4/17/18 0:13,"fix potential resource leak, continued",5b12e7f866f66e737d3b609b3f598fa792a564c8,java,9.3,0,8,https://github.com/apache/tika/compare/5b12e7f866f66e737d3b609b3f598fa792a564c8…d1bc09386405d28d6b0f0a29ce8c3e7efd72d6c7
+VULAS-M,CVE-2017-4992,https://github.com/cloudfoundry/uaa,4f942064d85454a4bcc4da04cd482d114816c14a,CWE-269,HIGH,2017,cloudfoundry,uaa,5/17/17 20:52,"Improve invitations
+
+[#145624295] https://www.pivotaltracker.com/story/show/145624295
+
+Signed-off-by: Filip Hanik <fhanik@pivotal.io>",4292ea4ccd50c3cf9f497b25e3ccef685798e02c,java,7.5,0,1,https://github.com/cloudfoundry/uaa/compare/4292ea4ccd50c3cf9f497b25e3ccef685798e02c…4f942064d85454a4bcc4da04cd482d114816c14a
+VULAS-M,CVE-2018-17297,https://github.com/looly/hutool,9f8a801c7b98b75ee681c0988e1a58bcfdc21756,CWE-22,MEDIUM,2018,looly,hutool,9/13/18 15:18,fix path problem,fd77bb8718648f69a587046b735488a80123cc26,java,6.4,1,4,https://github.com/looly/hutool/compare/fd77bb8718648f69a587046b735488a80123cc26…9f8a801c7b98b75ee681c0988e1a58bcfdc21756
+VULAS-M,CVE-2015-0201,https://github.com/spring-projects/spring-framework,dc5b5ca8ee09c890352f89b2dae58bc0132d6545,CWE-254,MEDIUM,2015,spring-projects,spring-framework,12/2/14 17:03,"Check the user of a SockJS request
+
+Issue: SPR-12497",6e54fc960a6d0241f2520f7296312a0db1edd5c7,java,5,0,1,https://github.com/spring-projects/spring-framework/compare/6e54fc960a6d0241f2520f7296312a0db1edd5c7…dc5b5ca8ee09c890352f89b2dae58bc0132d6545
+VULAS-M,CVE-2016-6795,https://github.com/apache/struts,030ffa33543f8953306ed0c0dc815c7fb74d7129,CWE-22,HIGH,2016,apache,struts,8/17/16 13:35,Disables params evaluation when creating results by convention,77017cd677c209324a9253f005246eba606d80d4,java,7.5,0,2,https://github.com/apache/struts/compare/77017cd677c209324a9253f005246eba606d80d4…030ffa33543f8953306ed0c0dc815c7fb74d7129
+VULAS-M,CVE-2016-0734,https://github.com/apache/activemq,24ad36778534c5ac888f880837075449169578ad,CWE-254,MEDIUM,2016,apache,activemq,2/12/16 19:43,"https://issues.apache.org/jira/browse/AMQ-6170
+
+Fixing X-Frame-Options header so that is applied for all content served
+by Jetty.  The previous patch wasn't correct because it only applied it
+to Servlets and JSPs and not static content. This also reverts AMQ-6113",b595b8bc12cf58314fb131128184fec92e7d2509,java,4.3,0,1,https://github.com/apache/activemq/compare/b595b8bc12cf58314fb131128184fec92e7d2509…24ad36778534c5ac888f880837075449169578ad
+VULAS-M,CVE-2016-9878,https://github.com/spring-projects/spring-framework,e2d6e709c3c65a4951eb096843ee75d5200cfcad,CWE-22,MEDIUM,2016,spring-projects,spring-framework,12/21/16 9:21,"Normalize resource URL in ResourceServlet
+
+Issue: SPR-14946",bd7fee5a7745436ad40798739f89e9c3222b62cd,java,5,0,1,https://github.com/spring-projects/spring-framework/compare/bd7fee5a7745436ad40798739f89e9c3222b62cd…e2d6e709c3c65a4951eb096843ee75d5200cfcad
+VULAS-M,CVE-2011-3190,https://github.com/apache/tomcat,a2538ce78f83b7376c48d12d8247600079d789b1,CWE-264,HIGH,2011,apache,tomcat,8/29/11 19:44,"Fix https://issues.apache.org/bugzilla/show_bug.cgi?id=51698
+Fix CVE-2011-3190
+Prevent AJP request forgery via unread request body packet
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1162957 13f79535-47bb-0310-9956-ffa450edef68",3513acc544ae5f1ba22ee8c70eb1fcc9180b439c,java,7.5,0,1,https://github.com/apache/tomcat/compare/3513acc544ae5f1ba22ee8c70eb1fcc9180b439c…a2538ce78f83b7376c48d12d8247600079d789b1
+VULAS-M,CVE-2013-2115,https://github.com/apache/struts,d934c6e7430b7b98e43a0a085a2304bd31a75c3d,CWE-94,HIGH,2013,apache,struts,5/27/13 14:11,"Merged from STRUTS_2_3_14_X
+Disable eval expressions [from revision 1469249]
+WW-4063
+Improved security  by making static method attribute immutable [from revision 1486054]
+WW-4063
+Skipping unneeded translation for included parameters [from revision 1486076]
+WW-4063
+Testcase modification after refactoring [from revision 1486164]
+WW-4063
+Testcases for double parameter evaluation problems [from revision 1486576]
+
+git-svn-id: https://svn.apache.org/repos/asf/struts/struts2/trunk@1486633 13f79535-47bb-0310-9956-ffa450edef68",eb2a9eb8ff95a124a3e4d585dff3b889d710e685,java,9.3,0,1,https://github.com/apache/struts/compare/eb2a9eb8ff95a124a3e4d585dff3b889d710e685…d934c6e7430b7b98e43a0a085a2304bd31a75c3d
+VULAS-M,CVE-2017-4995,https://github.com/spring-projects/spring-security,5dee8534cd1b92952d10cc56335b5d5856f48f3b,CWE-502,MEDIUM,2017,spring-projects,spring-security,5/31/17 17:19,"Update SecurityJackson2Modules
+
+Fixes gh-4370",489ffcfce5a9670d14a66f1788327f5550ea1278,java,6.8,0,1,https://github.com/spring-projects/spring-security/compare/489ffcfce5a9670d14a66f1788327f5550ea1278…5dee8534cd1b92952d10cc56335b5d5856f48f3b
+VULAS-M,CVE-2017-15709,https://github.com/apache/activemq,5fa0bbd5156f29d97dcf48fd9fdb6a0488a8df1a,CWE-200,MEDIUM,2017,apache,activemq,11/29/17 17:43,"AMQ-6871 - By default only send generic platform details
+
+The default behavior by the OpenWire client will be to send generic
+platform details to the server with a new flag to send more specific
+information.",9d98ee253fbe3e2134e7242abd572c6e64a6f6b2,java,4.3,0,1,https://github.com/apache/activemq/compare/9d98ee253fbe3e2134e7242abd572c6e64a6f6b2…5fa0bbd5156f29d97dcf48fd9fdb6a0488a8df1a
+VULAS-M,CVE-2017-5664,https://github.com/apache/tomcat,7d93527254d9e9371b342800617f20d13c8b85ad,CWE-755,MEDIUM,2017,apache,tomcat,5/2/17 13:30,"Ensure that when the Default or WebDAV servlets process an error dispatch that the error resource is processed via the doGet() method irrespective of the method used for the original request that triggered the error.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/tc7.0.x/trunk@1793491 13f79535-47bb-0310-9956-ffa450edef68",d71140268e3a7b66d8dd89f12673a1da329df628,java,5,0,2,https://github.com/apache/tomcat/compare/d71140268e3a7b66d8dd89f12673a1da329df628…7d93527254d9e9371b342800617f20d13c8b85ad
+VULAS-M,CVE-2017-12631,https://github.com/apache/cxf-fediz,e7127129dbc0f4ee83985052085e185e750cebbf,CWE-352,MEDIUM,2017,apache,cxf-fediz,10/6/17 15:16,Some improvements to the Spring plugins,5937660dc2307fb1ea99f818decb73c05674b60f,java,6.8,0,1,https://github.com/apache/cxf-fediz/compare/5937660dc2307fb1ea99f818decb73c05674b60f…e7127129dbc0f4ee83985052085e185e750cebbf
+VULAS-M,CVE-2010-4476,https://github.com/apache/tomcat,407841c426dc52a4c6b8ccd297df6c484a540056,NVD-CWE-Other,MEDIUM,2010,apache,tomcat,2/1/11 22:12,"Improve HTTP specification compliance
+This works-around the Oracle JVM bug that triggers a DoS. CVE-2010-4476.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1066244 13f79535-47bb-0310-9956-ffa450edef68",008447095ce8c3a8f713093d5e618f3f06f94ea8,java,5,0,1,https://github.com/apache/tomcat/compare/008447095ce8c3a8f713093d5e618f3f06f94ea8…407841c426dc52a4c6b8ccd297df6c484a540056
+VULAS-M,CVE-2017-8045,https://github.com/spring-projects/spring-amqp,36e55998f6352ba3498be950ccab1d5f4d0ce655,CWE-502,HIGH,2017,spring-projects,spring-amqp,9/6/17 15:14,"AMQP-766: Deserialization in Message.toString()
+
+JIRA: https://jira.spring.io/browse/AMQP-766
+
+Add white list for classes/packages that can be deserialized in Message.toString().
+
+__cherry-pick to 1.7.x, 1.6.x, 1.5.x__
+
+* Polishing - checkstyle and PR Comments",06bc198194c1cce731e20e88e778744db6d9a6f6,java,7.5,0,1,https://github.com/spring-projects/spring-amqp/compare/06bc198194c1cce731e20e88e778744db6d9a6f6…36e55998f6352ba3498be950ccab1d5f4d0ce655
+VULAS-M,CVE-2017-5638,https://github.com/apache/struts,6b8272ce47160036ed120a48345d9aa884477228,CWE-20,HIGH,2017,apache,struts,3/6/17 10:17,Uses default error key if specified key doesn't exist,f487d7e7d69c767949a59f36ceb5a45d96eb32dd,java,10,0,1,https://github.com/apache/struts/compare/f487d7e7d69c767949a59f36ceb5a45d96eb32dd…6b8272ce47160036ed120a48345d9aa884477228
+VULAS-M,CVE-2016-6637,https://github.com/cloudfoundry/uaa,cded6164a3b90e791688a954069aea3cfde59b69,CWE-352,MEDIUM,2016,cloudfoundry,uaa,8/30/16 17:50,"Implement approvals csrf tokens
+[#129374221] https://www.pivotaltracker.com/story/show/129374221",3da1c165f595db24c526ba0446b487178e81182a,java,6.8,0,2,https://github.com/cloudfoundry/uaa/compare/3da1c165f595db24c526ba0446b487178e81182a…cded6164a3b90e791688a954069aea3cfde59b69
+VULAS-M,CVE-2016-4436,https://github.com/apache/struts,27ca165ddbf81c84bafbd083b99a18d89cc49ca7,NVD-CWE-noinfo,HIGH,2016,apache,struts,5/12/16 13:36,Throws away methods that doesn't match pattern,8b688cc38d589c787c091a2c7c3574e5c3619484,java,7.5,0,1,https://github.com/apache/struts/compare/8b688cc38d589c787c091a2c7c3574e5c3619484…27ca165ddbf81c84bafbd083b99a18d89cc49ca7
+VULAS-M,CVE-2017-12196,https://github.com/undertow-io/undertow,8804170ce3186bdd83b486959399ec7ac0f59d0f,CWE-863,MEDIUM,2017,undertow-io,undertow,12/10/17 23:51,UNDERTOW-1190 handle absolute URI in the digest mechanism,4ab466d6ce89c217443431ed0c10e66ae44e55c4,java,4.3,0,2,https://github.com/undertow-io/undertow/compare/4ab466d6ce89c217443431ed0c10e66ae44e55c4…8804170ce3186bdd83b486959399ec7ac0f59d0f
+VULAS-M,CVE-2017-15719,https://github.com/sebfz1/wicket-jquery-ui,936c12a2db262cf471c781f0d3c0d0ad61c35c7b,CWE-79,MEDIUM,2017,sebfz1,wicket-jquery-ui,12/27/17 22:19," Kendo UI: Editor, added OWASP sanitizer
+
+Kendo UI: **API BREAK** Editor model object is now String type (no more generic T)",96d55ac0cf25b8cb9b71a8b569dfe9593c9ad273,java,4.3,0,3,https://github.com/sebfz1/wicket-jquery-ui/compare/96d55ac0cf25b8cb9b71a8b569dfe9593c9ad273…936c12a2db262cf471c781f0d3c0d0ad61c35c7b
+VULAS-M,CVE-2016-8735,https://github.com/apache/tomcat,0e83ad3e547fc9a75a258799ef581249b40a82a6,CWE-284,HIGH,2016,apache,tomcat,11/2/16 11:57,"Explicitly configure allowed credential types
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1767644 13f79535-47bb-0310-9956-ffa450edef68",b0715ef477d7e05c202eb27d93b8e146a61f2a34,java,7.5,0,1,https://github.com/apache/tomcat/compare/b0715ef477d7e05c202eb27d93b8e146a61f2a34…0e83ad3e547fc9a75a258799ef581249b40a82a6
+VULAS-M,CVE-2014-4172,https://github.com/apereo/java-cas-client,ab6cbdc3daa451b4fef89c0bd0f4e6568f3aa9ef,CWE-74,HIGH,2014,apereo,java-cas-client,6/29/14 19:11,"Merge pull request #73 from battags/CASC-228
+
+CASC-228 URL Encode Paramaters Passed to Server via Validate",fd962da5c4a30e445583413c4e612baed6b11bd4,java,7.5,0,2,https://github.com/apereo/java-cas-client/compare/fd962da5c4a30e445583413c4e612baed6b11bd4…ab6cbdc3daa451b4fef89c0bd0f4e6568f3aa9ef
+VULAS-M,CVE-2017-5648,https://github.com/apache/tomcat,dfa40863421d7681fed893b4256666491887e38c,CWE-668,MEDIUM,2017,apache,tomcat,3/6/17 22:14,"Ensure request and response facades are used when firing application listeners. 
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1785774 13f79535-47bb-0310-9956-ffa450edef68",c2d925984aacef20e8c253db648bca30b6eb4b4f,java,6.4,0,1,https://github.com/apache/tomcat/compare/c2d925984aacef20e8c253db648bca30b6eb4b4f…dfa40863421d7681fed893b4256666491887e38c
+VULAS-M,CVE-2014-0075,https://github.com/apache/tomcat,f646a5acd5e32d6f5a2d9bf1d94ca66b65477675,CWE-189,MEDIUM,2014,apache,tomcat,3/17/14 12:31,"Improve processing of chuck size from chunked headers. Avoid overflow and use a bit shift instead of a multiplication as it is marginally faster.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1578337 13f79535-47bb-0310-9956-ffa450edef68",e8cc1e6ef11a779313ab467a8410feabfdb4d8bf,java,5,0,1,https://github.com/apache/tomcat/compare/e8cc1e6ef11a779313ab467a8410feabfdb4d8bf…f646a5acd5e32d6f5a2d9bf1d94ca66b65477675
+VULAS-M,CVE-2016-3092,https://github.com/apache/tomcat,2c3553f3681baf775c50bb0b49ea61cb44ea914f,CWE-20,HIGH,2016,apache,tomcat,5/13/16 18:50,"Update internal fork of Commons File Upload
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/tc8.5.x/trunk@1743722 13f79535-47bb-0310-9956-ffa450edef68",250eb500207a921c204b3cf641c2aba7a1bba69e,java,7.8,0,1,https://github.com/apache/tomcat/compare/250eb500207a921c204b3cf641c2aba7a1bba69e…2c3553f3681baf775c50bb0b49ea61cb44ea914f
+VULAS-M,CVE-2015-1427,https://github.com/elastic/elasticsearch,764fda6420a0aa10db4abef15429b5e77b9be8bf,CWE-284,HIGH,2015,elastic,elasticsearch,2/11/15 12:21,[TEST] make sandbox settings explicit in Tests,0b0cd1c46cb5d1483ec83b8efa0c0088a8f8ef01,java,7.5,0,1,https://github.com/elastic/elasticsearch/compare/0b0cd1c46cb5d1483ec83b8efa0c0088a8f8ef01…764fda6420a0aa10db4abef15429b5e77b9be8bf
+VULAS-M,CVE-2018-6356,https://github.com/jenkinsci/jenkins,9de62915807deab61d6e780eed660428f9889b51,CWE-22,MEDIUM,2018,jenkinsci,jenkins,2/9/18 16:25,[SECURITY-705] Additional precautions.,2d16b459205730d85e51499c2457109b234ca9d9,java,4,1,4,https://github.com/jenkinsci/jenkins/compare/2d16b459205730d85e51499c2457109b234ca9d9…9de62915807deab61d6e780eed660428f9889b51
+VULAS-M,CVE-2016-0762,https://github.com/apache/tomcat,86b2e436099cb48f30dad950175c5beeeb763756,CWE-264,MEDIUM,2016,apache,tomcat,8/30/16 22:55,"Make timing attacks against the Realm implementations harder. (schultz)
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1758499 13f79535-47bb-0310-9956-ffa450edef68",f603f2f4595073f9490e01699d2083112a7c09a7,java,4.3,0,1,https://github.com/apache/tomcat/compare/f603f2f4595073f9490e01699d2083112a7c09a7…86b2e436099cb48f30dad950175c5beeeb763756
+VULAS-M,PRIMEFACES-1194,https://github.com/primefaces/primefaces,afcec249b82cad60978e8ecb3926822d3f51b25a,CWE-79,,2018,primefaces,primefaces,11/7/17 21:15,Fix #1194: XSS in DialogFramework.,492d3dfe4346ea8132fda8fa4e12a9eb43d7124c,java,,0,2,https://github.com/primefaces/primefaces/compare/492d3dfe4346ea8132fda8fa4e12a9eb43d7124c…afcec249b82cad60978e8ecb3926822d3f51b25a
+VULAS-M,CVE-2014-0097,https://github.com/spring-projects/spring-security,a7005bd74241ac8e2e7b38ae31bc4b0f641ef973,CWE-287,HIGH,2014,spring-projects,spring-security,3/4/14 19:48,SEC-2500: Prevent anonymous bind for ActiveDirectoryLdapAuthenticator,ea902e5829f5d2dd6279983846ebce3416a52479,java,7.5,0,1,https://github.com/spring-projects/spring-security/compare/ea902e5829f5d2dd6279983846ebce3416a52479…a7005bd74241ac8e2e7b38ae31bc4b0f641ef973
+VULAS-M,CVE-2018-1000180,https://github.com/bcgit/bc-java,22467b6e8fe19717ecdf201c0cf91bacf04a55ad,CWE-327,MEDIUM,2018,bcgit,bc-java,4/22/18 22:14,BJA-694 minor tweak to avoid method signature change,49883825258f8111cfa8fe980223e52996604fa5,java,5,0,2,https://github.com/bcgit/bc-java/compare/49883825258f8111cfa8fe980223e52996604fa5…22467b6e8fe19717ecdf201c0cf91bacf04a55ad
+VULAS-M,CVE-2009-3555,https://github.com/apache/tomcat,30af3f5630542a2340781f66553e734a6fd69701,CWE-310,MEDIUM,2009,apache,tomcat,11/19/09 22:06,"Improve workaround for CVE-2009-3555
+On the plus side, it doesn't rely on an async event to close the connection
+On the down side, I haven't yet found a way to log client initiated handshakes before they get closed
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@882320 13f79535-47bb-0310-9956-ffa450edef68",760f24921fe95d05586b43586ca19e4585d8b7f5,java,5.8,0,1,https://github.com/apache/tomcat/compare/760f24921fe95d05586b43586ca19e4585d8b7f5…30af3f5630542a2340781f66553e734a6fd69701
+VULAS-M,CVE-2016-8747,https://github.com/apache/tomcat,452c8094a665ef6375530e81c033da4eeb2e4865,CWE-200,MEDIUM,2016,apache,tomcat,12/14/16 10:09,"Fix intermittent test failure spotted during some refactoring.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1774161 13f79535-47bb-0310-9956-ffa450edef68",d61ebedc7e6d98bb9e60601afe4e5401266b72c9,java,5,0,1,https://github.com/apache/tomcat/compare/d61ebedc7e6d98bb9e60601afe4e5401266b72c9…452c8094a665ef6375530e81c033da4eeb2e4865
+VULAS-M,CVE-2016-3084,https://github.com/cloudfoundry/uaa,460627ed419e4227b10ff121248b3ffc009011a9,CWE-264,MEDIUM,2016,cloudfoundry,uaa,5/3/16 15:46,Improve reset password experience,08c0e1fc8dbe5168144c4ffa26ee99dee1dd20f7,java,4.3,0,4,https://github.com/cloudfoundry/uaa/compare/08c0e1fc8dbe5168144c4ffa26ee99dee1dd20f7…460627ed419e4227b10ff121248b3ffc009011a9
+VULAS-M,CVE-2017-7674,https://github.com/apache/tomcat,b94478d45b7e1fc06134a785571f78772fa30fed,CWE-345,MEDIUM,2017,apache,tomcat,5/22/17 14:55,"BZ61101: CORS filter should set Vary header in response. Submitted by Rick Riemer.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1795813 13f79535-47bb-0310-9956-ffa450edef68",5edb50d61386cb3aca1d403e147440e52ab87ebd,java,4.3,0,1,https://github.com/apache/tomcat/compare/5edb50d61386cb3aca1d403e147440e52ab87ebd…b94478d45b7e1fc06134a785571f78772fa30fed
+VULAS-M,CVE-2015-1830,https://github.com/apache/activemq,729c4731574ffffaf58ebefdbaeb3bd19ed1c7b7,CWE-22,MEDIUM,2015,apache,activemq,5/5/15 14:29,https://issues.apache.org/jira/browse/AMQ-5754 - better filename guaard fix,a37b43cca82f108a8e3f5c2803a9b50911a60979,java,5,0,2,https://github.com/apache/activemq/compare/a37b43cca82f108a8e3f5c2803a9b50911a60979…729c4731574ffffaf58ebefdbaeb3bd19ed1c7b7
+VULAS-M,CVE-2017-5650,https://github.com/apache/tomcat,5496e193a89b8b8b3177e516358df2f07ab852b3,CWE-404,MEDIUM,2017,apache,tomcat,3/24/17 14:43,"Close the streams as soon as we know the connection is closing
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1788460 13f79535-47bb-0310-9956-ffa450edef68",4ba258bb563d2799d774e47ce91edee94a87e170,java,5,0,1,https://github.com/apache/tomcat/compare/4ba258bb563d2799d774e47ce91edee94a87e170…5496e193a89b8b8b3177e516358df2f07ab852b3
+VULAS-M,CVE-2017-1000387,https://github.com/jenkinsci/build-publisher-plugin,e9c1b263400e42aaa3f9fcbbd0e8b1e85c76e3a0,CWE-522,LOW,2017,jenkinsci,build-publisher-plugin,8/15/17 10:18,"Do not deprecate the field, change its type instead",969d90b5aa9462e7a654e927e24b253c56d434b7,java,2.1,0,4,https://github.com/jenkinsci/build-publisher-plugin/compare/969d90b5aa9462e7a654e927e24b253c56d434b7…e9c1b263400e42aaa3f9fcbbd0e8b1e85c76e3a0
+VULAS-M,CVE-2016-6651,https://github.com/cloudfoundry/uaa,96f702681676d829628a23db171ffa79a32f03af,CWE-264,MEDIUM,2016,cloudfoundry,uaa,9/16/16 20:55,Cleanup of non needed parameters,9429d16935f204913a4ab60a3ba1811beafaab0b,java,6.5,0,1,https://github.com/cloudfoundry/uaa/compare/9429d16935f204913a4ab60a3ba1811beafaab0b…96f702681676d829628a23db171ffa79a32f03af
+VULAS-M,CVE-2013-2134,https://github.com/apache/struts,711cf0201cdd319a38cf29238913312355db29ba,CWE-94,HIGH,2013,apache,struts,6/6/13 5:29,"Merged from STRUTS_2_3_14_2_X
+WW-4090 Itroduces actions names' whitelisting [from revision 1488895]
+WW-4090 Removes double evaluation of parsed expression [from revision 1488897]
+WW-4090 Add some logging [from revision 1488899]
+WW-4090 Uses warn level instead of debug [from revision 1488900]
+
+git-svn-id: https://svn.apache.org/repos/asf/struts/struts2/trunk@1490149 13f79535-47bb-0310-9956-ffa450edef68",66d71be669f08fe47f89875ecef969d9995316bc,java,9.3,0,1,https://github.com/apache/struts/compare/66d71be669f08fe47f89875ecef969d9995316bc…711cf0201cdd319a38cf29238913312355db29ba
+VULAS-M,CVE-2010-3718,https://github.com/apache/tomcat,a697f7b52c4e3aea0c6763b33d413b54a518e883,CWE-20,LOW,2010,apache,tomcat,10/13/10 15:16,"Ensure work dir attribute is made read-only
+CVE-2010-3718
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1022134 13f79535-47bb-0310-9956-ffa450edef68",2c4536c874fc86d2fe021e9fdaa3b167754b88eb,java,1.2,0,1,https://github.com/apache/tomcat/compare/2c4536c874fc86d2fe021e9fdaa3b167754b88eb…a697f7b52c4e3aea0c6763b33d413b54a518e883
+VULAS-M,CVE-2017-1000390,https://github.com/jenkinsci/tikal-multijob-plugin,3e6ab85019334a5b2a438264afdebe439cfc82b4,CWE-732,MEDIUM,2017,jenkinsci,tikal-multijob-plugin,7/22/17 15:55,JENKINS-36333 - Attach permission to Job.Build,9d8bd650c5d8e1dd9447e88c0d7659a2e7f8e9f3,java,4,0,4,https://github.com/jenkinsci/tikal-multijob-plugin/compare/9d8bd650c5d8e1dd9447e88c0d7659a2e7f8e9f3…3e6ab85019334a5b2a438264afdebe439cfc82b4
+VULAS-M,CVE-2012-0391,https://github.com/apache/struts,b4265d369dc29d57a9f2846a85b26598e83f3892,CWE-20,HIGH,2012,apache,struts,8/12/11 8:38,"WW-3668 - Vulnerability: User input is evaluated as an OGNL expression when there's a conversion error
+
+git-svn-id: https://svn.apache.org/repos/asf/struts/struts2/trunk@1157009 13f79535-47bb-0310-9956-ffa450edef68",481ef2feaf80bfe9f59ea176dfeb505a5be59428,java,9.3,0,3,https://github.com/apache/struts/compare/481ef2feaf80bfe9f59ea176dfeb505a5be59428…b4265d369dc29d57a9f2846a85b26598e83f3892
+VULAS-M,CVE-2016-2510,https://github.com/beanshell/beanshell,7c68fde2d6fc65e362f20863d868c112a90a9b49,CWE-19,MEDIUM,2016,beanshell,beanshell,2/3/16 1:03,Prevent deserialization of Handler,65a3c86837f0cff718fc9d389543e5ad59b527cd,java,6.8,0,2,https://github.com/beanshell/beanshell/compare/65a3c86837f0cff718fc9d389543e5ad59b527cd…7c68fde2d6fc65e362f20863d868c112a90a9b49
+VULAS-M,CVE-2016-3674,https://github.com/x-stream/xstream,7c77ac0397a1f93c69d2776a13c31957f55d1647,CWE-200,MEDIUM,2016,x-stream,xstream,10/1/15 7:24,Fix XXE vulnerability for JDom parsers. ,2b1568bd72baf71254190b74dd1204d47f630e30,java,5,0,6,https://github.com/x-stream/xstream/compare/2b1568bd72baf71254190b74dd1204d47f630e30…7c77ac0397a1f93c69d2776a13c31957f55d1647
+VULAS-M,CVE-2014-0225,https://github.com/spring-projects/spring-framework,8e096aeef55287dc829484996c9330cf755891a1,CWE-611,MEDIUM,2014,spring-projects,spring-framework,5/20/14 2:45,"Disable URL resolution in DTD declarations
+
+Issue: SPR-11768",61b47ba7d90ecaf37c61ecacc1fb19de57ed4b1b,java,6.8,0,1,https://github.com/spring-projects/spring-framework/compare/61b47ba7d90ecaf37c61ecacc1fb19de57ed4b1b…8e096aeef55287dc829484996c9330cf755891a1
+VULAS-M,CVE-2010-1632,https://github.com/apache/axis2-java,dbb2a3d37baf651f34b3bb064badb0e2c377f46b,CWE-20,HIGH,2010,apache,axis2-java,6/4/10 12:03,"CVE-2010-1632 (AXIS2-4450)
+Don't allow DTD's in MTOMBuilder flow. 
+
+
+git-svn-id: https://svn.apache.org/repos/asf/axis/axis2/java/core/trunk@951385 13f79535-47bb-0310-9956-ffa450edef68",05dafb98d69f86fa1d6d3044c4f6ca271550f817,java,7.5,1,13,https://github.com/apache/axis2-java/compare/05dafb98d69f86fa1d6d3044c4f6ca271550f817…dbb2a3d37baf651f34b3bb064badb0e2c377f46b
+VULAS-M,CVE-2016-5388,https://github.com/apache/tomcat,fb3569fbb9a2f55459aa8e1e22bc35a737e66329,CWE-284,MEDIUM,2016,apache,tomcat,8/19/16 16:38,"Add a new initialisation parameter, envHttpHeaders, to the CGI Servlet to mitigate httpoxy (CVE-2016-5388) by default and to provide a mechanism that can be used to mitigate any future, similar issues.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1756939 13f79535-47bb-0310-9956-ffa450edef68",f6b3b9ef6c70a2d6f45b5e2d848eef0c74f93d53,java,5.1,0,1,https://github.com/apache/tomcat/compare/f6b3b9ef6c70a2d6f45b5e2d848eef0c74f93d53…fb3569fbb9a2f55459aa8e1e22bc35a737e66329
+VULAS-M,CVE-2016-0763,https://github.com/apache/tomcat,76ebc9007567c8326217dd94844540e1e27d8468,CWE-264,MEDIUM,2016,apache,tomcat,1/21/16 12:47,"Protect initialization of ResourceLinkFactory when running with a SecurityManager.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1725926 13f79535-47bb-0310-9956-ffa450edef68",0a6502c6b1d889fd69aa389eedb34215f593e58e,java,6.5,0,1,https://github.com/apache/tomcat/compare/0a6502c6b1d889fd69aa389eedb34215f593e58e…76ebc9007567c8326217dd94844540e1e27d8468
+VULAS-M,CVE-2016-4970,https://github.com/netty/netty,9e2c400f89c5badc39919f811179d3d42ac5257c,NVD-CWE-Other,HIGH,2016,netty,netty,5/28/16 3:52,"OpenSslEngine writePlaintextData WANT_READ with no data in BIO buffer
+
+Motivation:
+CVE-2016-4970
+
+OpenSslEngine.wrap calls SSL_write which may return SSL_ERROR_WANT_READ, and if in this condition there is nothing to read from the BIO the OpenSslEngine and SslHandler will enter an infinite loop.
+
+Modifications:
+- Use the error code provided by OpenSSL and go back to the EventLoop selector to detect if the socket is closed
+
+Result:
+OpenSslEngine correctly handles the return codes from OpenSSL and does not enter an infinite loop.",a14eda7db055cbe3b32dc34370701c841879d2ae,java,7.8,0,1,https://github.com/netty/netty/compare/a14eda7db055cbe3b32dc34370701c841879d2ae…9e2c400f89c5badc39919f811179d3d42ac5257c
+VULAS-M,CVE-2014-0119,https://github.com/apache/tomcat,ce70ee6b8fe437a498a375215011056702b0c481,CWE-264,MEDIUM,2014,apache,tomcat,4/17/14 9:56,"Small optimisation. The resolver and the factory are only used when running under a security manager so only load them in this case.
+Also avoid a possible memory leak when creating these objects.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1588193 13f79535-47bb-0310-9956-ffa450edef68",804fec853b560598d83b50686575bfedcf43d04a,java,4.3,0,1,https://github.com/apache/tomcat/compare/804fec853b560598d83b50686575bfedcf43d04a…ce70ee6b8fe437a498a375215011056702b0c481
+VULAS-M,AMQ-5751,https://github.com/apache/activemq,886e2d4d97555e2f10276616389a5d1f915bad18,,,2015,apache,activemq,5/1/15 19:02,"Adding a configuration option to PolicyEntry to enable setting the maximum number of created destinations by policy on the broker.
+
+This resolves https://issues.apache.org/jira/browse/AMQ-5751",eaf5c12151552e01c7de31bdcc8b96d8cbd3a1c6,java,,0,1,https://github.com/apache/activemq/compare/eaf5c12151552e01c7de31bdcc8b96d8cbd3a1c6…886e2d4d97555e2f10276616389a5d1f915bad18
+VULAS-M,CVE-2018-11041,https://github.com/cloudfoundry/uaa,f6362a8f1865314aa507fc5de772848b7e552365,CWE-601,MEDIUM,2018,cloudfoundry,uaa,6/12/18 23:03," Request cache only saves requests with form_redirect_uri if it's valid
+
+- A valid/approved form_redirect_uri value has the same host as the
+receiving UAA server.
+
+[#158222161] https://www.pivotaltracker.com/story/show/158222161
+
+Signed-off-by: Jaskanwal Pawar <jpawar@pivotal.io>",d370654972c25049ebb126894b23af80b5fc863c,java,5.8,0,2,https://github.com/cloudfoundry/uaa/compare/d370654972c25049ebb126894b23af80b5fc863c…f6362a8f1865314aa507fc5de772848b7e552365
+VULAS-M,CVE-2017-7675,https://github.com/apache/tomcat,cf181edc9a8c239cde704cffc3c503425bdcae2b,CWE-22,MEDIUM,2017,apache,tomcat,5/24/17 19:35,"Fix https://bz.apache.org/bugzilla/show_bug.cgi?id=61120
+Do not ignore path parameters when processing HTTP/2 requests.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1796090 13f79535-47bb-0310-9956-ffa450edef68",ffc9baa175cdb3d4831b6926bd970e33f845b601,java,5,0,1,https://github.com/apache/tomcat/compare/ffc9baa175cdb3d4831b6926bd970e33f845b601…cf181edc9a8c239cde704cffc3c503425bdcae2b
+VULAS-M,CVE-2017-4960,https://github.com/cloudfoundry/uaa,5eab756eaf4bb397302f00fbd0273f2470009d38,NVD-CWE-noinfo,MEDIUM,2017,cloudfoundry,uaa,2/25/17 1:07,"set a global flag to disable clientlockoutpolicy
+
+[#138677887] https://www.pivotaltracker.com/story/show/138677887
+
+Signed-off-by: Mikhail Vyshegorodtsev <medvedzver@inbox.ru>",0e3013bda9c13c630f2dd469368b93cb1b73f006,java,5,0,1,https://github.com/cloudfoundry/uaa/compare/0e3013bda9c13c630f2dd469368b93cb1b73f006…5eab756eaf4bb397302f00fbd0273f2470009d38
+VULAS-M,CVE-2017-5651,https://github.com/apache/tomcat,9233d9d6a018be4415d4d7d6cb4fe01176adf1a8,NVD-CWE-noinfo,HIGH,2017,apache,tomcat,3/24/17 20:51,"Fix https://bz.apache.org/bugzilla/show_bug.cgi?id=60918
+When sendfile processing passes to the Poller for completion and then completes before Http11Processor.service() exists, the Processor is recycled which clears sendfileData causing the Processor to return CLOSED or OPEN rather than SENDFILE.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1788544 13f79535-47bb-0310-9956-ffa450edef68",e0dcf76bcb25bf191609e19a3a05518bbedb34b5,java,7.5,0,1,https://github.com/apache/tomcat/compare/e0dcf76bcb25bf191609e19a3a05518bbedb34b5…9233d9d6a018be4415d4d7d6cb4fe01176adf1a8
+VULAS-M,CVE-2015-7559,https://github.com/apache/activemq,338a74dfa42a7b19d39adecacfa5f626a050e807,CWE-20,MEDIUM,2015,apache,activemq,10/18/16 10:04,https://issues.apache.org/jira/browse/AMQ-6470 - Remove unused ControlCommand handling in client,c1157fe1f007ee2344a7f0badefa0794c98817cd,java,4,0,1,https://github.com/apache/activemq/compare/c1157fe1f007ee2344a7f0badefa0794c98817cd…338a74dfa42a7b19d39adecacfa5f626a050e807
+VULAS-M,CVE-2015-2080,https://github.com/eclipse/jetty.project,3e7b5f0fa918633ec24bd1bc23d6ee76d32c7729,CWE-200,MEDIUM,2015,eclipse,jetty.project,2/23/15 21:57,"460642 - HttpParser error 400 can expose previous buffer contents in HTTP status reason message
+
++ Simplifying behavior",b69b8dfe504943b20f86b56233dc791a8081712e,java,5,0,2,https://github.com/eclipse/jetty.project/compare/b69b8dfe504943b20f86b56233dc791a8081712e…3e7b5f0fa918633ec24bd1bc23d6ee76d32c7729
+VULAS-M,CVE-2016-8745,https://github.com/apache/tomcat,cbc9b18a845d3c8c053ac293dffda6c6c19dd92b,CWE-388,MEDIUM,2016,apache,tomcat,11/29/16 8:34,"Fix https://bz.apache.org/bugzilla/show_bug.cgi?id=60409
+When unable to complete sendfile request, ensure the Processor will be added to the cache only once. Patch by markt.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1771853 13f79535-47bb-0310-9956-ffa450edef68",167e1e4ec99d26d34abb21583c72c5586fd6d1fd,java,5,0,1,https://github.com/apache/tomcat/compare/167e1e4ec99d26d34abb21583c72c5586fd6d1fd…cbc9b18a845d3c8c053ac293dffda6c6c19dd92b
+VULAS-M,CVE-2016-6817,https://github.com/apache/tomcat,079372fc7bac8e2e378942715c9ce26a4a72c07a,CWE-119,MEDIUM,2016,apache,tomcat,10/20/16 10:07,"Fix https://bz.apache.org/bugzilla/show_bug.cgi?id=60232
+
+The header read buffer needs to be at least the size of the largest
+header.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1765794 13f79535-47bb-0310-9956-ffa450edef68",e4bdc8ab50b13ffe66ecdf242db5a83199f4dad1,java,5,0,1,https://github.com/apache/tomcat/compare/e4bdc8ab50b13ffe66ecdf242db5a83199f4dad1…079372fc7bac8e2e378942715c9ce26a4a72c07a
+VULAS-M,CVE-2016-6794,https://github.com/apache/tomcat,c1660182010b4255c21c874d69c124370a67784a,CWE-200,MEDIUM,2016,apache,tomcat,7/28/16 19:45,"Provide a mechanism that enables the container to check if a component (typically a web application) has been granted a given permission when running under a SecurityManager without the current execution stack having to have passed through the component. Use this new mechanism to extend SecurityManager protection to the system property replacement feature of the digester.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1754445 13f79535-47bb-0310-9956-ffa450edef68",b93fa63eade1deee9594d7ad3e372ea835ff99c1,java,5,0,1,https://github.com/apache/tomcat/compare/b93fa63eade1deee9594d7ad3e372ea835ff99c1…c1660182010b4255c21c874d69c124370a67784a
+VULAS-M,CVE-2017-9735,https://github.com/eclipse/jetty.project,2baa1abe4b1c380a30deacca1ed367466a1a62ea,CWE-200,MEDIUM,2017,eclipse,jetty.project,5/18/17 19:09,"Issue #1556 - A timing channel in Password.java.
+
+Improved logic to avoid timing attacks:
+now the password length cannot be inferred.",b1b94d870e0c8ac8d6fb9356ea4c455ddb56c20c,java,5,0,3,https://github.com/eclipse/jetty.project/compare/b1b94d870e0c8ac8d6fb9356ea4c455ddb56c20c…2baa1abe4b1c380a30deacca1ed367466a1a62ea
+VULAS-M,CVE-2017-4973,https://github.com/cloudfoundry/uaa,5eb43757d5a3a2c9e7aae1ef3d0b9b7e2a38851e,CWE-269,MEDIUM,2017,cloudfoundry,uaa,4/18/17 0:26,"Validate client ID for approvals
+
+[#143844261] https://www.pivotaltracker.com/story/show/143844261",74a8e977282d7016c5c75420ac92f8793b8d387b,java,6.5,0,1,https://github.com/cloudfoundry/uaa/compare/74a8e977282d7016c5c75420ac92f8793b8d387b…5eb43757d5a3a2c9e7aae1ef3d0b9b7e2a38851e
+VULAS-M,CVE-2014-8122,https://github.com/weld/core,8e413202fa1af08c09c580f444e4fd16874f9c65,CWE-362,MEDIUM,2014,weld,core,12/3/14 13:21,"WELD-1802 An exception during context deactivation/dissociation should
+not abort further procesing",00bdcbaffe1c8bc75a0d25d8dddecff396eda1c4,java,4.3,0,3,https://github.com/weld/core/compare/00bdcbaffe1c8bc75a0d25d8dddecff396eda1c4…8e413202fa1af08c09c580f444e4fd16874f9c65
+VULAS-M,CVE-2014-0099,https://github.com/apache/tomcat,fffd63a3bd3a5475379b7c074820a5463b7663b3,CWE-189,MEDIUM,2014,apache,tomcat,3/18/14 10:27,"Fix possible overflow when parsing long values from a byte array.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1578812 13f79535-47bb-0310-9956-ffa450edef68",313ba522851a32e798d94c7250e1ec80a1d30a22,java,4.3,0,1,https://github.com/apache/tomcat/compare/313ba522851a32e798d94c7250e1ec80a1d30a22…fffd63a3bd3a5475379b7c074820a5463b7663b3
+VULAS-M,CVE-2018-15761,https://github.com/cloudfoundry/uaa,95b7d9e7fae534a362b98de1df5bf501cd52c481,NVD-CWE-noinfo,MEDIUM,2018,cloudfoundry,uaa,10/24/18 23:42,"Validate authz parameters against original authz request
+
+Signed-off-by: Jaskanwal Pawar <jpawar@pivotal.io>
+Co-authored-by: Jaskanwal Pawar <jpawar@pivotal.io>",46c122d45c9d62261b8e29dcf315740d39b752b9,java,6.5,0,2,https://github.com/cloudfoundry/uaa/compare/46c122d45c9d62261b8e29dcf315740d39b752b9…95b7d9e7fae534a362b98de1df5bf501cd52c481
+VULAS-M,CVE-2013-4322,https://github.com/apache/tomcat,d6a9898125f34e593de426e8c7dabb0f224fc00f,CWE-20,MEDIUM,2013,apache,tomcat,9/11/13 13:44,"Add support for limiting the size of chunk extensions when using
+chunked encoding
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1521834 13f79535-47bb-0310-9956-ffa450edef68",d0f94a5bb7eb4cb74c7c7c936c67d557baef4055,java,4.3,0,1,https://github.com/apache/tomcat/compare/d0f94a5bb7eb4cb74c7c7c936c67d557baef4055…d6a9898125f34e593de426e8c7dabb0f224fc00f
+VULAS-M,CVE-2015-5204,https://github.com/apache/cordova-plugin-file-transfer,8fcdb1aa3deb892691b44bdf57e8d780da09e2a4,CWE-20,MEDIUM,2015,apache,cordova-plugin-file-transfer,9/8/15 18:19,"Found issue where : is accepted as a valid header, this is obviously wrong",cebdae3a402b595c280c722e7f851993f6d5b2c5,java,4.3,0,3,https://github.com/apache/cordova-plugin-file-transfer/compare/cebdae3a402b595c280c722e7f851993f6d5b2c5…8fcdb1aa3deb892691b44bdf57e8d780da09e2a4
+VULAS-M,CVE-2016-4468,https://github.com/cloudfoundry/uaa,b384a650a122e42d75e8cbb5624d0274a65cd848,CWE-89,MEDIUM,2016,cloudfoundry,uaa,6/17/16 2:01,"Enable processing of the sorting parameter
+[#121682941]",4e7d8dd214069fa5d643ee64ed6e42bacd52acc2,java,6.5,0,1,https://github.com/cloudfoundry/uaa/compare/4e7d8dd214069fa5d643ee64ed6e42bacd52acc2…b384a650a122e42d75e8cbb5624d0274a65cd848
+VULAS-M,CVE-2017-12617,https://github.com/apache/tomcat,a9dd96046d7acb0357c6b7b9e6cc70d186fae663,CWE-434,MEDIUM,2017,apache,tomcat,9/25/17 23:20,"Add some additional checks required on Windows to keep all the checks in one place and to avoid exceptions later in the processing.
+Includes utility class to determine if platform is Windows and performance test case for alternative implementations.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1809669 13f79535-47bb-0310-9956-ffa450edef68",a738d02b5b105902ca5bb6811b35ca76bbbcb01e,java,6.8,0,1,https://github.com/apache/tomcat/compare/a738d02b5b105902ca5bb6811b35ca76bbbcb01e…a9dd96046d7acb0357c6b7b9e6cc70d186fae663
+VULAS-M,CVE-2011-1475,https://github.com/apache/tomcat,fd8a579e0e2379a84826b11700adf396e4ed2041,CWE-20,MEDIUM,2011,apache,tomcat,3/28/11 19:19,"Protect against things going wrong during access logging. An un-handled exception here could trigger some unexpected code paths.
+Possible contributing factor to https://issues.apache.org/bugzilla/show_bug.cgi?id=50957 ?
+This is part of the fix for CVE-2011-1475
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1086352 13f79535-47bb-0310-9956-ffa450edef68",de8402d9fa8f1cc63d0c5fab65f1261bacbb30dc,java,5,0,2,https://github.com/apache/tomcat/compare/de8402d9fa8f1cc63d0c5fab65f1261bacbb30dc…fd8a579e0e2379a84826b11700adf396e4ed2041
+VULAS-M,CVE-2016-2402,https://github.com/square/okhttp,3ccb46dd16b6ec98f70b0ee53eafe5ed6380891e,CWE-295,MEDIUM,2016,square,okhttp,2/9/16 16:20,"Merge pull request #2330 from square/jwilson_0209_dont_pay
+
+Don't pay to clean certificates if we aren't pinning.",61b05581188ac5cc531af2f6b0cb628b011b3588,java,4.3,1,11,https://github.com/square/okhttp/compare/61b05581188ac5cc531af2f6b0cb628b011b3588…3ccb46dd16b6ec98f70b0ee53eafe5ed6380891e
+VULAS-M,CVE-2013-2248,https://github.com/apache/struts,630e1ba065a8215c4e9ac03bfb09be9d655c2b6e,CWE-20,MEDIUM,2013,apache,struts,7/15/13 8:02,"Merged from STRUTS_2_3_15_X
+WW-4140
+- Lukasz' patch applied [from revision 1502979]
+
+git-svn-id: https://svn.apache.org/repos/asf/struts/struts2/trunk@1503127 13f79535-47bb-0310-9956-ffa450edef68",4e3b0d9e9d86cc116441ca53670983fcf983cc18,java,5.8,0,1,https://github.com/apache/struts/compare/4e3b0d9e9d86cc116441ca53670983fcf983cc18…630e1ba065a8215c4e9ac03bfb09be9d655c2b6e
+VULAS-M,CVE-2015-5174,https://github.com/apache/tomcat80,2fc9d03ffbc3fe7eabfd272380807ac0ddcf748d,CWE-22,MEDIUM,2015,apache,tomcat80,8/17/15 14:10,"Fix Javadoc
+Separate test cases into separate test methods and add some additional tests.
+Clean up the code and fix a couple of edge cases
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/tc8.0.x/trunk@1696281 13f79535-47bb-0310-9956-ffa450edef68",53cdc8d6752584b54159fe8a48aaf1a8ef7155e2,java,4,0,1,https://github.com/apache/tomcat80/compare/53cdc8d6752584b54159fe8a48aaf1a8ef7155e2…2fc9d03ffbc3fe7eabfd272380807ac0ddcf748d
+VULAS-M,CVE-2016-6797,https://github.com/apache/tomcat,2859ac3eae132383cb6f3f2042e25d7a4a281b0d,CWE-284,MEDIUM,2016,apache,tomcat,8/22/16 20:48,"When adding and removing ResourceLinks dynamically, ensure
+that the global resource is only visible via the
+ResourceLinkFactory when it is meant to be.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1757271 13f79535-47bb-0310-9956-ffa450edef68",457e2dc2c764e0f3c8ccdd7bd320a1f4bfded7a6,java,5,0,1,https://github.com/apache/tomcat/compare/457e2dc2c764e0f3c8ccdd7bd320a1f4bfded7a6…2859ac3eae132383cb6f3f2042e25d7a4a281b0d
+VULAS-M,CVE-2017-8038,https://github.com/cloudfoundry-incubator/credhub,632951898a2f1474f699094200367fb405397127,NVD-CWE-noinfo,MEDIUM,2017,cloudfoundry-incubator,credhub,7/28/17 0:28,"Consolidate credential access paths
+
+We now use the CredentialHandler as the consistent access path for
+credentials. Consequently, it must return Credentials instead of views.
+
+[Finishes #149701173]",b3267689214fa3052005eb442c57ce03ceb74248,java,4,0,2,https://github.com/cloudfoundry-incubator/credhub/compare/b3267689214fa3052005eb442c57ce03ceb74248…632951898a2f1474f699094200367fb405397127
+VULAS-M,CVE-2014-0096,https://github.com/apache/tomcat,970c23bfd24dfa1dcb86ed917e6c8b47dcfb4433,CWE-264,MEDIUM,2014,apache,tomcat,3/17/14 21:43,"Redefine globalXsltFile as relative to CATALINA_BASE/conf or CATALINA_HOME/conf
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1578610 13f79535-47bb-0310-9956-ffa450edef68",03d1f33ee8f7e6b2fb7aa86edd7a43f3a240aa42,java,4.3,0,1,https://github.com/apache/tomcat/compare/03d1f33ee8f7e6b2fb7aa86edd7a43f3a240aa42…970c23bfd24dfa1dcb86ed917e6c8b47dcfb4433
+VULAS-M,CVE-2016-6816,https://github.com/apache/tomcat,516bda676ac8d0284da3e0295a7df70391315360,CWE-20,MEDIUM,2016,apache,tomcat,11/2/16 11:57,"Add additional checks for valid characters to the HTTP request line
+parsing so invalid request lines are rejected sooner.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1767641 13f79535-47bb-0310-9956-ffa450edef68",06d9c8760ce1eae8eec553c9fdf481aa026e37ff,java,6.8,0,1,https://github.com/apache/tomcat/compare/06d9c8760ce1eae8eec553c9fdf481aa026e37ff…516bda676ac8d0284da3e0295a7df70391315360
+VULAS-M,AMQP-590,https://github.com/spring-projects/spring-amqp,462dcb6f1f93d54923daffb9729c1c8519576c08,,,2016,spring-projects,spring-amqp,3/15/16 15:50,"AMQP-590: Java Deserialization White List
+
+JIRA: https://jira.spring.io/browse/AMQP-590
+
+Polishing - PR Comments
+
+Verify Mock",6d9afdfa0b15ca3ed68c26476143030be0123d25,java,,0,1,https://github.com/spring-projects/spring-amqp/compare/6d9afdfa0b15ca3ed68c26476143030be0123d25…462dcb6f1f93d54923daffb9729c1c8519576c08
+VULAS-M,CVE-2017-4974,https://github.com/cloudfoundry/uaa,74b9b270787aa602196d59d58893c3a6e09816f9,CWE-89,MEDIUM,2017,cloudfoundry,uaa,4/19/17 19:54,better parsing of attributes,21dee620011210eda0202f7a15ec3ba04293758f,java,4,0,1,https://github.com/cloudfoundry/uaa/compare/21dee620011210eda0202f7a15ec3ba04293758f…74b9b270787aa602196d59d58893c3a6e09816f9
+VULAS-M,CVE-2015-5211,https://github.com/spring-projects/spring-framework,2bd1daa75ee0b8ec33608ca6ab065ef3e1815543,CWE-20,HIGH,2015,spring-projects,spring-framework,10/5/15 1:25,"Protect against RFD exploits
+
+Issue: SPR-13548",161fd986566b12fc6eb776cd5e48e3fdb9910e72,java,9.3,0,1,https://github.com/spring-projects/spring-framework/compare/161fd986566b12fc6eb776cd5e48e3fdb9910e72…2bd1daa75ee0b8ec33608ca6ab065ef3e1815543
+VULAS-M,CVE-2018-1298,https://github.com/apache/qpid-broker-j,4b9fb37abbe882193b16595ed7b8e9d8383f59e1,CWE-20,MEDIUM,2018,apache,qpid-broker-j,1/17/18 11:29,"QPID-8046: [Broker-J] [PlainNegotiator] Eliminate redundant UTF-8/UnsupportedEncodingException catch block
+
+Cherry picked from fcca9d2",66faf8edd1fa0bc4be657747e5e1bb07afa91aa7,java,4.3,0,3,https://github.com/apache/qpid-broker-j/compare/66faf8edd1fa0bc4be657747e5e1bb07afa91aa7…4b9fb37abbe882193b16595ed7b8e9d8383f59e1
+VULAS-M,CVE-2014-0227,https://github.com/apache/tomcat,593a2447e6ebe465585cfa07e93b5635dffa1c70,CWE-19,MEDIUM,2014,apache,tomcat,6/6/14 19:14,"i18n for ChunkedInputFilter error message
+Add error flag to allow subsequent attempts at reading after an error to fail fast
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1600984 13f79535-47bb-0310-9956-ffa450edef68",a733f7f1daa9d8234e5efc958ead6f7c5a70960e,java,6.4,0,1,https://github.com/apache/tomcat/compare/a733f7f1daa9d8234e5efc958ead6f7c5a70960e…593a2447e6ebe465585cfa07e93b5635dffa1c70
+VULAS-M,CVE-2016-5016,https://github.com/cloudfoundry/uaa,0a78612f981c541ad2d997e6a365f2a0b3e799d9,CWE-295,MEDIUM,2016,cloudfoundry,uaa,7/14/16 22:47,"Wrap trustmanager in custom trustmanager
+
+Signed-off-by: Priyata Agrawal <pagrawal@pivotal.io>",ddae2a131ab505ddf079a7db4289205098373244,java,4.3,0,1,https://github.com/cloudfoundry/uaa/compare/ddae2a131ab505ddf079a7db4289205098373244…0a78612f981c541ad2d997e6a365f2a0b3e799d9
+VULAS-M,CVE-2013-7398,https://github.com/AsyncHttpClient/async-http-client,3c9152e2c75f7e8b654beec40383748a14c6b51b,CWE-345,MEDIUM,2013,AsyncHttpClient,async-http-client,3/30/14 15:43,"Merge pull request #510 from wsargent/fix-197
+
+Fix for #197 -- use a hostname verifier that does hostname verification",c9b5391e94cb5c81476d8d154d8b02d06f7804ff,java,4.3,0,4,https://github.com/AsyncHttpClient/async-http-client/compare/c9b5391e94cb5c81476d8d154d8b02d06f7804ff…3c9152e2c75f7e8b654beec40383748a14c6b51b
+VULAS-M,CVE-2015-5262,https://github.com/apache/httpcomponents-client,d954cd287dfcdad8f153e61181e20d253175ca8c,CWE-399,MEDIUM,2015,apache,httpcomponents-client,9/22/14 14:13,"Use non-zero connect timeout as SSL handshake handshake (socket) timeout if not explicitly set by the caller (socket timeout is zero)
+
+git-svn-id: https://svn.apache.org/repos/asf/httpcomponents/httpclient/branches/4.3.x@1626784 13f79535-47bb-0310-9956-ffa450edef68",a7defd94e57fc9a0b537fc4dab3bd7b0c1128df1,java,4.3,1,38,https://github.com/apache/httpcomponents-client/compare/a7defd94e57fc9a0b537fc4dab3bd7b0c1128df1…d954cd287dfcdad8f153e61181e20d253175ca8c
+VULAS-M,CVE-2018-1305,https://github.com/apache/tomcat,4d637bc3986e5d09b9363e2144b8ba74fa6eac3a,NVD-CWE-noinfo,MEDIUM,2018,apache,tomcat,2/15/18 16:05,"62104: Fix programmatic login regression as the NonLoginAuthenticator has to be set for it to work (if no login method is specified).
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1824323 13f79535-47bb-0310-9956-ffa450edef68",723ea6a5bc5e7bc49e5ef84273c3b3c164a6a4fd,java,4,1,44,https://github.com/apache/tomcat/compare/723ea6a5bc5e7bc49e5ef84273c3b3c164a6a4fd…4d637bc3986e5d09b9363e2144b8ba74fa6eac3a
+VULAS-M,CVE-2016-0714,https://github.com/apache/tomcat,f626da75fd59da82b14dee7b8cc46ad51eefdbe5,CWE-264,MEDIUM,2016,apache,tomcat,1/21/16 13:13,"When using the new sessionAttributeValueClassNameFilter, apply the filter earlier rather than loading the class and then deciding to filter it out.
+When a SecurityManager is used, enable filtering by default.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/tc7.0.x/trunk@1727034 13f79535-47bb-0310-9956-ffa450edef68",b40f6d6c235266ca65a110519d043f57ffb83a6f,java,6.5,1,50,https://github.com/apache/tomcat/compare/b40f6d6c235266ca65a110519d043f57ffb83a6f…f626da75fd59da82b14dee7b8cc46ad51eefdbe5
+VULAS-M,CVE-2008-5518,https://github.com/apache/geronimo,67dda0760bb0925ead201ddd5d809ff53686d63f,CWE-22,HIGH,2009,apache,geronimo,3/25/09 15:11,"GERONIMO-4597 Validate Web Admin Console input - fixes for CVE-2008-5518, CVE-2009-0038, and CVE-2009-0039
+
+git-svn-id: https://svn.apache.org/repos/asf/geronimo/server/trunk@758297 13f79535-47bb-0310-9956-ffa450edef68",f1bcbf2bd88a88b4bca589cde452ed7b9732377d,java,9.4,0,1,https://github.com/apache/geronimo/compare/f1bcbf2bd88a88b4bca589cde452ed7b9732377d…67dda0760bb0925ead201ddd5d809ff53686d63f
+VULAS-M,CVE-2013-0158,https://github.com/jenkinsci/jenkins,94a8789b699132dd706021a6be1b78bc47f19602,NVD-CWE-noinfo,LOW,2013,jenkinsci,jenkins,1/6/13 0:55,"[SECURITY-49] actively invalidate bad API tokens.
+
+If the user still has the API token that's generated from secret.key,
+don't accept that.
+
+Hopefully this is the last fix",31d2e03d478c7e30f8a5b05d8f3bd07b868d9525,java,2.6,0,5,https://github.com/jenkinsci/jenkins/compare/31d2e03d478c7e30f8a5b05d8f3bd07b868d9525…94a8789b699132dd706021a6be1b78bc47f19602
+VULAS-M,CVE-2018-1000613,https://github.com/bcgit/bc-java,cd98322b171b15b3f88c5ec871175147893c31e6,CWE-502,HIGH,2018,bcgit,bc-java,3/3/18 4:54,added full filtering for BDS data.,0a702f116d8b670e03fa48afdf057f7c81b97f9f,java,7.5,0,3,https://github.com/bcgit/bc-java/compare/0a702f116d8b670e03fa48afdf057f7c81b97f9f…cd98322b171b15b3f88c5ec871175147893c31e6
+VULAS-M,CVE-2012-5633,https://github.com/apache/cxf,1a6b532d53a7b98018871982049e4b0c80dc837c,CWE-287,MEDIUM,2012,apache,cxf,12/12/12 14:23,"Added some tests for CXF-4629
+
+git-svn-id: https://svn.apache.org/repos/asf/cxf/trunk@1420698 13f79535-47bb-0310-9956-ffa450edef68",d479c1b40f1f5d39d018cf808ebbdf7331c8f816,java,5.8,1,192,https://github.com/apache/cxf/compare/d479c1b40f1f5d39d018cf808ebbdf7331c8f816…1a6b532d53a7b98018871982049e4b0c80dc837c
+VULAS-M,CVE-2011-2204,https://github.com/apache/tomcat,763a56b45999653ce648a18462b8a826809215b1,CWE-200,LOW,2011,apache,tomcat,6/27/11 9:27,"Fix CVE-2011-2204.
+Prevent user passwords appearing in log files if a runtime exception (e.g. OOME) occurs while creating a new user for a MemoryUserDatabase via JMX.
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/trunk@1140070 13f79535-47bb-0310-9956-ffa450edef68",83c0aea60f331eb632dcea8e9919d234903e06d1,java,1.9,0,1,https://github.com/apache/tomcat/compare/83c0aea60f331eb632dcea8e9919d234903e06d1…763a56b45999653ce648a18462b8a826809215b1
+VULAS-M,CVE-2017-15695,https://github.com/apache/geode,954ccb545d24a9c9a35cbd84023a4d7e07032de0,NVD-CWE-noinfo,MEDIUM,2017,apache,geode,2/13/18 19:15,GEODE-3974: revert a change to log the exception in the server logs (#1444),15ae789b19fc8e58d27eabe6633bf1a117a8fd14,java,6.5,1,197,https://github.com/apache/geode/compare/15ae789b19fc8e58d27eabe6633bf1a117a8fd14…954ccb545d24a9c9a35cbd84023a4d7e07032de0
+VULAS-M,CVE-2011-4461,https://github.com/eclipse/jetty.project,979d6dbbf9416b1a0ad965e2b8a3b11a2d208627,CWE-310,MEDIUM,2011,eclipse,jetty.project,12/7/12 23:03,367638 throw exception for excess form keys,d66f45f2daef85c71a1d5d8e4987036fb8f871d9,java,5,1,939,https://github.com/eclipse/jetty.project/compare/d66f45f2daef85c71a1d5d8e4987036fb8f871d9…979d6dbbf9416b1a0ad965e2b8a3b11a2d208627
+VULAS-M,CVE-2014-0054,https://github.com/spring-projects/spring-framework,edba32b3093703d5e9ed42b5b8ec23ecc1998398,CWE-352,MEDIUM,2014,spring-projects,spring-framework,2/18/14 23:48,"Add processExternalEntities support to OXM
+
+Update OXM AbstractMarshaller to support processing of external
+XML entities. By default external entities will not be processed.
+
+Issue: SPR-11376",f053f60630b3251500bb7ad321853d8679947e29,java,6.8,1,95,https://github.com/spring-projects/spring-framework/compare/f053f60630b3251500bb7ad321853d8679947e29…edba32b3093703d5e9ed42b5b8ec23ecc1998398
+VULAS-M,CVE-2014-1904,https://github.com/spring-projects/spring-framework,741b4b229ae032bd17175b46f98673ce0bd2d485,CWE-79,MEDIUM,2014,spring-projects,spring-framework,2/13/14 19:36,"Add encoding for the default action in FormTag
+
+Issue: SPR-11426",0cb27f4bc50e4ce78c64176a0aec1291754cabfd,java,4.3,0,1,https://github.com/spring-projects/spring-framework/compare/0cb27f4bc50e4ce78c64176a0aec1291754cabfd…741b4b229ae032bd17175b46f98673ce0bd2d485
+VULAS-M,PT-2013-65,https://github.com/eclipse/jetty.project,0fac295cd82b59085d4aae5ca6792b2cda752455,,,2013,eclipse,jetty.project,9/27/13 5:50,"418014 Handle NTFS canonical exceptions during alias check
+
+replaced URL returns with URI",948d97c60c112fb0bf59f1314c9c06c4eee80aaf,java,,1,713,https://github.com/eclipse/jetty.project/compare/948d97c60c112fb0bf59f1314c9c06c4eee80aaf…0fac295cd82b59085d4aae5ca6792b2cda752455
+VULAS-M,CVE-2016-5018,https://github.com/apache/tomcat,492cbc9a1e33e6d356438bcba4fa2b67680d245a,CWE-254,MEDIUM,2016,apache,tomcat,9/12/16 8:27,"Fix https://bz.apache.org/bugzilla/show_bug.cgi?id=60101
+Remove preloading of the class that was deleted
+
+git-svn-id: https://svn.apache.org/repos/asf/tomcat/tc7.0.x/trunk@1760309 13f79535-47bb-0310-9956-ffa450edef68",4c84818cf2f5494cb14a740d440fb28d0aaa22d0,java,5,1,216,https://github.com/apache/tomcat/compare/4c84818cf2f5494cb14a740d440fb28d0aaa22d0…492cbc9a1e33e6d356438bcba4fa2b67680d245a
