@@ -130,9 +130,9 @@
 % \title{Fixing Vulnerabilities Hinders Maintainability}
 \title{\Sof{TBA - New Titles in the comments}}
 %\title{Coding practices are important to produce secure software: Teach them to your students and developers!}
-%\title{The reason why you should be using coding practices: safer software.}
+%\title{The reason why you should be applying coding practices: safer software.}
 %\title{What is the impact of security patches in software evolution?}
-%\title{Hey, security engineers! You should pay more attention to your patches.}
+%\title{Hey, developers! You should pay more attention to your patches.}
 
 \author{
     Anonymou(s) Author(s)
@@ -195,11 +195,13 @@ discovered, and fixed, almost weekly as disclosed by the Zero Day Initiative
 website\footnote{Zero Day Initiative website available at
 \url{https://www.zerodayinitiative.com/advisories/published/} (Accessed on \today{})}.
 These vulnerabilities are gateways for attackers to penetrate systems and 
-exploit their resources. \Sof{Update example for 2020 - outdated}As an example, in the last week of January $2019$, 
-a severe vulnerability in Apple FaceTime was revealed\footnote{FaceTime vulnerability 
-details available at \url{https://thehackernews.com/2019/01/apple-facetime-privacy-hack.html} (Accessed on \today{})} --- the outcome of a design/logical
-flaw that allowed callers to see and hear others without them picking up the call.\Sof{---}%\cite{cacheOut}.
+exploit their resources. As an example, at the beginning of $2020$, academics published a 
+new execution attack (CacheOut) capable of leaking data from Intel CPUs across many 
+security boundaries~\cite{cacheOut} $-$ a processor bug that the company attempted to 
+address in previous generations and that makes every user using a CPU released before Q$4$ $2018$ vulnerable. Although not a software bug, software can mitigate this type of issues
+at the cost of features and/or performance.
 %
+
 In $2011$, the International Organization for Standardization (ISO) issued an
 update for software product quality ISO/IEC 25010 considering
 \emph{Security} as one of the main software product quality characteristics~\cite{iso:2011}. 
@@ -213,7 +215,6 @@ efficiency with which a software product or system can be modified to improve
 it, correct it or adapt it to changes in environment, and in requirements'' on
 software quality ISO/IEC 25010~\cite{iso:2011}. Novel tools have been built to 
 detect automatically software vulnerabilities (e.g., FindBugs, Infer and more). 
-%
 Despite these efforts, improving software security is not a trivial task and requires 
 implementing patches that might affect software maintainability. 
 Our suspiciousness is that some of the these patches may have a negative 
@@ -235,11 +236,13 @@ vulnerabilities on software maintenance across open-source software.
 % maintainability when trying to improve software security?}, it is what we want to
 % investigate.
 %
-As ISO does not provide any specific guidelines or formulas to calculate 
+
+
+As ISO does not provide any specific guidelines/formulas to calculate 
 maintainability, we resort to Software Improvement Group (SIG)'s web-based source 
 code analysis service Better Code Hub (BCH) to compute the software compliance 
 with a set of $10$ guidelines/metrics to produce quality software 
-based in ISO/IEC 25010~\cite{Visser:2016:OREILLY}. The code metrics used by BCH 
+based in ISO/IEC $25010$~\cite{Visser:2016:OREILLY}. The code metrics used by BCH 
 were empirically validated in previous work~\cite{Bijlsma:2012:FIR:2317098.2317124, 8530041, cruz2019energyoriented}. 
 There are other well-known standards and models that have been proposed
 to increase software security: Common Criteria~\cite{common:2009} which received
@@ -251,13 +254,13 @@ first steps taken by SIG to introduce security on their maintainability model).
 %
 We use BCH's toolset to provide an assessment of maintainability in 
 software mainly due to the broad number of metrics used.
+
 From a methodological 
 perspective, we leveraged a dataset of $1335$ security patches collected from open-source 
 software. We calculate software maintainability before and after the patch to measure its 
 impact. This empirical study presents evidence that changes 
-applied in the code bases to patch vulnerabilities affect code maintainability. 
-Especially, for patches that address Path Traversal (CWE-22),
-Information Exposure (CWE-200) and Resource Management Errors (CWE-399). This is important work
+applied in the code bases to patch vulnerabilities affect code maintainability.\Sof{fix}Especially, for patches that address Path Traversal (CWE-22),
+Information Exposure (CWE-200) and Resource Management Errors (CWE-399). \Sof{-END-}This is important work
 because there is still little information about the impact of security patches on the software
 maintainability. With this study, 
 we intend to highlight the need for tools to predict the impact of patches on 
@@ -270,6 +273,7 @@ security-related code evolution in computer curricula.
 %based on the McCabe Complexity~\cite{1702388} and \emph{Keep your code base Small}
 %based on the idea that smaller code bases are easier to maintain and less prone to defects~\cite{Visser:2016:OREILLY}.
 %
+
 The main contributions of the present work are:
 %
 \begin{itemize}
@@ -305,21 +309,20 @@ performant one. Thus, we want to understand how security patches impact
 the maintainability of software. 
 
 %%%%% NEEDS REVIEW
-\Sof{Improve for 2nd version}
 As an example, consider the patch of the TLS state-machine protocol implementation in 
 OpenSSL\footnoteref{openssl} to address a vulnerability where an attacker could cause a Denial-of-Service
 (DoS) attack by crafting TLS messages to trigger memory allocations
 corresponding to large length values. This vulnerability is listed at the Common
-Vulnerabilities and Exposures dictionary as CVE-$2016$-$6307$ \footnote{CVE-$2016$-$6307$
+Vulnerabilities and Exposures dictionary as CVE-$2016$-$6307$~\footnote{CVE-$2016$-$6307$
 details available at \url{http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6307}
 (Accessed on \today{})}. It is amongst the vulnerabilities studied in our
-evaluation. The snippet, in Listing~\ref{lst:vuln}, presents the changes performed on the
+research. The snippet, in Listing~\ref{lst:vuln}, presents the changes performed on the
 \emph{ssl/statem/statem.c} file\footnote{CVE-$2016$-$6307$ fix available  at
 \url{https://github.com/openssl/openssl/commit/c1ef7c971d0bbf117c3c80f65b5875e2e7b024b1}
 (Accessed on \today{})} by the OpenSSL developers to patch the vulnerability. Every SSL/TLS connection begins with a handshake which is responsible by the
 negotiation between the two parties. The problem in
 CVE-$2016$-$6307$ is that due to a flaw in the logic of version $1.1.0$,
-memory for a message is allocated too early, prior to the excessive
+the memory for a message is allocated too early, prior to the excessive
 message length check which can lead to a Denial of Service through memory
 exhaustion if an attacker triggers up a certain message length to be allocated to service a
 connection. In this case, there is only a security impact if the application does not call  \texttt{SSL\_free()} in a timely manner in the
@@ -328,10 +331,10 @@ or, the application is working in a constrained environment where there
 is very little free memory;
 or, the attacker initiates multiple connection attempts such that there
 are multiple connections in a state where memory has been allocated for
-the connection, \texttt{SSL\_free()} has not yet been called, and there is
+the connection, when \texttt{SSL\_free()} has not yet been called, and there is
 insufficient memory to service the multiple requests. Except in the instance of $1$ above, any Denial Of Service is likely to
 be transitory because as soon as the connection fails the memory is
-subsequently freed again in the \texttt{SSL\_free()} call. However there is an
+subsequently freed again in the \texttt{SSL\_free()} call. However, there is an
 increased risk during this period of application crashes due to the lack
 of memory - which would then mean a more serious Denial of Service.
 
@@ -340,7 +343,7 @@ of memory - which would then mean a more serious Denial of Service.
 \setcounter{lstannotation}{0}
 \begin{lstlisting}[style={CStyle}, caption={Fix provided by OpenSSL developers to the
 \\CVE-2016-6307 vulnerability for file ssl/statem/statem.c},label={lst:vuln}]
- static SUB_STATE_RETURN read_state_machine(SSL *s){ /*!\annotation{lst:func1}!*/
+ static SUB_STATE_RETURN read_state_machine(SSL *s){ 
  // [snip]
 +   if (!SSL_IS_DTLS(s) && s->s3->tmp.message_size > 0
 +        && !BUF_MEM_grow_clean(s->init_buf, 
@@ -357,17 +360,17 @@ of memory - which would then mean a more serious Denial of Service.
 \setcounter{lstannotation}{0}
 \begin{lstlisting}[style={CStyle}, caption={Fix provided by OpenSSL developers to the
 \\CVE-2016-6307 vulnerability for file ssl/statem/statem\_lib.c},label={lst:vuln2}]
- int tls_get_message_header(SSL *s, int *mt){  /*!\annotation{lst:func3}!*/
+ int tls_get_message_header(SSL *s, int *mt){   
  // [snip]
   l = RECORD_LAYER_get_rrec_length(&s->rlayer) + 
         SSL3_HM_HEADER_LENGTH;
-- if (l && !BUF_MEM_grow_clean(s->init_buf, (int)l)) { /*!\annotation{lst:func4}!*/
+- if (l && !BUF_MEM_grow_clean(s->init_buf, (int)l)) { /*!\annotation{lst:func3}!*/
 -      SSLerr(SSL_F_TLS_GET_MESSAGE_HEADER, ERR_R_BUF_LIB);
 -      goto err;
    }
  // [snip]
  
-- if (l && !BUF_MEM_grow_clean(s->init_buf, (int)l +SSL3_HM_HEADER_LENGTH)) {  /*!\annotation{lst:func5}!*/  
+- if (l && !BUF_MEM_grow_clean(s->init_buf, (int)l +SSL3_HM_HEADER_LENGTH)) {  /*!\annotation{lst:func4}!*/
 -     SSLerr(SSL_F_TLS_GET_MESSAGE_HEADER, ERR_R_BUF_LIB);
 -     goto err;
 - }
@@ -393,11 +396,11 @@ of memory - which would then mean a more serious Denial of Service.
 
 %The code changes performed to fix the vulnerability are:
 
-~\ref{lst:func1} \texttt{read\_state\_machine} function abstracts a sub-state-machine
+The \texttt{read\_state\_machine} function, presented in Listing \ref{lst:vuln}, abstracts a sub-state-machine
 to handle the messages exchanged between peers. When messages are larger than
 what is defined by default for TLS, it may trigger a memory corruption issue since the allocation
-of this resource was being verified very early in the application's flow.  Listing ~\ref{lst:vuln2} presents those verifications (lines $5$-$7$ and line $11$-$13$).
-These verifications of size allocation were substituted by the one presented in Listing~\ref{lst:vuln}.
+of this resource was being verified very early in the application's flow, using the \texttt{tls\_get\_message\_header} function presented in Listing ~\ref{lst:vuln2} (\ref{lst:func3} and \ref{lst:func4}).
+These verifications of size allocation were substituted by the one presented in Listing~\ref{lst:vuln}(\ref{lst:func2}).
 
 %
 Although checking the maximum size of a message seems an elementary
@@ -911,22 +914,22 @@ To validate the maintainability differences in different groups of commits
 test with the significance level $\alpha = 0.05$~\cite{10.2307/3001968}. In
 other words, we test the null hypothesis that the maintainability difference
 between pairs of versions $v_{s-1}$, $v_s$ (i.e., before and after a
-security-commit) come from the same distribution. Nevertheless, this test has a
-limitation: it does not consider the groups of commits with a zero-difference
-maintainability. In $1959$, Pratt provided an improvement to the test to solve
-this issue making the test more robust. Thus, we use a version of the Wilcoxon
-test that incorporates the cases where maintainability is different from zero~\cite{10.2307/2282543}.
+security-commit) come from the same distribution. Nevertheless, this test 
+has a limitation: it does not consider the groups of commits with a 
+zero-difference maintainability. In $1959$, Pratt provided an improvement to 
+the test to solve this issue making the test more robust. Thus, we use a 
+version of the Wilcoxon test that incorporates the cases where 
+maintainability is different from zero~\cite{10.2307/2282543}.
 The Wilcoxon test requires a distribution size of at leat $20$ instances.
-To understand the effect-size, as
-advocated by the Common-language effect sizes\cite{graw:1992}, we compute the
-mean difference, the median of the difference, and the percentage of cases that
-reduce maintainability.
+To understand the effect-size, as advocated by the Common-language effect 
+sizes\cite{graw:1992}, we compute the mean difference, the median of the 
+difference, and the percentage of cases that reduce maintainability.
 %
 \section{Results}\label{sec:results}
 
-This study evaluates $1031$ security and baseline commits
-from $265$ distinct open-source projects. The following section presents the
-results obtained for each research question.
+This study evaluates $1031$ security and baseline commits from $265$ 
+distinct open-source projects. The following section presents the results 
+obtained for each research question.
 
 \textit{\textbf{RQ1: What is the impact of security patches on the
 maintainability of open-source software?}}
@@ -950,10 +953,10 @@ maintainability of open-source software?}}
 \end{figure}
 
 Maintainability is being calculated as the mean of the guidelines computed
-by BCH. Figure~\ref{fig:guidelines} shows the impact of security patches on each 
-guideline individually. For each type of
-guideline, three types of impact of patches in the software maintainability
-are presented: \emph{negative}, maintainability decreases (\emph{red});
+by BCH. Figure~\ref{fig:guidelines} shows the impact of security patches on 
+each guideline individually. For each type of guideline, three types of 
+impact of patches in the software maintainability are presented: 
+\emph{negative}, maintainability decreases (\emph{red});
 \emph{none}, maintainability remains the same (\emph{yellow}); and,
 \emph{positive}, maintainability increases (\emph{green}). Next to each
 type of guideline, it is presented the mean ($\overline{x}$) and median (M)
@@ -962,16 +965,21 @@ Paired Wilcoxon signed-rank test.
 
 Regarding the impact of security patches for each guideline, we observe
 that overall patches have a significant positive impact in $6$ guidelines: 
-\emph{Write Clean Code} (p-value = $4.9$x$10^{-54}$), \emph{Keep Architecture 
-Components Balanced} (p-value = $5.26$x$10^{-71}$), \emph{Couple Architecture 
-Components Loosely} (p-value = $2.43$x$10^{-07}$), \emph{Keep Unit Interfaces 
-Small} (p-value = $2.25$x$10^{-13}$), \emph{ Write Code Once} (p-value = 
-$7.9$x$10^{-35}$). However, for each of these guidelines we also observe a 
+\emph{Write Clean Code} (p-value = $5.49$x$10^{-54}$), \emph{Keep 
+Architecture Components Balanced} (p-value = $5.30$x$10^{-71}$), 
+\emph{Couple Architecture Components Loosely} (p-value = $2.24$x$10^{-07}$), 
+\emph{Separate Concerns in Modules} (p-value = $0.399$), \emph{Keep Unit 
+Interfaces Small} (p-value = $1.94$x$10^{-13}$), \emph{Write Code Once} 
+(p-value = $1.03$x$10^{-34}$). 
+
+
+However, for each guideline we also observe a 
 substantial number of cases where the maintainability suffers a negative 
-impact $-$ from $10\%$ to $35\%$ $-$ which highlights the need of better 
-practices/techniques/tools to produce software. \emph{Separate Concerns in Module} 
-guideline also follows the same results but without any statistical 
-significance since the p-value is higher than $0.05$. According to the 
+impact $-$ from $10\%$ to $40\%$ $-$ which highlights the need of better 
+practices/techniques/tools to produce software. \emph{Separate Concerns in 
+Module} guideline does not the p-value is higher than $0.05$. 
+
+According to the 
 results, \emph{Write Simple Units of Code} (p-value=$0.015$ and $38.2\%$/$396$ 
 of negative cases) and \emph{Write Short Units of Code} (p-value=$0.029$ and 
 $38.3\%$/$397$ of negative cases) are the most affected affected guidelines.
