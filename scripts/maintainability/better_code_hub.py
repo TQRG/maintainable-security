@@ -64,6 +64,7 @@ def external_analyze_commit(user, project, commit_sha):
     """Analyze project commit without write privileges."""
     try:
         forked_repo = ghutils.git_fork(user, project)
+        log.info(forked_repo)
         log.info(f"Repo {user}/{project} Forked")
         result = analyze_commit(forked_repo.owner.login, project, commit_sha)
     except ProjectNotSupported:
@@ -150,14 +151,6 @@ def collect_report(user, project):
         raise StillProcessing
     raise BetterCodeHubException
 
-def compute_maintainability_score_old(report):
-    """Compute maintainability score."""
-    guidelines_scores = [
-        1 - guideline.get('percentageOfNonCompliantCode')
-        for guideline in report.get("analysisResults")
-    ]
-    return sum(guidelines_scores)/len(guidelines_scores)
-
 def compute_maintainability_score(report):
     """Compute maintainability score."""
     total_loc = get_project_loc(report)
@@ -182,7 +175,6 @@ def _compute_maintainability_for_guideline(guideline, total_loc):
         return 0
     if guideline['guideline'] == "Keep Your Codebase Small":
         return 0
-        
     volumes = guideline.get('qualityProfileVolume')
     if guideline['guideline'] == "Keep Architecture Components Balanced":
         total_compoments = sum(volumes)

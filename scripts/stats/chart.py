@@ -35,36 +35,38 @@ def save_report(path, name):
 
 def main_comparison_chart(reports, df_sec, df_reg):    
 
-        test = (tests.hypothesis_test(df_sec['diff']), tests.hypothesis_test(df_reg['diff']))
-        print(test)
-        total_sec, total_reg = data.filter_results(df_sec), data.filter_results(df_reg)
-        print(total_sec)
-        print(total_reg)
-        
-        db_size = len(df_sec)        
+        test = pd.concat((tests.hypothesis_test(df_reg['diff'], 'reg'), 
+                            tests.hypothesis_test(df_sec['diff'], 'sec')),
+                            ignore_index=True)
+                        
+        total_sec, total_reg = data.filter_results(df_sec), data.filter_results(df_reg)        
+        db_size = len(df_sec)  
 
-        d = {'neg' : pd.Series([total_reg['neg']/db_size, total_sec['neg']/db_size]),
-            'pos' : pd.Series([total_reg['pos']/db_size, total_sec['pos']/db_size]),
-            'nul' : pd.Series([total_reg['nul']/db_size, total_sec['nul']/db_size]),
-            'type' : pd.Series(['Regular Change','Security Change'])}
+        rep = {'neg' : pd.Series([total_reg['neg']/db_size, total_sec['neg']/db_size]),
+                'neg_abs' : pd.Series([total_reg['neg'], total_sec['neg']]),
+                'pos' : pd.Series([total_reg['pos']/db_size, total_sec['pos']/db_size]),
+                'pos_abs' : pd.Series([total_reg['pos'], total_sec['pos']]),
+                'nul' : pd.Series([total_reg['nul']/db_size, total_sec['nul']/db_size]),
+                'nul_abs' : pd.Series([total_reg['nul'], total_sec['nul']]),
+                'type' : pd.Series(['Regular Change','Security Change'])}
         
-        df, idx, fig, ax = config_report(d, len(d['type']), 7, 6, 111)
+        df, idx, fig, ax = config_report(rep, len(rep['type']), 7, 6, 111)
         
         set_bars(df, idx)
-        set_ticks(df, idx, 9)
+        set_ticks(df, idx, 9) 
         
         plt.subplots_adjust(left=0.2, right=0.85, top=0.9, bottom=0.1)
         plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.07), fancybox=True, ncol=3, fontsize=8)
 
         y = 1.2
-        for l in test:
-            p = format_p_value(l['pvalue'][0])
-            box_text = '$\overline{x}$='+ '{:.{}f}'.format(l['mean'][0], 2) + '\nM=' + '{:.{}f}'.format(l['med'][0], 2) + '\np' + p
+        for i, r in test[::-1].iterrows():
+            p = format_p_value(r['pvalue'])
+            box_text = '$\overline{x}$='+ '{:.{}f}'.format(r['mean'], 2) + '\nM=' + '{:.{}f}'.format(r['med'], 2) + '\np' + p
             ax.text(0.4, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':4}, fontsize=10)
             y -= 1.1
         
         save_report(reports, 'main_comparison.pdf')
-
+        test.join(df).to_csv(reports+'/comparison_stats_report.csv', index=False)
 
 def main_per_cwe_spec_chart(reports, cwe, df, wilcoxon = True):
     
@@ -76,19 +78,18 @@ def main_per_cwe_spec_chart(reports, cwe, df, wilcoxon = True):
 
     cwes = data.add_others_group(df, tests.filter_small_cwe_groups(df), 'CWE', 'MISC')
     results = {c:data.filter_results_per_field(df, c, 'CWE') for c in cwes}
-    print(results)
-    test_cwe = [tests.hypothesis_test(df[df['CWE'] == c]['diff']) for c in cwes if wilcoxon]
+    test = pd.concat([tests.hypothesis_test(df[df['CWE'] == c]['diff'], c) for c in cwes], ignore_index=True)
+    
+    rep = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in cwes]),
+        'neg_abs': pd.Series([results[i][0] for i in cwes]),
+        'pos': pd.Series([results[i][1]/sum(results[i]) for i in cwes]),
+        'pos_abs': pd.Series([results[i][1] for i in cwes]),
+        'nul': pd.Series([results[i][2]/sum(results[i]) for i in cwes]),
+        'nul_abs': pd.Series([results[i][2] for i in cwes]),
+        'N': pd.Series([sum(results[i]) for i in cwes]),
+        'type': pd.Series(cwes)}
 
-    d = {'neg': pd.Series([results[i][0]/sum(results[i]) if sum(results[i]) != 0 else 0 for i in cwes]),
-        'pos': pd.Series([results[i][1]/sum(results[i]) if sum(results[i]) != 0 else 0 for i in cwes]),
-        'nul': pd.Series([results[i][2]/sum(results[i]) if sum(results[i]) != 0 else 0 for i in cwes]),
-        'N': pd.Series([sum(results[i]) for i in cwes if wilcoxon]),
-        'mean': pd.Series([i['mean'][0] for i in test_cwe if wilcoxon]),
-        'med': pd.Series([i['med'][0] for i in test_cwe if wilcoxon]),
-        'p': pd.Series([i['pvalue'][0] for i in test_cwe if wilcoxon]),
-        'type': pd.Series([i for i in cwes])}
-
-    df, idx, fig, ax = config_report(d, len(d['type']), 5, 10, 111)
+    df, idx, fig, ax = config_report(rep, len(rep['type']), 5, 8, 111)
 
     set_bars(df, idx)
     set_ticks(df, idx, 9)
@@ -96,16 +97,16 @@ def main_per_cwe_spec_chart(reports, cwe, df, wilcoxon = True):
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.04), fancybox=True, ncol=3, fontsize=8)
     
     if wilcoxon:
-        boxes_start=5 
-        for l in df[::-1].iterrows():
-            p = format_p_value(l[1]['p'])
-            box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
+        boxes_start=len(idx)-1
+        for i, r in test.join(df)[::-1].iterrows():
+            p = format_p_value(r['pvalue'])
+            box_text = 'N='+str(sum([r['pos_abs'], r['neg_abs'], r['nul_abs']]))+'\n$\overline{x}$='+ '{:.{}f}'.format(r['mean'], 2) + '\nM=' + '{:.{}f}'.format(r['med'], 2) + '\np' + p
             ax.text(0.5, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=9)
             boxes_start -= 1.0 
 
     save_report(reports, 'main_per_cwe_spec.pdf')
-
-
+    test.join(df).to_csv(reports+'/cwe_spec_test_report.csv', index=False)
+    
 def main_per_cwe_chart(reports, df, wilcoxon = True):
     
     composites = enum.read_cwe_composites('stats/CWE')
@@ -120,50 +121,55 @@ def main_per_cwe_chart(reports, df, wilcoxon = True):
     
     cwes = data.add_others_group(df, tests.filter_small_cwe_groups(df), 'CWE', 'MISC') 
     results = {c:data.filter_results_per_field(df, c, 'CWE') for c in cwes}          
-    test_cwe = [tests.hypothesis_test(df[df['CWE'] == c]['diff']) for c in cwes]
-    
-    d = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in cwes]),
+    test = pd.concat([tests.hypothesis_test(df[df['CWE'] == c]['diff'], c) for c in cwes], ignore_index=True)
+        
+    rep = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in cwes]),
+        'neg_abs': pd.Series([results[i][0] for i in cwes]),
         'pos': pd.Series([results[i][1]/sum(results[i]) for i in cwes]),
+        'pos_abs': pd.Series([results[i][1] for i in cwes]),
         'nul': pd.Series([results[i][2]/sum(results[i]) for i in cwes]),
-        'N': pd.Series([sum(results[i]) for i in cwes if wilcoxon]),
-        'mean': pd.Series([i['mean'][0] for i in test_cwe if wilcoxon]),
-        'med': pd.Series([i['med'][0] for i in test_cwe if wilcoxon]),
-        'p': pd.Series([i['pvalue'][0] for i in test_cwe if wilcoxon]),
-        'type': pd.Series([i for i in cwes])}
+        'nul_abs': pd.Series([results[i][2] for i in cwes]),
+        'N': pd.Series([sum(results[i]) for i in cwes]),
+        'type': pd.Series(cwes)}
 
-    df, idx, fig, ax = config_report(d, len(d['type']), 5, 10, 111)
+    df, idx, fig, ax = config_report(rep, len(rep['type']), 5, 10, 111)
     
     set_bars(df, idx)
     set_ticks(df, idx, 9)
     plt.subplots_adjust(left=0.25, right=0.85, top=0.9, bottom=0.06)
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.04), fancybox=True, ncol=3, fontsize=8)
 
-    boxes_start=7.1
-    for l in df[::-1].iterrows():
-        p = format_p_value(l[1]['p'])
-        box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
+    boxes_start=6
+    for i, r in test.join(df)[::-1].iterrows():
+        p = format_p_value(r['pvalue'])
+        box_text = 'N='+str(sum([r['pos_abs'], r['neg_abs'], r['nul_abs']]))+'\n$\overline{x}$='+ '{:.{}f}'.format(r['mean'], 2) + '\nM=' + '{:.{}f}'.format(r['med'], 2) + '\np' + p
         ax.text(0.5, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=9)
         boxes_start -= 1
     
     save_report(reports, 'main_per_cwe.pdf')
+    test.join(df).to_csv(reports+'/cwe_test_report.csv', index=False)
 
 def main_per_guideline_chart(reports, df, wilcoxon = True):
     
-    results = {g:data.filter_results_per_guideline(df, g) for g in enum.guidelines}
-    keys = results.keys() 
-    test_g = [tests.hypothesis_test(df[i+'-diff']) for i in keys]
+    results = {g:data.filter_results_per_guideline(df, g) 
+                for g in enum.guidelines}    
     
-    d = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in keys]),
+    keys = results.keys() 
+    
+    test = pd.concat([tests.hypothesis_test(df[i+'-diff'], i) 
+                            for i in keys],
+                            ignore_index=True)
+    
+    rep = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in keys]),
+        'neg_abs': pd.Series([results[i][0] for i in keys]),
         'pos': pd.Series([results[i][1]/sum(results[i]) for i in keys]),
+        'pos_abs': pd.Series([results[i][1] for i in keys]),
         'nul': pd.Series([results[i][2]/sum(results[i]) for i in keys]),
-        'N': pd.Series([sum(results[i]) for i in keys if wilcoxon]),
-        'mean': pd.Series([i['mean'][0] for i in test_g if wilcoxon]),
-        'med': pd.Series([i['med'][0] for i in test_g if wilcoxon]),
-        'p': pd.Series([i['pvalue'][0] for i in test_g if wilcoxon]),
+        'nul_abs': pd.Series([results[i][2] for i in keys]),
+        'N': pd.Series([sum(results[i]) for i in keys]),
         'type': pd.Series([enum.guidelines[i] for i in keys])}
         
-        
-    df, idx, fig, ax = config_report(d, len(d['type']), 5, 7, 111)
+    df, idx, fig, ax = config_report(rep, len(rep['type']), 5, 7, 111)
     
     set_bars(df, idx)
     set_ticks(df, idx, 9)
@@ -173,13 +179,14 @@ def main_per_guideline_chart(reports, df, wilcoxon = True):
     
     if wilcoxon:
         boxes_start = 7
-        for l in df[::-1].iterrows():    
-            p = format_p_value(l[1]['p'])
-            box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
+        for i, r in test.join(df)[::-1].iterrows():    
+            p = format_p_value(r['pvalue'])
+            box_text = 'N='+str(sum([r['pos_abs'], r['neg_abs'], r['nul_abs']]))+'\n$\overline{x}$='+ '{:.{}f}'.format(r['mean'], 2) + '\nM=' + '{:.{}f}'.format(r['med'], 2) + '\np' + p
             ax.text(0.57, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=8)
             boxes_start -= 1
     
     save_report(reports, 'main_per_guideline.pdf')
+    test.join(df).to_csv(reports+'/guidelines_test_report.csv', index=False)
 
 def main_per_language_chart(reports, df, wilcoxon = True):
     
@@ -188,70 +195,76 @@ def main_per_language_chart(reports, df, wilcoxon = True):
         if lang != None:
             df.at[i, 'Language'] = lang
     
-    langs = tests.filter_small_sample_groups(df, 'Language')
-    langs = data.add_others_group(df, langs, 'Language', 'Other')
+    langs = data.add_others_group(df,
+                                tests.filter_small_sample_groups(df, 'Language'), 
+                                'Language', 
+                                'Other')
         
     results = {l:data.filter_results_per_field(df, l, 'Language') for l in langs}
-    test_lang = [tests.hypothesis_test(df[df['Language'] == i]['diff']) for i in langs]
-    
-    d = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in langs]),
+    test = pd.concat([tests.hypothesis_test(df[df['Language'] == i]['diff'], i) 
+                            for i in langs],
+                            ignore_index=True)
+                                
+    rep = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in langs]),
+        'neg_abs': pd.Series([results[i][0] for i in langs]),
         'pos': pd.Series([results[i][1]/sum(results[i]) for i in langs]),
+        'pos_abs': pd.Series([results[i][1] for i in langs]),
         'nul': pd.Series([results[i][2]/sum(results[i]) for i in langs]),
-        'N': pd.Series([sum(results[i]) for i in langs if wilcoxon]),
-        'mean': pd.Series([i['mean'][0] for i in test_lang if wilcoxon]),
-        'med': pd.Series([i['med'][0] for i in test_lang if wilcoxon]),
-        'p': pd.Series([i['pvalue'][0] for i in test_lang if wilcoxon]),
-        'type': pd.Series([i for i in langs])}
+        'nul_abs': pd.Series([results[i][2] for i in langs]),
+        'N': pd.Series([sum(results[i]) for i in langs]),
+        'type': pd.Series(langs)}
     
-    df, idx, fig, ax = config_report(d, len(d['type']), 6, 8, 111)
+    df, idx, fig, ax = config_report(rep, len(rep['type']), 6, 8, 111)
     
     set_bars(df, idx)
     set_ticks(df, idx, 9)    
     plt.subplots_adjust(left=0.25, right=0.85, top=0.9, bottom=0.06)
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.04), fancybox=True, ncol=3, fontsize=8)
-
+    
     boxes_start = 6
-    for l in df[::-1].iterrows():
-        p = format_p_value(l[1]['p'])
-        box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
+    for i, r in test.join(df)[::-1].iterrows():
+        p = format_p_value(r['pvalue'])
+        box_text = 'N='+str(sum([r['pos_abs'], r['neg_abs'], r['nul_abs']]))+'\n$\overline{x}$='+ '{:.{}f}'.format(r['mean'], 2) + '\nM=' + '{:.{}f}'.format(r['med'], 2) + '\np' + p
         ax.text(0.67, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=9)
         boxes_start -= 1
         
     save_report(reports, 'main_per_language.pdf') 
-
+    test.join(df).to_csv(reports+'/language_test_report.csv', index=False)
+    
 def main_per_severity(reports, df, wilcoxon = True):
     
     y_axis = data.add_others_group(df, enum.severity, 'Severity', 'UNKNOWN')
     
     results = {s:data.filter_results_per_field(df, s, 'Severity') for s in y_axis}        
-    test_sev = [tests.hypothesis_test(df[df['Severity'] == i]['diff']) for i in y_axis]
+    test = pd.concat([tests.hypothesis_test(df[df['Severity'] == i]['diff'], i) for i in y_axis], ignore_index=True)
         
-    d = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in y_axis]),
+    rep = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in y_axis]),
+        'neg_abs': pd.Series([results[i][0] for i in y_axis]),
         'pos': pd.Series([results[i][1]/sum(results[i]) for i in y_axis]),
+        'pos_abs': pd.Series([results[i][1] for i in y_axis]),
         'nul': pd.Series([results[i][2]/sum(results[i]) for i in y_axis]),
-        'N': pd.Series([sum(results[i]) for i in y_axis if wilcoxon]),
-        'mean': pd.Series([i['mean'][0] for i in test_sev if wilcoxon]),
-        'med': pd.Series([i['med'][0] for i in test_sev if wilcoxon]),
-        'p': pd.Series([i['pvalue'][0] for i in test_sev if wilcoxon]),
-        'type': pd.Series([i for i in y_axis])}
+        'nul_abs': pd.Series([results[i][2] for i in y_axis]),
+        'N': pd.Series([sum(results[i]) for i in y_axis]),
+        'type': pd.Series(y_axis)}
 
-    df, idx, fig, ax = config_report(d, len(d['type']), 6, 6, 111)
+    df, idx, fig, ax = config_report(rep, len(rep['type']), 6, 6, 111)
     
     set_bars(df, idx)
-    
     set_ticks(df, idx, 9)
+    
     plt.subplots_adjust(left=0.05, right=0.85, top=0.9, bottom=0.06)
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.08), fancybox=True, ncol=3, fontsize=8)
     
     boxes_start = 3
-    for l in df[::-1].iterrows():
-        p = format_p_value(l[1]['p'])
-        box_text = 'N='+str(l[1]['N'])+'\n$\overline{x}$='+ '{:.{}f}'.format(l[1]['mean'], 2) + '\nM=' + '{:.{}f}'.format(l[1]['med'], 2) + '\np' + p
+    for i, r in test.join(df)[::-1].iterrows():
+        p = format_p_value(r['pvalue'])
+        box_text = 'N='+str(sum([r['pos_abs'], r['neg_abs'], r['nul_abs']]))+'\n$\overline{x}$='+ '{:.{}f}'.format(r['mean'], 2) + '\nM=' + '{:.{}f}'.format(r['med'], 2) + '\np' + p
         ax.text(0.5, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=9)
         boxes_start -= 1
         
     save_report(reports, 'main_per_severity.pdf')
-
+    test.join(df).to_csv(reports+'/severity_test_report.csv', index=False)
+    
 def report_guidelines_violin_plot(reports, filename):
     
     df = pd.read_csv(filename)

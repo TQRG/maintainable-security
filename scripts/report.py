@@ -78,14 +78,9 @@ def export(secdb, regdb, results, cache_path):
     cache = bch.BCHCache(cache_path)
     
     df_sec, sec_res_path = main_calculation_by_db(secdb, results, cache, 'security')
-    df_reg, reg_res_path = main_calculation_by_db(regdb, results, cache, 'regular')
-    
-    ids = df_reg[~df_reg['diff'].notnull()].index
-    
-    df_reg = df_reg.drop(ids) 
-    df_sec = df_sec.drop(ids)
-        
     df_sec.to_csv(sec_res_path, index=False)
+    
+    df_reg, reg_res_path = main_calculation_by_db(regdb, results, cache, 'regular')
     df_reg.to_csv(reg_res_path, index=False)
         
 def language(secdb, reports):
@@ -127,7 +122,6 @@ if __name__ == "__main__":
     parser.add_argument('-cache', type=str, metavar='file path', help='cache path')   
     parser.add_argument('-cwe', type=str, metavar='file path', help='cache path')    
      
-    
     args = parser.parse_args()
 
     if args.goal == 'export':  

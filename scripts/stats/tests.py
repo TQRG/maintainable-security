@@ -1,9 +1,9 @@
 import pandas as pd
 from scipy.stats import wilcoxon
 
-def hypothesis_test(diff):
+def hypothesis_test(diff, i):
     test, pvalue = wilcoxon(x=diff, zero_method="pratt")
-    return pd.DataFrame({'test': [test], 
+    return pd.DataFrame({'guideline':[i], 'test': [test], 
                         'med':[pd.DataFrame({'diff': diff})['diff'].median()],
                         'pvalue': [pvalue], 
                         'mean':[pd.DataFrame({'diff': diff})['diff'].mean()]})
