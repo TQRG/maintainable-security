@@ -132,7 +132,7 @@ def main_per_cwe_chart(reports, df, wilcoxon = True):
         'N': pd.Series([sum(results[i]) for i in cwes]),
         'type': pd.Series(cwes)}
 
-    df, idx, fig, ax = config_report(rep, len(rep['type']), 5, 10, 111)
+    df, idx, fig, ax = config_report(rep, len(rep['type']), 5, 8, 111)
     
     set_bars(df, idx)
     set_ticks(df, idx, 9)
