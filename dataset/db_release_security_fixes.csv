@@ -1268,7 +1268,6 @@ See 295806e for the warnings fix.",295806e11945a6fa052438a5ff8ef82cb262b977,gems
 SECBENCH,,https://github.com/joomla/joomla-cms,4f455b16ea0c10d72045d0b15419a16d66046036,,,2007,joomla,joomla-cms,7/13/07 21:48,"Checking database queries for possible SQL injections
 
 git-svn-id: http://joomlacode.org/svn/joomla/development/trunk@7944 6f6e1ebd-4c2b-0410-823f-f34bde69bce9",9c33979356e300c02842dc7a71f4294814b4edb7,php,
-SECBENCH,,https://github.com/php/php-src,4ffedc700dffa57b72ffda663f2a015e0f658451,,,2011,php,php-src,12/14/11 8:56,Added max_input_vars directive to prevent attacks based on hash collisions,4b14c11dcd4d27519b9c03d7acf638f9bface169,c,
 SECBENCH,,https://github.com/openssl/openssl,5059658219465c2e3e15f45c5ca3a0d251cd5fba,,,1999,openssl,openssl,7/12/99 17:15,fix memory leak in s3_clnt.c,d9f0016bc57ac680d30aa1f32c9aef91acfe5aa4,c,
 SECBENCH,CVE-2012-4345,https://github.com/phpmyadmin/phpmyadmin,50d1a4884306ae6705f0bb665ba71da24089b6fe,CWE-79,LOW,2012,phpmyadmin,phpmyadmin,8/9/12 17:08,"Fix for trigger page vulnerability, see PMASA-2012-4",4b133e277f1e7116ff30b2d0000019d1d58749d8,php,3.5
 SECBENCH,,https://github.com/owncloud/core,5155f589fd93132fdeb39b04fc18e30a5643cbf6,,,2012,owncloud,core,5/7/12 7:26,prevent xss in webfinger,cde60dba0f45cbfbe32059a50eb37c41e9da990b,php,
@@ -1595,7 +1594,6 @@ SECBENCH,,https://github.com/MISP/MISP,611317cf81ef5503f7a8d5eebd84bbb5cde09e61,
 
 Thanks to Emanuele Gentili from tigersecurity.pro for reporting this vulnerability",b9f5297b3a3dc6d076852910f3b52719d469509c,php,
 SECBENCH,CVE-2016-9242,https://github.com/exponentcms/exponent-cms,6172f67620ac13fc2f4e9d650c61937d48e9ecb9,CWE-89,MEDIUM,2016,exponentcms,exponent-cms,11/3/16 15:00,fix security vulnerability in ratings; reported by fyth,0ce8b94d745b818bd207933d9a2e7f32587c2c89,php,6.5
-SECBENCH,,https://github.com/php/php-src,617698dfe0f22bfa6041e6f0728136002d30d2bc,,,2015,php,php-src,11/14/15 22:44,Fixed bug #70914 zend_throw_or_error() format string vulnerability,c2773ea02f94f4efa0be33f510088e8395caba1f,c,
 SECBENCH,CVE-2015-1794,https://github.com/openssl/openssl,61e72d761c945e128ca13599a98a187ac23650dd,CWE-189,MEDIUM,2015,openssl,openssl,8/7/15 14:45,"Fix seg fault with 0 p val in SKE
 
 If a client receives a ServerKeyExchange for an anon DH ciphersuite with the
@@ -2709,7 +2707,6 @@ SECBENCH,,https://github.com/lxml/lxml,b14f67842b88f2fcecb24166f1ffb7de156066b1,
 
 --HG--
 branch : trunk",0af4cf494d4ee955366f9d4b059ad1f78ef60185,py,
-SECBENCH,CVE-2016-3074,https://github.com/php/php-src,b15f0ecc0f34364fd7ce924b4164be4e8198ff93,CWE-189,HIGH,2016,php,php-src,4/19/16 5:20,Fix for bug #71912 (libgd: signedness vulnerability),8a4d164c2b33e7a89af13762dbc09941df14a035,c,7.5
 SECBENCH,CVE-2009-3009,https://github.com/josh/rails,b16e0c922344da256ab977fd5e7a7f69e0be90fc,CWE-79,MEDIUM,2009,josh,rails,8/31/09 19:07,"Clean tag attributes before passing through the escape_once logic.
 
 Addresses CVE-2009-3009",9a73630d935e360f3dc896e50dd673afb97cf3b5,rb,4.3
@@ -2722,21 +2719,6 @@ Previously the unit values were trusted leading to potential XSS vulnerabilities
 
 Fixes: CVE-2013-6415",2e3c3a87d81e16a2fed442c1cf31360f75737a83,rb,4.3
 SECBENCH,CVE-2012-1108,https://github.com/taglib/taglib,b3646a07348ffa276ea41a9dae03ddc63ea6c532,CWE-20,MEDIUM,2012,taglib,taglib,6/9/11 16:44,Be more careful when parsing Vorbis Comments,8ed9b0da2cdb2ac870052d4734b622e755430f71,cpp,4.3
-SECBENCH,,https://github.com/php/php-src,b3962ab94052254cec19034b77af0ca040b50fdd,,,2015,php,php-src,3/26/15 18:05,"zend_hash_do_resize: amortizing the cost of compaction
-
-New implementation of hashtables introduced a compaction step which is
-triggered when a hashtable is full but it contains at least one deleted
-bucket. Therefore there is a possibility that a cleverly crafted code can
-trigger this compaction step (which takes time proportional to the size of
-hashtabe) by executing constatnt number of operations. When the hashtable
-is full, deletion and subsequent addition or single element triggers a
-table compaction and these two steps can be repeated ad infinitum. This
-might be avenue for a DOS attack.
-
-This patch allows compaction to be performed only if the hashtable contains
-at least 1/32 deleted elements, otherwise the hashtable is doubled in size.
-Linear amount of work caused by compaction is amortized over multiple
-malicious additions and deletions.",d9d74d37ac2de7267b3c9904bb6e77c231f4973a,c,
 SECBENCH,,https://github.com/openstack/nova,b5f8ab0e913c121a80ff0efe358960099e7c87f8,,,2011,openstack,nova,1/5/11 19:16,fix injection and xml,1cc5e933ccc29a88d09d2050e5224ee27eda767c,py,
 SECBENCH,,https://github.com/neo4j/neo4j,b60a4547effa4c77f183bb10cc7c68dee8464f1b,,,2013,neo4j,neo4j,5/16/13 15:06,"Properly stop server.
 
@@ -2954,13 +2936,6 @@ CVSSv2: AV:N/AC:L/Au:N/C:N/I:N/A:P/E:P/RL:O/RC:C
 ticket: 7637 (new)
 target_version: 1.11.3
 tags: pullup",0a97afba6986e2818cd26869704820e00efcae63,c,5
-SECBENCH,CVE-2014-2497,https://github.com/php/php-src,cf4753691dc55999373d1c576f62ecb298723420,CWE-399,MEDIUM,2014,php,php-src,8/4/14 8:42,"Fixed Bug #66901 php-gd 'c_color' NULL pointer dereference
-
-Upstream https://bitbucket.org/libgd/gd-libgd/commits/463c3bd09bfe8e924e19acad7a2a6af16953a704
-
-Notice: this fix don't manage monochrome/monovisual values
-but just fix the security issue CVE-2014-2497
-failing when trying to load such an image",ae74549239f80ef40e978942b71c08a7e8a09a23,c,4.3
 SECBENCH,,https://github.com/nextcloud/server,cfd0140e2faa250e6e90cbeb4ec2ca4dcceed2f4,,,2012,nextcloud,server,4/16/12 10:59,fix 2 potential xss problems,3c182bdb351cd0f7938c9f9f022b44b4e530664d,php,
 SECBENCH,,https://github.com/owncloud/core,cfe219fbb9f2f734b063041ae420400044f90000,,,2012,owncloud,core,6/9/12 13:07,fix potential xss in multiselect,344299a074e135140262d051531f723be69c786f,js,
 SECBENCH,CVE-2011-3356,https://github.com/mantisbt/mantisbt,d00745f5e267eba4ca34286d125de685bc3a8034,CWE-79,MEDIUM,2011,mantisbt,mantisbt,8/29/11 17:55,"Fix issue introduced previously whereby php_Self is now used unchecked.
@@ -2984,21 +2959,6 @@ Dwayne Litzenberger (4):
       Fortuna: Add comments for reseed_interval and min_pool_size to FortunaAccumulator
       Update the ChangeLog
       Release v2.6.1",f9a0fc77e1c8847c1a17503e5a1b86a409b8cb2d,py,4.3
-SECBENCH,CVE-2014-3507,https://github.com/openssl/openssl,d0a4b7d1a2948fce38515b8d862f43e7ba0ebf74,CWE-399,MEDIUM,2014,openssl,openssl,6/6/14 21:30,"Fix memory leak from zero-length DTLS fragments.
-
-The |pqueue_insert| function can fail if one attempts to insert a
-duplicate sequence number. When handling a fragment of an out of
-sequence message, |dtls1_process_out_of_seq_message| would not call
-|dtls1_reassemble_fragment| if the fragment's length was zero. It would
-then allocate a fresh fragment and attempt to insert it, but ignore the
-return value, leaking the fragment.
-
-This allows an attacker to exhaust the memory of a DTLS peer.
-
-Fixes CVE-2014-3507
-
-Reviewed-by: Matt Caswell <matt@openssl.org>
-Reviewed-by: Emilia Käsper <emilia@openssl.org>",1250f12613b61758675848f6600ebd914ccd7636,c,5
 SECBENCH,,https://github.com/PrestaShop/PrestaShop,d10cef87f99c60f6213f336220efc49f3821bcbc,,,2011,PrestaShop,PrestaShop,12/19/11 17:47,// Fix xss,ab2af6ff20716afccb4e828c9c151b56d2d3f6eb,tpl,
 SECBENCH,,https://github.com/mozilla/kuma,d186dd1e20a5d0f1b7d295d410485bcfb7807ea4,,,2016,mozilla,kuma,5/19/16 13:42,"bug 1272791 - Encode attachment data for JS
 
@@ -3206,12 +3166,6 @@ against a client or a server enabling client authentication.
 CVE-2015-0286
 
 Reviewed-by: Richard Levitte <levitte@openssl.org>",d3cc5e610d1719a35cda52c9152134b490a8c944,c,5
-SECBENCH,CVE-2010-3870,https://github.com/php/php-src,e69b1ff2c43fbfd672097e9f8b25dead81f34ccf,CWE-20,MEDIUM,2010,php,php-src,10/27/10 18:13,"- Fixed bug #49687 (utf8_decode vulnerabilities and deficiencies in the number
-  of reported malformed sequences). (Gustavo)
-#Made a public interface for get_next_char/utf-8 in trunk to use in utf8_decode.
-#In PHP 5.3, trunk's get_next_char was copied to xml.c because 5.3's
-#get_next_char is different and is not prepared to recover appropriately from
-#errors.",da400e7500e236a332b8104b373e60e842bbd63e,c,6.8
 SECBENCH,SECOAUTH-36,https://github.com/spring-projects/spring-security-oauth,e703d747af332746895a02f75045c68255395c5c,,Minor,2011,spring-projects,spring-security-oauth,1/12/11 20:35,SECOAUTH-36: providing support for a password encoder for plaintext signatures,0da337aef2979db848bc2e091a2b2a206412c62c,java,
 SECBENCH,,https://github.com/MISP/MISP,e74aabf924db998dccdd444109263a38caf6f39a,,,2013,MISP,MISP,7/17/13 14:41,Fixes XSS vulnerability in filters,8e8f41ab13e574ef2b98408229dd5cf4613afb9a,php,
 SECBENCH,CVE-2017-7309,https://github.com/mantisbt/mantisbt,e881dd79df422033bbea88914fc0a717fae40358,CWE-79,LOW,2017,mantisbt,mantisbt,3/25/17 14:23,"Fix XSS in adm_config_report.php
