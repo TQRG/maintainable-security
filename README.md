@@ -68,3 +68,11 @@ cd scripts
 python3 report.py --report cwe -secdb ../results/maintainability_release_security_fixes.csv -reports ../reports
 ``` 
 
+Get security maintainability report per specific cwe (available for CWE_664 and CWE_707):
+
+```
+source venv/bin/activate
+cd scripts
+python3 report.py --report cwe-spec -secdb ../results/maintainability_release_security_fixes.csv -cwe CWE_664 -reports ../reports
+``` 
+
