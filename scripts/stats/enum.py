@@ -1,13 +1,13 @@
 # data.py 
 
-guidelines = {'Write Short Units of Code':'WShortUC', 
-                'Write Simple Units of Code':'WSimpleUC', 
-                'Write Code Once':'WCO', 
-                'Keep Unit Interfaces Small':'KUIS', 
-                'Separate Concerns in Modules':'SCM',
-                'Couple Architecture Components Loosely':'CACL', 
-                'Keep Architecture Components Balanced':'KACB', 
-                'Write Clean Code':'WCC'}
+guidelines = {'Write Short Units of Code':'\\textbf{WShortUC}\nUnit Size',
+                'Write Simple Units of Code':'\\textbf{WSimpleUC}\nMcCabe Complexity',
+                'Write Code Once':'\\textbf{WCO}\nDuplication',
+                'Keep Unit Interfaces Small':'\\textbf{KUIS}\nUnit Interfacing',
+                'Separate Concerns in Modules':'\\textbf{SCM}\nModule Coupling',
+                'Couple Architecture Components Loosely':'\\textbf{CACL}\nComponent Independence',
+                'Keep Architecture Components Balanced':'\\textbf{KACB}\nComponent Balance',
+                'Write Clean Code':'\\textbf{WCC}\nCode Smells'}
 
 languages = {'Java': ['java', 'scala'], 
                 'Python': ['py'], 

@@ -7,10 +7,6 @@ import pandas as pd
 import numpy as np
 import matplotlib
 import seaborn as sns
-
-matplotlib.rcParams['font.family'] = 'serif'
-matplotlib.rcParams['mathtext.fontset'] = 'cm'
-
 import matplotlib.pyplot as plt
 from math import sqrt
 import pandas as pd

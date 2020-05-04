@@ -1,5 +1,9 @@
 import matplotlib.pyplot as plt
+from matplotlib import rc
+from matplotlib import rcParams
+
 import pandas as pd
+
 
 from scipy.stats import wilcoxon
 import numpy as np
@@ -8,6 +12,9 @@ from . import enum
 from . import tests
 from . import data
 
+rc('text', usetex=True)
+rcParams['font.family'] = 'serif'
+rcParams['mathtext.fontset'] = 'cm'
 
 BAR_WIDTH = 0.25
 
@@ -17,12 +24,12 @@ def set_bars(df, idx):
     plt.barh(idx + 2*BAR_WIDTH, df['neg'], BAR_WIDTH, alpha=0.7, align='center', color='red', label='Negative')
 
 def format_p_value(p):
-    return '<0.001' if float('{:.{}f}'.format(p, 3)) <= 0.000 else '={:.{}f}'.format(p, 3)
+    return '$<$0.001' if float('{:.{}f}'.format(p, 3)) <= 0.000 else '={:.{}f}'.format(p, 3)
 
 def set_ticks(df, idx, fontsize=7):
     plt.yticks(idx + BAR_WIDTH, df['type'], fontsize=fontsize)
     plt.xticks(fontsize=fontsize)
-    plt.gca().set_xticklabels(['{:.0f}%'.format(x*100) for x in plt.gca().get_xticks()])
+    plt.gca().set_xticklabels(['{:.0f}$\%$'.format(x*100) for x in plt.gca().get_xticks()])
 
 def config_report(data, yaxs_size, x, y, plt_config):
     fig = plt.figure(figsize=(x,y))
@@ -182,7 +189,7 @@ def main_per_guideline_chart(reports, df, wilcoxon = True):
         for i, r in test.join(df)[::-1].iterrows():    
             p = format_p_value(r['pvalue'])
             box_text = 'N='+str(sum([r['pos_abs'], r['neg_abs'], r['nul_abs']]))+'\n$\overline{x}$='+ '{:.{}f}'.format(r['mean'], 2) + '\nM=' + '{:.{}f}'.format(r['med'], 2) + '\np' + p
-            ax.text(0.57, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=8)
+            ax.text(0.56, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=8)
             boxes_start -= 1
     
     save_report(reports, 'main_per_guideline.pdf')
