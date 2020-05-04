@@ -172,10 +172,10 @@ Maintainability is measured based on the Better Code Hub’s model of 10
 guidelines using a dataset including 1335 security commits.
 Results show that fixing software vulnerabilities may hinder the maintainability of 
 open-source software. This is particularly the case for patches that 
-address Improper Input Validation (CWE-20), Information 
-Exposure (CWE-200), Improper Restriction of Operations within the Bounds of a 
-Memory Buffer (CWE-119), Missing Release of Memory after Effective Lifetime
-(CWE-401) and Path Traversal (CWE-22). We conclude that changes to code bases to patch 
+address Improper Restriction of Operations within the Bounds of 
+a Memory Buffer (CWE-119), Path Traversal (CWE-22), Missing Release 
+of Memory after Effective Lifetime (CWE- 401) and Information Exposure 
+(CWE-200). We conclude that changes to code bases to patch 
 vulnerabilities need to be performed with extra care and that security-related 
 code evolution should be subject in computer curricula.
 \end{abstract}
@@ -263,7 +263,7 @@ impact. This empirical study presents evidence that changes
 applied in the code bases to patch vulnerabilities affect code maintainability. Especially, 
 for patches that address \emph{Improper Restriction of Operations within the Bounds of 
 a Memory Buffer} (CWE-119), \emph{Path Traversal} (CWE-22), \emph{Missing Release of Memory 
-after Effective Lifetime} (CWE-401) and \emph{Information Exposure} (CWE-200).
+after Effective Lifetime} (CWE-401) and \emph{Information Exposure} (CWE-200)\Luis{Little information is known about..}.
 This is important work
 because there is still little information about the impact of security patches on the software
 maintainability. With this study, 
@@ -295,12 +295,13 @@ contains open-source implementations of the SSL and TLS cryptographic
 protocols. Repository available at \url{https://github.com/openssl/openssl}
 (Accessed on \today{})}; section~\ref{sec:methodology} describes the
 methodology used to answer the research questions; section~\ref{sec:results}
-presents the results and section~\ref{sec:discussion} discusses their
+presents the results and discusses their
 implications; section~\ref{sec:threats} enumerates the threats to the validity of
 this study; section~\ref{sec:rw} describes the different work and existing
 literature in the field of study; and, finally, section~\ref{sec:conclusions}
 concludes the main findings and elaborates on future work.
 %
+
 \section{Motivation and Research Questions}\label{sec:motivation}
 %
 Due to time-to-market pressure and the lack of security expertise~\cite{8077802}, code-related
@@ -313,19 +314,24 @@ performant one. Thus, we want to understand how security patches impact
 the maintainability of software. 
 
 %%%%% NEEDS REVIEW
-\Sof{As an example, consider the patch of the TLS state-machine protocol implementation in 
+As an example, consider the patch of the TLS state-machine protocol implementation in 
 OpenSSL\footnoteref{openssl} to address a vulnerability where an attacker could cause a Denial-of-Service
-(DoS) attack by crafting TLS messages to trigger memory allocations
-corresponding to large length values. This vulnerability is listed at the Common
-Vulnerabilities and Exposures dictionary as CVE-$2016$-$6307$~\footnote{CVE-$2016$-$6307$
-details available at \url{http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6307}
+(DoS) attack by sending excessively large OCSP Status Request extensions 
+
+
+
+The Online Certificate Status Protocol (OCSP) is a protocol that allows the client to verify the server certificate for revocation without messing with certificate revocation lists. Its drawback is that it requires the client to connect to the server CA OCSP server and request the status of the certificate. This extension however, enables a TLS server to include its CA OCSP server response in the handshake. That is an HTTPS server may periodically run ocsptool (see ocsptool Invocation) to obtain its certificate revocation status and serve it to the clients. That way a client avoids an additional connection to the OCSP server.
+
+This vulnerability is listed at the Common
+Vulnerabilities and Exposures dictionary as CVE-$2016$-$6304$~\footnote{CVE-$2016$-$6304$
+details available at \url{http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6304}
 (Accessed on \today{})}. It is amongst the vulnerabilities studied in our
 research. The snippet, in Listing~\ref{lst:vuln}, presents the changes performed on the
-\emph{ssl/statem/statem.c} file\footnote{CVE-$2016$-$6307$ fix available  at
-\url{https://github.com/openssl/openssl/commit/c1ef7c971d0bbf117c3c80f65b5875e2e7b024b1}
+\emph{ssl/t1\_lib.c} file\footnote{CVE-$2016$-$6304$ fix available  at
+\url{https://github.com/openssl/openssl/commit/e408c09bbf7c3057bda4b8d20bec1b3a7771c15b}
 (Accessed on \today{})} by the OpenSSL developers to patch the vulnerability. Every SSL/TLS connection begins with a handshake which is responsible by the
 negotiation between the two parties. The problem in
-CVE-$2016$-$6307$ is that due to a flaw in the logic of version $1.1.0$,
+CVE-$2016$-$6304$ is that due to a flaw in the logic of version $1.1.0$,
 the memory for a message is allocated too early, prior to the excessive
 message length check which can lead to a Denial of Service through memory
 exhaustion if an attacker triggers up a certain message length to be allocated to service a
@@ -340,46 +346,81 @@ insufficient memory to service the multiple requests. Except in the instance of 
 be transitory because as soon as the connection fails the memory is
 subsequently freed again in the \texttt{SSL\_free()} call. However, there is an
 increased risk during this period of application crashes due to the lack
-of memory - which would then mean a more serious Denial of Service.}
-
+of memory - which would then mean a more serious Denial of Service.
 
 \medskip
 \setcounter{lstannotation}{0}
 \begin{lstlisting}[style={CStyle}, caption={Fix provided by OpenSSL developers to the
-\\CVE-2016-6307 vulnerability for file ssl/statem/statem.c},label={lst:vuln}]
- static SUB_STATE_RETURN read_state_machine(SSL *s){ 
+\\CVE-2016-6304 vulnerability for file ssl/t1\_lib.c},label={lst:vuln}]
+static int ssl_scan_clienthello_tlsext(SSL *s, PACKET *pkt, int *al){ 
  // [snip]
-+   if (!SSL_IS_DTLS(s) && s->s3->tmp.message_size > 0
-+        && !BUF_MEM_grow_clean(s->init_buf, 
-+                                (int)s->s3->tmp.message_size
-+                                + SSL3_HM_HEADER_LENGTH)) { /*!\annotation{lst:func2}!*/
-+         ssl3_send_alert(s, SSL3_AL_FATAL, SSL_AD_INTERNAL_ERROR);
-+         SSLerr(SSL_F_TLS_GET_MESSAGE_HEADER, ERR_R_BUF_LIB);
-+          return SUB_STATE_ERROR;
++  sk_OCSP_RESPID_pop_free(s->tlsext_ocsp_ids, OCSP_RESPID_free);
++  if (PACKET_remaining(&responder_id_list) > 0) {
++     s->tlsext_ocsp_ids = sk_OCSP_RESPID_new_null();
++     if (s->tlsext_ocsp_ids == NULL) {
++        *al = SSL_AD_INTERNAL_ERROR;
++        return 0;
++     }
++  } else {
++     s->tlsext_ocsp_ids = NULL;
++  }
+
+   while (PACKET_remaining(&responder_id_list) > 0) {
+     OCSP_RESPID *id;
+     PACKET responder_id;
+     const unsigned char *id_data;
+     if (!PACKET_get_length_prefixed_2(&responder_id_list, &responder_id) || PACKET_remaining(&responder_id) == 0) {
+          return 0;
+     }
+
+-  if (s->tlsext_ocsp_ids == NULL 
+-      && (s->tlsext_ocsp_ids = 
+-      sk_OCSP_RESPID_new_null()) == NULL) {
+-    *al = SSL_AD_INTERNAL_ERROR;
+-    return 0;
+-  }
+
  // [snip]
  }
 \end{lstlisting}
 
-\medskip
-\setcounter{lstannotation}{0}
-\begin{lstlisting}[style={CStyle}, caption={Fix provided by OpenSSL developers to the
-\\CVE-2016-6307 vulnerability for file ssl/statem/statem\_lib.c},label={lst:vuln2}]
- int tls_get_message_header(SSL *s, int *mt){   
- // [snip]
-  l = RECORD_LAYER_get_rrec_length(&s->rlayer) + 
-        SSL3_HM_HEADER_LENGTH;
-- if (l && !BUF_MEM_grow_clean(s->init_buf, (int)l)) { /*!\annotation{lst:func3}!*/
--      SSLerr(SSL_F_TLS_GET_MESSAGE_HEADER, ERR_R_BUF_LIB);
--      goto err;
-   }
- // [snip]
- 
-- if (l && !BUF_MEM_grow_clean(s->init_buf, (int)l +SSL3_HM_HEADER_LENGTH)) {  /*!\annotation{lst:func4}!*/
--     SSLerr(SSL_F_TLS_GET_MESSAGE_HEADER, ERR_R_BUF_LIB);
--     goto err;
-- }
-
-\end{lstlisting}
+% \medskip
+% \setcounter{lstannotation}{0}
+% \begin{lstlisting}[style={CStyle}, caption={Fix provided by OpenSSL developers to the
+% \\CVE-2016-6307 vulnerability for file ssl/statem/statem.c},label={lst:vuln}]
+%  static SUB_STATE_RETURN read_state_machine(SSL *s){
+%  // [snip]
+% +   if (!SSL_IS_DTLS(s) && s->s3->tmp.message_size > 0
+% +        && !BUF_MEM_grow_clean(s->init_buf,
+% +                                (int)s->s3->tmp.message_size
+% +                                + SSL3_HM_HEADER_LENGTH)) { /*!\annotation{lst:func2}!*/
+% +         ssl3_send_alert(s, SSL3_AL_FATAL, SSL_AD_INTERNAL_ERROR);
+% +         SSLerr(SSL_F_TLS_GET_MESSAGE_HEADER, ERR_R_BUF_LIB);
+% +          return SUB_STATE_ERROR;
+%  // [snip]
+%  }
+% \end{lstlisting}
+%
+% \medskip
+% \setcounter{lstannotation}{0}
+% \begin{lstlisting}[style={CStyle}, caption={Fix provided by OpenSSL developers to the
+% \\CVE-2016-6307 vulnerability for file ssl/statem/statem\_lib.c},label={lst:vuln2}]
+%  int tls_get_message_header(SSL *s, int *mt){
+%  // [snip]
+%   l = RECORD_LAYER_get_rrec_length(&s->rlayer) +
+%         SSL3_HM_HEADER_LENGTH;
+% - if (l && !BUF_MEM_grow_clean(s->init_buf, (int)l)) { /*!\annotation{lst:func3}!*/
+% -      SSLerr(SSL_F_TLS_GET_MESSAGE_HEADER, ERR_R_BUF_LIB);
+% -      goto err;
+%    }
+%  // [snip]
+%
+% - if (l && !BUF_MEM_grow_clean(s->init_buf, (int)l +SSL3_HM_HEADER_LENGTH)) {  /*!\annotation{lst:func4}!*/
+% -     SSLerr(SSL_F_TLS_GET_MESSAGE_HEADER, ERR_R_BUF_LIB);
+% -     goto err;
+% - }
+%
+% \end{lstlisting}
 %
 %\medskip
 %\setcounter{lstannotation}{0}
@@ -400,22 +441,22 @@ of memory - which would then mean a more serious Denial of Service.}
 
 %The code changes performed to fix the vulnerability are:
 
-\Sof{The \texttt{read\_state\_machine} function, presented in Listing \ref{lst:vuln}, abstracts a sub-state-machine
-to handle the messages exchanged between peers. When messages are larger than
-what is defined by default for TLS, it may trigger a memory corruption issue since the allocation
-of this resource was being verified very early in the application's flow, using the \texttt{tls\_get\_message\_header} function presented in Listing ~\ref{lst:vuln2} (\ref{lst:func3} and \ref{lst:func4}).
-These verifications of size allocation were substituted by the one presented in Listing~\ref{lst:vuln}(\ref{lst:func2}).
-%
-Although checking the maximum size of a message seems an elementary
-problem to repair, the example shows that there was a significant amount of
-changes performed in the code base which produced a negative impact in the
-maintainability. The developer tries to patch the
-code base by introducing a new branch point to the function \texttt{read\_state\_machine}~\ref{lst:func1} which adds complexity to the software
-and disrupts
-one of the guidelines proposed by the Software Improvement Group (SIG) for
-building maintainable software~\cite{Visser:2016:OREILLY} $-$
-the \emph{Write Simple Units of Code} guideline $-$ which resulted in a negative impact on the
-OpenSSL maintainability.}
+% \Sof{The \texttt{read\_state\_machine} function, presented in Listing \ref{lst:vuln}, abstracts a sub-state-machine
+% to handle the messages exchanged between peers. When messages are larger than
+% what is defined by default for TLS, it may trigger a memory corruption issue since the allocation
+% of this resource was being verified very early in the application's flow, using the \texttt{tls\_get\_message\_header} function presented in Listing ~\ref{lst:vuln2} (\ref{lst:func3} and \ref{lst:func4}).
+% These verifications of size allocation were substituted by the one presented in Listing~\ref{lst:vuln}(\ref{lst:func2}).
+% %
+% Although checking the maximum size of a message seems an elementary
+% problem to repair, the example shows that there was a significant amount of
+% changes performed in the code base which produced a negative impact in the
+% maintainability. The developer tries to patch the
+% code base by introducing a new branch point to the function \texttt{read\_state\_machine}~\ref{lst:func1} which adds complexity to the software
+% and disrupts
+% one of the guidelines proposed by the Software Improvement Group (SIG) for
+% building maintainable software~\cite{Visser:2016:OREILLY} $-$
+% the \emph{Write Simple Units of Code} guideline $-$ which resulted in a negative impact on the
+% OpenSSL maintainability.}
 
 %%%%%%% 
 Software maintainability is designed as the degree to which an application is understood, 
@@ -473,10 +514,11 @@ they are not}.
 %
 \section{Methodology}\label{sec:methodology}
 %
+\Luis{this passive voice here sounds a bit weird (imo)}
 The methodology used to measure the impact of security patches on the
 maintainability of open-source software is discussed in this section.
 The methodology comprises the following steps, as illustrated in
-Figure~\ref{fig:met}:
+Figure~\ref{fig:met}\Luis{could you make the numbers in the figure a bit larger}:
 %
 \begin{enumerate}
 	\item Combine the datasets from related work that classifies
@@ -484,7 +526,8 @@ the activities of developers addressing security-oriented patches~\cite{Reis:201
 %
 	\item
 	Extract relevant data (e.g., owner and name of
-	the repository, sha key of the vulnerable version, sha key of the fixed version) to the experiments and code bases from the combined dataset containing $1335$ security
+	the repository, sha key of the vulnerable version, sha key of the fixed version) to the experiments and 
+	code bases from the combined dataset containing $1335$ security
 	refactorings collected from open-source software available on
 	GitHub.
 %
@@ -501,16 +544,18 @@ the activities of developers addressing security-oriented patches~\cite{Reis:201
 \end{enumerate}
 %
 \begin{figure}[h]
- 	\centering 	\includegraphics[width=0.45\textwidth]{figures/methodology.pdf}
+ 	\centering 	
+	\includegraphics[width=0.5\textwidth]{figures/methodology.pdf}
  	\caption{Study Methodology}
 	\label{fig:met}
 \end{figure}
 %
 \subsection{Datasets}
 %
+\Luis{We already made clear that we ``evaluate the impact..'' }
 To evaluate the impact of security refactorings on the maintainability of
 open-source software, we use a combined dataset of security vulnerabilities which is 
-the outcome of mining/manually inspect $265$ GitHub projects. Reis and Abreu 
+the outcome of mining/manually inspect $265$ GitHub projects\Luis{:mining and manually inspecting:}. \Luis{it is not clear the connection between the 267 projects and the works we mention below. There should be a sentence here clarifying and making the connection.}. Reis and Abreu 
 ($2017$) mined open-source
 software aiming at the extraction of real examples --- created by real
 developers --- to test and assess the performance of static analysis tools~\cite{Reis:2017:IJSSE} since
@@ -888,10 +933,9 @@ guidelines, while $M(v) > 0$ indicates that version $v$ is following
 the BCH guidelines. The maintenance for the guideline $g$, $M_g$ for a given version
 of a project is computed as the summation of the compliance with the 
 maintainability guideline for the given severity level (medium, high, and very high).
-\Sof{The compliance for a severity level
-is calculated based on the number of lines of code that comply and not comply
-with the guideline at a given severity level as explained in more
-detail in previous work~\cite{cruz2019energyoriented}.} In our analysis, we compute 
+The compliance for a severity level
+is calculated based on previous work, which calculates the number of lines of code that comply and not comply
+with the guideline at a given severity level~\cite{cruz2019energyoriented}. In our analysis, we compute 
 the difference of maintainability between the security commit ($v_{s}$) and its parent 
 commit ($v_{s-1}$), as illustrated in Figure~\ref{fig:commit}. Thus, we can determine 
 which patches had a positive, negative or null impact on the project maintainability. 
@@ -1125,7 +1169,7 @@ code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. However,
 Figure~\ref{fig:lang_main} shows that only \emph{C/C++} and \emph{Ruby} have 
 a significant negative impact approximate to $50\%$ on software 
 maintainability. We suspect that these values are
-the result of projects contributions policies. Nine of the top-10 of dataset projects
+the result of projects contributions policies. \Luis{In our dataset, nine of the ten projects with more contributors have strict...} Nine of the top-10 of dataset projects
 with more contributors have restrict contribution policies regarding code
 standards. Some examples are the \texttt{laravel/framework},
 \texttt{php/php-src}, \texttt{openssl/openssl} and \texttt{cakephp/cakephp}. For
@@ -1133,6 +1177,8 @@ instance, \texttt{laravel/framework} requires the \texttt{PSR-2
 Standard}\footnote{PSR-2 Standard available at
 \url{https://www.php-fig.org/psr/psr-2/} (Accessed on \today{})} that is a coding style guide for \texttt{PHP}.
 
+\Luis{I did not fully understand this paragraph.. We are mixing programming languages, contribution policies, and number of contributors in the same bucket.}
+\Luis{I think this section is missing more discussion. What do you think should be changed in the community to cope with our findings? How can practitioners fix security vulnerabilities wihthout hindering maintainability? do we need more tools, better programming languages, more strict contribution policies? is there a trade-off between secure software and technical debt? show us how these findings can change SE}
 % Following the \textit{American Statistical Association}
 % recommendations~\cite{doi:10.1080/00031305.2016.1154108}, we consider the results for
 % Ruby as statistically significant because its p-value is on the borderline.
@@ -1192,7 +1238,7 @@ Lifetime (CWE-401)} and \emph{Path Traversal (CWE-22)}. Results also show that
 software maintainability is less negatively impacted when patching 
 \emph{Improper Restriction of XML External Entity Reference (CWE-611)}.  
 
-The impact of a patch depends on its complexity, i.e., if the patche
+The impact of a patch depends on its complexity, i.e., if the patch
 adds complexity to the code base it is probably affecting the software
 maintainability. \emph{Cross-Site Scripting (CWE-79)} patches endure more
 cases with no impact on the open-source software maintainability.
