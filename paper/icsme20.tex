@@ -187,7 +187,7 @@ discovered, and fixed, almost weekly as disclosed by the Zero Day Initiative
 website\footnote{Zero Day Initiative website available at
 \url{https://www.zerodayinitiative.com/advisories/published/} (Accessed on \today{})}.
 These vulnerabilities are gateways for attackers to penetrate systems and 
-exploit their resources. \Sof{Improve example - outdated}As an example, in the last week of January $2019$, 
+exploit their resources. \Sof{Improve example - outdated}\Luis{I think it is okay. Just say it is from 2019. It's too precise atm.}As an example, in the last week of January $2019$, 
 a severe vulnerability in Apple FaceTime was revealed\footnote{FaceTime vulnerability 
 details available at \url{https://thehackernews.com/2019/01/apple-facetime-
 privacy-hack.html} (Accessed on \today{})} --- the outcome of a design/logical
@@ -250,7 +250,7 @@ software. We calculate software maintainability before and after the patch to me
 impact. This empirical study presents evidence that changes 
 applied in the code bases to patch vulnerabilities affect code maintainability. 
 Especially, for patches that address Path Traversal (CWE-22),
-Information Exposure (CWE-200) and Resource Management Errors (CWE-399). This is important work
+Information Exposure (CWE-200) and Resource Management Errors (CWE-399). \Luis{Little information is known about..}This is important work
 because there is still little information about the impact of security patches on the software
 maintainability. With this study, 
 we intend to highlight the need for tools to predict the impact of patches on 
@@ -454,10 +454,12 @@ they are not}.
 %
 \section{Methodology}\label{sec:methodology}
 %
+\Luis{this passive voice here sounds a bit weird (imo)}
 The methodology used to measure the impact of security patches on the
 maintainability of open-source software is discussed in this section.
 The methodology comprises the following steps, as illustrated in
 Figure~\ref{fig:met}:
+\Luis{could you make the numbers in the figure a bit larger}
 %
 \begin{enumerate}
 	\item Combine the datasets from related work that classifies
@@ -489,9 +491,10 @@ the activities of developers addressing security-oriented patches~\cite{Reis:201
 %
 \subsection{Datasets}
 %
+\Luis{We already made clear that we ``evaluate the impact..'' }
 To evaluate the impact of security refactorings on the maintainability of
 open-source software, we use a combined dataset of security vulnerabilities which is 
-the outcome of mining/manually inspect $267$ GitHub projects. Reis and Abreu 
+the outcome of mining/manually inspect $267$ GitHub projects\Luis{:mining and manually inspecting:}. \Luis{it is not clear the connection between the 267 projects and the works we mention below. There should be a sentence here clarifying and making the connection.} Reis and Abreu 
 ($2017$) mined open-source
 software aiming at the extraction of real examples --- created by real
 developers --- to test and assess the performance of static analysis tools~\cite{Reis:2017:IJSSE} since
@@ -842,6 +845,9 @@ guidelines, while $M(v) > 0$ indicates that version $v$ is following
 the BCH guidelines. The maintenance for the guideline $g$, $M_g$ for a given version
 of a project is computed as the summation of the compliance with the 
 maintainability guideline for the given severity level (medium, high, and very high).
+\Luis{The compliance for a severity level
+is calculated based on previous work, which calculates the number of lines of code that comply and not comply
+with the guideline at a given severity level~\cite{cruz2019energyoriented}.}
 The compliance for a severity level
 is calculated based on the number of lines of code that comply and not comply
 with the guideline at a given severity level as explained in more
@@ -1085,9 +1091,12 @@ of open-source software?}}}
 
 \textit{Security patches harm the maintainability of open-source software.}
 
-The guideline analysis suggests that all guidelines are affected by security patches. Being the
+The guideline analysis suggests that all guidelines are affected by security patches. 
+\Luis{The guidelines ... have the most negative impact ...}
+Being the
 \emph{Write Short Units of Code}, \emph{Write Simple Units of Code} and \emph{Separate Concerns in Modules} the guidelines with higher negative impact on the maintainability ($>30\%$ of cases). \emph{Keep Architecture Components Balanced} is the guideline with lower negative impact on 
-the maintainability (approx. $10\%$). This might imply that developers should give different
+the maintainability (approx. $10\%$). This \Luis{I dont like the ``might imply''. I was going to recommend replacing by ``suggests'', but I can see it is already being used below. Can you think of something else?}
+might imply that developers should give different
 levels of attention to the guidelines when patching vulnerabilities.
 %
 As expected, vulnerabilities with higher severity are more likely to impact negatively
@@ -1100,14 +1109,15 @@ maintainability to be more severe, as arguably poor design of programming
 languages and lack of using the best practices lead to more buggy and vulnerable
 code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. However,
 Figure~\ref{fig:lang_main} shows that only \emph{C/C++} and \emph{Python} have a negative impact approximate to $50\%$ on software maintainability. We suspect that these values are
-the result of projects contributions policies. Nine of the top-10 of dataset projects 
+the result of projects contributions policies. \Luis{In our dataset, nine of the ten projects with more contributors have strict...} Nine of the top-10 of dataset projects 
 with more contributors have restrict contribution policies regarding code
 standards. Some examples are the \texttt{laravel/framework},
 \texttt{php/php-src}, \texttt{openssl/openssl} and \texttt{cakephp/cakephp}. For
 instance, \texttt{laravel/framework} requires the \texttt{PSR-2
 Standard}\footnote{PSR-2 Standard available at
 \url{https://www.php-fig.org/psr/psr-2/} (Accessed on \today{})} that is a coding style guide for \texttt{PHP}.
-
+\Luis{I did not fully understand this paragraph.. We are mixing programming languages, contribution policies, and number of contributors in the same bucket.}
+\Luis{I think this section is missing more discussion. What do you think should be changed in the community to cope with our findings? How can practitioners fix security vulnerabilities wihthout hindering maintainability? do we need more tools, better programming languages, more strict contribution policies? is there a trade-off between secure software and technical debt? show us how these findings can change SE}
 \subsubsection*{\textit{\textbf{RQ2} \textbf{Which patterns of security patches are more likely to
 affect open-source software maintainability?}}}
 
@@ -1116,7 +1126,7 @@ affect open-source software maintainability?}}}
 open-source software maintainability.}
 
 Overall, the results obtained for the maintainability per CWE are no statistical significance 
-The impact of a patch depends on its complexity, i.e., if the patchs
+The impact of a patch depends on its complexity, i.e., if the patch
 adds complexity to the code base it is probably affecting the software
 maintainability. One evidence of that is the fact of \emph{Cross-Site Scripting} (CWE-79)
 patches endure more
