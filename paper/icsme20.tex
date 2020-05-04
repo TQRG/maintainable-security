@@ -263,7 +263,7 @@ impact. This empirical study presents evidence that changes
 applied in the code bases to patch vulnerabilities affect code maintainability. Especially, 
 for patches that address \emph{Improper Restriction of Operations within the Bounds of 
 a Memory Buffer} (CWE-119), \emph{Path Traversal} (CWE-22), \emph{Missing Release of Memory 
-after Effective Lifetime} (CWE-401) and \emph{Information Exposure} (CWE-200)\Luis{Little information is known about..}.
+after Effective Lifetime} (CWE-401) and \emph{Information Exposure} (CWE-200)\Luis{Little information is known about..}\Sof{Do you want me to explain what is each vulnerability?}.
 This is important work
 because there is still little information about the impact of security patches on the software
 maintainability. With this study, 
@@ -514,11 +514,10 @@ they are not}.
 %
 \section{Methodology}\label{sec:methodology}
 %
-\Luis{this passive voice here sounds a bit weird (imo)}
-The methodology used to measure the impact of security patches on the
-maintainability of open-source software is discussed in this section.
-The methodology comprises the following steps, as illustrated in
-Figure~\ref{fig:met}\Luis{could you make the numbers in the figure a bit larger}:
+In this section, we discuss the methodology used to measure
+the impact of security patches on the maintainbility of open-source
+software. The methodology comprises the following steps, as illustrated in
+Figure~\ref{fig:met}.
 %
 \begin{enumerate}
 	\item Combine the datasets from related work that classifies
@@ -552,10 +551,9 @@ the activities of developers addressing security-oriented patches~\cite{Reis:201
 %
 \subsection{Datasets}
 %
-\Luis{We already made clear that we ``evaluate the impact..'' }
-To evaluate the impact of security refactorings on the maintainability of
-open-source software, we use a combined dataset of security vulnerabilities which is 
-the outcome of mining/manually inspect $265$ GitHub projects\Luis{:mining and manually inspecting:}. \Luis{it is not clear the connection between the 267 projects and the works we mention below. There should be a sentence here clarifying and making the connection.}. Reis and Abreu 
+We use a combined dataset of security vulnerabilities which is 
+the outcome of mining and manually inspect a total of $265$ GitHub projects for both
+datasets. Reis and Abreu 
 ($2017$) mined open-source
 software aiming at the extraction of real examples --- created by real
 developers --- to test and assess the performance of static analysis tools~\cite{Reis:2017:IJSSE} since
@@ -588,8 +586,8 @@ The $1335$ patches in the dataset were run against the BCH toolset to
 calculate their maintainability reports. However, there are refactorings
 discarded from our study due to limitations of BCH: in particular, lack of
 language support and project size. The final dataset used in this paper comprises
-$998$ security patches. $912$ of these patches are identified with Common Weakness
-Enumeration IDs (CWE) where $59.1\%$ were scraped from the National Vulnerability Dataset (NVD) and the remaining $40.9\%$ were manually classified following the \texttt{Research Concepts} view map from the CWE's list.
+$998$ security patches. $883$ of these patches are identified with Common Weakness
+Enumeration IDs (CWE) where $62.5\%$ were scraped from the National Vulnerability Dataset (NVD) and the remaining $37.5\%$ were manually classified following the \texttt{Research Concepts} CWE's list.
 
 % In Table~\ref{tab:patterns}, the most prevailing categories are presented. To satisfy the Wilcoxon test size requirement, types of vulnerabilities
 % with less than $20$ instances were merged in a bigger group named \textit{Miscellaneous}.
