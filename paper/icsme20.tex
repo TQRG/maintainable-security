@@ -263,7 +263,7 @@ impact. This empirical study presents evidence that changes
 applied in the code bases to patch vulnerabilities affect code maintainability. Especially, 
 for patches that address \emph{Improper Restriction of Operations within the Bounds of 
 a Memory Buffer} (CWE-119), \emph{Path Traversal} (CWE-22), \emph{Missing Release of Memory 
-after Effective Lifetime} (CWE-401) and \emph{Information Exposure} (CWE-200)\Luis{Little information is known about..}\Sof{Do you want me to explain what is each vulnerability?}.
+after Effective Lifetime} (CWE-401) and \emph{Information Exposure} (CWE-200)\Luis{Little information is known about..}.
 This is important work
 because there is still little information about the impact of security patches on the software
 maintainability. With this study, 
@@ -287,7 +287,7 @@ The main contributions of the present work are:
 	empirical evaluation, for reproducibility. Available online:
   \url{https://figshare.com/s/4861207064900dfb3372}.
 \end{itemize}
-%
+%-
 This paper is structured as follows: section~\ref{sec:motivation} introduces an
 example of a security refactoring of a known vulnerability found in the
 protocol implementation of OpenSSL\footnote{\label{openssl}OpenSSL is a toolkit that
@@ -315,10 +315,9 @@ the maintainability of software.
 
 %%%%% NEEDS REVIEW
 As an example, consider the patch of the TLS state-machine protocol implementation in 
-OpenSSL\footnoteref{openssl} to address a vulnerability where an attacker could cause a Denial-of-Service
-(DoS) attack by sending excessively large OCSP Status Request extensions 
-
-
+OpenSSL\footnoteref{openssl} to address multiple memory leaks in \texttt{t1$\_$lib.c} 
+where a remote attacker could cause a Denial-of-Service
+(DoS) attack - through memory consumption - via large OCSP Status Request extensions.
 
 The Online Certificate Status Protocol (OCSP) is a protocol that allows the client to verify the server certificate for revocation without messing with certificate revocation lists. Its drawback is that it requires the client to connect to the server CA OCSP server and request the status of the certificate. This extension however, enables a TLS server to include its CA OCSP server response in the handshake. That is an HTTPS server may periodically run ocsptool (see ocsptool Invocation) to obtain its certificate revocation status and serve it to the clients. That way a client avoids an additional connection to the OCSP server.
 
@@ -329,14 +328,14 @@ details available at \url{http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016
 research. The snippet, in Listing~\ref{lst:vuln}, presents the changes performed on the
 \emph{ssl/t1\_lib.c} file\footnote{CVE-$2016$-$6304$ fix available  at
 \url{https://github.com/openssl/openssl/commit/e408c09bbf7c3057bda4b8d20bec1b3a7771c15b}
-(Accessed on \today{})} by the OpenSSL developers to patch the vulnerability. Every SSL/TLS connection begins with a handshake which is responsible by the
-negotiation between the two parties. The problem in
+(Accessed on \today{})} by the OpenSSL developers to patch the vulnerability. Every SSL/TLS connection begins with a handshake 
+which is responsible by the negotiation between the two parties. The problem in
 CVE-$2016$-$6304$ is that due to a flaw in the logic of version $1.1.0$,
 the memory for a message is allocated too early, prior to the excessive
 message length check which can lead to a Denial of Service through memory
 exhaustion if an attacker triggers up a certain message length to be allocated to service a
-connection. In this case, there is only a security impact if the application does not call  \texttt{SSL\_free()} in a timely manner in the
-event that the connection fails;
+connection. In this case, there is only a security impact if the application does not call  
+\texttt{SSL\_free()} in a timely manner in the event that the connection fails;
 or, the application is working in a constrained environment where there
 is very little free memory;
 or, the attacker initiates multiple connection attempts such that there
@@ -846,7 +845,7 @@ as described by Section~\ref{sec:motivation}. This
 version of OpenSSL only complies with $1$ out of $10$ guidelines: \emph{Write
 Clean Code}.
 
-\Sof{SIG defines \emph{Units} as the smallest groups of code that can be maintained
+SIG defines \emph{Units} as the smallest groups of code that can be maintained
 and executed independently~\cite{Visser:2016:OREILLY} (e.g., methods and
 constructors in Java). One of the guidelines with which the project does not
 comply is the one presented in the report (cf. Figure~\ref{fig:bchrep}):
@@ -862,7 +861,7 @@ comply with medium (\emph{above $5$}), high (\emph{above $10$}) and very high
 (\emph{above $25$}) severity levels. In the bar, there are marks that pinpoint
 the compliance thresholds for each severity level. If the green mark is
 somewhere in the green bar it means it is compliant with a low level of
-severity.}
+severity.
 
 \begin{figure}[h]
  	\centering 	
@@ -883,7 +882,7 @@ maintainability of two different versions of the project (cf. Figure~\ref{fig:co
 
 Patches can be performed through one commit, several consecutive commits, or 
 commit(s) interleaved with more programming activities, being the later
-commonly called a floss-refactoring. This study considers mainly 1-commit 
+commonly called a floss-refactoring. This study considers mainly $1$-commit 
 patches. Yet, a small percentage of data points had more than one commit 
 involved in the patch. We manually inspected these cases and $23$ 
 floss-refactorings were identified and disregarded since it would not
@@ -938,9 +937,6 @@ the difference of maintainability between the security commit ($v_{s}$) and its 
 commit ($v_{s-1}$), as illustrated in Figure~\ref{fig:commit}. Thus, we can determine 
 which patches had a positive, negative or null impact on the project maintainability. 
 
-
-\Sof{@todo: Don't forget to mention the limitations of BCH and the outliers.}
-
 % The compliance $C$ for a given severity
 % level $l$ is derived by:
 %
@@ -986,6 +982,7 @@ To understand the effect-size, as advocated by the Common-language effect
 sizes\cite{graw:1992}, we compute the mean difference, the median of the 
 difference, and the percentage of cases that reduce maintainability.
 %
+
 \section{Results \& Discussion}\label{sec:results}
 
 This study evaluates a final total of $998$ security and baseline commits 
@@ -1167,16 +1164,15 @@ code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. However,
 Figure~\ref{fig:lang_main} shows that only \emph{C/C++} and \emph{Ruby} have 
 a significant negative impact approximate to $50\%$ on software 
 maintainability. We suspect that these values are
-the result of projects contributions policies. \Luis{In our dataset, nine of the ten projects with more contributors have strict...} Nine of the top-10 of dataset projects
-with more contributors have restrict contribution policies regarding code
-standards. Some examples are the \texttt{laravel/framework},
-\texttt{php/php-src}, \texttt{openssl/openssl} and \texttt{cakephp/cakephp}. For
+the result of projects contributions policies. In our dataset, 
+nine of the ten projects with more contributors have strict contribution policies regarding code
+standards. For
 instance, \texttt{laravel/framework} requires the \texttt{PSR-2
 Standard}\footnote{PSR-2 Standard available at
 \url{https://www.php-fig.org/psr/psr-2/} (Accessed on \today{})} that is a coding style guide for \texttt{PHP}.
 
-\Luis{I did not fully understand this paragraph.. We are mixing programming languages, contribution policies, and number of contributors in the same bucket.}
-\Luis{I think this section is missing more discussion. What do you think should be changed in the community to cope with our findings? How can practitioners fix security vulnerabilities wihthout hindering maintainability? do we need more tools, better programming languages, more strict contribution policies? is there a trade-off between secure software and technical debt? show us how these findings can change SE}
+
+% \Luis{I think this section is missing more discussion. What do you think should be changed in the community to cope with our findings? How can practitioners fix security vulnerabilities wihthout hindering maintainability? do we need more tools, better programming languages, more strict contribution policies? is there a trade-off between secure software and technical debt? show us how these findings can change SE}
 % Following the \textit{American Statistical Association}
 % recommendations~\cite{doi:10.1080/00031305.2016.1154108}, we consider the results for
 % Ruby as statistically significant because its p-value is on the borderline.
