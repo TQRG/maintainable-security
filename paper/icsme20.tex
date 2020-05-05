@@ -313,39 +313,32 @@ quickest solution to fix the problem and not necessarily the most elegant and
 performant one. Thus, we want to understand how security patches impact
 the maintainability of software. 
 
-%%%%% NEEDS REVIEW
 As an example, consider the patch of the TLS state-machine protocol implementation in 
-OpenSSL\footnoteref{openssl} to address multiple memory leaks in \texttt{t1$\_$lib.c} 
+OpenSSL\footnoteref{openssl} to address a memory leak flaw found in the way OpenSSL 
+handled TLS status request extension data during session renegotiation.multiple memory leaks 
 where a remote attacker could cause a Denial-of-Service
 (DoS) attack - through memory consumption - via large OCSP Status Request extensions.
-
-The Online Certificate Status Protocol (OCSP) is a protocol that allows the client to verify the server certificate for revocation without messing with certificate revocation lists. Its drawback is that it requires the client to connect to the server CA OCSP server and request the status of the certificate. This extension however, enables a TLS server to include its CA OCSP server response in the handshake. That is an HTTPS server may periodically run ocsptool (see ocsptool Invocation) to obtain its certificate revocation status and serve it to the clients. That way a client avoids an additional connection to the OCSP server.
+The Online Certificate Status Protocol (OCSP) is a protocol that allows the client to 
+verify the server certificate for revocation without messing with certificate revocation 
+lists. This extension however, enables a TLS server to include its response in the handshake.
 
 This vulnerability is listed at the Common
 Vulnerabilities and Exposures dictionary as CVE-$2016$-$6304$~\footnote{CVE-$2016$-$6304$
 details available at \url{http://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2016-6304}
 (Accessed on \today{})}. It is amongst the vulnerabilities studied in our
 research. The snippet, in Listing~\ref{lst:vuln}, presents the changes performed on the
-\emph{ssl/t1\_lib.c} file\footnote{CVE-$2016$-$6304$ fix available  at
+\emph{ssl/t1$\_$lib.c} file\footnote{CVE-$2016$-$6304$ fix available  at
 \url{https://github.com/openssl/openssl/commit/e408c09bbf7c3057bda4b8d20bec1b3a7771c15b}
-(Accessed on \today{})} by the OpenSSL developers to patch the vulnerability. Every SSL/TLS connection begins with a handshake 
-which is responsible by the negotiation between the two parties. The problem in
-CVE-$2016$-$6304$ is that due to a flaw in the logic of version $1.1.0$,
-the memory for a message is allocated too early, prior to the excessive
-message length check which can lead to a Denial of Service through memory
-exhaustion if an attacker triggers up a certain message length to be allocated to service a
-connection. In this case, there is only a security impact if the application does not call  
-\texttt{SSL\_free()} in a timely manner in the event that the connection fails;
-or, the application is working in a constrained environment where there
-is very little free memory;
-or, the attacker initiates multiple connection attempts such that there
-are multiple connections in a state where memory has been allocated for
-the connection, when \texttt{SSL\_free()} has not yet been called, and there is
-insufficient memory to service the multiple requests. Except in the instance of $1$ above, any Denial Of Service is likely to
-be transitory because as soon as the connection fails the memory is
-subsequently freed again in the \texttt{SSL\_free()} call. However, there is an
-increased risk during this period of application crashes due to the lack
-of memory - which would then mean a more serious Denial of Service.
+(Accessed on \today{})} by the OpenSSL developers to patch the vulnerability. 
+
+Every SSL/TLS connection begins with a handshake 
+which is responsible by the negotiation between the two parties. 
+The OSCP Status Request extension allows the client to verify
+the server certificate. The problem in CVE-$2016$-$6304$
+is that if the client sistematically requests a renegotiation,
+while sending large OCSP Status Request extensions each time,
+then there will be unbounded memory growth on the server
+and lead to a Denial-of-Service attack through memory exhaustion. 
 
 \medskip
 \setcounter{lstannotation}{0}
@@ -353,7 +346,7 @@ of memory - which would then mean a more serious Denial of Service.
 \\CVE-2016-6304 vulnerability for file ssl/t1\_lib.c},label={lst:vuln}]
 static int ssl_scan_clienthello_tlsext(SSL *s, PACKET *pkt, int *al){ 
  // [snip]
-+  sk_OCSP_RESPID_pop_free(s->tlsext_ocsp_ids, OCSP_RESPID_free);
++  sk_OCSP_RESPID_pop_free(s->tlsext_ocsp_ids, OCSP_RESPID_free); /*!\annotation{lst:func1}!*/
 +  if (PACKET_remaining(&responder_id_list) > 0) {
 +     s->tlsext_ocsp_ids = sk_OCSP_RESPID_new_null();
 +     if (s->tlsext_ocsp_ids == NULL) {
@@ -438,7 +431,10 @@ static int ssl_scan_clienthello_tlsext(SSL *s, PACKET *pkt, int *al){
 % }
 %\end{lstlisting}
 
-%The code changes performed to fix the vulnerability are:
+The code changes performed to fix the vulnerability are:
+
+The \texttt{sk\_OCSP\_RESPID\_pop\_free} function removes any OCSP$\_$RESPIDs 
+from a previous handshake to prevent unbounded memory growth~\ref{lst:func1}.
 
 % \Sof{The \texttt{read\_state\_machine} function, presented in Listing \ref{lst:vuln}, abstracts a sub-state-machine
 % to handle the messages exchanged between peers. When messages are larger than
@@ -464,8 +460,7 @@ security, developers are also negatively impacting the maintainability of their
 software applications. This is important because software maintainability is 
 approximately $75\%$ of the cost related to a project. To answer the following three 
 research questions, we use two datasets of security patches~\cite{Reis:2017:IJSSE, 10.1109/MSR.2019.00064} 
-to measure the impact of
-security patches on the maintainability of open-source software. 
+to measure the impact of security patches on the maintainability of open-source software. 
 %
 
 \textit{\textbf{RQ1: What is the impact of security patches on the
@@ -485,7 +480,8 @@ There are security flaws that are more difficult to patch than others. For
 instance, implementing secure authentication is not as easy as fixing a
 cross-site scripting vulnerability since usually the last one can be fixed
 without adding new lines of code/complexity to the code. A typical fix for 
-the cross-site scripting vulnerability is presented in Listing~\ref{lst:fix}. The developer added the function \texttt{htmlentities} to escape the data given by the variable
+the cross-site scripting vulnerability is presented in Listing~\ref{lst:fix}. 
+The developer added the function \texttt{htmlentities} to escape the data given by the variable
 \texttt{\$\_['file']}. \textbf{Knowing which patterns are more likely to increase
 maintainability issues is one step forward to bring awareness to security
 engineers of what patterns need more attention}. The taxonomy of security
@@ -566,9 +562,11 @@ for the patching, and the snippets of code that differ from one version to
 another (typically, called \textit{diffs}) --- where one can easily review the
 code used to fix the security flaw. 
 %
+
 Ponta et al. ($2019$) tracked the \url{pivotal.io} website for vulnerabilities 
 from $2014$ to $2019$. For each new vulnerability, the authors manually searched 
-for references to commits involved in the patch on the National Vulnerability Database (NVD) website. However, $70\%$
+for references to commits involved in the patch on the National Vulnerability 
+Database (NVD) website. However, $70\%$
 of the vulnerabilities did not have any references to commits. Thus, the authors
 used their expertise to locate the commits in the repositories. This technique 
 yielded a database of $624$ patches~\cite{10.1109/MSR.2019.00064}. The original 
@@ -578,6 +576,7 @@ used to patch the vulnerability. We assumed the last commit of the patch as
 the fix (\emph{sha}) and the parent of the first commit as the vulnerable version 
 (\emph{sha-p}).
 %
+
 In this study, we focus on computing the
 maintainability of the commits before and after the security patching to
 evaluate if its impact was positive, negative or none.
@@ -586,7 +585,9 @@ calculate their maintainability reports. However, there are refactorings
 discarded from our study due to limitations of BCH: in particular, lack of
 language support and project size. The final dataset used in this paper comprises
 $998$ security patches. $883$ of these patches are identified with Common Weakness
-Enumeration IDs (CWE) where $62.5\%$ were scraped from the National Vulnerability Dataset (NVD) and the remaining $37.5\%$ were manually classified following the \texttt{Research Concepts} CWE's list.
+Enumeration IDs (CWE) where $62.5\%$ were scraped from the National Vulnerability 
+Dataset (NVD) and the remaining $37.5\%$ were manually classified following the 
+\emph{Research Concepts} CWE's list.
 
 % In Table~\ref{tab:patterns}, the most prevailing categories are presented. To satisfy the Wilcoxon test size requirement, types of vulnerabilities
 % with less than $20$ instances were merged in a bigger group named \textit{Miscellaneous}.
@@ -722,12 +723,12 @@ previous work focused on comparing the impact of security refactorings with
 regular refactorings on maintainability.
 We analyze the maintainability of regular commits (i.e., commits not related
 to security fixes) and use them as a baseline.
-
 The baseline dataset uses the security commits dataset as input.
 Both datasets have the same size. For each
 security commit, a commit with an approximate size is searched. Due to the complexity 
 of some patches, it was not possible to find patches with the exact number of added and 
-deleted lines. Our search uses the patch \emph{diff} to look for a new similar \emph{diff}. The algorithm integrates the following steps:
+deleted lines. Our search uses the patch \emph{diff} to look for a new similar \emph{diff}. 
+The algorithm integrates the following steps:
 
 \begin{enumerate}
 \item Calculates the \emph{diff} between the security patch commit (\emph{sha}) and its parent (\emph{sha-p}).
@@ -737,17 +738,11 @@ deleted lines. Our search uses the patch \emph{diff} to look for a new similar \
 the security patch.
 \end{enumerate}
 
-\Sof{The pair of the random commit and its parent is accepted if the \emph{diff} 
-size fits in the range size considered acceptable at the moment. The algorithm 
-starts with a step of $1$. Every $10$ attempts to search for a change with the 
-same \emph{diff} the step increases. Thus, if a change suffered $20$ deletions 
-and $10$ additions, then, in the first $10$ attempts, the algorithm searches 
-for a \emph{diff} with deletions between $19$ and $21$ and additions between 
-$9$ and $11$. After the $10$ first attempts, the algorithm increase the step 
-for $2$ and searches for a \emph{diff} with deletions between $18$ and $22$ 
-and additions between $8$ and $10$. We originate the regular commits from the 
+The pair of the random commit and its parent is accepted if the \emph{diff} 
+size fits in the range size. This range widens every $10$ attempts to
+search for a chanfe with the same size. We originate the regular commits from the 
 security commits to ensure that differences in maintainability are not a 
-consequence of characteristics of different projects.}
+consequence of characteristics of different projects.
 
 \subsection{Maintainability Analysis}
 
@@ -773,7 +768,8 @@ software used by BCH to calculate the thresholds\footnote{Check the answer to
 \url{https://bettercodehub.com/docs/faq} (Accessed on \today{})}.
 
 \begin{figure}[h]
- 	\centering 	\includegraphics[width=0.44\textwidth]{figures/bch_report.png}
+ 	\centering 	
+	\includegraphics[width=0.44\textwidth]{figures/bch_report.png}
  	\caption{Maintainability report of OpenSSL's CVE-$2014$-$3506$ vulnerability
 refactoring for the guideline \emph{Write Simple Units of Code} provided by
 \emph{Better Code Hub}. This version of OpenSSL does not comply with the
@@ -1052,6 +1048,26 @@ smells may be new vulnerabilities~\cite{8819456}. Thus, while developers
 tend to ignore refactoring techinques such as the \emph{Replace Method 
 with Method Object} technique, they may also be introducing new software 
 vulnerabilities. 
+
+ \begin{figure}[h]
+  	\centering
+ 	\vspace{-0.3 cm}
+  	\includegraphics[width=0.5\textwidth]{figures/main_per_guideline.pdf}
+ 	\vspace{-0.3 cm}
+  	\caption{Impact of the security patches per guideline.}
+ 	\label{fig:guidelines}
+ 	\vspace{0.2 cm}
+ 	\scalebox{0.5}{
+ 	\begin{tabular}{r@{: }l r@{: }l}
+ 	$WCC$ & Write Clean Code & $KACB$ & Keep Architecture Components Balanced\\
+ 	$CACL$ & Couple Architecture Components Loosely & $SCM$ & Separate Concerns 
+	in Modules \\
+ 	$KUIS$ & Keep Unit Interfaces Small & $WCO$ & Write Code Once \\
+ 	$WSimpleUC$ & Write Simple Units of Code & $WShortUC$ & Write Short Units of 
+	Code
+ 	\end{tabular}
+ 	}	
+ \end{figure}
   
 For projects with large codebases, the results retrieved for \emph{Keep Your 
 Codebase Small} were not viable because they retrieved values above the limit 
@@ -1081,30 +1097,9 @@ practice guidelines and hinder software maintainability after patching; and,
 that different levels of attention should be paid to each guideline. For instance,
 \emph{Write Simple Units of Code} and \emph{Write Short Units of Code}
 are the most affected guidelines.
-
- 
 %
 % 
- \begin{figure}[h]
-  	\centering
- 	\vspace{-0.3 cm}
-  	\includegraphics[width=0.45\textwidth]{figures/main_per_guideline.pdf}
- 	\vspace{-0.3 cm}
-  	\caption{Impact of the security patches per guideline.}
- 	\label{fig:guidelines}
- 	\vspace{0.2 cm}
- 	\scalebox{0.5}{
- 	\begin{tabular}{r@{: }l r@{: }l}
- 	$WCC$ & Write Clean Code & $KACB$ & Keep Architecture Components Balanced\\
- 	$CACL$ & Couple Architecture Components Loosely & $SCM$ & Separate Concerns 
-	in Modules \\
- 	$KUIS$ & Keep Unit Interfaces Small & $WCO$ & Write Code Once \\
- 	$WSimpleUC$ & Write Simple Units of Code & $WShortUC$ & Write Short Units of 
-	Code
- 	\end{tabular}
- 	}	
- \end{figure}
- 
+
 \textbf{Severity:} Some of the vulnerabilities are identified with \emph{Common 
 Vulnerabilities and Exposure} (CVE) entries. We leveraged the \emph{National Vulnerability 
 Database} (NVD) website to obtain their severity levels. In total, we 
@@ -1123,7 +1118,6 @@ more negative impact on maintainability. This suggests that high/medium
 severity vulnerabilities may need more attention than low severity while 
 patching vulnerabilities which was also observed in previous work but 
 regarding the companies market values~\cite{4267025}.
-
 
 \begin{figure}[h]
  	\centering 	\includegraphics[width=0.4\textwidth]{figures/main_per_severity.pdf}
@@ -1165,7 +1159,7 @@ Figure~\ref{fig:lang_main} shows that only \emph{C/C++} and \emph{Ruby} have
 a significant negative impact approximate to $50\%$ on software 
 maintainability. We suspect that these values are
 the result of projects contributions policies. In our dataset, 
-nine of the ten projects with more contributors have strict contribution policies regarding code
+nine of the ten projects with more contributors have strsict contribution policies regarding code
 standards. For
 instance, \texttt{laravel/framework} requires the \texttt{PSR-2
 Standard}\footnote{PSR-2 Standard available at
@@ -1196,11 +1190,14 @@ affect open-source software maintainability?}}
 \begin{figure*}[htp]
   \centering
   \subfigure[Maintainability difference by first-level weaknesses from the 
-  \textit{Research Concepts} list on Common Weakness Enumeration (CWE)]{\includegraphics[scale=0.4]{figures/main_per_cwe.pdf}}\quad\quad
+  \textit{Research Concepts} list on Common Weakness Enumeration (CWE)]{
+  \includegraphics[scale=0.4]{figures/main_per_cwe.pdf}}\quad\quad
   \subfigure[Maintainability difference by sub-weaknesses of the 
-  \textit{Improper Neutralization} Weakness (CWE-707)]{\includegraphics[scale=0.4]{figures/main_per_cwe_spec_707.pdf}}\quad\quad
+  \textit{Improper Neutralization} Weakness (CWE-707)]{
+  \includegraphics[scale=0.4]{figures/main_per_cwe_spec_707.pdf}}\quad\quad
     \subfigure[Maintainability difference by sub-weaknesses of the 
-	\textit{Improper Control of a Resource Through its Lifetime} Weakness (CWE-664)]{\includegraphics[scale=0.4]{figures/main_per_cwe_spec_664.pdf}}
+	\textit{Improper Control of a Resource Through its Lifetime} Weakness (CWE-664)]{
+	\includegraphics[scale=0.4]{figures/main_per_cwe_spec_664.pdf}}
 	\label{fig:pat}
 \end{figure*}
 
@@ -1238,11 +1235,12 @@ maintainability. \emph{Cross-Site Scripting (CWE-79)} patches endure more
 cases with no impact on the open-source software maintainability.
 Typically, these types of vulnerabilities do not need extra lines 
 to be fixed, as shown in Listing~\ref{lst:fix} - one simple \texttt{escape} 
-function patches the issue.  Whereas, \emph{Missing Release of Memory after Effective 
+function patches the issue. Whereas, \emph{Missing Release of Memory after Effective 
 Lifetime (CWE-401)} and \emph{Resource Management Errors} (CWE-399) vulnerabilities
 are usually the root cause of Denial-of-Service attacks which are more difficult
 to patch since it usually requires to add more complexity to the program - as
-seen in the example presented on Section~\ref{sec:motivation}.
+seen in the example presented on Section~\ref{sec:motivation}. 
+
 
 
 
@@ -1260,6 +1258,14 @@ $0.041$). However, results obtained to the other weaknesses should not be
 disregarded because they offer an interesting view on how the maintainability 
 is impacted per weakness which can provide insights to developers/researchers
 on the weaknesses that need more attention.
+
+Real
+efforts have been made in creating and incorporating coding standards and best
+practices in software production. However, security is still far from perfection
+and fixing vulnerabilities might hinder software maintainability. Thus, it is
+not only important to provide tool support to developers to help them apply these
+patterns without harming software maintainability, but also to create and redesign
+programming languages to facilitate developers improving software maintainability.
 
 
 % Another example is the Apple authentication flaw discovered in $2017$
@@ -1300,6 +1306,7 @@ same in $42.69\%$ ($426$) of the cases and performing regular
 changes has a more positive impact than negative on the software 
 maintainability. 
 
+
 Results show that regular changes typically have no impact on the 
 software maintainability which contradicts previous research\Sof{missing citation}.
 However, we manually inspected a considerable amount of cases from
@@ -1307,19 +1314,11 @@ the regular changes distribution where this happens and found that
 identifying regular commits as similar in size as the security-related 
 commit is limiting the type of regular commits (e.g, input 
 refactorings, variables or functions, type conversion, etc).  
-One example is the regular commit\footnote{Regular change: 
-\url{https://github.com/AFNetworking/AFNetworking/compare/9cde4e45845486bdb46ad32
-2448f93df3b8479bf...3486a008a1fd1348d0f2fe748a5e23933d94647a}} generated 
-by our methodology and using as reference the following security commit
-\footnote{Security change: 
-\url{https://github.com/AFNetworking/AFNetworking/compare/49186d9a3032dc02da1d0cc
-445cbf69b0cfb001b...2b2558a90e7bfb2ef5169b1ca21b91851e5a5b7d}}. From a
-overflow vulnerability patch, our methodology chose a similiar
-type of change. We strongly believe that this phenomenon lead
+We strongly believe that this phenomenon lead
 to the significant number of cases where there is no impact
 on the software maintainability.
 
-Results show that for both types of changes there is a negative impact
+For both types of changes, there is a negative impact
 on software maintainability - especially, for security changes. This raises 
 a new trade-off when developers need to patch vulnerabilities on their projects
 because they might be hindering the software maintainability or even introducing
@@ -1360,17 +1359,18 @@ and that this study tries to bring awareness for:
 	
 \end{itemize}
 
+\begin{figure}[h]	
+ 	\centering 	\includegraphics[width=0.4\textwidth]{figures/main_comparison.pdf}
+ 	\caption{Maintainability difference for security and baseline patches.}
+	\label{fig:secvsreg}
+\end{figure}
+
 The resulting p-value of the Paired Wilcoxon signed-rank test is $0.331$, i.e., 
 conclusions regarding the regular changes are not statistically significant. 
 Yet, it is important to note that \emph{patching security vulnerabilities seem 
 to have a more negative impact on the maintainability of open-source software 
 than performing regular changes}.
 
-\begin{figure}[h]	
- 	\centering 	\includegraphics[width=0.4\textwidth]{figures/main_comparison.pdf}
- 	\caption{Maintainability difference for security and baseline patches.}
-	\label{fig:secvsreg}
-\end{figure}
 
 
 \section{Threats to Validity}\label{sec:threats}
@@ -1395,8 +1395,6 @@ to fix security flaws. This approach discards security patches that were
 not explicit in commits messages. Pontas et. al\cite{10.1109/MSR.2019.00064} dataset
 has patches that were manually mined in software repositories. Being a manual technique,
 the search might led to wrong associations between vulnerabilities and code snippets. 
-However, we manually inspected all the data points again and disregarded the ones we were
-in doubt. 
 When comparing security changes versus regular changes, our study does not take into consideration that 
 developers may patch the issue quickly and later proceed to refactor.
 We assume that vulnerabilities are patched once or in different parts consecutively.
