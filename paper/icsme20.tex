@@ -1382,31 +1382,31 @@ on the BCH's reports. The high amount of different projects and backgrounds
 may require other maintainability standards. However, BCH does use a 
 representative benchmark of closed and open-source software projects to compute 
 the thresholds for each maintainability guideline~\cite{Visser:2016:OREILLY, Baggen2012}.
-The way how maintainability is being calculated - mean of all guidelines - is
-a preliminar measure to show how the maintainability is overall affected. Nevertheless,
-in some cases the maintainability for the two versions might be the same but have
-different causes, i.e., being affected by different guidelines. 
+Maintainability is computed as the mean of all guidelines. A patch can
+have the same impact on the overall maintainability of both software versions 
+- non-vulnerable and vulnerable - but not necessarily on the same 
+guidelines.
 %
 \\\textit{\textbf{Internal:}} The security patches dataset provided by previous
 work~\cite{Reis:2017:IJSSE} was collected based on the messages of GitHub
 commits produced by project developers to classify the changes performed by them
 to fix security flaws. This approach discards security patches that were
 not explicit in commits messages. Pontas et. al\cite{10.1109/MSR.2019.00064} dataset
-has patches that were manually mined in software repositories. Being a manual technique,
-the search might led to wrong associations between vulnerabilities and code snippets. 
-When comparing security changes versus regular changes, our study does not take into consideration that 
-developers may patch the issue quickly and later proceed to refactor.
-We assume that vulnerabilities are patched once or in different parts consecutively.
+has patches that were manually mined in software repositories and, consequently,
+wrong associations may have been performed between vulnerabilities and code snippets. 
+The dataset also included floss-refactorings. Both cases were manually inspected
+and deleted from the dataset. Thus, this study does not consider that a
+developer may perform a patch quickly and later proceed to the refactor.
 Baseline commits are retrieved randomly by selecting one commit with an 
-approximate size from the same
-project of a given security patch. This approach softens the differences
+approximate size and from the same project of a given security patch. 
+This approach softens the differences
 that may result from the characteristics of each project. However,
 maintainability may still be affected by the developers' experience, coding
 style and software contribution policies which is not evaluated in this study.
-Furthermore, this evaluation considers that $998$ regular commits are enough to
+Furthermore, this evaluation considers that $998$ regular commits - any kind
+of commit - are enough to
 alleviate random irregularities in the maintainability differences of the
 baseline. 
-%
 \\\textit{\textbf{External:}} We use a dataset that only comprises patches of open-source software.
 However, the methodology requires to access data that is not publicly available.
 Thus, our findings may not extend to non-open source software. Different programming 
