@@ -1469,10 +1469,13 @@ This work presents an empirical study on the impact of $998$ security
 patches on the maintainability of $262$ open-source projects. We leveraged
 Better Code Hub reports to calculate maintainability based on a model proposed in previous work~\cite{Olivari:2018, cruz2019energyoriented}. Security patches 
 significantly affect the software maintainability of open-source software, i.e., 
-developers hinder maintainability when patching vulnerabilities. We found this evidence in
+developers hinder maintainability while patching vulnerabilities. We found this evidence in
 $41.28\%$ of the studied cases. Regarding regular commits, it seems that overall
 maintainability stays the same ($42.69\%$). However, there is still a 
 considerable amount of cases that harm maintainability ($27.05\%$).
+Regarding security patches, we also observe that some guidelines are more
+affected than others: \emph{Write Simple Units of Code} ($37.3\%$) and
+\emph{Write Short Units of Code} ($37.6\%$) the most affected ones. 
 
 This study also shows evidence that there are security patterns that need more
 attention than others. \emph{Improper Input Validation} (CWE-20), \emph{Information 
@@ -1480,20 +1483,20 @@ Exposure} (CWE-200), \emph{Improper Restriction of Operations within the Bounds 
 Memory Buffer} (CWE-119), \emph{Missing Release of Memory after Effective Lifetime} 
 (CWE-401) and \emph{Path Traversal} (CWE-22) endure maintainability
 in $41.9\%$, $52.5\%$, $42.9\%$, $49.4\%$, and $41.7\%$, respectively. Therefore, 
-we draw attention for the need of better documentation explaining how to use best practices to
-produce secure and maintainable code; new and better programming languages; new
-academic curricula in the fields of security and software quality; and, tools
-such as BCH to help developers predict the effect of their patches.
+we draw attention for the need of better documentation explaining 
+how to use best practices to produce secure and maintainable code; 
+new and better programming languages; new
+academic curricula in the fields of security and software quality; and, 
+tools such as Better Code Hub and efficient static analysis to help 
+developers predict the effect of their patches on software maintainability.
 
 As future work, this study may be extended in several directions: 
 investigate which guidelines affect most the maintainability per
 weakness; check if vulnerability patches are followed by refactoring
-commits or not and how much time does it take to do it; 
-investigate how patches impact maintainability for each
-vulnerability and programming language; expand our methodology with other
-software quality properties; validate these findings with closed or private
+commits and how much time does it take to do it; 
+expand our methodology with other software quality properties; 
+validate these findings with closed/private
 software; and, expand this analysis to other quality standards.
-
 
 %
 % \section*{Acknowledgment}\label{sec:ack}
