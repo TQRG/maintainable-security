@@ -312,13 +312,14 @@ quickest solution to fix the problem and not necessarily the most elegant and
 performant one. Thus, we want to understand how security patches impact
 the maintainability of software. 
 
-As an example, consider the patch of the Online Certificate Status Procotol (OCSP) 
-implementation in OpenSSL\footnoteref{openssl} to address a memory leak flaw 
+As an example, consider the patch of the TLS state machine protocol implementation
+in OpenSSL\footnoteref{openssl} to address a memory leak flaw 
 found in the way OpenSSL handled TLS status request extension data during session 
-renegotiation and where a remote attacker could cause a Denial-of-Service
-(DoS) attack - through memory consumption - via large OCSP Status Request extensions.
-OCSP, formally known as the TLS Certificate Status Request extension, is a protocol 
-that allows the client to verify the server certificate for revocation. 
+renegotiation and where a malicious client could cause a Denial-of-Service
+(DoS) attack via large OCSP Status Request extensions - if OCSP stapling support
+enabled. Online Certificate Status Procotol (OCSP) stapling, formally known as the TLS Certificate 
+Status Request extension, is a standard for checking the revocation status of
+certificates.
 
 
 This vulnerability is listed at the Common
@@ -335,11 +336,12 @@ which is responsible for the negotiation between the two parties.
 The OSCP Status Request extension allows the client to verify
 the server certificate and enables a TLS server to include
 its response in the handshake. The problem in CVE-$2016$-$6304$
-is that if the client systematically requests a renegotiation,
-while sending large OCSP Status Request extensions each time,
-then there will be unbounded memory growth on the server
-and lead to a Denial-of-Service attack through memory exhaustion. 
-Applications not enabling OCSP stapling support are not affected. 
+was a flaw in the logic of OpenSSL, a client 
+can systematically requests renegotiation,
+while sending large OCSP Status Request extensions each time. This
+increases the amount of unbounded memory on the server
+which will eventually lead to a DoS attack through memory exhaustion. 
+Applications not enabling OCSP stapling support are not affected.
 
 \medskip
 \setcounter{lstannotation}{0}
