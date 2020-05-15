@@ -313,14 +313,13 @@ performant one. Thus, we want to understand how security patches impact
 the maintainability of software. 
 
 As an example, consider the patch of the TLS state machine protocol implementation
-in OpenSSL\footnoteref{openssl} to address a memory leak flaw 
-found in the way OpenSSL handled TLS status request extension data during session 
+in OpenSSL\footnoteref{openssl} to address a memory leak flaw found in the way 
+OpenSSL handled TLS status request extension data during session 
 renegotiation and where a malicious client could cause a Denial-of-Service
 (DoS) attack via large OCSP Status Request extensions - if OCSP stapling support
 enabled. Online Certificate Status Procotol (OCSP) stapling, formally known as the TLS Certificate 
 Status Request extension, is a standard for checking the revocation status of
-certificates.
-
+certificates. 
 
 This vulnerability is listed at the Common
 Vulnerabilities and Exposures dictionary as CVE-$2016$-$6304$~\footnote{CVE-$2016$-$6304$
@@ -330,27 +329,40 @@ research. The snippet, in Listing~\ref{lst:vuln}, presents the changes performed
 \emph{ssl/t1$\_$lib.c} file\footnote{CVE-$2016$-$6304$ fix available  at
 \url{https://github.com/openssl/openssl/commit/e408c09bbf7c3057bda4b8d20bec1b3a7771c15b}
 (Accessed on \today{})} by the OpenSSL developers to patch the vulnerability. 
-
 Every SSL/TLS connection begins with a handshake 
 which is responsible for the negotiation between the two parties. 
 The OSCP Status Request extension allows the client to verify
 the server certificate and enables a TLS server to include
 its response in the handshake. The problem in CVE-$2016$-$6304$
-was a flaw in the logic of OpenSSL, a client 
-can systematically requests renegotiation,
-while sending large OCSP Status Request extensions each time. This
-increases the amount of unbounded memory on the server
-which will eventually lead to a DoS attack through memory exhaustion. 
+is a flaw in the logic of OpenSSL that does not handle memory efficiently
+when large OCSP Status Request extensions are sent each time a client 
+requests renegotiation. This was possible because the OCSP responses IDs 
+were not released between handshakes. Instead, they would be allocated 
+again and again. 
+
+%We remove any OCSP_RESPIDs from a previous handshake
+%to prevent unbounded memory growth - CVE-2016-6304
+
+
+If 
+a malicious client does it several times it may lead to an unbounded memory
+growth on the server. 
+
+
+
+
+Applications 
+which eventually lead to a DoS attack through memory exhaustion. 
 Applications not enabling OCSP stapling support are not affected.
 
 \medskip
 \setcounter{lstannotation}{0}
-\begin{lstlisting}[style={CStyle}, caption={Fix provided by OpenSSL developers to the
-\\CVE-2016-6304 vulnerability for file ssl/t1\_lib.c},label={lst:vuln}]
+\begin{lstlisting}[style={CStyle}, caption={Patch provided by OpenSSL developers to the
+\\CVE-2016-6304 vulnerability on file ssl/t1\_lib.c},label={lst:vuln}]
 static int ssl_scan_clienthello_tlsext(SSL *s, PACKET *pkt, int *al){ 
  // [snip]
 +  sk_OCSP_RESPID_pop_free(s->tlsext_ocsp_ids, OCSP_RESPID_free); /*!\annotation{lst:func1}!*/
-+  if (PACKET_remaining(&responder_id_list) > 0) {
++  if (PACKET_remaining(&responder_id_list) > 0) { /*!\annotation{lst:func2}!*/
 +     s->tlsext_ocsp_ids = sk_OCSP_RESPID_new_null();
 +     if (s->tlsext_ocsp_ids == NULL) {
 +        *al = SSL_AD_INTERNAL_ERROR;
@@ -370,7 +382,7 @@ static int ssl_scan_clienthello_tlsext(SSL *s, PACKET *pkt, int *al){
 
 -  if (s->tlsext_ocsp_ids == NULL 
 -      && (s->tlsext_ocsp_ids = 
--      sk_OCSP_RESPID_new_null()) == NULL) {
+-      sk_OCSP_RESPID_new_null()) == NULL) { /*!\annotation{lst:func3}!*/
 -    *al = SSL_AD_INTERNAL_ERROR;
 -    return 0;
 -  }
@@ -434,10 +446,10 @@ static int ssl_scan_clienthello_tlsext(SSL *s, PACKET *pkt, int *al){
 % }
 %\end{lstlisting}
 
-The code changes performed to fix the vulnerability are:
+The code changes performed to patch the vulnerability are:
 
-The \texttt{sk\_OCSP\_RESPID\_pop\_free} function removes any OCSP$\_$RESPIDs 
-from a previous handshake to prevent unbounded memory growth~\ref{lst:func1}.
+~\ref{lst:func1} The \texttt{sk\_OCSP\_RESPID\_pop\_free} function removes any OCSP$\_$RESPIDs 
+from a previous handshake to prevent unbounded memory growth.
 
 % \Sof{The \texttt{read\_state\_machine} function, presented in Listing \ref{lst:vuln}, abstracts a sub-state-machine
 % to handle the messages exchanged between peers. When messages are larger than
@@ -891,7 +903,7 @@ programming activities are involved.
 The BCH tool does not compute the final score that our study needs to compare
 maintainability amongst different project versions. For this, we follow previous 
 work on measuring the impact of energy-oriented 
-refactorings~\cite{cruz2019energyoriented}. Luis et al. ($2019$) proposed an 
+refactorings~\cite{cruz2019energyoriented}. Cruz et al. ($2019$) proposed an 
 equation to capture the distance between the current state of the project and
 the standard thresholds calculated by the BCH based on the insights provided 
 in~\cite{Olivari:2018}. The equation provided in~\cite{cruz2019energyoriented} 
@@ -1075,8 +1087,11 @@ vulnerabilities.
 For projects with large codebases, the results retrieved for \emph{Keep Your 
 Codebase Small} were not viable because they retrieved values above the limit 
 set by BCH ($20$ Person-years). The \emph{Automated Tests} guideline was also 
-not considered because the BCH tool does not return the same type of information
-as for other guidelines. Due to BCH limitations, we detected a few data points
+not considered for this study because the BCH tool does not contemplate two
+of the most important techniques to security testing: vulnerability scanning
+and pentration testing. Instead, it only contemplates unit 
+testing.
+Due to BCH limitations, we detected a few data points
 that retrieved incorrect overall calculations for one version of the software. 
 Those data points were disregarded from the study.
 
@@ -1435,7 +1450,7 @@ the development of Android apps, Malavolta et al. ($2018$)~\cite{8530041}
 discovered that maintainability decreases over time. Palomba et al.
 ($2018$)~\cite{Palomba:2018:DIM:3231288.3231337} exhibits proof that code smells
 should be carefully monitored by programmers since there is a high correlation
-between maintainability aspects and proneness to changes and faults. In 2019, Luis et 
+between maintainability aspects and proneness to changes and faults. In 2019, Cruz et 
 al.~\cite{cruz2019energyoriented} proposed a formula to calculate maintainability 
 based on the BCH's guidelines and measured the impact of energy-oriented fixes 
 on the maintainability of software.
