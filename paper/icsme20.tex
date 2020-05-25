@@ -190,21 +190,24 @@ Software quality characteristics include, but are not limited to functional corr
 reliability, usability, maintainability, and security. Security is an 
 important non-functional requirement during the development of software systems. 
 However, there is still a considerable amount of vulnerabilities being
-discovered, and fixed, almost weekly as disclosed by the Zero Day Initiative
+discovered and fixed, almost weekly, as disclosed by the Zero Day Initiative
 website\footnote{Zero Day Initiative website available at
 \url{https://www.zerodayinitiative.com/advisories/published/} (Accessed on \today{})}.
-These vulnerabilities are gateways for attackers to penetrate systems and 
-exploit their resources. As an example, at the beginning of $2020$, academics published a 
-new execution attack (CacheOut) capable of leaking data from Intel CPUs across many 
-security boundaries~\cite{cacheOut} $-$ a processor bug that the company attempted to 
-address in previous generations and that makes every user using a CPU released before Q$4$ $2018$ vulnerable. Although not a software bug, software can mitigate this type of issues
-at the cost of features and/or performance.
+%These vulnerabilities are gateways for attackers to penetrate systems and 
+%exploit their resources. As an example, at the beginning of $2020$, academics published a 
+%new execution attack (CacheOut) capable of leaking data from Intel CPUs across many 
+%security boundaries~\cite{cacheOut} $-$ a processor bug that the company attempted to 
+%address in previous generations and that makes every user using a CPU released before Q$4$ 
+%$2018$ vulnerable. Although not a software bug, software can mitigate this type of issues
+%at the cost of features and/or performance.
 %
 
 In $2011$, the International Organization for Standardization (ISO) issued an
 update for software product quality ISO/IEC 25010 considering
 \emph{Security} as one of the main software product quality characteristics~\cite{iso:2011}. 
-However, many developers still lack the knowledge about best practices to deliver secure and high-quality software~\cite{Pothamsetty:2005:SEL:1107622.1107635, 8077802}.
+However, many developers still lack the knowledge about best practices to deliver secure and 
+high-quality software~\cite{Pothamsetty:2005:SEL:1107622.1107635, 8077802}.
+\Rui{link between security and maintainability is still obscure.}
 Unmaintainable code is hard to test, analyze and re-use, and thus more difficult
 to find vulnerabilities and defects. Therefore, writing maintainable code
 supports the production of more reliable software preventing the introduction of 
@@ -216,7 +219,7 @@ software quality ISO/IEC 25010~\cite{iso:2011}. Novel tools have been built to
 detect automatically software vulnerabilities (e.g., FindBugs, Infer and more). 
 Despite these efforts, improving software security is not a trivial task and requires 
 implementing patches that might affect software maintainability. 
-Our suspiciousness is that some of the these patches may have a negative 
+Our \Rui{wrong word -->} suspiciousness is that some of the these patches may have a negative 
 impact on the software maintainability and, possibly, even be the cause of the 
 introduction of new vulnerabilities $-$ harming software reliability. Therefore, 
 in this paper, we present an empirical study on the impact of patches of 
@@ -252,14 +255,14 @@ focused only on web applications, and a model proposed by Xu et al. ($2013$)
 first steps taken by SIG to introduce security on their maintainability model). 
 %
 We use BCH's toolset to provide an assessment of maintainability in 
-software mainly due to the broad number of metrics used.
+software mainly due to the broad number of metrics used. \Rui{this paragraph is boring and in cicles. revise.}
 
 From a methodological 
 perspective, we leveraged a dataset of $1335$ security patches collected from open-source 
 software. We calculate software maintainability before and after the patch to measure its 
 impact. This empirical study presents evidence that changes 
 applied in the code bases to patch vulnerabilities affect code maintainability.
-Results also show that different levels of attention should be given to different
+\Rui{Sentence is too criptic -->} Results also show that different levels of attention should be given to different
 severity levels, programming languages and types of weaknesses.
 Little information is known about the impact of security patches on the software
 maintainability. With this study, 
@@ -278,7 +281,8 @@ The main contributions of the present work are:
 %
 \begin{itemize}
 	\item An empirical study on the impact of security changes on software
-	maintainability and what patterns need more attention.
+  maintainability and what patterns need more attention.
+  \item \Rui{results, conclusions}
 	\item A replication package with all scripts and data created to perform the
 	empirical evaluation, for reproducibility. Available online:
   \url{https://figshare.com/s/4861207064900dfb3372}.
@@ -302,7 +306,7 @@ concludes the main findings and elaborates on future work.
 %
 Due to time-to-market pressure and the lack of security expertise~\cite{8077802}, code-related
 security flaws are generally detected \textit{after the fact}, i.e., when
-hackers exploit them. It turns out that fixing these issues is as simple as
+hackers exploit them. \Rui{strange sentence -->} It turns out that fixing these issues is as simple as
 modifying the software code base. However, these patches may have a
 negative impact on software maintenance --- e.g., developers might follow the
 quickest solution to fix the problem and not necessarily the most elegant and
@@ -470,7 +474,7 @@ and \emph{Write Simple Units of Code}.
 
 
 %%%%%%% 
-Software maintainability is designed as the degree to which an application is understood, 
+Software maintainability is \Rui{designed??} designed as the degree to which an application is understood, 
 repaired or enhanced. In this paper, our concern is to study whether, while improving software
 security, developers are also negatively impacting the maintainability of their
 software applications. This is important because software maintainability is 
@@ -739,9 +743,9 @@ previous work focused on comparing the impact of security refactorings with
 regular refactorings on maintainability.
 We analyze the maintainability of regular commits (i.e., commits not related
 to security fixes) and use them as a baseline.
-The baseline dataset uses the security commits dataset as input.
+\Rui{strange sentence:} The baseline dataset uses the security commits dataset as input.
 Both datasets have the same size. For each
-security commit, a commit with an approximate size is searched. Due to the complexity 
+security commit, a commit with an approximate size is fetched. Due to the complexity 
 of some patches, it was not possible to find patches with the exact number of added and 
 deleted lines. Our search uses the patch \emph{diff} to look for a new similar \emph{diff}. 
 The algorithm integrates the following steps:
@@ -1014,9 +1018,9 @@ on the source code of the software. These changes may have a different
 impact on the guidelines/metrics used to measure software maintainability. 
 Figure~\ref{fig:guidelines} shows the impact of security patches 
 on each guideline individually and the average impact on all guidelines 
-together - $M(v)$. Under each guideline is stated the 
+together - $M(v)$. \Rui{doesn't parse -->} Under each guideline is stated the 
 metric used to the calculations. Table~\ref{tab:guidelines} describes 
-in more detail the metrics behind the guidelines presented. 
+in more detail the metrics behind the guidelines. 
 For each type of guideline, three types of impact of patches in 
 the software maintainability are presented: 
 \emph{negative}, maintainability decreases (\emph{red});
@@ -1031,13 +1035,16 @@ of the maintainability difference and the p-value resulting from the
 Paired Wilcoxon signed-rank test. $M(v)$ is not a guideline but rather the 
 average impact of all guidelines.
 
+\Rui{the next couple of sentences read contradictory...}
 Regarding the impact of security patches for each guideline, we observe
 that overall patches have a more positive impact than negative in
 all guidelines/metrics. However, patching vulnerabilities also has a very
 significant negative impact on all guidelines - between $10\%$ and $40\%$. 
 \emph{Write Short Units of 
-Code} ($38.3\%$), \emph{Write Simple Units of Code} ($37.9\%$),  and \emph{Separate Concerns in Modules} ($33.8\%$) seem to be the 
+Code} ($38.3\%$), \emph{Write Simple Units of Code} ($37.9\%$),  and 
+\emph{Separate Concerns in Modules} ($33.8\%$) seem to be the 
 most affected guidelines. 
+\Rui{The next sentence should be in a morer  abstract way.. too much detail, no?}
 This may imply that developers when patching 
 vulnerabilities fail to design/implement solutions that continue to respect 
 the limit bounds of branch points (/programming conditions) and function/module 
@@ -1093,7 +1100,7 @@ The $M(v)$ plots show that $406$ ($41.9\%$) of the cases have negative impact
 on software maintainability. While $188$ ($19.4\%$) have no impact and $375$ ($38.7$)
 have a negative impact. The larger number of negative cases may be 
 explained by guidelines with higher concentration of negative cases with higher amplitudes
-such as WShortUC, WSimpleUC and SCM. In other words, it is 
+such as \Rui{these acronyms came out of the blue.} WShortUC, WSimpleUC and SCM. In other words, it is 
 important to note that the design debt of one guideline can lead
 to severe impacts on the software quality~\cite{10.1145/1985362.1985366}.  
 Thus, tools like Better Code Hub and static analysis tools (e.g., SonarQube, Codacy,
@@ -1236,7 +1243,7 @@ affect open-source software maintainability?}}
 \end{figure*}
 
 \emph{Weakness}, according to the Common Weakness Enumeration (CWE) glossary, 
-is a type of mistake that, in proper conditions, could contribute to the 
+is a type of mistake that, \Rui{meaning?} in proper conditions, could contribute to the 
 introduction of vulnerabilities within that product. The CWE enumeration
 system was used to classify the vulnerabilities included in our study.
 Figure~\ref{fig:pat} shows three different charts: \emph{(a)} shows
