@@ -190,21 +190,24 @@ Software quality characteristics include, but are not limited to functional corr
 reliability, usability, maintainability, and security. Security is an 
 important non-functional requirement during the development of software systems. 
 However, there is still a considerable amount of vulnerabilities being
-discovered, and fixed, almost weekly as disclosed by the Zero Day Initiative
+discovered and fixed, almost weekly, as disclosed by the Zero Day Initiative
 website\footnote{Zero Day Initiative website available at
 \url{https://www.zerodayinitiative.com/advisories/published/} (Accessed on \today{})}.
-These vulnerabilities are gateways for attackers to penetrate systems and 
-exploit their resources. As an example, at the beginning of $2020$, academics published a 
-new execution attack (CacheOut) capable of leaking data from Intel CPUs across many 
-security boundaries~\cite{cacheOut} $-$ a processor bug that the company attempted to 
-address in previous generations and that makes every user using a CPU released before Q$4$ $2018$ vulnerable. Although not a software bug, software can mitigate this type of issues
-at the cost of features and/or performance.
+%These vulnerabilities are gateways for attackers to penetrate systems and 
+%exploit their resources. As an example, at the beginning of $2020$, academics published a 
+%new execution attack (CacheOut) capable of leaking data from Intel CPUs across many 
+%security boundaries~\cite{cacheOut} $-$ a processor bug that the company attempted to 
+%address in previous generations and that makes every user using a CPU released before Q$4$ 
+%$2018$ vulnerable. Although not a software bug, software can mitigate this type of issues
+%at the cost of features and/or performance.
 %
 
 In $2011$, the International Organization for Standardization (ISO) issued an
 update for software product quality ISO/IEC 25010 considering
 \emph{Security} as one of the main software product quality characteristics~\cite{iso:2011}. 
-However, many developers still lack the knowledge about best practices to deliver secure and high-quality software~\cite{Pothamsetty:2005:SEL:1107622.1107635, 8077802}.
+However, many developers still lack the knowledge about best practices to deliver secure and 
+high-quality software~\cite{Pothamsetty:2005:SEL:1107622.1107635, 8077802}.
+\Rui{link between security and maintainability is still obscure.}
 Unmaintainable code is hard to test, analyze and re-use, and thus more difficult
 to find vulnerabilities and defects. Therefore, writing maintainable code
 supports the production of more reliable software preventing the introduction of 
@@ -216,7 +219,7 @@ software quality ISO/IEC 25010~\cite{iso:2011}. Novel tools have been built to
 detect automatically software vulnerabilities (e.g., FindBugs, Infer and more). 
 Despite these efforts, improving software security is not a trivial task and requires 
 implementing patches that might affect software maintainability. 
-Our suspiciousness is that some of the these patches may have a negative 
+Our \Rui{wrong word -->} suspiciousness is that some of the these patches may have a negative 
 impact on the software maintainability and, possibly, even be the cause of the 
 introduction of new vulnerabilities $-$ harming software reliability. Therefore, 
 in this paper, we present an empirical study on the impact of patches of 
@@ -252,14 +255,14 @@ focused only on web applications, and a model proposed by Xu et al. ($2013$)
 first steps taken by SIG to introduce security on their maintainability model). 
 %
 We use BCH's toolset to provide an assessment of maintainability in 
-software mainly due to the broad number of metrics used.
+software mainly due to the broad number of metrics used. \Rui{this paragraph is boring and in cicles. revise.}
 
 From a methodological 
 perspective, we leveraged a dataset of $1335$ security patches collected from open-source 
 software. We calculate software maintainability before and after the patch to measure its 
 impact. This empirical study presents evidence that changes 
 applied in the code bases to patch vulnerabilities affect code maintainability.
-Results also show that different levels of attention should be given to different
+\Rui{Sentence is too criptic -->} Results also show that different levels of attention should be given to different
 severity levels, programming languages and types of weaknesses.
 Little information is known about the impact of security patches on the software
 maintainability. With this study, 
