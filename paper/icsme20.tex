@@ -17,6 +17,9 @@
 \usepackage{hyperref}
 \usepackage{array}
 \usepackage{subfigure}
+\usepackage{changepage}
+
+
 \newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 
 \usepackage{listings}
@@ -127,11 +130,10 @@
 
 \begin{document}
 
-% \title{Fixing Vulnerabilities Hinders Maintainability}
-\title{\Sof{TBA - New Titles in the comments}}
+\title{Fixing Vulnerabilities Potentially Hinders Maintainability}
 %\title{Coding practices are important to produce secure software: Teach them to your students and developers!}
 %\title{The reason why you should be applying coding practices: safer software.}
-%\title{What is the impact of security patches in software evolution?}
+%\title{What is the impact of  corollarysecurity patches in software evolution?}
 %\title{Hey, developers! You should pay more attention to your patches.}
 %\title{Are good coding pratices used when patching software vulnerabilities?}
 
@@ -175,7 +177,7 @@ of open-source software and that different levels of attention should be given t
 different severity levels, programming languages and types of weaknesses. We 
 conclude that changes to code bases to patch 
 vulnerabilities need to be performed with extra care and that security-related 
-code evolution should be subject in computer curricula.
+code evolution should be subject in computer curricula.\Rui{Needs improvement}
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -1018,14 +1020,9 @@ on the source code of the software. These changes may have a different
 impact on the guidelines/metrics used to measure software maintainability. 
 Figure~\ref{fig:guidelines} shows the impact of security patches 
 on each guideline individually and the average impact on all guidelines 
-together - $M(v)$. \Rui{doesn't parse -->} Under each guideline is stated the 
+together - $M(v)$. \Rui{doesn't parse -->} Under each guideline, it is stated the 
 metric used to the calculations. Table~\ref{tab:guidelines} describes 
 in more detail the metrics behind the guidelines. 
-For each type of guideline, three types of impact of patches in 
-the software maintainability are presented: 
-\emph{negative}, maintainability decreases (\emph{red});
-\emph{none}, maintainability remains the same (\emph{yellow}); and,
-\emph{positive}, maintainability increases (\emph{green}). 
 For each type of guideline, a boxplot 
 and a swarmplot are presented to show the variability and dipersion of
 the results alongside the number of absolute
@@ -1096,47 +1093,36 @@ Those data points were disregarded from the study.
 Although overall patching vulnerabilities has a less negative impact
 on software maintainability guidelines, this is not reflected in the average 
 impact of all guidelines ($M(v)$) as we can see in Figure~\ref{fig:guidelines}.
-The $M(v)$ plots show that $406$ ($41.9\%$) of the cases have negative impact
-on software maintainability. While $188$ ($19.4\%$) have no impact and $375$ ($38.7$)
+The $M(v)$ plots show that $406$ ($41.9\%$) cases have negative impact
+on software maintainability. While $188$ ($19.4\%$) have no impact and $375$ ($38.7\%$) cases
 have a negative impact. The larger number of negative cases may be 
-explained by guidelines with higher concentration of negative cases with higher amplitudes
-such as \Rui{these acronyms came out of the blue.} WShortUC, WSimpleUC and SCM. In other words, it is 
-important to note that the design debt of one guideline can lead
-to severe impacts on the software quality~\cite{10.1145/1985362.1985366}.  
-Thus, tools like Better Code Hub and static analysis tools (e.g., SonarQube, Codacy,
-ESLint, Infer, and more) should be leveraged to 
-assess the risk of patching vulnerabilities - alongside with pull
-requests and code reviews. While static code analysis
-may be daunting due to the number of rules and different effects
-on maintainability, BCH only uses the top-$10$ of the guidelines
-with the highest effect on maintainability. Static analysis 
-can be used to complement the source code analysis, introduce
-the capability of vulnerability detection, and, consequently,
-reduce the risk of hindering maintainability. 
+explained by guidelines with higher concentration of negative cases with higher amplitudes, 
+such as, \emph{Write Short Units of 
+Code}, \emph{Write Simple Units of 
+Code} and \emph{Separate Concerns in Modules}.
 
- \begin{figure}[H]
+
+% For each type of guideline, three types of impact of patches in
+% the software maintainability are presented:
+% \emph{negative}, maintainability decreases (\emph{red});
+% \emph{none}, maintainability remains the same (\emph{yellow}); and,
+% \emph{positive}, maintainability increases (\emph{green}).
+
+ \begin{figure}[htp]
+     \begin{adjustwidth}{-2.5cm}{-1cm}  
+	 
   	\centering
-  	\includegraphics[width=0.5\textwidth]{figures/main_per_guideline.pdf}
- 	\vspace{-0.8 cm}
+  	\includegraphics[width=0.51\textwidth]{figures/main_per_guideline.pdf}
   	\caption{Impact of the security patches per guideline.}
  	\label{fig:guidelines}
- 	\vspace{0.2 cm}
- 	\scalebox{0.5}{
- 	\begin{tabular}{r@{: }l r@{: }l}
- 	\textbf{WCC} & Write Clean Code & \textbf{KACB} & Keep Architecture Components Balanced\\
- 	\textbf{CACL} & Couple Architecture Components Loosely & \textbf{SCM} & Separate Concerns
-	in Modules \\
- 	\textbf{KUIS} & Keep Unit Interfaces Small & \textbf{WCO} & Write Code Once \\
- 	\textbf{WSimpleUC} & Write Simple Units of Code & \textbf{WShortUC} & Write Short Units of
-	Code
- 	\end{tabular}
- 	}
- 	\vspace{-0.3 cm}
+    \end{adjustwidth}
+ 	\vspace{-0.5 cm}
+	
  \end{figure}
 
 \textbf{Severity:} Some of the vulnerabilities are identified with \emph{Common 
 Vulnerabilities and Exposure} (CVE) entries. We leveraged the \emph{National Vulnerability 
-Database} (NVD) website to obtain their severity levels. In total, we 
+Database} (NVD) website to collect their severity levels. In total, we 
 retrieved severity scores for $536$ vulnerabilities: $112$ (\emph{HIGH}), 
 $395$ (\emph{MEDIUM}) and $29$ (\emph{LOW}). Figure~\ref{fig:severity} 
 presents the impact of security patches per severity level on the 
@@ -1164,10 +1150,10 @@ patching vulnerabilities.
 \textbf{Programming Languages:} The impact on software maintainability per programming 
 language was also analyzed (Figure~\ref{fig:lang_main}). We restrict 
 this analysis to programming languages with at least $20$ data points, as this 
-is a requirement for our hypothesis tests (HT). Thus, we compare the results for 
+is a requirement for our hypothesis tests. Thus, we compare the results for 
 \texttt{C/C++}, \texttt{Ruby}, \texttt{Java}, \texttt{Objective C/C++}, 
 \texttt{Python} and \texttt{PHP}. \texttt{Groovy} samples are not presented
-because the number of cases did not fulfill the HT requirement. 
+because the number of cases did not fulfill the statistical test requirement. 
 \texttt{C/C++} ($46.5\%$), \texttt{Ruby} ($46.5\%$) and 
 \texttt{PHP} ($38.6\%$) are the programming languages with worse 
 impact on software maintainability. \texttt{Java} ($50.9\%$) and \texttt{Python} 
@@ -1178,7 +1164,8 @@ considerable negative impact on maintainability - between $35\%$ to $50\%$ - whi
 confirms the need for better and more secure programming languages. 
 Statistical significance was only retrieved for the \texttt{C/C++} 
 (p-value = $2.24$x$10^{-05}$), \texttt{Ruby} (p-value = $0.041$) and \texttt{PHP} (p-value = $0.048$) languages.
-Results should be read with care where statistical significance was not found.
+The remaining programming languages did not yield statistical significance, 
+thus results should be read with care.
 Yet, data reports very interesting hints on the impact of programming languages 
 on security patches.
 
@@ -1203,7 +1190,7 @@ Standard}\footnote{PSR-2 Standard available at
   \label{fig:lang_main}  
 \end{figure}
 
-\textbf{Conclusion:} Results show that developers may fail to follow the coding
+\textbf{Conclusion:} Results show that developers fail to follow the coding
 practice guidelines and hinder software maintainability after patching; and, 
 that different levels of attention should be paid to each guideline. For instance,
 \emph{Write Simple Units of Code} and \emph{Write Short Units of Code}
@@ -1314,6 +1301,10 @@ not only important to provide tool support to developers to help them apply thes
 patches without harming software maintainability, but also to create and redesign
 programming languages to facilitate developers improving software maintainability.
 
+\Luis{
+Can we say somehting on why some vulbnerabilities are more affect than others? Complexity? Hard to understand? Good  Documentation resources?
+this is valid for RQ1 as well. What are the implciations of results in these different vulneratbilities?}
+
 
 \textit{\textbf{RQ3: What is the impact of security changes versus regular 
 changes on the maintainability of open-source software?}}
@@ -1345,10 +1336,40 @@ to the significant number of cases where there is no impact
 on the software maintainability.
 
 For both types of changes, there is a negative impact
-on software maintainability - especially, for security changes. This raises 
+on software maintainability $-$ especially, for security changes. This raises 
 a new trade-off when developers need to patch vulnerabilities on their projects
 because they might be hindering the software maintainability or even introducing
-new vulnerabilities. This study exhibits evidence that developers may have to
+new vulnerabilities. 
+
+\begin{figure}[h]	
+ 	\centering 	\includegraphics[width=0.4\textwidth]{figures/main_comparison.pdf}
+ 	\caption{Maintainability difference for security and baseline patches.}
+	\label{fig:secvsreg}
+\end{figure}
+
+The resulting p-value of the Paired Wilcoxon signed-rank test is $0.331$, i.e., 
+conclusions regarding the regular changes are not statistically significant. 
+Yet, it is important to note that \emph{patching security vulnerabilities seem 
+to have a more negative impact on the maintainability of open-source software 
+than performing regular changes}.
+
+\section{Study Implications}\label{sec:implications}
+
+ In other words, it is 
+important to note that the design debt of one guideline can lead
+to severe impacts on the software quality~\cite{10.1145/1985362.1985366}.  
+Thus, tools like Better Code Hub and static analysis tools (e.g., SonarQube, Codacy,
+ESLint, Infer, and more) should be leveraged to 
+assess the risk of patching vulnerabilities - alongside with pull
+requests and code reviews. While static code analysis
+may be daunting due to the number of rules and different effects
+on maintainability, BCH only uses the top-$10$ of the guidelines
+with the highest effect on maintainability. Static analysis 
+can be used to complement the source code analysis, introduce
+the capability of vulnerability detection, and, consequently,
+reduce the risk of hindering maintainability. 
+
+This study exhibits evidence that developers may have to
 reduce maintainability for the sake of security. We understand that developers
 should be able to patch and produce secure code without hindering the maintainability of
 their projects. But there are still some concerns that need to be addressed
@@ -1385,17 +1406,6 @@ and that this study tries to bring awareness for:
 	
 \end{itemize}
 
-\begin{figure}[h]	
- 	\centering 	\includegraphics[width=0.4\textwidth]{figures/main_comparison.pdf}
- 	\caption{Maintainability difference for security and baseline patches.}
-	\label{fig:secvsreg}
-\end{figure}
-
-The resulting p-value of the Paired Wilcoxon signed-rank test is $0.331$, i.e., 
-conclusions regarding the regular changes are not statistically significant. 
-Yet, it is important to note that \emph{patching security vulnerabilities seem 
-to have a more negative impact on the maintainability of open-source software 
-than performing regular changes}.
 
 \section{Threats to Validity}\label{sec:threats}
 %
