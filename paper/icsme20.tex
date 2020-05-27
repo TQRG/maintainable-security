@@ -224,7 +224,7 @@ Despite these efforts, improving software security is not a trivial task and req
 implementing patches that might affect software maintainability. 
 Our suspicion is that some of these patches may have a negative 
 impact on the software maintainability and, possibly, even be the cause of the 
-introduction of new vulnerabilities $-$ harming software reliability. Therefore, 
+introduction of new vulnerabilities---harming software reliability. Therefore, 
 in this paper, we present an empirical study on the impact of patches of 
 vulnerabilities on software maintenance across open-source software.
 %
@@ -293,7 +293,7 @@ The main contributions of the present work are:
 	empirical evaluation, for reproducibility. Available online:
   \url{https://figshare.com/s/4861207064900dfb3372}.
 \end{itemize}
-%-
+%
 This paper is structured as follows: section~\ref{sec:motivation} introduces an
 example of a security refactoring of a known vulnerability found in the
 protocol implementation of OpenSSL\footnote{\label{openssl}OpenSSL is a toolkit that
@@ -314,16 +314,16 @@ Due to time-to-market pressure and the lack of security expertise~\cite{8077802}
 security flaws are generally detected \textit{after the fact}, i.e., when
 hackers exploit them. Patching these issues is usually done by modifying the code base. 
 However, these patches may have a
-negative impact on software maintenance --- e.g., developers might follow the
-quickest solution to fix the problem and not necessarily the most elegant and
-performant one. Thus, we want to understand how security patches impact
+negative impact on software maintenance (e.g., developers might follow the
+quickest solution to fix the problem but not necessarily the most elegant and
+performant one). Thus, we want to understand how security patches impact
 the maintainability of software. 
 
 As an example, consider the patch of the TLS state machine protocol implementation
 in OpenSSL\footnoteref{openssl} to address a memory leak flaw found in the way 
 OpenSSL handled TLS status request extension data during session 
 renegotiation, and where a malicious client could cause a Denial-of-Service
-(DoS) attack via large OCSP Status Request extensions - if OCSP stapling support
+(DoS) attack via large OCSP Status Request extensions when OCSP stapling support
 was enabled. Online Certificate Status Procotol (OCSP) stapling, formally known as the TLS Certificate 
 Status Request extension, is a standard for checking the revocation status of
 certificates. 
@@ -446,19 +446,19 @@ static int ssl_scan_clienthello_tlsext(SSL *s, PACKET *pkt, int *al){
 
 The code changes performed to patch the vulnerability were:
 
-~\ref{lst:func1} The \texttt{sk\_OCSP\_RESPID\_pop\_free} function removes any
+\ref{lst:func1} The \texttt{sk\_OCSP\_RESPID\_pop\_free} function removes any
 memory allocated to the OCSP response IDs (OCSP$\_$RESPIDs) from a previous handshake to prevent unbounded memory growth - which was not being perfomed before.
 After releasing the unbounded memory, the program performs the same check 
-in ~\ref{lst:func2} that used to perform in ~\ref{lst:func3} which is responsible 
+in \ref{lst:func2} that used to perform in \ref{lst:func3} which is responsible 
 for handling the application when no OCSP response IDS were being allocated. Now, instead of performing it after packaging processing, it does it previously.
 
-Although performing this patch, seems an elementary problem to repair,
-the example shows that there was a significant amount of changes performed
-in the code base which performed a negative impact in the software maintanibility.
+Patching this vulnerability seems a rudimentary task. Yet,
+a considerable amount of changes were performed
+in the codebase which yielded to a negative impact on software maintainability.
 While patching, the developer introduced $6$ new lines in a method already with 
 a large number of lines of code and introduced more complexity to the code
-with new branch points which disrupts two of the guidelines proposed by the Software Improvement Group (SIG) for
-building maintainable software~\cite{Visser:2016:OREILLY} - \emph{Write Short Units of Code}
+with new branch points which disrupts two of the guidelines proposed by the Software Improvement Group 
+(SIG) for building maintainable software~\cite{Visser:2016:OREILLY}: \emph{Write Short Units of Code}
 and \emph{Write Simple Units of Code}. 
 
 % \Sof{The \texttt{read\_state\_machine} function, presented in Listing \ref{lst:vuln}, abstracts a sub-state-machine
@@ -531,7 +531,7 @@ separately for each weakness.
 maintainability of open-source software?}}
 %
 We also compute the maintainability of random regular commits using the
-\emph{Better Code Hub} tool --- baseline.  We use them to understand \textbf{how
+\emph{Better Code Hub} tool---baseline.  We use them to understand \textbf{how
 maintainability evolves when security patches are performed versus when
 they are not}.
 %
@@ -578,8 +578,8 @@ We use a combined dataset of security vulnerabilities which is
 the outcome of mining and manually inspect a total of $265$ GitHub projects for both
 datasets. Reis and Abreu 
 ($2017$) mined open-source
-software aiming at the extraction of real examples --- created by real
-developers --- to test and assess the performance of static analysis tools~\cite{Reis:2017:IJSSE} since
+software aiming at the extraction of real examples---created by real
+developers---to test and assess the performance of static analysis tools~\cite{Reis:2017:IJSSE} since
 using hand-seeded test cases or mutations could lead to misleading assessments
 of the capabilities of the tools~\cite{just2014mutants}. The study yielded a
 dataset of $711$ test cases for $16$ different security vulnerability types. Some of the vulnerability types
@@ -587,7 +587,7 @@ are based on the OWASP Top $10$ of $2013$~\cite{oswap:2013} and OWASP Top $10$ o
 $2017$~\cite{oswap:2017}. Each test case of the
 dataset is a triplet: the commit before the patching, the commit responsible
 for the patching, and the snippets of code that differ from one version to
-another (typically, called \textit{diffs}) --- where one can easily review the
+another (typically, called \textit{diffs})---where one can easily review the
 code used to fix the security flaw. 
 %
 
@@ -778,9 +778,9 @@ In this research, we follow a very similar methodology to the one presented
 in previous work on the maintainability of energy-oriented fixes~\cite{cruz2019energyoriented}. 
 As said before, the web-based source code analysis service \emph{Better Code
 Hub} (BCH) is used to collect the maintainability reports of the refactorings of
-each project. Table~\ref{tab:guidelines} presents the $10$ guidelines $-$ proposed
+each project. Table~\ref{tab:guidelines} presents the $10$ guidelines proposed
 by BCH's authors for delivering software that is not difficult to
-maintain~\cite{Visser:2016:OREILLY} $-$ and maps each guideline to the metric 
+maintain~\cite{Visser:2016:OREILLY} and, maps each guideline to the metric 
 calculated by BCH. Theses guidelines are calculated using the metrics 
 presented in~\cite{criteria:2017} and also briefly explained on Table~\ref{tab:guidelines}. 
 During each guideline evaluation, the tool determines the compliance towards 
@@ -789,7 +789,7 @@ in each of the $4$ risk severity levels
 (\emph{low risk}, \emph{medium risk}, \emph{high risk}, and \emph{very high
 risk}). If the project does not violate the thresholds, then it is compliant
 with the guideline. These thresholds are calibrated by BCH using their own
-data/experience --- using open-source and closed software systems. If a project is
+data/experience---using open-source and closed software systems. If a project is
 compliant with a guideline, it means that it is at least $65\%$ better than the
 software used by BCH to calculate the thresholds\footnote{Check the answer to
 \emph{How can I adjust the threshold for passing/not passing a guideline?} at
@@ -864,7 +864,7 @@ identifier names) \\
 
 Figure~\ref{fig:bchrep} shows an example of the report
 provided by BCH for a project after finishing its evaluation. The example
-refers to the OpenSSL CVE-$2016$-$6304$ vulnerability refactoring -
+refers to the OpenSSL CVE-$2016$-$6304$ vulnerability refactoring---
 as described by Section~\ref{sec:motivation}. This
 version of OpenSSL only complies with $1$ out of $10$ guidelines: \emph{Write
 Clean Code}.
@@ -906,7 +906,7 @@ maintainability of two different versions of the project (cf. Figure~\ref{fig:co
 
 Patches can be performed through one commit, several consecutive commits, or 
 commit(s) interleaved with more programming activities, being the later
-commonly called a floss-refactoring. This study considers mainly $1$-commit 
+commonly called a floss-refactoring. This study considers mainly single-commit 
 patches. Yet, a small percentage of data points had more than one commit 
 involved in the patch. We manually inspected these cases and $23$ 
 floss-refactorings were identified and disregarded since it would not
@@ -1017,16 +1017,15 @@ discusses the results and answers to each research question.
 maintainability of open-source software?}}
 
 In \emph{RQ1}, we report and discuss the impact of patches on open-source
-software maintainability under two different views: guidelines/metrics 
-and formula proposed - the mean of all 
-guidelines/metrics - $M(v)$.
+software maintainability under four different views: guidelines/metrics, formula proposed (i.e., the mean of all 
+guidelines/metrics, $M(v)$), severity and programming languages.
 
 \textbf{Guidelines/Metrics:} Each patch performs a set of changes
 on the source code of the software. These changes may have a different
 impact on the guidelines/metrics used to measure software maintainability. 
 Figure~\ref{fig:guidelines} shows the impact of security patches 
 on each guideline individually and the average impact on all guidelines 
-together - $M(v)$. Under each guideline, it is stated the 
+together ($M(v)$). Under each guideline, it is stated the 
 metric used to the calculations. Table~\ref{tab:guidelines} describes 
 in more detail the metrics behind the guidelines. 
 For each type of guideline, a boxplot 
@@ -1041,7 +1040,7 @@ average impact of all guidelines.
 Regarding the impact of security patches for each guideline, we observe
 that overall patches have more cases where the impact is positive. However, 
 we also see that patching vulnerabilities also has a very
-significant negative impact on all guidelines - between $10\%$ and $40\%$. 
+significant negative impact on all guidelines---between $10\%$ and $40\%$. 
 \emph{Write Short Units of 
 Code} ($38.3\%$), \emph{Write Simple Units of Code} ($37.9\%$),  and 
 \emph{Separate Concerns in Modules} ($33.8\%$) seem to be the 
@@ -1127,7 +1126,7 @@ maintainability of open-source software. We observe that patches for
 \emph{HIGH} ($50.0\%$) and \emph{MEDIUM} ($43.8\%$) severity vulnerabilities 
 hinder more the maintainability of software than \emph{LOW} ($27.6\%$) 
 severity vulnerabilities. Again, patches have a considerable 
-negative impact on software maintainability - between $20\%$ 
+negative impact on software maintainability---between $20\%$ 
 and $50\%$. Statistical significance was retrieved only for \emph{LOW}
 severity vulnerabilitie, i.e., \emph{LOW} severity vulnerabilities
 may have less negative impact on software maintainability thant the 
@@ -1157,7 +1156,7 @@ impact on software maintainability. \texttt{Java} ($50.9\%$) and \texttt{Python}
 ($46.5\%$) seem to be the 
 languages less affected by patching, i.e., more than $45\%$ of patches had a positive 
 impact on maintainability. But overall patches in all languages have a 
-considerable negative impact on maintainability - between $35\%$ to $50\%$ - which 
+considerable negative impact on maintainability---between $35\%$ to $50\%$---which 
 confirms the need for better and more secure programming languages. 
 Statistical significance was only retrieved for the \texttt{C/C++} 
 (p-value = $2.24$x$10^{-05}$), \texttt{Ruby} (p-value = $0.041$) and \texttt{PHP} (p-value = $0.048$) languages.
@@ -1260,7 +1259,7 @@ maintainability. \emph{Cross-Site Scripting (CWE-79)} and
 a Memory Buffer (CWE-119)} patches endure more
 cases with no impact on the open-source software maintainability.
 Typically, CWE-79 vulnerabilities do not need extra lines 
-to be fixed, as shown in Listing~\ref{lst:fix} - one simple 
+to be fixed, as shown in Listing~\ref{lst:fix}---one simple 
 \texttt{escape} function patches the issue. On the same type of fix,
 CWE-199 vulnerabilities may also be fixed without adding new source code
 (e.g., replacing the \texttt{strncpy} function by a more secure one 
@@ -1272,8 +1271,7 @@ CVE-$2016$-$0799$\footnote{CVE-$2016$-$0799$ patch details available at
 As CWE-199 
 vulnerabilities, \emph{Missing Release of Memory after Effective 
 Lifetime (CWE-401)}, or also called \emph{Resource Management Errors (CWE-399)}, can also be the root cause of Denial-of-Service attacks and  
-difficult to patch since it usually requires to add more complexity to the program 
-- as seen in the example presented on Section~\ref{sec:motivation}. 
+difficult to patch since it usually requires to add more complexity to the program---as seen in the example presented on Section~\ref{sec:motivation}. 
 Patches of \emph{SQL Injection
 (CWE-89)} weaknesses equally hinder and improve the software maintainability. 
 But a very considerable percentage of patches hinder the open-source 
@@ -1306,7 +1304,6 @@ same in $42.5\%$ ($412$) of the cases and performing regular
 changes has a more positive impact than negative on the software 
 maintainability. 
 
-
 Results show that regular changes typically have less negative impact
 on the software maintainability of open-source software.
 However, we manually inspected a considerable amount of cases from
@@ -1319,7 +1316,7 @@ to the significant number of cases where there is no impact
 on the software maintainability.
 
 For both types of changes, there is a negative impact
-on software maintainability $-$ especially, for security changes. 
+on software maintainability---especially, for security changes. 
 The resulting p-value of the Paired Wilcoxon signed-rank test is $0.300$, i.e., 
 conclusions regarding the regular changes are not statistically significant. 
 Yet, it is important to note that \emph{patching security vulnerabilities seem 
@@ -1353,7 +1350,7 @@ and that this study tries to bring awareness for:
 	to severe impacts on the software quality~\cite{10.1145/1985362.1985366}. 
 	Thus, tools like Better Code Hub and static analysis (e.g., SonarQube, Codacy,
 	ESLint, Infer, and more) should be leveraged to 
-	assess the risk of patching vulnerabilities - alongside pull
+	assess the risk of patching vulnerabilities---alongside pull
 	requests/code reviews. While static code analysis
 	may be daunting due to the number of rules and different effects
 	on maintainability, BCH uses the top-$10$ of the guidelines
@@ -1400,7 +1397,7 @@ representative benchmark of closed and open-source software projects to compute
 the thresholds for each maintainability guideline~\cite{Visser:2016:OREILLY, Baggen2012}.
 Maintainability is computed as the mean of all guidelines. A patch can
 have the same impact on the overall maintainability of both software versions 
-- non-vulnerable and vulnerable - but not necessarily on the same 
+(non-vulnerable and vulnerable) but not necessarily on the same 
 guidelines.
 %
 \\\textit{\textbf{Internal:}} The security patches dataset provided by previous
@@ -1419,8 +1416,8 @@ This approach softens the differences
 that may result from the characteristics of each project. However,
 maintainability may still be affected by the developers' experience, coding
 style and software contribution policies which is not evaluated in this study.
-Furthermore, this evaluation considers that $969$ regular commits - any kind
-of commit - are enough to
+Furthermore, this evaluation considers that $969$ regular commits---any kind
+of commit---are enough to
 alleviate random irregularities in the maintainability differences of the
 baseline. 
 \\\textit{\textbf{External:}} We use a dataset that only comprises patches of open-source software.
