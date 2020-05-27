@@ -302,7 +302,8 @@ protocols. Repository available at \url{https://github.com/openssl/openssl}
 (Accessed on \today{})}; section~\ref{sec:methodology} describes the
 methodology used to answer the research questions; section~\ref{sec:results}
 presents the results and discusses their
-implications; section~\ref{sec:threats} enumerates the threats to the validity of
+implications; section~\ref{sec:implications} elaborates on the implications
+developers should consider in the future; section~\ref{sec:threats} enumerates the threats to the validity of
 this study; section~\ref{sec:rw} describes the different work and existing
 literature in the field of study; and, finally, section~\ref{sec:conclusions}
 concludes the main findings and elaborates on future work.
@@ -859,6 +860,7 @@ identifier names) \\
 \bottomrule
 \end{tabular}
 \label{tab:guidelines}
+\vspace{-0.5cm}
 \end{table}
 
 
@@ -892,6 +894,7 @@ severity.
 	\includegraphics[width=0.6\linewidth]{figures/commit.pdf}
  	\caption{Maintainability difference for security commits}
 	\label{fig:commit}
+	\vspace{-0.5cm}
 \end{figure}
 
 Aiming to analyze the impact of security patches, we use BCH to compute the
@@ -1010,17 +1013,17 @@ difference, and the percentage of cases that reduce maintainability.
 \section{Results \& Discussion}\label{sec:results}
 
 This study evaluates a final total of $969$ security and baseline commits 
-from $260$ distinct open-source projects. The following section presents and 
-discusses the results and answers to each research question.
-
-\textit{\textbf{RQ1: What is the impact of security patches on the
+from $260$ distinct open-source projects. This section reports/discusses 
+the results for each research question.
+%
+\\\textit{\textbf{RQ1: What is the impact of security patches on the
 maintainability of open-source software?}}
 
-In \emph{RQ1}, we report and discuss the impact of patches on open-source
-software maintainability under four different views: guidelines/metrics, formula proposed (i.e., the mean of all 
-guidelines/metrics, $M(v)$), severity and programming languages.
+In \emph{RQ1}, we report/discuss the impact of patches on open-source
+software maintainability under four views: guideline, overall score, 
+severity and programming language.
 
-\textbf{Guidelines/Metrics:} Each patch performs a set of changes
+\textbf{Guideline/Metric:} Each patch performs a set of changes
 on the source code of the software. These changes may have a different
 impact on the guidelines/metrics used to measure software maintainability. 
 Figure~\ref{fig:guidelines} shows the impact of security patches 
@@ -1036,6 +1039,19 @@ type of guideline, it is presented the mean ($\overline{x}$) and median (M)
 of the maintainability difference and the p-value resulting from the
 Paired Wilcoxon signed-rank test. $M(v)$ is not a guideline but rather the 
 average impact of all guidelines.
+
+ \begin{figure}[htp]
+ 	\vspace{-0.9cm}
+	 
+     \begin{adjustwidth}{-1cm}{-1cm}  
+  	\centering
+  	\includegraphics[width=0.51\textwidth]{figures/main_per_guideline.pdf}
+
+    \end{adjustwidth}
+  	\caption{Impact of the security patches per guideline. For each guideline, $3$ types of impact in the software maintainability are presented: negative, maintainability decreases (red); none, maintainability remains the same (yellow); and, positive, maintainability increases (green).}
+ 	\label{fig:guidelines}	
+	\vspace{-0.5cm}
+ \end{figure}
 
 Regarding the impact of security patches for each guideline, we observe
 that overall patches have more cases where the impact is positive. However, 
@@ -1103,18 +1119,13 @@ such as, \emph{Write Short Units of
 Code}, \emph{Write Simple Units of 
 Code} and \emph{Separate Concerns in Modules}.
 
- \begin{figure}[htp]
- 	\vspace{-0.9cm}
-	 
-     \begin{adjustwidth}{-2.5cm}{-1cm}  
-  	\centering
-  	\includegraphics[width=0.51\textwidth]{figures/main_per_guideline.pdf}
-
-    \end{adjustwidth}
-  	\caption{Impact of the security patches per guideline. For each guideline, $3$ types of impact in the software maintainability are presented: negative, maintainability decreases (red); none, maintainability remains the same (yellow); and, positive, maintainability increases (green).}
- 	\label{fig:guidelines}	
+\begin{figure}[htp]
+ 	\centering 	
+	\includegraphics[width=0.4\textwidth]{figures/main_per_severity.pdf}
+ 	\caption{Maintainability difference by vulnerability severity.}
+	\label{fig:severity}
 	\vspace{-0.5cm}
- \end{figure}
+\end{figure}
 
 \textbf{Severity:} Some of the vulnerabilities are identified with \emph{Common 
 Vulnerabilities and Exposure} (CVE) entries. We leveraged the \emph{National Vulnerability 
@@ -1137,13 +1148,32 @@ more negative impact on maintainability and, consequently, that high/medium
 severity vulnerabilities may need more attention than low severity while 
 patching vulnerabilities.
 
-\begin{figure}[h]
- 	\centering 	\includegraphics[width=0.4\textwidth]{figures/main_per_severity.pdf}
- 	\caption{Maintainability difference by vulnerability severity.}
-	\label{fig:severity}
+\begin{figure}[htp]
+\vspace{-0.3cm}
+  \centering
+  \includegraphics[width=0.4\textwidth]{figures/main_per_language.pdf}
+  \caption{Maintainability difference by programming language.}
+  \label{fig:lang_main}  
 \end{figure}
 
-\textbf{Programming Languages:} The impact on software maintainability per programming 
+\begin{figure*}[htp]
+	\vspace{-0.5cm}
+  \centering
+  \subfigure[Maintainability difference by first-level weaknesses from the 
+  \textit{Research Concepts} list on Common Weakness Enumeration (CWE)]{
+  \includegraphics[scale=0.4]{figures/main_per_cwe.pdf}}\quad\quad
+  \subfigure[Maintainability difference by sub-weaknesses of the 
+  \textit{Improper Neutralization} Weakness (CWE-707)]{
+  \includegraphics[scale=0.4]{figures/main_per_cwe_spec_707.pdf}}\quad\quad
+    \subfigure[Maintainability difference by sub-weaknesses of the 
+	\textit{Improper Control of a Resource Through its Lifetime} Weakness (CWE-664)]{
+	\includegraphics[scale=0.4]{figures/main_per_cwe_spec_664.pdf}}
+	\label{fig:pat}
+	\vspace{-0.5cm}
+\end{figure*}
+
+
+\textbf{Programming Language:} The impact on software maintainability per programming 
 language was also analyzed (Figure~\ref{fig:lang_main}). We restrict 
 this analysis to programming languages with at least $20$ data points, as this 
 is a requirement for our hypothesis tests. Thus, we compare the results for 
@@ -1165,6 +1195,9 @@ thus results should be read with care.
 Yet, data reports very interesting hints on the impact of programming languages 
 on security patches.
 
+
+
+
 We would expect that the negative impact of programming languages on
 maintainability to be more severe, as arguably poor design of programming
 languages and lack of using the best practices lead to more buggy and vulnerable
@@ -1179,12 +1212,7 @@ instance, \texttt{laravel/framework} requires the \texttt{PSR-2
 Standard}\footnote{PSR-2 Standard available at
 \url{https://www.php-fig.org/psr/psr-2/} (Accessed on \today{})} that is a coding style guide for \texttt{PHP}.
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.4\textwidth]{figures/main_per_language.pdf}
-  \caption{Maintainability difference by programming language.}
-  \label{fig:lang_main}  
-\end{figure}
+
 
 \textbf{Conclusion:} Results show that developers fail to follow the coding
 practice guidelines and hinder software maintainability after patching; and, 
@@ -1201,29 +1229,9 @@ to help developers evaluate the risk of patches hindering software maintainabili
 alongside with Pull Requests/Code Reviews. We also conclude that different severity 
 vulnerabilities may need different levels of attention and better and more secure 
 programming languages are needed.
-
-% \Luis{I think this section is missing more discussion. What do you think should be changed in the community to cope with our findings? How can practitioners fix security vulnerabilities wihthout hindering maintainability? do we need more tools, better programming languages, more strict contribution policies? is there a trade-off between secure software and technical debt? show us how these findings can change SE}
-% Following the \textit{American Statistical Association}
-% recommendations~\cite{doi:10.1080/00031305.2016.1154108}, we consider the results for
-% Ruby as statistically significant because its p-value is on the borderline.
 %
-
-\textit{\textbf{RQ2: Which weaknesses are more likely to
+\\\textit{\textbf{RQ2: Which weaknesses are more likely to
 affect open-source software maintainability?}}
-
-\begin{figure*}[htp]
-  \centering
-  \subfigure[Maintainability difference by first-level weaknesses from the 
-  \textit{Research Concepts} list on Common Weakness Enumeration (CWE)]{
-  \includegraphics[scale=0.4]{figures/main_per_cwe.pdf}}\quad\quad
-  \subfigure[Maintainability difference by sub-weaknesses of the 
-  \textit{Improper Neutralization} Weakness (CWE-707)]{
-  \includegraphics[scale=0.4]{figures/main_per_cwe_spec_707.pdf}}\quad\quad
-    \subfigure[Maintainability difference by sub-weaknesses of the 
-	\textit{Improper Control of a Resource Through its Lifetime} Weakness (CWE-664)]{
-	\includegraphics[scale=0.4]{figures/main_per_cwe_spec_664.pdf}}
-	\label{fig:pat}
-\end{figure*}
 
 In \emph{RQ2}, we report and discuss the impact of security patches on open-source
 software maintainability per weakness. In this study, we use weakness definition 
@@ -1287,8 +1295,8 @@ results should not be disregarded because they offer an interesting view on how
 the maintainability is impacted per weakness which can provide insights to 
 developers/researchers on the weaknesses that need more attention. Further
 research should be perfomed to retrieve conclusions.
-
-\textit{\textbf{RQ3: What is the impact of security changes versus regular 
+%
+\\\textit{\textbf{RQ3: What is the impact of security changes versus regular 
 changes on the maintainability of open-source software?}}
 
 The impact of security and baseline changes in the maintainability of
@@ -1315,6 +1323,15 @@ We strongly believe that this phenomenon lead
 to the significant number of cases where there is no impact
 on the software maintainability.
 
+\begin{figure}[h]
+	\vspace{-0.3cm}	
+ 	\centering 	
+	\includegraphics[width=0.4\textwidth]{figures/main_comparison.pdf}
+ 	\caption{Maintainability difference for security and baseline patches.}
+	\label{fig:secvsreg}
+	\vspace{-0.2cm}
+\end{figure}
+
 For both types of changes, there is a negative impact
 on software maintainability---especially, for security changes. 
 The resulting p-value of the Paired Wilcoxon signed-rank test is $0.300$, i.e., 
@@ -1326,13 +1343,6 @@ This raises
 a new trade-off when developers need to patch vulnerabilities on their projects
 because they might be hindering the software maintainability or even introducing
 new vulnerabilities. 
-
-\begin{figure}[h]	
- 	\centering 	\includegraphics[width=0.4\textwidth]{figures/main_comparison.pdf}
- 	\caption{Maintainability difference for security and baseline patches.}
-	\label{fig:secvsreg}
-\end{figure}
-
 
 
 \section{Study Implications}\label{sec:implications}
@@ -1387,18 +1397,15 @@ and that this study tries to bring awareness for:
 
 \section{Threats to Validity}\label{sec:threats}
 %
-The following section presents the potential threats to the validity of this
-study.
+This section presents the potential threats to the validity.
 %
-\\\textit{\textbf{Construct:}} The maintainability formula was inferred based 
+\\\textit{\textbf{Construct:}} The formula was inferred based 
 on the BCH's reports. The high amount of different projects and backgrounds 
 may require other maintainability standards. However, BCH does use a 
 representative benchmark of closed and open-source software projects to compute 
 the thresholds for each maintainability guideline~\cite{Visser:2016:OREILLY, Baggen2012}.
-Maintainability is computed as the mean of all guidelines. A patch can
-have the same impact on the overall maintainability of both software versions 
-(non-vulnerable and vulnerable) but not necessarily on the same 
-guidelines.
+Maintainability is computed as the mean of all guidelines. Different software versions (vulnerable/fixed) of one vulnerability may have the same overal score
+and still be affected by different guidelines.
 %
 \\\textit{\textbf{Internal:}} The security patches dataset provided by previous
 work~\cite{Reis:2017:IJSSE} was collected based on the messages of GitHub
