@@ -1346,14 +1346,11 @@ new vulnerabilities.
 
 
 \section{Study Implications}\label{sec:implications}
-
-This section presents the implications that we retrieved from this
-study and think are important to consider in the future by developers.
-Our results exhibit evidence that developers may have to
-reduce maintainability for the sake of security. We understand that developers
-should be able to patch and produce secure code without hindering the maintainability of
-their projects. But there are still some concerns that need to be addressed
-and that this study tries to bring awareness for:
+%
+Our results show evidence that developers may have to reduce maintainability for the 
+sake of security. We argue that developers should be able to patch and produce secure 
+code without hindering the maintainability of their projects. But there are still  
+concerns that need to be addressed and that this study brings awareness for:
 %
 \\\textit{\textbf{Tools for Patch Risk Detection:}}
 	Design debt of one guideline can lead
@@ -1361,19 +1358,20 @@ and that this study tries to bring awareness for:
 	Thus, tools like Better Code Hub and static analysis (e.g., SonarQube, Codacy,
 	ESLint, Infer, and more) should be leveraged to 
 	assess the risk of patching vulnerabilities---alongside pull
-	requests/code reviews. While static code analysis
+  requests/code reviews. \Rui{what? (till the ned)-->} While static code analysis
 	may be daunting due to the number of rules and different effects
 	on maintainability, BCH uses the top-$10$ of the guidelines
 	with the highest effect on maintainability. Yet, static analysis 
 	can be used to complement the source code analysis, introduce
 	the capability of vulnerability detection, and, predict and
-	reduce the risk of hindering maintainability.
+  reduce the risk of hindering maintainability.
+  \Rui{static analysis vs. source coode?!}
 %
 \\\textit{\textbf{Computer Curricula Needs to be Updated:}}
-	Software Developers lack the knowledge to create secure and
+	We argue that software Developers lack the knowledge to create both secure and
 	maintainable code. Mainly because academic curricula is not yet prepared
 	to properly educate them. Universities should do their part on making
-	this possible. Online services such as BCH have a great potential to help
+	this possible. \Rui{connection to curricula is not clear-->} Online services such as BCH have a great potential to help
 	developers to be more aware of the maintainability issues introduced by their
 	changes. Thus, developers can 
 	put more work into improving their code maintainability and avoiding the risk
@@ -1389,7 +1387,8 @@ and that this study tries to bring awareness for:
 	features to implement.
 %
 \\\textit{\textbf{Poor Coding Practices Documentation:}}
-	Software documentation must provided to developers with the
+  \Rui{too generic?}
+	Software documentation must be provided to developers with the
 	best practices to implement secure and maintainable software. Unmaintainable
 	code is difficult to test, analyze and re-use. Software companies must
 	do an effort to provide these artifacts to their developers, in order,
