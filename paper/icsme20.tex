@@ -1427,27 +1427,20 @@ impact of refactorings on maintainability may help to choose the appropriate
 refactoring type~\cite{1167822}. In contrast to this work, Hegedus et
 al.~\cite{HEGEDUS2018313} did not select particular metrics to assess the effect
 of refactorings. Instead, statistical tests were used to find the metrics that
-have the potential to change significantly after refactorings. The differences
-of maintainability between groups of refactored elements and non-refactored were
-analyzed. In addition, the authors concluded that the source code elements
-subjected to refactorings had significantly lower maintainability than the
-elements not affected. Studying the evolution of maintainability issues during
-the development of Android apps, Malavolta et al. ($2018$)~\cite{8530041}
+have the potential to change significantly after refactorings. Studying the evolution 
+of maintainability issues during the development of Android apps, Malavolta et al. ($2018$)~\cite{8530041}
 discovered that maintainability decreases over time. Palomba et al.
 ($2018$)~\cite{Palomba:2018:DIM:3231288.3231337} exhibits proof that code smells
 should be carefully monitored by programmers since there is a high correlation
-between maintainability aspects and proneness to changes and faults. In 2019, Cruz et 
+between maintainability aspects and proneness to changes/faults. In 2019, Cruz et 
 al.~\cite{cruz2019energyoriented} proposed a formula to calculate maintainability 
 based on the BCH's guidelines and measured the impact of energy-oriented fixes 
-on the maintainability of software.
-The present work uses the same model (BCH) and focuses solely on evaluating 
-the impact of patching vulnerabilities on software maintainability.
+on software maintainability. The present work uses the same model (BCH) and focuses 
+solely on evaluating the impact of security patches on software maintainability.
 
 Researchers investigated the relationship between design patterns and software
-maintainability~\cite{10.1007/978-3-642-35267-6-18}. $300$ revisions of
-\texttt{JHotDraw} were analyzed to conclude that every introduced pattern
-instance improved software maintainability. However, other studies show that the
-use of design patterns may introduce maintainability issues into
+maintainability~\cite{10.1007/978-3-642-35267-6-18}. However, other studies show that 
+the use of design patterns may introduce maintainability issues into
 software~\cite{4493325}. Yskout et. al were not able to detect if the usage of 
 design patterns has a positive impact, but concludes that developers prefer to 
 work with the support of security patterns~\cite{8077802}. The present work 
@@ -1457,14 +1450,13 @@ There are studies that investigated the impact of programming languages on softw
 quality~\cite{Ray:2014:LSS:2635868.2635922,Ray:2017:LSP:3144574.3126905}. The first
 study shows that some programming languages are more buggy-prone than others. However,
 the authors of the second study were not able to reproduce it, not obtaining any
-evidence about the impact of language design. Both have used the number of
-defects as an indicator of software quality. In addition,
+evidence about the impact of language design. In addition,
 Berger et al. ($2019$)~\cite{2019arXiv190110220B} tried to reproduce~\cite{Ray:2014:LSS:2635868.2635922,
 Ray:2017:LSP:3144574.3126905} and identified flaws that throw into distrust the 
 previously demonstrated correlation between programming language and software 
-defects. Our work studies how security refactorings affect software quality based 
-on the code maintainability analysis and provides evidence that programming languages 
-have an impact on maintainability.
+defects. Our work studies how security patches affect software quality based 
+on the code maintainability analysis and provides shows that programming languages 
+may have an impact on maintainability.
 
 \section{Conclusion and Future Work}\label{sec:conclusions}
 
