@@ -1398,14 +1398,10 @@ and still be affected by different guidelines.
 work~\cite{Reis:2017:IJSSE} was collected based on the messages of GitHub
 commits produced by project developers to classify the changes performed by them
 to fix security flaws. This approach discards security patches that were
-not explicit in commits messages. Pontas et. al\cite{10.1109/MSR.2019.00064} dataset
-has patches that were manually mined in software repositories and, consequently,
-wrong associations may have been performed between vulnerabilities and code snippets. 
-The dataset also included floss-refactorings. Both cases were manually inspected
-and deleted from the dataset. Thus, this study does not consider that a
-developer may perform a patch quickly and later proceed to the refactor.
-Baseline commits are retrieved randomly by selecting one commit with an 
-approximate size and from the same project of a given security patch. 
+not explicit in commits messages. This study assumes that patches were performed 
+using a single-commit or several sequentially. The view that a 
+developer may perform a patch quickly and later proceed to the refactor is not considered.s
+Baseline commits are retrieved randomly from the same project of the security patch.
 This approach softens the differences
 that may result from the characteristics of each project. However,
 maintainability may still be affected by the developers' experience, coding
