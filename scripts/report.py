@@ -24,13 +24,13 @@ def main_calculation(df, cache, dataset):
         sha_p_key = 'sha-p'
     
     for i, r in df.iterrows():
-
+                
         if r[sha_key] is np.nan or r[sha_p_key] is np.nan:
             continue
             
         info_f = cache.get_stored_commit_analysis(r['owner'], r['project'], r[sha_key])
         info_p = cache.get_stored_commit_analysis(r['owner'], r['project'], r[sha_p_key])
-            
+                    
         if info_f is None or info_p is None:
             none+=1
             df.at[i, 'diff'] = np.nan
@@ -104,6 +104,11 @@ def comparison(secdb, regdb, reports):
     df_reg = pd.read_csv(regdb)
     chart.main_comparison_chart(reports, df_sec, df_reg)
     
+def guideline_swarm(secdb, reports):
+    
+    df_sec = pd.read_csv(secdb)
+    chart.main_guideline_swarm_plot(reports, df_sec)
+       
     
 if __name__ == "__main__":
     
@@ -128,7 +133,7 @@ if __name__ == "__main__":
             comparison(secdb=args.secdb, regdb=args.regdb, reports=args.reports)
     elif args.goal == 'guideline':
         if args.secdb != None and args.reports != None:
-            guideline(secdb=args.secdb, reports=args.reports)
+            guideline_swarm(secdb=args.secdb, reports=args.reports)
     elif args.goal == 'language':
         if args.secdb != None and args.reports != None:
             language(secdb=args.secdb, reports=args.reports)

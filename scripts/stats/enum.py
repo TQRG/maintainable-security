@@ -1,18 +1,18 @@
 # data.py 
 
-guidelines = {'Write Short Units of Code':'\\textbf{WShortUC}\nUnit Size',
-                'Write Simple Units of Code':'\\textbf{WSimpleUC}\nMcCabe Complexity',
-                'Write Code Once':'\\textbf{WCO}\nDuplication',
-                'Keep Unit Interfaces Small':'\\textbf{KUIS}\nUnit Interfacing',
-                'Separate Concerns in Modules':'\\textbf{SCM}\nModule Coupling',
-                'Couple Architecture Components Loosely':'\\textbf{CACL}\nComponent Independence',
-                'Keep Architecture Components Balanced':'\\textbf{KACB}\nComponent Balance',
-                'Write Clean Code':'\\textbf{WCC}\nCode Smells'}
+guidelines = {'Write Short Units of Code':'\\textbf{Write Short}\n\\textbf{Units of Code}\nUnit Size',
+                'Write Simple Units of Code':'\\textbf{Write Simple}\n\\textbf{Units of Code}\nMcCabe Complexity',
+                'Write Code Once':'\\textbf{Write Code}\n\\textbf{Once}\nDuplication',
+                'Keep Unit Interfaces Small':'\\textbf{Keep Unit}\n\\textbf{Interfaces Small}\nUnit Interfacing',
+                'Separate Concerns in Modules':'\\textbf{Separate Concerns}\n\\textbf{in Modules}\nModule Coupling',
+                'Couple Architecture Components Loosely':'\\textbf{Couple Architecture}\n\\textbf{Components Loosely}\nComponent Independence',
+                'Keep Architecture Components Balanced':'\\textbf{Keep Architecture}\n\\textbf{Components Balanced}\nComponent Balance',
+                'Write Clean Code':'\\textbf{Write Clean}\n\\textbf{Code}\nCode Smells'}
 
-languages = {'Java': ['java', 'scala'], 
+
+languages = {'Java': ['java', 'scala', 'js'], 
                 'Python': ['py'], 
                 'Groovy': ['groovy'], 
-                'JavaScript': ['js'] , 
                 'PHP': ['ctp', 'php', 'inc', 'tpl'], 
                 'Objective-C/C++': ['m', 'mm'], 
                 'Ruby': ['rb'], 

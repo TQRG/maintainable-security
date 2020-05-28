@@ -3,6 +3,7 @@ from matplotlib import rc
 from matplotlib import rcParams
 
 import pandas as pd
+import seaborn as sns
 
 
 from scipy.stats import wilcoxon
@@ -40,13 +41,13 @@ def save_report(path, name):
     plt.tight_layout()
     plt.savefig('{}/{}'.format(path, name))
 
-def main_comparison_chart(reports, df_sec, df_reg):    
-
+def main_comparison_chart(reports, df_sec, df_reg):   
+        
         test = pd.concat((tests.hypothesis_test(df_reg['diff'], 'reg'), 
                             tests.hypothesis_test(df_sec['diff'], 'sec')),
                             ignore_index=True)
                         
-        total_sec, total_reg = data.filter_results(df_sec), data.filter_results(df_reg)        
+        total_sec, total_reg = data.filter_results(df_sec), data.filter_results(df_reg)   
         db_size = len(df_sec)  
 
         rep = {'neg' : pd.Series([total_reg['neg']/db_size, total_sec['neg']/db_size]),
@@ -202,15 +203,12 @@ def main_per_language_chart(reports, df, wilcoxon = True):
         if lang != None:
             df.at[i, 'Language'] = lang
     
-    langs = data.add_others_group(df,
-                                tests.filter_small_sample_groups(df, 'Language'), 
-                                'Language', 
-                                'Other')
+    langs = tests.filter_small_sample_groups(df, 'Language')
         
     results = {l:data.filter_results_per_field(df, l, 'Language') for l in langs}
     test = pd.concat([tests.hypothesis_test(df[df['Language'] == i]['diff'], i) 
                             for i in langs],
-                            ignore_index=True)
+                            ignore_index=True)    
                                 
     rep = {'neg': pd.Series([results[i][0]/sum(results[i]) for i in langs]),
         'neg_abs': pd.Series([results[i][0] for i in langs]),
@@ -228,11 +226,11 @@ def main_per_language_chart(reports, df, wilcoxon = True):
     plt.subplots_adjust(left=0.25, right=0.85, top=0.9, bottom=0.06)
     plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.04), fancybox=True, ncol=3, fontsize=8)
     
-    boxes_start = 6
+    boxes_start = 5
     for i, r in test.join(df)[::-1].iterrows():
         p = format_p_value(r['pvalue'])
         box_text = 'N='+str(sum([r['pos_abs'], r['neg_abs'], r['nul_abs']]))+'\n$\overline{x}$='+ '{:.{}f}'.format(r['mean'], 2) + '\nM=' + '{:.{}f}'.format(r['med'], 2) + '\np' + p
-        ax.text(0.67, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=9)
+        ax.text(0.5, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=9)
         boxes_start -= 1
         
     save_report(reports, 'main_per_language.pdf') 
@@ -252,7 +250,7 @@ def main_per_severity(reports, df, wilcoxon = True):
         'nul': pd.Series([results[i][2]/sum(results[i]) for i in y_axis]),
         'nul_abs': pd.Series([results[i][2] for i in y_axis]),
         'N': pd.Series([sum(results[i]) for i in y_axis]),
-        'type': pd.Series(y_axis)}
+        'type': pd.Series(['Unknown', 'Low', 'Medium', 'High'])}
 
     df, idx, fig, ax = config_report(rep, len(rep['type']), 6, 6, 111)
     
@@ -260,43 +258,86 @@ def main_per_severity(reports, df, wilcoxon = True):
     set_ticks(df, idx, 9)
     
     plt.subplots_adjust(left=0.05, right=0.85, top=0.9, bottom=0.06)
-    plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.08), fancybox=True, ncol=3, fontsize=8)
+    plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.05), fancybox=True, ncol=3, fontsize=8)
     
     boxes_start = 3
     for i, r in test.join(df)[::-1].iterrows():
         p = format_p_value(r['pvalue'])
         box_text = 'N='+str(sum([r['pos_abs'], r['neg_abs'], r['nul_abs']]))+'\n$\overline{x}$='+ '{:.{}f}'.format(r['mean'], 2) + '\nM=' + '{:.{}f}'.format(r['med'], 2) + '\np' + p
-        ax.text(0.5, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=9)
+        ax.text(0.54, boxes_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=9)
         boxes_start -= 1
         
     save_report(reports, 'main_per_severity.pdf')
     test.join(df).to_csv(reports+'/severity_test_report.csv', index=False)
     
-def report_guidelines_violin_plot(reports, filename):
+def main_guideline_swarm_plot(reports, df):
     
-    df = pd.read_csv(filename)
+    swarm_data = {'m': [], 'guideline': [], 'impact': []}
     
-    stats = {'value':[], 'fix': [], 'guideline':[]}
-    for i, r in df.iterrows():
-        for g in guidelines:
-            stats['guideline'].append(g)
-            stats['guideline'].append(g)
-            stats['value'].append(r[g+'-prev'])
-            stats['fix'].append('before')
-            stats['value'].append(r[g+'-fix'])
-            stats['fix'].append('after')
+    x_axis_values = dict(enum.guidelines, **{'diff': '$M (v)$'})
+        
+    test = pd.concat([tests.hypothesis_test(df[i+'-diff'], i) 
+                            if i != 'diff' 
+                            else tests.hypothesis_test(df['diff'], 'diff')
+                            for i in x_axis_values],
+                            ignore_index=True)
     
-    f = pd.DataFrame.from_dict(stats)
-    print(f)
+    results = {i:data.filter_results_per_guideline(df, i) 
+                for i in x_axis_values}    
     
-    g = sns.violinplot(x="guideline", y="value", hue="fix", data=f, palette="Set2", split=True)
-    #g.set_yscale("symlog")
-    plt.ylim(-9000000,9000000) 
-    plt.xticks(rotation=90)
+    keys = results.keys()
+    rep = pd.DataFrame({'neg': pd.Series([results[i][0]/sum(results[i]) for i in keys]),
+        'neg_abs': pd.Series([results[i][0] for i in keys]),
+        'pos': pd.Series([results[i][1]/sum(results[i]) for i in keys]),
+        'pos_abs': pd.Series([results[i][1] for i in keys]),
+        'nul': pd.Series([results[i][2]/sum(results[i]) for i in keys]),
+        'nul_abs': pd.Series([results[i][2] for i in keys]),
+        'N': pd.Series([sum(results[i]) for i in keys]),
+        'type': pd.Series([x_axis_values[i] for i in keys])})
     
-    fig = matplotlib.pyplot.gcf()
-    fig.set_size_inches(18.5, 10.5, forward=True)
-    fig.tight_layout()
-    fig.savefig('{}/{}'.format(reports, "maintainability_per_guideline_sns.pdf"))
+    for v in x_axis_values.keys():
+        f = v+'-diff' if 'diff' not in v else v
+        for i in df[f]:
+            swarm_data['m'].append(i)
+            swarm_data['guideline'].append(x_axis_values[v])
+            if i > 0:
+                swarm_data['impact'].append('Positive')
+            elif i < 0:
+                swarm_data['impact'].append('Negative')
+            else:
+                swarm_data['impact'].append('None')
+                
+    palette ={"Positive":"green","None":"orange","Negative":"red"}
+    swarm_data = pd.DataFrame(swarm_data)
+    
+    f, ax = plt.subplots(figsize=(9, 18))
+    ax.set_xscale("symlog")
+
+    sns.swarmplot(x="m", y="guideline", hue='impact', data=swarm_data, alpha=0.7, ax=ax, size=4.3, palette=palette, lw=2, edgecolor='k')
+    swarm_cols = ax.collections
+    
+    sns.boxplot(x="m", y="guideline", data=swarm_data,
+                     showcaps=True,boxprops=dict(facecolor='None', zorder=10),
+                     showfliers=False,whiskerprops={"zorder":10}, ax=ax, zorder=10)
+    
+    ax.legend(swarm_cols[-3:],np.unique(swarm_data.impact), loc='upper center', bbox_to_anchor=(0.5, 1.025), ncol=3)
+    ax.set_ylabel('')
+    ax.set_xlabel("$\\Delta M (v_{s-1}, v{s})$")
+
+    stats_start, cases_start = 8.1, 7.53
+    for i, r in test.join(rep)[::-1].iterrows():
+        p = format_p_value(r['pvalue'])
+        box_text = 'N='+str(sum( [r['pos_abs'], r['neg_abs'], r['nul_abs']]))+'\n$\overline{x}$='+ '{:.{}f}'.format(r['mean'], 2) + '\nM=' + '{:.{}f}'.format(r['med'], 2) + '\np' + p
+        ax.text(11000, stats_start, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=10)
+        ax.text(-30, cases_start, '{} (${:.2f}\%$)'.format(r['neg_abs'], r['neg']*100), bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=8)
+        ax.text(-1, cases_start, '{} (${:.2f}\%$)'.format(r['nul_abs'], r['nul']*100), bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=8)
+        ax.text(2, cases_start, '{} (${:.2f}\%$)'.format(r['pos_abs'], r['pos']*100), bbox={'facecolor':'white', 'alpha':0.8, 'pad':3}, fontsize=8)
+        
+        stats_start -= 1
+        cases_start -= 1
+    
+    save_report(reports, 'main_guideline_plot.pdf')    
+    test.join(df).to_csv(reports+'/guideline_test_report.csv', index=False)
+    
 
 
