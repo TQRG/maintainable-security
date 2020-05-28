@@ -13,7 +13,7 @@ import maintainability.better_code_hub as bch
 RETRY_ATTEMPTS = 10
 
 @click.command()
-@click.option('--dataset', prompt=True, default="../dataset/reg.csv",
+@click.option('--dataset', prompt=True, default="../dataset/db_release_security_fixes.csv",
               help="Dataset with commits for comparison.")
 @click.option('--commit', prompt=True, default="security",
               help="type of dataset")
