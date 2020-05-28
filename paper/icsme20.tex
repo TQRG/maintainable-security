@@ -172,14 +172,14 @@ introducing other vulnerabilities. This paper evaluates the impact of
 patches to improve security on the maintainability of open-source software. 
 Maintainability is measured based on the Better Code Hub’s model of 10 
 guidelines using a dataset including 1335 security commits.
-Results show that fixing software vulnerabilities may hinder the maintainability 
-of open-source software and that different levels of attention should be given to 
-different severity levels, programming languages and types of weaknesses. We 
-conclude that changes to code bases to patch 
-vulnerabilities need to be performed with extra care and that security-related 
-code evolution should be subject in computer curricula.\Rui{Needs improvement}
+Results show evidence of a new trade-off between security and maintainability, i.e., 
+when developers may be hindering the software maintainability or even introducing 
+new vulnerabilities while patching vulnerabiliteis.
+We conclude that changes to codebases while patching 
+vulnerabilities need to be performed with extra care (e.g., using tools
+for patch risk assessment), computer science
+curricula needs to be updated and more secure programming languages are necessary.
 \end{abstract}
-
 \begin{IEEEkeywords}
 Security, Software Maintenance, Open-Source Software
 \end{IEEEkeywords}
@@ -916,6 +916,16 @@ floss-refactorings were identified and disregarded since it would not
 be fair to measure the maintainability of these cases where other
 programming activities are involved.
 
+For projects with large codebases, the results retrieved for \emph{Keep Your 
+Codebase Small} were not viable because they retrieved values above the limit 
+set by BCH ($20$ Person-years). The \emph{Automated Tests} guideline was also 
+not considered since the tool does not contemplate two
+of the most important techniques to security testing: vulnerability scanning
+and penetration testing. Instead, it only contemplates unit 
+testing. Due to BCH limitations, we detected a few data points
+that retrieved incorrect overall calculations. 
+Those data points were disregarded from the study.
+
 The BCH tool does not compute the final score that our study needs to compare
 maintainability amongst different project versions. For this, we follow previous 
 work on measuring the impact of energy-oriented 
@@ -1042,13 +1052,13 @@ average impact of all guidelines.
 
  \begin{figure}[htp]
  	\vspace{-0.9cm}
-	 
      \begin{adjustwidth}{-1cm}{-1cm}  
   	\centering
   	\includegraphics[width=0.51\textwidth]{figures/main_per_guideline.pdf}
-
     \end{adjustwidth}
-  	\caption{Impact of the security patches per guideline. For each guideline, $3$ types of impact in the software maintainability are presented: negative, maintainability decreases (red); none, maintainability remains the same (yellow); and, positive, maintainability increases (green).}
+  	\caption{Impact of the security patches per guideline. For each guideline, $3$ types of impact 
+	in the software maintainability are presented: negative, maintainability decreases (red); none, 
+	maintainability remains the same (yellow); and, positive, maintainability increases (green).}
  	\label{fig:guidelines}	
 	\vspace{-0.5cm}
  \end{figure}
@@ -1056,20 +1066,18 @@ average impact of all guidelines.
 Regarding the impact of security patches for each guideline, we observe
 that overall patches have more cases where the impact is positive. However, 
 we also see that patching vulnerabilities also has a very
-significant negative impact on all guidelines---between $10\%$ and $40\%$. 
-\emph{Write Short Units of 
-Code} ($38.3\%$), \emph{Write Simple Units of Code} ($37.9\%$),  and 
-\emph{Separate Concerns in Modules} ($33.8\%$) seem to be the 
-most negativelly affected guidelines. 
-This may imply that developers when patching 
-vulnerabilities fail to design/implement solutions that continue to respect 
-the limit bounds of branch points and function/module 
-sizes that are recommended by coding best practices. Still, on 
+significant number of negative cases for all guidelines---between $10\%$ and $40\%$. 
+\emph{Write Short Units of Code} ($38.3\%$), \emph{Write Simple Units of Code} 
+($37.9\%$), and \emph{Separate Concerns in Modules} ($33.8\%$) seem to be the 
+most negativelly affected guidelines. This may imply that developers when patching 
+vulnerabilities have a hard time to design/implement solutions that continue to 
+respect the limit bounds of branch points and function/module sizes that are 
+recommended by coding best practices. Still, on 
 respecting bound limits, developers also seem to not consider the limit 
 of $4$ parameters per function for the \emph{Keep Unit Interfaces Small} 
 guideline required by BCH, in $24.8\%$ of the cases. This guideline is usually
 violated when the patch requires to input new information to a function/class 
-and developers fail to use the \emph{Introduce Parameter Object} refactoring 
+and developers struggle to use the \emph{Introduce Parameter Object} refactoring 
 pattern. Results do not provide statistical significance to the \emph{Separate 
 Concerns in Modules} guideline, i.e., results should be read carefully. 
 
@@ -1080,12 +1088,12 @@ $26.9\%$ and $11.0\%$, respectively. Component independence and balance
 are important to make easier to find the source code that developers
 want to patch/improve and to understand how the high-level components
 interact with others. However, results may imply that developers
-fail to use techniques such as encapsulation to hide implementation
+forget to use techniques such as encapsulation to hide implementation
 details and make the system more modular.
 
-Software systems typically have $9\%$-$17\%$ of cloned code~\cite{5773403}. 
 The \emph{Write Code Once} guideline results show that duplicated code 
-increased in $171$ ($17.7\%$) of the patches. Previous work showed a 
+increased in $171$ ($17.7\%$) of the patches. Software systems typically have 
+$9\%$-$17\%$ of cloned code~\cite{5773403}. Previous work showed a 
 correlation between code smells and code duplication~\cite{7476787} 
 which may also be reflected in the \emph{Write Clean Code} guideline results. 
 BCH reported new code smells for $145$ ($15.0\%$) patches which according 
@@ -1097,27 +1105,16 @@ with Method Object} technique, they may also be introducing new software
 vulnerabilities and, consequently, harm the market value and economy of companies
 ~\cite{4267025}.
 
-For projects with large codebases, the results retrieved for \emph{Keep Your 
-Codebase Small} were not viable because they retrieved values above the limit 
-set by BCH ($20$ Person-years). The \emph{Automated Tests} guideline was also 
-not considered since the tool does not contemplate two
-of the most important techniques to security testing: vulnerability scanning
-and penetration testing. Instead, it only contemplates unit 
-testing. Due to BCH limitations, we detected a few data points
-that retrieved incorrect overall calculations. 
-Those data points were disregarded from the study.
-
 \textbf{Overall Score ($M(v)$):} 
 Although overall patching vulnerabilities has a less negative impact
 on software maintainability guidelines, this is not reflected in the average 
 impact of all guidelines ($M(v)$) as we can see in Figure~\ref{fig:guidelines}.
 The $M(v)$ plots show that $406$ ($41.9\%$) cases have negative impact
-on software maintainability. While $188$ ($19.4\%$) have no impact and $375$ ($38.7\%$) cases
-have a negative impact. The larger number of negative cases may be 
-explained by guidelines with higher concentration of negative cases with higher amplitudes, 
-such as, \emph{Write Short Units of 
-Code}, \emph{Write Simple Units of 
-Code} and \emph{Separate Concerns in Modules}.
+on software maintainability. While $188$ ($19.4\%$) cases have no impact, $375$ 
+($38.7\%$) have a negative impact on software maintanibility. The larger number of 
+negative cases may be explained by guidelines with higher concentration of negative 
+cases with higher amplitudes, such as, \emph{Write Short Units of Code}, \emph{Write 
+Simple Units of Code} and \emph{Separate Concerns in Modules}.
 
 \begin{figure}[htp]
  	\centering 	
@@ -1128,21 +1125,21 @@ Code} and \emph{Separate Concerns in Modules}.
 \end{figure}
 
 \textbf{Severity:} Some of the vulnerabilities are identified with \emph{Common 
-Vulnerabilities and Exposure} (CVE) entries. We leveraged the \emph{National Vulnerability 
-Database} (NVD) website to collect their severity levels. In total, we 
-retrieved severity scores for $536$ vulnerabilities: $112$ (\emph{HIGH}), 
-$395$ (\emph{MEDIUM}) and $29$ (\emph{LOW}). Figure~\ref{fig:severity} 
+Vulnerabilities and Exposure} (CVE) entries. We leveraged the \emph{National 
+Vulnerability Database} (NVD) website to collect their severity levels. In total, 
+we retrieved severity scores for $536$ vulnerabilities: $112$ \emph{High}, 
+$395$ \emph{Medium} and $29$ \emph{Low}. Figure~\ref{fig:severity} 
 presents the impact of security patches per severity level on the 
 maintainability of open-source software. We observe that patches for 
-\emph{HIGH} ($50.0\%$) and \emph{MEDIUM} ($43.8\%$) severity vulnerabilities 
-hinder more the maintainability of software than \emph{LOW} ($27.6\%$) 
+\emph{High} ($50.0\%$) and \emph{Medium} ($43.8\%$) severity vulnerabilities 
+hinder more the maintainability of software than \emph{Low} ($27.6\%$) 
 severity vulnerabilities. Again, patches have a considerable 
 negative impact on software maintainability---between $20\%$ 
-and $50\%$. Statistical significance was retrieved only for \emph{LOW}
-severity vulnerabilitie, i.e., \emph{LOW} severity vulnerabilities
+and $50\%$. Statistical significance was retrieved only for \emph{Low}
+severity vulnerabilitie, i.e., \emph{Low} severity vulnerabilities
 may have less negative impact on software maintainability thant the 
-other severity levels. However, 
-results should not be disregarded because they seem to confirm the 
+other severity levels. However, results should not be disregarded 
+because they seem to confirm the 
 assumption that higher severity vulnerabilities patches may have a 
 more negative impact on maintainability and, consequently, that high/medium 
 severity vulnerabilities may need more attention than low severity while 
@@ -1178,15 +1175,13 @@ language was also analyzed (Figure~\ref{fig:lang_main}). We restrict
 this analysis to programming languages with at least $20$ data points, as this 
 is a requirement for our hypothesis tests. Thus, we compare the results for 
 \texttt{C/C++}, \texttt{Ruby}, \texttt{Java}, \texttt{Objective C/C++}, 
-\texttt{Python} and \texttt{PHP}. \texttt{Groovy} samples are not presented
-because the number of cases did not fulfill the statistical test requirement. 
-\texttt{C/C++} ($46.5\%$), \texttt{Ruby} ($46.5\%$) and 
-\texttt{PHP} ($38.6\%$) are the programming languages with worse 
-impact on software maintainability. \texttt{Java} ($50.9\%$) and \texttt{Python} 
-($46.5\%$) seem to be the 
-languages less affected by patching, i.e., more than $45\%$ of patches had a positive 
-impact on maintainability. But overall patches in all languages have a 
-considerable negative impact on maintainability---between $35\%$ to $50\%$---which 
+\texttt{Python} and \texttt{PHP}, leaving \texttt{Groovy} out of the analysis.
+\texttt{C/C++}, \texttt{Ruby} and 
+\texttt{PHP} are the programming languages with worse 
+impact on software maintainability, i.e., with the highest number of negative cases (respectively, $46.5\%$, $46.5\%$ and $38.6\%$). \texttt{Java} and \texttt{Python} 
+seem to be the languages less affected by patching, i.e., integrating a larger amount of cases with positive impact on maintainability (respectively, $50.9\%$ and $46.5\%$). But overall 
+languages have a considerable amount of cases that negatively impact software 
+maintainability---between $35\%$ to $50\%$---which 
 confirms the need for better and more secure programming languages. 
 Statistical significance was only retrieved for the \texttt{C/C++} 
 (p-value = $2.24$x$10^{-05}$), \texttt{Ruby} (p-value = $0.041$) and \texttt{PHP} (p-value = $0.048$) languages.
@@ -1195,12 +1190,9 @@ thus results should be read with care.
 Yet, data reports very interesting hints on the impact of programming languages 
 on security patches.
 
-
-
-
-We would expect that the negative impact of programming languages on
-maintainability to be more severe, as arguably poor design of programming
-languages and lack of using the best practices lead to more buggy and vulnerable
+We expected the negative impact for programming languages on
+maintainability to be more severe, as arguably, poor design of programming
+languages for security and the lack of best practices application by developers   leads to more buggy and vulnerable
 code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. However,
 Figure~\ref{fig:lang_main} shows that only \emph{C/C++} and \emph{Ruby} have 
 a significant negative impact approximate to $50\%$ on software 
@@ -1212,10 +1204,8 @@ instance, \texttt{laravel/framework} requires the \texttt{PSR-2
 Standard}\footnote{PSR-2 Standard available at
 \url{https://www.php-fig.org/psr/psr-2/} (Accessed on \today{})} that is a coding style guide for \texttt{PHP}.
 
-
-
-\textbf{Conclusion:} Results show that developers fail to follow the coding
-practice guidelines and hinder software maintainability after patching; and, 
+\textbf{Conclusion:} Results show that developers have a hard time followings the coding
+practice guidelines and, consequently, hinder software maintainability while patching; and, 
 that different levels of attention should be paid to each guideline. For instance,
 \emph{Write Simple Units of Code} and \emph{Write Short Units of Code}
 are the most affected ones. No statistical significance was retrieved
@@ -1352,28 +1342,25 @@ sake of security. We argue that developers should be able to patch and produce s
 code without hindering the maintainability of their projects. But there are still  
 concerns that need to be addressed and that this study brings awareness for:
 %
-\\\textit{\textbf{Tools for Patch Risk Detection:}}
+\\\textit{\textbf{Tools for Patch Risk Assessment:}}
 	Design debt of one guideline can lead
 	to severe impacts on the software quality~\cite{10.1145/1985362.1985366}. 
 	Thus, tools like Better Code Hub and static analysis (e.g., SonarQube, Codacy,
 	ESLint, Infer, and more) should be leveraged to 
 	assess the risk of patching vulnerabilities---alongside pull
-  requests/code reviews. \Rui{what? (till the ned)-->} While static code analysis
+  requests/code reviews. Static code analysis
 	may be daunting due to the number of rules and different effects
-	on maintainability, BCH uses the top-$10$ of the guidelines
+	on maintainability. BCH claims to use the top-$10$ of the guidelines
 	with the highest effect on maintainability. Yet, static analysis 
-	can be used to complement the source code analysis, introduce
-	the capability of vulnerability detection, and, predict and
-  reduce the risk of hindering maintainability.
-  \Rui{static analysis vs. source coode?!}
+	can be used to complement the BCH analysis by introducing
+	the capability of vulnerability detection and support the prediction/prevention of the risk of hindering maintainability while patching.
 %
-\\\textit{\textbf{Computer Curricula Needs to be Updated:}}
-	We argue that software Developers lack the knowledge to create both secure and
+\\\textit{\textbf{Computer Science Curricula Needs to be Updated:}}
+	We argue that developers lack the knowledge to create both secure and
 	maintainable code. Mainly because academic curricula is not yet prepared
-	to properly educate them. Universities should do their part on making
-	this possible. \Rui{connection to curricula is not clear-->} Online services such as BCH have a great potential to help
-	developers to be more aware of the maintainability issues introduced by their
-	changes. Thus, developers can 
+	to properly educate them. Universities should encourage students to use online 	services such as BCH or similar ones. These tools have a great potential to make
+	students aware of maintainability issues and beginner mistakes (e.g.,
+	coding practices violation). Thus, students and future developers can 
 	put more work into improving their code maintainability and avoiding the risk
 	of introducing new vulnerabilities while patching older ones.
 %	
@@ -1385,14 +1372,14 @@ concerns that need to be addressed and that this study brings awareness for:
 	maintaining secure applications. One example is the need for designing new
 	authorization mechanisms since these are one of the most complex security
 	features to implement.
-%
-\\\textit{\textbf{Poor Coding Practices Documentation:}}
-  \Rui{too generic?}
-	Software documentation must be provided to developers with the
-	best practices to implement secure and maintainable software. Unmaintainable
-	code is difficult to test, analyze and re-use. Software companies must
-	do an effort to provide these artifacts to their developers, in order,
-	to avoid the introduction of new vulnerabilities while patching older ones.
+% %
+% \\\textit{\textbf{Poor Coding Practices Documentation:}}
+%   \Rui{too generic?}
+% 	Software documentation must be provided to developers with the
+% 	best practices to implement secure and maintainable software. Unmaintainable
+% 	code is difficult to test, analyze and re-use. Software companies must
+% 	do an effort to provide these artifacts to their developers, in order,
+% 	to avoid the introduction of new vulnerabilities while patching older ones.
 
 \section{Threats to Validity}\label{sec:threats}
 %
