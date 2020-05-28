@@ -281,9 +281,8 @@ security-related code evolution in computer curricula.
 The main contributions of the present work are:
 %
 \begin{itemize}
-  \item Evidence that supports a new trade-off between security and maintainability:
-  when developers need to patch vulnerabilities, they might be hindering the software
-  maintainability or even introducing new vulnerabilities.
+  \item Evidence that supports the trade-off between security and maintainability:
+  developers may be hindering the software maintainability or even introducing new vulnerabilities, while patching older ones.
 	\item An empirical study on the impact of security changes on software
   maintainability and what weaknesses, severity levels and programming languages need more attention.
 	\item A replication package with all scripts and data created to perform the
@@ -1162,6 +1161,7 @@ patching vulnerabilities.
     \subfigure[Maintainability difference by sub-weaknesses of the 
 	\textit{Improper Control of a Resource Through its Lifetime} Weakness (CWE-664)]{
 	\includegraphics[scale=0.4]{figures/main_per_cwe_spec_664.pdf}}
+    \caption{Maintainability difference per weakness.}
 	\label{fig:pat}
 	\vspace{-0.5cm}
 \end{figure*}
@@ -1220,27 +1220,27 @@ programming languages are needed.
 \\\textit{\textbf{RQ2: Which weaknesses are more likely to
 affect open-source software maintainability?}}
 
-In \emph{RQ2}, we report and discuss the impact of security patches on open-source
-software maintainability per weakness. In this study, we use weakness definition 
-mentioned in Section~\ref{sec:motivation} and the CWE enumeration
-system to classify the vulnerabilities.
-Figure~\ref{fig:pat} shows three different charts: \emph{(a)} shows
+In \emph{RQ2}, we report/discuss the impact of security patches on
+software maintainability per weakness. We use the weakness definition
+and taxonomy proposed by the \emph{Common Weakness Enumeration} (cf. Section~\ref{sec:motivation}).
+Figure~\ref{fig:pat} shows three different charts: \emph{(\ref{fig:pat}-a)}, shows
 the impact of all patches grouped using the first-level weaknesses from
-the \emph{Research Concepts} list on CWE; and, the remaining charts
-present the impact on maintainability of the sub-weaknesses from two of
-the weaknesses presented in \emph{(a)}. 
+the \emph{Research Concepts} list on CWE; and, \emph{(\ref{fig:pat}-b)} and  
+\emph{(\ref{fig:pat}-c)} present the impact on maintainability per sub-weakness of two 
+weaknesses from \emph{(\ref{fig:pat}-a)}: \emph{Improper Neutralization} (CWE-707) and 
+\emph{Improper Control of a Resource 
+Through its Lifetime} (CWE-664), respectively.
 
-In Figure~\ref{fig:pat}-\emph{a}, we observe that patching vulnerabilities
-such as Insufficient Control Flow Management 
-(CWE-691), Protection Mechanism Failure (CWE-693), Improper Access Control 
-(CWE-284), Improper Neutralization (CWE-707) and Improper Control of a Resource 
-Through its Lifetime (CWE-664) may have a negative impact on software 
-maintainability. The CWE-707 ($295$) and CWE-664 ($318$) 
-weaknesses integrate a larger amount of cases compared to the remaining 
-weaknesses. Thus, we present an analysis of their sub-weaknesses on 
+In Figure~\ref{fig:pat}-\emph{a}, there is no clear evidence of the impact on 
+maintainability per weakness. Yet, it is important to note that
+overall there is a very considerable number of cases that hinder
+maintainability---between $30\%$ and $60\%$.
+The CWE-707 ($295$) and CWE-664 ($318$) 
+weaknesses integrate the higher number of cases compared to the remaining 
+ones. Thus, we present an analysis of their sub-weaknesses on 
 Figure~\ref{fig:pat}-\emph{b} and Figure~\ref{fig:pat}-\emph{c}, respectively. 
-Results demonstrate evidence that patching vulnerabilities hinders 
-the maintainability of open-source software for $4$ different weaknesses: 
+Results shows that patching vulnerabilities may hinder 
+the maintainability of open-source software in $4$ different sub-weaknesses: 
 \emph{Improper Input Validation (CWE-20)}, \emph{Information Exposure 
 (CWE-200)}, \emph{Missing Release of Memory after Effective 
 Lifetime (CWE-401)} and \emph{Path Traversal (CWE-22)}. Results also show that 
@@ -1252,8 +1252,12 @@ adds complexity to the code base it is probably affecting the software
 maintainability. \emph{Cross-Site Scripting (CWE-79)} and 
 \emph{Improper Restriction of Operations within the Bounds of 
 a Memory Buffer (CWE-119)} patches endure more
-cases with no impact on the open-source software maintainability.
-Typically, CWE-79 vulnerabilities do not need extra lines 
+cases with no impact on the open-source software maintainability. \emph{SQL Injection
+(CWE-89)} patches equally hinder and improve the software maintainability.
+These patches usually follow the same complexity as the CWE-79 patches.
+However, the three weaknesses have a considerable amount of cases that hinder
+the software maintainability---$32.4\%$, $40.7\%$ and, $41.1\%$, respectively---which
+should not be happening. Typically, CWE-79 vulnerabilities do not need extra lines 
 to be fixed, as shown in Listing~\ref{lst:fix}---one simple 
 \texttt{escape} function patches the issue. On the same type of fix,
 CWE-199 vulnerabilities may also be fixed without adding new source code
@@ -1262,26 +1266,19 @@ CWE-199 vulnerabilities may also be fixed without adding new source code
 some buffer overflows may be harder to fix and lead to more complex 
 solutions such as the one performed for 
 CVE-$2016$-$0799$\footnote{CVE-$2016$-$0799$ patch details available at 
-\url{https://github.com/openssl/openssl/commit/9cb177301fdab492e4cfef376b28339afe3ef663} (Accessed on \today{})}.
-As CWE-199 
-vulnerabilities, \emph{Missing Release of Memory after Effective 
-Lifetime (CWE-401)}, or also called \emph{Resource Management Errors (CWE-399)}, can also be the root cause of Denial-of-Service attacks and  
-difficult to patch since it usually requires to add more complexity to the program---as seen in the example presented on Section~\ref{sec:motivation}. 
-Patches of \emph{SQL Injection
-(CWE-89)} weaknesses equally hinder and improve the software maintainability. 
-But a very considerable percentage of patches hinder the open-source 
-software maintainability ($41.1\%$). 
+\url{https://github.com/openssl/openssl/commit/9cb177301fdab492e4cfef376b28339afe3ef663}
+(Accessed on \today{})}. 
+As CWE-199 vulnerabilities, \emph{Missing Release of Memory after Effective 
+Lifetime (CWE-401)} can also be the root cause of Denial-of-Service attacks and  
+difficult to patch since it usually requires to add more complexity to the program (cf. Section~\ref{sec:motivation}). 
+
 
 \emph{Improper Input Validation (CWE-20)}, \emph{Information Exposure 
 (CWE-200)}, \emph{Missing Release of Memory after Effective 
 Lifetime (CWE-401)} and \emph{Path Traversal (CWE-22)} seem to be the most likely 
-weaknesses to affect open-source software maintainability.
-No statistical evidence was retrieved mostly due to the difficult
-of finding a higher numbers of cases of open-source patches per weakness. However, 
-results should not be disregarded because they offer an interesting view on how 
-the maintainability is impacted per weakness which can provide insights to 
-developers/researchers on the weaknesses that need more attention. Further
-research should be perfomed to retrieve conclusions.
+weaknesses to affect software maintainability. No statistical evidence was retrieveds. However, results should not be disregarded because they hint on how 
+the maintainability is impacted per weakness which highlights the weaknesses
+that may need more attention from developers/researchers. 
 %
 \\\textit{\textbf{RQ3: What is the impact of security changes versus regular 
 changes on the maintainability of open-source software?}}
@@ -1319,17 +1316,24 @@ on the software maintainability.
 	\vspace{-0.2cm}
 \end{figure}
 
-For both types of changes, there is a negative impact
-on software maintainability---especially, for security changes. 
-The resulting p-value of the Paired Wilcoxon signed-rank test is $0.300$, i.e., 
-conclusions regarding the regular changes are not statistically significant. 
-Yet, it is important to note that \emph{patching security vulnerabilities seem 
-to have a more negative impact on the maintainability of open-source software 
-than performing regular changes}.
-This raises 
-a new trade-off when developers need to patch vulnerabilities on their projects
-because they might be hindering the software maintainability or even introducing
-new vulnerabilities. 
+
+Results show that security-related commits are expected to hinder the
+maintainability of software. In contrast, one cannot say the same about
+regular changes, in which we do not observe significant differences. Thus, we
+urge the importance of adopting maintainability practices while applying
+security patches.
+%
+% For both types of changes, there is a negative impact
+% on software maintainability---especially, for security changes.
+% The resulting p-value of the Paired Wilcoxon signed-rank test is $0.300$, i.e.,
+% conclusions regarding the regular changes are not statistically significant.
+% Yet, it is important to note that \emph{patching security vulnerabilities seem
+% to have a more negative impact on the maintainability of open-source software
+% than performing regular changes}.
+% This raises
+% a new trade-off when developers need to patch vulnerabilities on their projects
+% because they might be hindering the software maintainability or even introducing
+% new vulnerabilities.
 
 
 \section{Study Implications}\label{sec:implications}
