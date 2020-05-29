@@ -252,7 +252,7 @@ focused only on web applications, and a model proposed by Xu et al. ($2013$)
 first steps taken by SIG to introduce security on their maintainability model). 
 Nevertheless, our study uses BCH to provide an assessment of maintainability in 
 software for the following reasons: BCH integrates a broad number of code metrics; and, 
-code metrics were empirically validated in previous work~\cite{Bijlsma:2012:FIR:2317098.2317124, 8530041, cruz2019energyoriented, 8785997}.
+code metrics were empirically validated in previous work~\cite{Bijlsma:2012:FIR:2317098.2317124, 8530041, 8919169, 8785997}.
 
 From a methodological 
 perspective, we leveraged a dataset of $1335$ security patches/refactorings collected from open-source 
@@ -774,7 +774,7 @@ consequence of characteristics of different projects.
 \subsection{Maintainability Analysis}
 
 In this research, we follow a very similar methodology to the one presented 
-in previous work on the maintainability of energy-oriented fixes~\cite{cruz2019energyoriented}. 
+in previous work on the maintainability of energy-oriented fixes~\cite{8919169}. 
 As said before, the web-based source code analysis service \emph{Better Code
 Hub} (BCH) is used to collect the maintainability reports of the refactorings of
 each project. Table~\ref{tab:guidelines} presents the $10$ guidelines proposed
@@ -927,10 +927,10 @@ Those data points were disregarded from the study.
 The BCH tool does not compute the final score that our study needs to compare
 maintainability amongst different project versions. For this, we follow previous 
 work on measuring the impact of energy-oriented 
-refactorings~\cite{cruz2019energyoriented}. Cruz et al. ($2019$) proposed an 
+refactorings~\cite{8919169}. Cruz et al. ($2019$) proposed an 
 equation to capture the distance between the current state of the project and
 the standard thresholds calculated by the BCH based on the insights provided 
-in~\cite{Olivari:2018}. The equation provided in~\cite{cruz2019energyoriented} 
+in~\cite{Olivari:2018}. The equation provided in~\cite{8919169} 
 considers that the size of project changes does not affect the maintainability 
 and that the distance to lower severity levels is less penalized than to the
 thresholds in high severity levels.
@@ -967,7 +967,7 @@ of a project is computed as the summation of the compliance with the
 maintainability guideline for the given severity level (medium, high, and very high).
 The compliance for a severity level
 is calculated based on previous work, which calculates the number of lines of code that comply and not comply
-with the guideline at a given severity level~\cite{cruz2019energyoriented}. In our analysis, we compute 
+with the guideline at a given severity level~\cite{8919169}. In our analysis, we compute 
 the difference of maintainability between the security commit ($v_{s}$) and its parent 
 commit ($v_{s-1}$), as illustrated in Figure~\ref{fig:commit}. Thus, we can determine 
 which patches had a positive, negative, or null impact on the project maintainability. 
@@ -1445,7 +1445,7 @@ discovered that maintainability decreases over time. Palomba et al.
 ($2018$)~\cite{Palomba:2018:DIM:3231288.3231337} exhibits proof that code smells
 should be carefully monitored by programmers since there is a high correlation
 between maintainability aspects and proneness to changes/faults. In 2019, Cruz et 
-al.~\cite{cruz2019energyoriented} proposed a formula to calculate maintainability 
+al.~\cite{8919169} proposed a formula to calculate maintainability 
 based on the BCH's guidelines and measured the impact of energy-oriented fixes 
 on software maintainability. Recent work,
 proposed a new maintainability model to 
@@ -1478,7 +1478,7 @@ may have an impact on maintainability.
 This work presents an empirical study on the impact of $969$ security
 patches on the maintainability of $260$ open-source projects. We leveraged
 Better Code Hub reports to calculate maintainability based on a model proposed in 
-previous work~\cite{Olivari:2018, cruz2019energyoriented}. Results show evidence of a 
+previous work~\cite{Olivari:2018, 8919169}. Results show evidence of a 
 trade-off between security and maintainability, as $41.9\%$ of security patches yielded a negative impact. Hence,
 developers may be hindering software maintainability while patching vulnerabilities. We also observe that some guidelines 
 and programming languages are more likely to be affected than others. The implications 
