@@ -1268,7 +1268,7 @@ maintainability. \emph{Cross-Site Scripting (CWE-79)} and
 \emph{Improper Restriction of Operations within the Bounds of 
 a Memory Buffer (CWE-119)} patches endure more
 cases with no impact on the open-source software maintainability. \emph{SQL Injection
-(CWE-89)} patches equally hinder and improve the software maintainability.
+(CWE-89)} patches equally hinder and improve software maintainability.
 These patches usually follow the same complexity as the CWE-79 patches.
 However, the three weaknesses have a considerable amount of cases that hinder
 the software maintainability---$32.4\%$, $40.7\%$ and, $41.1\%$, respectively---which
@@ -1277,7 +1277,7 @@ to be fixed, as shown in Listing~\ref{lst:fix}---one simple
 \texttt{escape} function patches the issue. On the same type of fix,
 CWE-199 vulnerabilities may also be fixed without adding new source code
 (e.g., replacing the \texttt{strncpy} function by a more secure one 
-\texttt{strlcpy} that checks if the buffer is null terminated). However,
+\texttt{strlcpy} that checks if the buffer is null-terminated). However,
 some buffer overflows may be harder to fix and lead to more complex 
 solutions (e.g., 
 CVE-$2016$-$0799$\footnote{CVE-$2016$-$0799$ patch details available at 
@@ -1291,7 +1291,7 @@ difficult to patch since it usually requires to add complexity to the program (c
 \emph{Improper Input Validation (CWE-20)}, \emph{Information Exposure 
 (CWE-200)}, \emph{Missing Release of Memory after Effective 
 Lifetime (CWE-401)} and \emph{Path Traversal (CWE-22)} seem to be the most likely 
-weaknesses to affect software maintainability. No statistical evidence was retrieveds. However, results should not be disregarded because they hint on how 
+weaknesses to affect software maintainability. No statistical evidence was retrieved. However, results should not be disregarded because they hint on how 
 the maintainability is impacted per weakness which highlights the weaknesses
 that may need more attention from developers/researchers. 
 %
@@ -1302,7 +1302,7 @@ The impact of security and baseline changes on software maintainability is prese
 We have seen, previously, a deterioration on software maintainability 
 when patching vulnerabilities: $41.9\%$ ($406$) suffered a 
 negative impact, $38.7\%$ ($375$) remained the same and $19.4\%$ 
-($188$) increased the software maintainability. For regular changes, 
+($188$) increased software maintainability. For regular changes, 
 we observe that the maintainability decreases in $27.0\%$ ($262$) 
 and increases in $30.5\%$ ($295$) of the cases. But in contrast to 
 security patches, the maintainability of regular changes remains the 
