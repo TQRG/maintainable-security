@@ -1,6 +1,6 @@
 # security-maintainability
 
-Instal requirements:
+Requirements installation:
 
 ```
 virtualenv --python=python3.7 venv
