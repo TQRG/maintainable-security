@@ -1399,19 +1399,21 @@ still concerns that need to be addressed and that this study brings awareness fo
 
 \section{Threats to Validity}\label{sec:threats}
 %
-This section presents the potential threats to the validity.
+This section presents the potential threats to validity.
 %
 \\\textit{\textbf{Construct:}} The formula was inferred based 
 on the BCH's reports. The high amount of different projects and backgrounds 
 may require other maintainability standards. However, BCH does use a 
 representative benchmark of closed and open-source software projects to compute 
 the thresholds for each maintainability guideline~\cite{Visser:2016:OREILLY, Baggen2012}.
-Maintainability is computed as the mean of all guidelines. Different software versions (vulnerable/fixed) of one vulnerability may have the same overal score
+Maintainability is computed as the mean of all guidelines. Different software versions 
+(vulnerable/fixed) of one vulnerability may have the same overall score
 and still be affected by different guidelines.
 %
 \\\textit{\textbf{Internal:}} The security patches dataset provided by previous
 work~\cite{Reis:2017:IJSSE} was collected based on the messages of GitHub
-commits produced by project developers to classify the changes performed while patching vulnerabilities. This approach discards patches that were
+commits produced by project developers to classify the changes performed while 
+patching vulnerabilities. This approach discards patches that were
 not explicit in commits messages. We assume that patches were performed 
 using a single-commit or several sequentially. The view that a 
 developer may perform a patch quickly and later proceed to the refactor is not considered.
@@ -1419,7 +1421,7 @@ Baseline commits are retrieved randomly from the same project of the security pa
 This approach softens the differences
 that may result from the characteristics of each project. However,
 maintainability may still be affected by the developers' experience, coding
-style and software contribution policies which is not evaluated in this study.
+style, and software contribution policies which are not evaluated in this study.
 Furthermore, this evaluation considers that $969$ regular commits---any kind
 of commit---are enough to
 alleviate random irregularities in the maintainability differences of the
@@ -1430,7 +1432,8 @@ However, the methodology requires to access data that is not publicly available.
 Thus, our findings may not extend to non-open source software. Different programming 
 languages may require different coding practices to address software safety. The 
 dataset comprises more commits in Java, i.e., the dataset may not be representative 
-of the population regarding programming languages. Our approach does not consider patches in any other languages but English.
+of the population regarding programming languages. Our approach does not consider 
+patches in any other language but English.
 
 \section{Related Work}\label{sec:rw}
 
