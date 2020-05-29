@@ -13,7 +13,7 @@ import maintainability.better_code_hub as bch
 RETRY_ATTEMPTS = 10
 
 @click.command()
-@click.option('--dataset', prompt=True, default="../dataset/db_release_regular_fixes.csv",
+@click.option('--dataset', prompt=True, default="../dataset/db_release_security_fixes.csv",
               help="Dataset with commits for comparison.")
 @click.option('--commit', prompt=True, default="security",
               help="type of dataset")
@@ -27,15 +27,13 @@ def tool(dataset, commit):
 @timer()
 def collect_maintainability(rows, commit, dataset):
     """Collect maintainability of regular/random commits"""
-    for i, row in rows.iterrows():        
+    for i, row in rows[::-1].iterrows():        
         user = row['owner']
         project = row['project']
         
         if commit == 'regular':            
             commit_sha = row['sha-reg']
             parent_commit_sha = row['sha-reg-p']
-            if row['reg'] != 'FOUND':
-                continue
         else:
             commit_sha = row['sha']
             parent_commit_sha = row['sha-p']

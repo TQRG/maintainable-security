@@ -1,5 +1,4 @@
 
-
 def filter_results_per_field(df, t, field):
     return [df[(df['diff'] < 0) & (df[field] == t)].shape[0],
                 df[(df['diff'] > 0) & (df[field] == t)].shape[0],
@@ -11,9 +10,10 @@ def filter_results(df):
                 'nul':df[df['diff'] == 0].shape[0]}
 
 def filter_results_per_guideline(df, g):
-    return [df[df[g+'-diff'] < 0].shape[0],
-                df[df[g+'-diff'] > 0].shape[0],
-                df[df[g+'-diff'] == 0].shape[0]]
+    f = g+'-diff' if 'diff' not in g else g
+    return [df[df[f] < 0].shape[0],
+                df[df[f] > 0].shape[0],
+                df[df[f] == 0].shape[0]]
 
 def add_others_group(df, group, key, label):
     for i, r in df.iterrows():

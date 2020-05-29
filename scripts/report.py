@@ -7,10 +7,6 @@ import pandas as pd
 import numpy as np
 import matplotlib
 import seaborn as sns
-
-matplotlib.rcParams['font.family'] = 'serif'
-matplotlib.rcParams['mathtext.fontset'] = 'cm'
-
 import matplotlib.pyplot as plt
 from math import sqrt
 import pandas as pd
@@ -28,13 +24,13 @@ def main_calculation(df, cache, dataset):
         sha_p_key = 'sha-p'
     
     for i, r in df.iterrows():
-
+                
         if r[sha_key] is np.nan or r[sha_p_key] is np.nan:
             continue
             
         info_f = cache.get_stored_commit_analysis(r['owner'], r['project'], r[sha_key])
         info_p = cache.get_stored_commit_analysis(r['owner'], r['project'], r[sha_p_key])
-            
+                    
         if info_f is None or info_p is None:
             none+=1
             df.at[i, 'diff'] = np.nan
@@ -78,14 +74,9 @@ def export(secdb, regdb, results, cache_path):
     cache = bch.BCHCache(cache_path)
     
     df_sec, sec_res_path = main_calculation_by_db(secdb, results, cache, 'security')
-    df_reg, reg_res_path = main_calculation_by_db(regdb, results, cache, 'regular')
-    
-    ids = df_reg[~df_reg['diff'].notnull()].index
-    
-    df_reg = df_reg.drop(ids) 
-    df_sec = df_sec.drop(ids)
-        
     df_sec.to_csv(sec_res_path, index=False)
+    
+    df_reg, reg_res_path = main_calculation_by_db(regdb, results, cache, 'regular')
     df_reg.to_csv(reg_res_path, index=False)
         
 def language(secdb, reports):
@@ -103,25 +94,35 @@ def guideline(secdb, reports):
 def cwe(secdb, reports):
     df_sec = pd.read_csv(secdb)
     chart.main_per_cwe_chart(reports, df_sec)
+    
+def cwe_spec(secdb, reports, cwe):
+    df_sec = pd.read_csv(secdb)
+    chart.main_per_cwe_spec_chart(reports, cwe, df_sec)
 
 def comparison(secdb, regdb, reports):
     df_sec = pd.read_csv(secdb)
     df_reg = pd.read_csv(regdb)
     chart.main_comparison_chart(reports, df_sec, df_reg)
     
+def guideline_swarm(secdb, reports):
+    
+    df_sec = pd.read_csv(secdb)
+    chart.main_guideline_swarm_plot(reports, df_sec)
+       
     
 if __name__ == "__main__":
     
     parser = argparse.ArgumentParser(description='Report results')    
-    parser.add_argument('--report', dest='goal', choices=['export', 'comparison', 'severity', 'guideline', 'language', 'cwe'],
+    parser.add_argument('--report', dest='goal', choices=['export', 'comparison', 'severity', 'guideline', 'language', 'cwe', 'cwe-spec'],
                         help='choose a report goal')
                         
     parser.add_argument('-results', type=str, metavar='folder path', help='results folder path')  
     parser.add_argument('-reports', type=str, metavar='folder path', help='reports folder path')      
     parser.add_argument('-secdb', type=str, metavar='file path', help='security dataset path')    
     parser.add_argument('-regdb', type=str, metavar='file path', help='regular dataset path')    
-    parser.add_argument('-cache', type=str, metavar='file path', help='cache path')    
-    
+    parser.add_argument('-cache', type=str, metavar='file path', help='cache path')   
+    parser.add_argument('-cwe', type=str, metavar='file path', help='cache path')    
+     
     args = parser.parse_args()
 
     if args.goal == 'export':  
@@ -132,7 +133,7 @@ if __name__ == "__main__":
             comparison(secdb=args.secdb, regdb=args.regdb, reports=args.reports)
     elif args.goal == 'guideline':
         if args.secdb != None and args.reports != None:
-            guideline(secdb=args.secdb, reports=args.reports)
+            guideline_swarm(secdb=args.secdb, reports=args.reports)
     elif args.goal == 'language':
         if args.secdb != None and args.reports != None:
             language(secdb=args.secdb, reports=args.reports)
@@ -142,5 +143,8 @@ if __name__ == "__main__":
     elif args.goal == 'cwe':
         if args.secdb != None and args.reports != None:
             cwe(secdb=args.secdb, reports=args.reports)
+    elif args.goal == 'cwe-spec':
+        if args.secdb != None and args.reports != None and args.cwe != None:
+            cwe_spec(secdb=args.secdb, reports=args.reports, cwe=args.cwe)
     else:
         print('Something is wrong. Verify your parameters')
