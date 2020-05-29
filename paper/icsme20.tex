@@ -1193,7 +1193,7 @@ is a requirement for the hypothesis tests. Thus, we compare the results for
 \texttt{C/C++}, \texttt{Ruby} and 
 \texttt{PHP} are the programming languages with worse 
 impact on maintainability, i.e., with the highest number of negative cases ($46.5\%$, $46.5\%$ and $38.6\%$, respectively). \texttt{Java} and \texttt{Python} 
-seem to be the less affected by patching, i.e., integrating a larger amount of cases with positive impact on maintainability ($50.9\%$ and $46.5\%$, respectively). But overall 
+seem to be less affected by patching, i.e., integrating a larger amount of cases with positive impact on maintainability ($50.9\%$ and $46.5\%$, respectively). But overall 
 languages have a considerable amount of cases that negatively impact  
 maintainability---between $35\%$ to $50\%$---which 
 confirms the need for better/more secure programming languages. 
@@ -1209,7 +1209,7 @@ code~\cite{Ray:2017:LSP:3144574.3126905, 2019arXiv190110220B}. However,
 Figure~\ref{fig:lang_main} shows that only \emph{C/C++} and \emph{Ruby} have 
 a significant negative impact approximate to $50\%$ on 
 maintainability. We suspect that these values are
-the result of projects contributions policies (e.g., coding standards). In our dataset, 
+the result of project contributions policies (e.g., coding standards). In our dataset, 
 $9$/$10$ projects with more contributors follow strict contribution 
 policies for code standards. % For
 % instance, \texttt{laravel/framework} requires the \texttt{PSR-2
@@ -1227,8 +1227,8 @@ The resulting p-value of the Paired Wilcoxon signed-rank test for $M(v)$ in Figu
 is $0.044$. Since the p-value is 
 below the significance level of $0.05$, we argue that \emph{security patches 
 may have a negative impact on the maintainability of open-source software}; and, 
-that tools such as BCH should be integrated in the CI/CD pipelines
-to help developers evaluate the risk of patches hinder software maintainability---alongside Pull Requests/Code Reviews. We also conclude that different severity 
+that tools such as BCH should be integrated into the CI/CD pipelines
+to help developers evaluate the risk of patches of hindering software maintainability---alongside Pull Requests/Code Reviews. We also conclude that different severity 
 vulnerabilities may need different levels of attention and better and more secure 
 programming languages are needed.
 %
