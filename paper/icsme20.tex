@@ -193,6 +193,7 @@ However, there is still a considerable amount of vulnerabilities being
 discovered and fixed, almost weekly, as disclosed by the Zero Day Initiative
 website\footnote{Zero Day Initiative website available at
 \url{https://www.zerodayinitiative.com/advisories/published/} (Accessed on \today{})}.
+
 %These vulnerabilities are gateways for attackers to penetrate systems and 
 %exploit their resources. As an example, at the beginning of $2020$, academics published a 
 %new execution attack (CacheOut) capable of leaking data from Intel CPUs across many 
@@ -532,6 +533,7 @@ they are not}.
 %
 \section{Methodology}\label{sec:methodology}
 %
+
 In this section, we discuss the methodology used to measure
 the impact of security patches on the maintainbility of open-source
 software. The methodology comprises the following steps, as illustrated in
@@ -574,6 +576,7 @@ the activities of developers addressing security-oriented patches~\cite{Reis:201
 %
 \subsection{Datasets}
 %
+
 We use a combined dataset of security vulnerabilities which is 
 the outcome of mining and manually inspect a total of $265$ GitHub projects for both
 datasets. Reis and Abreu 
@@ -966,6 +969,9 @@ guidelines, while $M(v) > 0$ indicates that version $v$ is following
 the BCH guidelines. The maintenance for the guideline $g$, $M_g$ for a given version
 of a project is computed as the summation of the compliance with the 
 maintainability guideline for the given severity level (medium, high, and very high).
+\Luis{The compliance for a severity level
+is calculated based on previous work, which calculates the number of lines of code that comply and not comply
+with the guideline at a given severity level~\cite{cruz2019energyoriented}.}
 The compliance for a severity level
 is calculated based on previous work, which calculates the number of lines of code that comply and not comply
 with the guideline at a given severity level~\cite{8919169}. In our analysis, we compute 
@@ -1333,6 +1339,7 @@ Security-related commits are expected to harm software maintainability. In contr
 regular changes, in which no significant differences are observed. Thus, we
 urge the importance of adopting maintainability practices while applying
 security patches.
+
 %
 % For both types of changes, there is a negative impact
 % on software maintainability---especially, for security changes.
