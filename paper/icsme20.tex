@@ -163,10 +163,10 @@
 \maketitle
 
 \begin{abstract}
-Security is a requirement of utmost importance to produce software quality. However, there is still a considerable amount of 
-vulnerabilities being discovered and fixed, almost weekly. We suspect 
-that when developers address these vulnerabilities on their codebases, 
-they actually affect the maintainability of software. This paper evaluates the 
+Security is a requirement of utmost importance to produce high-quality software. 
+However, there is still a considerable amount of 
+vulnerabilities being discovered and fixed, almost weekly. We suspect that developers 
+affect the maintainability of their codebases when patching vulnerabilities. This paper evaluates the 
 impact of patches to improve security on the maintainability of open-source 
 software. Maintainability is measured based on the Better Code Hub’s model of 10 
 guidelines using a dataset including 1335 security-related commits.
@@ -1320,10 +1320,10 @@ maintainability.
 	\vspace{-0.4cm}
 \end{figure}
 
-Results show that regular changes typically have less negative impact
+Results show that regular changes typically have a less negative impact
 on the software maintainability of open-source software.
 However, we manually inspected a considerable amount of cases from
-the regular changes distribution where this happens and found that 
+the distribution of the regular changes where this happens and found that 
 identifying regular commits as similar in size as the security-related 
 commit is limiting the type of regular commits (e.g, input 
 refactorings, variables or functions, type conversion, etc).  
@@ -1331,9 +1331,7 @@ We strongly believe that this phenomenon lead
 to the significant number of cases where there is no impact
 on the software maintainability.
 
-
-
-Results show that security-related commits are expected to harm software maintainability. In contrast, one cannot say the same about
+Security-related commits are expected to harm software maintainability. In contrast, one cannot say the same about
 regular changes, in which no significant differences are observed. Thus, we
 urge the importance of adopting maintainability practices while applying
 security patches.
