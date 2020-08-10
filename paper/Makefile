@@ -1,4 +1,4 @@
-NAME:=icsme20
+NAME:=emse20
 
 # To update, run: latex-process-inputs -makefilelist main.tex
 TEX_FILES = \
@@ -17,7 +17,7 @@ clean:
 	-rm -f *aux *bbl *blg *log *.dvi $(NAME).pdf *.fdb_latexmk *.synctex.gz *.fls *.out *.spl
 
 read:
-	evince icsme20.pdf
+	evince emse20.pdf
 
 tags: TAGS
 TAGS: ${TEX_FILES}
