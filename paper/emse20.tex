@@ -725,7 +725,8 @@ example only complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean Code}).
 	\label{fig:bchrep}
 \end{figure}
 
-\begin{table}[h]
+\begin{table}[H]
+\centering
 \scriptsize
 	\caption{Guidelines to produce maintainable code}
 \begin{tabular}{L{1.66cm}L{3.3cm}L{2.7cm}}
@@ -826,7 +827,7 @@ programming activities are involved.
 
 \begin{figure}[h]
  	\centering 	
-	\includegraphics[width=0.6\linewidth]{figures/commit.pdf}
+	\includegraphics[width=0.9\linewidth]{figures/commit.pdf}
  	\caption{Maintainability difference for security commits}
 	\label{fig:commit}
 \end{figure}
@@ -971,7 +972,7 @@ average impact of all guidelines.
  \begin{figure}[htp]
      \begin{adjustwidth}{-1cm}{-1cm}  
   	\centering
-  	\includegraphics[width=0.51\textwidth]{figures/main_per_guideline.pdf}
+  	\includegraphics[width=0.8\textwidth]{figures/main_per_guideline.pdf}
     \end{adjustwidth}
 	
   	\caption{Impact of the security patches per guideline. For each guideline, $3$ types of impact 
@@ -982,7 +983,7 @@ average impact of all guidelines.
  
  \begin{figure}[htp]
   	\centering 	
- 	\includegraphics[width=0.4\textwidth]{figures/main_per_severity.pdf}
+ 	\includegraphics[width=0.6\textwidth]{figures/main_per_severity.pdf}
   	\caption{Maintainability difference by vulnerability severity.}
  	\label{fig:severity}
  \end{figure}
@@ -1067,7 +1068,7 @@ patching vulnerabilities.
 
 \begin{figure}[htp]
   \centering
-  \includegraphics[width=0.4\textwidth]{figures/main_per_language.pdf}
+  \includegraphics[width=0.6\textwidth]{figures/main_per_language.pdf}
   \caption{Maintainability difference by programming language.}
   \label{fig:lang_main}    
 \end{figure}
@@ -1095,8 +1096,10 @@ is a requirement for the hypothesis tests. Thus, we compare the results for
 \texttt{Python} and \texttt{PHP}, leaving \texttt{Groovy} out of the analysis.
 \texttt{C/C++}, \texttt{Ruby} and 
 \texttt{PHP} are the programming languages with worse 
-impact on maintainability, i.e., with the highest number of negative cases ($46.5\%$, $46.5\%$ and $38.6\%$, respectively). \texttt{Java} and \texttt{Python} 
-seem to be less affected by patching, i.e., integrating a larger amount of cases with positive impact on maintainability ($50.9\%$ and $46.5\%$, respectively). But overall 
+impact on maintainability, i.e., with the highest number of negative cases ($46.5\%$, $46.5\%$ 
+and $38.6\%$, respectively). \texttt{Java} and \texttt{Python} 
+seem to be less affected by patching, i.e., integrating a larger amount of cases with positive 
+impact on maintainability ($50.9\%$ and $46.5\%$, respectively). But overall 
 languages have a considerable amount of cases that negatively impact  
 maintainability---between $35\%$ to $50\%$---which 
 confirms the need for better/more secure programming languages. 
@@ -1132,7 +1135,8 @@ is $0.044$. Since the p-value is
 below the significance level of $0.05$, we argue that \emph{security patches 
 may have a negative impact on the maintainability of open-source software}; and, 
 that tools such as BCH should be integrated into the CI/CD pipelines
-to help developers evaluate the risk of patches of hindering software maintainability---alongside Pull Requests/Code Reviews. We also conclude that different severity 
+to help developers evaluate the risk of patches of hindering software maintainability---alongside 
+Pull Requests/Code Reviews. We also conclude that different severity 
 vulnerabilities may need different levels of attention and better and more secure 
 programming languages are needed.
 %
@@ -1195,7 +1199,8 @@ difficult to patch since it usually requires to add complexity to the program (c
 \emph{Improper Input Validation (CWE-20)}, \emph{Information Exposure 
 (CWE-200)}, \emph{Missing Release of Memory after Effective 
 Lifetime (CWE-401)} and \emph{Path Traversal (CWE-22)} seem to be the most likely 
-weaknesses to affect software maintainability. No statistical evidence was retrieved. However, results should not be disregarded because they hint on how 
+weaknesses to affect software maintainability. No statistical evidence was retrieved. 
+However, results should not be disregarded because they hint on how 
 the maintainability is impacted per weakness which highlights the weaknesses
 that may need more attention from developers/researchers. 
 %
@@ -1216,7 +1221,7 @@ maintainability.
 
 \begin{figure}[htp]
  	\centering 	
-	\includegraphics[width=0.5\textwidth]{figures/main_comparison.pdf}
+	\includegraphics[width=0.7\textwidth]{figures/main_comparison.pdf}
  	\caption{Maintainability difference for security and baseline patches.}
 	\label{fig:secvsreg}
 \end{figure}
