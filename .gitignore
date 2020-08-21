@@ -1,5 +1,5 @@
 config/*.json
-paper/icsme20.pdf
+paper/emse20.pdf
 *.aux
 *.bbl
 *.blg
