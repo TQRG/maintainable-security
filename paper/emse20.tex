@@ -169,15 +169,17 @@
 
 %\authorrunning{Short form of author list} % if too long for running head
 
-\institute{F. Author \at
-              first address \\
-              Tel.: +123-45-678910\\
-              Fax: +123-45-678910\\
-              \email{fauthor@example.com}           %  \\
-%             \emph{Present address:} of F. Author  %  if needed
+\institute{Sofia Reis \at
+			INESC ID and IST, University of Lisbon, Lisbon, Portugal\\
+            \email{sofia.o.reis@tecnico.ulisboa.pt}   
+			\and
+			Rui Abreu \at
+			INESC ID and IST, University of Lisbon, Lisbon, Portugal\\
+			\email{rui@computer.org}
            \and
-           S. Author \at
-              second address
+			Luis Cruz \at
+			Delft University of Technology, Delft, The Netherlands\\
+			\email{L.Cruz@tudelft.nl}
 }
 
 \date{Received: date / Accepted: date}
@@ -200,7 +202,7 @@ The implications of our study are that changes to codebases while patching
 vulnerabilities need to be performed with extra care; tools
 for patch risk assessment should be integrate into the CI/CD pipeline; computer science
 curricula needs to be updated; and, more secure programming languages are necessary.
-\keywords{Security \and Software Maintenance \and Open-Source Software}
+\keywords{Software Security \and Software Maintenance \and Open-Source Software}
 % \PACS{PACS code1 \and PACS code2 \and more}
 % \subclass{MSC code1 \and MSC code2 \and more}
 \end{abstract}
@@ -343,7 +345,7 @@ DoS attack through memory exhaustion.
 \medskip
 \setcounter{lstannotation}{0}
 \begin{lstlisting}[style={CStyle}, caption={Patch provided by OpenSSL developers to the
-\\CVE-2016-6304 vulnerability on file ssl/t1\_lib.c},label={lst:vuln}]
+CVE-2016-6304 vulnerability on file ssl/t1\_lib.c},label={lst:vuln}]
 static int ssl_scan_clienthello_tlsext(SSL *s, PACKET *pkt, int *al){ 
  // [snip]
 +  sk_OCSP_RESPID_pop_free(s->tlsext_ocsp_ids, OCSP_RESPID_free); /*!\annotation{lst:func1}!*/
@@ -432,7 +434,7 @@ introduction of vulnerabilities within that product. Maintainability is measured
 separately for each weakness.
 %
 \setcounter{lstannotation}{0}
-\begin{lstlisting}[style={PHPStyle}, caption={Fix provided by \texttt{nextcloud/server} developers to a \\Cross-Site Scripting vulnerability},label={lst:fix}]
+\begin{lstlisting}[style={PHPStyle}, caption={Fix provided by \texttt{nextcloud/server} developers to a Cross-Site Scripting vulnerability},label={lst:fix}]
    <p class='hint'>
     <?php
 -   if(isset($_['file'])) echo $_['file']
@@ -457,6 +459,16 @@ the impact of security patches on the maintainbility of open-source
 software. The methodology comprises the following steps, as illustrated in
 Fig.~\ref{fig:met}.
 %
+\begin{figure}[h]
+	 	\centering 	
+    \begin{adjustwidth}{0.5cm}{-1cm}  
+	\includegraphics[width=0.9\textwidth]{figures/methodology.pdf}
+	
+ 	\caption{Study Methodology}
+	\label{fig:met}
+	 \end{adjustwidth}
+\end{figure}
+%
 \begin{enumerate}
 	\item Combine the datasets from related work that classifies
 the activities of developers addressing security-oriented patches~\cite{Reis:2017:IJSSE,10.1109/MSR.2019.00064}.
@@ -480,15 +492,7 @@ the activities of developers addressing security-oriented patches~\cite{Reis:201
   of our datasets are collected before the analysis performed by BCH.
 \end{enumerate}
 %
-\begin{figure}[h]
-	 	\centering 	
-    \begin{adjustwidth}{0.5cm}{-1cm}  
-	\includegraphics[width=0.49\textwidth]{figures/methodology.pdf}
-	
- 	\caption{Study Methodology}
-	\label{fig:met}
-	 \end{adjustwidth}
-\end{figure}
+
 %
 \subsection{Datasets}
 %
@@ -716,7 +720,7 @@ software used by BCH to calculate the thresholds\footnote{Check the answer to
 
 \begin{figure}[h]
  	\centering 	
-	\includegraphics[width=0.44\textwidth]{figures/bch_report.png}
+	\includegraphics[width=0.9\textwidth]{figures/bch_report.png}
  	\caption{Maintainability report of OpenSSL's CVE-$2016$-$6304$ vulnerability
 refactoring for the guideline \emph{Write Simple Units of Code} provided by
 \emph{Better Code Hub}. This version of OpenSSL does not comply with the
@@ -729,7 +733,7 @@ example only complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean Code}).
 \centering
 \scriptsize
 	\caption{Guidelines to produce maintainable code}
-\begin{tabular}{L{1.66cm}L{3.3cm}L{2.7cm}}
+\begin{tabular}{L{2cm}L{4.5cm}L{4cm}}
 
 \toprule
 \textbf{10 Guidelines} & \textbf{Description} & \textbf{Metric}\\
@@ -827,7 +831,7 @@ programming activities are involved.
 
 \begin{figure}[h]
  	\centering 	
-	\includegraphics[width=0.9\linewidth]{figures/commit.pdf}
+	\includegraphics[width=0.6\linewidth]{figures/commit.pdf}
  	\caption{Maintainability difference for security commits}
 	\label{fig:commit}
 \end{figure}
@@ -972,7 +976,7 @@ average impact of all guidelines.
  \begin{figure}[htp]
      \begin{adjustwidth}{-1cm}{-1cm}  
   	\centering
-  	\includegraphics[width=0.8\textwidth]{figures/main_per_guideline.pdf}
+  	\includegraphics[width=0.9\textwidth]{figures/main_per_guideline.pdf}
     \end{adjustwidth}
 	
   	\caption{Impact of the security patches per guideline. For each guideline, $3$ types of impact 
@@ -983,7 +987,7 @@ average impact of all guidelines.
  
  \begin{figure}[htp]
   	\centering 	
- 	\includegraphics[width=0.6\textwidth]{figures/main_per_severity.pdf}
+ 	\includegraphics[width=0.7\textwidth]{figures/main_per_severity.pdf}
   	\caption{Maintainability difference by vulnerability severity.}
  	\label{fig:severity}
  \end{figure}
@@ -1306,9 +1310,9 @@ still concerns that need to be addressed and that this study brings awareness fo
 
 \section{Threats to Validity}\label{sec:threats}
 %
-This section presents the potential threats to validity.
+This section presents the potential threats to validity of this study.
 %
-\\\textit{\textbf{Construct:}} The formula was inferred based 
+\\\textit{\textbf{Construct Validity:}} The formula was inferred based 
 on the BCH's reports. The high amount of different projects and backgrounds 
 may require other maintainability standards. However, BCH does use a 
 representative benchmark of closed and open-source software projects to compute 
@@ -1317,7 +1321,7 @@ Maintainability is computed as the mean of all guidelines. Different software ve
 (vulnerable/fixed) of one vulnerability may have the same overall score
 and still be affected by different guidelines.
 %
-\\\textit{\textbf{Internal:}} The security patches dataset provided by previous
+\\\textit{\textbf{Internal Validity:}} The security patches dataset provided by previous
 work~\cite{Reis:2017:IJSSE} was collected based on the messages of GitHub
 commits produced by project developers to classify the changes performed while 
 patching vulnerabilities. This approach discards patches that were
@@ -1334,7 +1338,7 @@ of commit---are enough to
 alleviate random irregularities in the maintainability differences of the
 baseline. 
 %
-\\\textit{\textbf{External:}} We use a dataset that only comprises patches of open-source software.
+\\\textit{\textbf{External Validity:}} We use a dataset that only comprises patches of open-source software.
 However, the methodology requires to access data that is not publicly available.
 Thus, our findings may not extend to non-open source software. Different programming 
 languages may require different coding practices to address software safety. The 
