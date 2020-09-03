@@ -131,7 +131,7 @@
   {\newcommand{\nb}[3]{}
   }
 
-\newcommand\Sof[1]{\nb{Sofia}{red}{#1}}
+\newcommand\Sofia[1]{\nb{Sofia}{red}{#1}}
 \newcommand\Luis[1]{\nb{Luis}{mygreen}{#1}}
 \newcommand\Rui[1]{\nb{Rui}{blue}{#1}}
 
@@ -242,12 +242,14 @@ vulnerability---corrective maintenance.
 % (hopefully, without introducing new ones). 
 However, many developers still lack knowledge on the best 
 practices to deliver and maintain secure and high-quality 
-software~\cite{Pothamsetty:2005:SEL:1107622.1107635,8077802}. In a world where zero-day vulnerabilities are constantly 
-emerging, mitigation needs to be fast and efficient. Therefore, it 
+software~\cite{Pothamsetty:2005:SEL:1107622.1107635,8077802}. In a 
+world where zero-day vulnerabilities are constantly emerging, 
+mitigation needs to be fast and efficient. Therefore, it 
 is important to write maintainable code to support the production of 
-more secure software---maintainable code is faster 
-to mitigate---and, prevent the introduction of new vulnerabilities 
-in the codebases.
+more secure software---maintainable code is less complex and, 
+consequently, less prone to
+vulnerabilities~\cite{shin2010evaluating,10.1145/1774088.1774504})---
+and, prevent the introduction of new vulnerabilities.
 % Unmaintainable code is hard to test, analyze and re-use. Therefore,
 % it is important to write maintainable code to support the production
 % of more secure software and prevent
@@ -312,6 +314,7 @@ leveraging security principles~\cite{kurilova2014wyvern,10.1145/2489828.2489830}
 This research performs the following main contributions:
 %
 \begin{itemize}
+	\vspace{-0.3em}
   \item Evidence that supports the trade-off between security and 
   maintainability: developers may be hindering software 
   maintainability while patching vulnerabilities.
@@ -515,85 +518,94 @@ the impact of security patches on the maintainbility of open-source
 software. The methodology comprises the following steps, as 
 illustrated in Fig.~\ref{fig:met}.
 %
+\begin{enumerate}
+	\item Combine the datasets from related work that classifies
+	the activities of developers addressing security-oriented 
+	patches~\cite{Reis:2017:IJSSE,10.1109/MSR.2019.00064}.
+%
+	\item
+	Extract relevant data (e.g., owner and name of
+	the repository, sha key of the vulnerable version, sha key of 	
+	the fixed version and codebases) from the combined dataset 	
+	containing $1335$ security patches collected from open-source 	
+	software available on GitHub.
+%
+	\item A baseline of regular commits was randomly collected from 
+	the list of projects of the final dataset to evaluate the impact 
+	of regular commits on the maintainability of open-source 
+	software.
+%
+  \item Use the Software Improvement Group's\footnote{SIG's website: 
+  \url{https://www.sig.eu/} (Accessed on \today{})} web-based source 
+  code analysis service \emph{Better Code Hub} (BCH)\footnote{BCH's 
+  website: \url{https://bettercodehub.com/} (Accessed on \today{})} 
+  to quantify maintainability for both security and regular commits. 
+  The codebases that resemble to the commits of our datasets are 
+  collected before the analysis performed by BCH.
+\end{enumerate}
+%
 \begin{figure}[h]
 	\centering 	
     \begin{adjustwidth}{0.5cm}{-1cm}  
 	\includegraphics[width=0.9\textwidth]{figures/methodology.pdf}
-	
  	\caption{Study Methodology}
 	\label{fig:met}
 	 \end{adjustwidth}
 \end{figure}
 %
-\begin{enumerate}
-	\item Combine the datasets from related work that classifies
-the activities of developers addressing security-oriented patches~\cite{Reis:2017:IJSSE,10.1109/MSR.2019.00064}.
-%
-	\item
-	Extract relevant data (e.g., owner and name of
-	the repository, sha key of the vulnerable version, sha key of the fixed version) to the experiments and 
-	code bases from the combined dataset containing $1335$ security
-	patches collected from open-source software available on
-	GitHub.
-%
-	\item A baseline of regular commits was randomly collected from the list of
-	projects of the final dataset to evaluate the impact of regular commits on the
-	maintainability of open-source software.
-%
-  \item Use the Software Improvement Group's\footnote{SIG's website: \url{https://www.sig.eu/} 
-  (Accessed on \today{})} web-based source code analysis
-  service \emph{Better Code Hub} (BCH)\footnote{BCH's website:
-  \url{https://bettercodehub.com/} (Accessed on \today{})} to quantify maintainability
-  for both security and regular commits. The code bases that resemble to the commits
-  of our datasets are collected before the analysis performed by BCH.
-\end{enumerate}
-%
-
-%
 \subsection{Datasets}
 %
 
 We use a combined dataset of security vulnerabilities which is 
-the outcome of mining and manually inspect a total of $265$ GitHub projects for both
-datasets. Reis and Abreu 
-($2017$) mined open-source
-software aiming at the extraction of real examples---created by real
-developers---to test and assess the performance of static analysis tools~\cite{Reis:2017:IJSSE} since
-using hand-seeded test cases or mutations could lead to misleading assessments
-of the capabilities of the tools~\cite{just2014mutants}. The study yielded a
-dataset of $711$ test cases for $16$ different security vulnerability types. Some of the vulnerability types
-are based on the OWASP Top $10$ of $2013$~\cite{oswap:2013} and OWASP Top $10$ of
-$2017$~\cite{oswap:2017}. Each test case of the
-dataset is a triplet: the commit before the patching, the commit responsible
-for the patching, and the snippets of code that differ from one version to
-another (typically, called \textit{diffs})---where one can easily review the
-code used to fix the security flaw. 
+the outcome of mining and manually inspecting a total of $265$ 
+GitHub projects for both datasets. Reis and Abreu 
+($2017$) mined open-source software aiming at the extraction of 
+real---created by developers---samples of security vulnerabilities 
+to test and assess the performance of static analysis 
+tools~\cite{Reis:2017:IJSSE} since using hand-seeded test cases or 
+mutations can lead to misleading assessments of the capabilities of 
+the tools~\cite{just2014mutants}. The study yielded a dataset of 
+$711$ test cases for $16$ different security vulnerability types. 
+Some of the vulnerability types are based on the OWASP Top $10$ of 
+$2013$~\cite{oswap:2013} and OWASP Top $10$ of 
+$2017$~\cite{oswap:2017}. Each test case of the dataset is a 
+triplet: the commit before the patching, the commit responsible
+for the patching, and the snippets of code that differ from one 
+version to another (typically, called \textit{diffs})---where one 
+can easily review the code used to fix the security flaw. 
 %
 
-Ponta et al. ($2019$) tracked the \url{pivotal.io} website for vulnerabilities 
-from $2014$ to $2019$. For each new vulnerability, the authors manually searched 
-for references to commits involved in the patch on the National Vulnerability 
-Database (NVD) website. However, $70\%$
-of the vulnerabilities did not have any references to commits. Thus, the authors
-used their expertise to locate the commits in the repositories. This technique 
-yielded a database of $624$ patches~\cite{10.1109/MSR.2019.00064}. The original 
-dataset contains $1282$ commits. One patch can have multiple commits assigned.
-To fit the dataset in our methodology, we search for the first and last commits
-used to patch the vulnerability. We assumed the last commit of the patch as 
-the fix (\emph{sha}) and the parent of the first commit as the vulnerable version 
-(\emph{sha-p}).
+Ponta et al. ($2019$) used a different approach and tracked the 
+\url{pivotal.io} website for vulnerabilities from $2014$ to $2019$. 
+For each new vulnerability, the authors manually searched for 
+references to commits involved in the patch on the National 
+Vulnerability Database (NVD) website. However, $70\%$ of the 
+vulnerabilities did not have any references to commits. Thus, the 
+authors used their expertise to locate the commits in the 
+repositories. This technique yielded a dataset of $624$ 
+patches~\cite{10.1109/MSR.2019.00064}. The original dataset contains 
+$1282$ commits. One patch can have multiple commits assigned.
+To fit the dataset in our methodology, we located the first and 
+last commits used to patch the vulnerability. For these cases, we 
+used the GitHub API to retrieve automatically the dates of the 
+commits. Then, for each patch, the group of commits was ordered from 
+the oldest commit to the newest one. We assumed the last commit 
+(newest one) as the fix (\emph{sha}) and the parent of the 
+first commit (oldest commit) as the vulnerable version 
+(\emph{sha-p}). 
 %
 
-In this study, we focus on computing the
-maintainability of the commits before and after the security patching to
-evaluate if its impact was positive, negative or none.
-The $1335$ patches in the dataset were run against the BCH toolset to
-calculate their maintainability reports. However, there are patches
-discarded from our study due to limitations of BCH: in particular, lack of
-language support and project size. The final dataset used in this paper comprises
-$969$ security patches. $867$ of these patches are identified with Common Weakness
-Enumeration IDs (CWE) where $62.1\%$ were scraped from the National Vulnerability 
-Dataset (NVD) and the remaining $37.9\%$ were manually classified following the 
+In this study, we focus on computing the maintainability of the 
+commits before and after the security patching to evaluate if its 
+impact was positive, negative or none. The $1335$ patches in the 
+dataset were run against the BCH toolset to calculate their 
+maintainability reports. However, there are patches discarded from 
+our study due to limitations of BCH: in particular, lack of
+language support and project size. The final dataset used in this 
+paper comprises $969$ security patches. $867$ of these patches are 
+identified with Common Weakness Enumeration IDs (CWE) where $62.1\%$ 
+were scraped from the National Vulnerability Dataset (NVD) and the 
+remaining $37.9\%$ were manually classified following the 
 \emph{Research Concepts} CWE's list.
 
 % In Table~\ref{tab:patterns}, the most prevailing categories are presented. To satisfy the Wilcoxon test size requirement, types of vulnerabilities
@@ -724,18 +736,19 @@ Dataset (NVD) and the remaining $37.9\%$ were manually classified following the
 %
 \subsection{Security vs. Baseline Commits}
 %
-Previous studies attempted to measure the impact of regular refactorings on
-open-source software maintainability~\cite{HEGEDUS2018313}. However, there is no
-previous work focused on comparing the impact of security patches with
-regular refactorings on maintainability.
-We analyze the maintainability of regular commits (i.e., commits not related
-to security fixes) and use them as a baseline.
+Previous studies attempted to measure the impact of regular commits 
+on open-source software maintainability~\cite{HEGEDUS2018313}. 
+However, there is no previous work focused on comparing the impact 
+of security patches with regular commits on maintainability.
+We analyze the maintainability of regular commits (i.e., commits not 
+related to security patches) and use them as a baseline.
 The baseline dataset is generated from the security commits dataset.
-For each
-security commit, a commit with an approximate size is fetched. Due to the complexity 
-of some patches, it was not possible to find patches with the exact number of added and 
-deleted lines. Our search uses the patch \emph{diff} to look for a new similar \emph{diff}. 
-The algorithm integrates the following steps:
+For both vulnerable/sha-p and patch/sha commits, a commit 
+with an approximate size is fetched. Due to the complexity of some 
+patches, it was not possible to find patches with the exact number 
+of added and deleted lines. Our search uses the patch \emph{diff} to 
+look for a \emph{diff} of the same size. The algorithm integrates 
+the following steps:
 
 \begin{enumerate}
 \item Calculates the \emph{diff} between the security patch commit (\emph{sha}) and its parent (\emph{sha-p}).
@@ -1474,14 +1487,14 @@ software; and, expand this analysis to other quality standards.
 Please, pay more attention to the cases with !.
 
 \begin{itemize}
-	\item How this is a problem or has an impact to the software project? 
-  What is the message to developers? (clarify)
+	% \item How this is a problem or has an impact to the software project?
+	%   What is the message to developers? (clarify)
 	\item Implications: Discuss that depending on the project, maybe security 
   is a first class citizen and should be fixed above all. Don't 
   just state that patch risk assessment should take maintainability into account. 
   Saying that security should be a priority requires maybe a user study
   as evidence (check if the literature available is not enough).
-  \item Review the secure programming languages implication. Check 
+  \item Implications: Review the secure programming languages implication. Check 
   if the idea of fully secure exists. The idea should be more secure, not
   fully secure.
   \item [!] \textit{I am not sure how the computer science curricula got mentioned 
@@ -1492,11 +1505,11 @@ Please, pay more attention to the cases with !.
     we have evidence that developers might not following good practices while
     patching? If they learn it in college and are aware of it in their jobs
     won't they be better prepared?
-  \item [!] \textit{It did take me several readings to understand the paper, especially the approach} - 
-  what to do with this @rui?
-    \begin{itemize}
-      \item Ehmm... strange... we need to improve the approach then. Thoughts?
-    \end{itemize}
+  % \item [!] \textit{It did take me several readings to understand the paper, especially the approach} -
+ %  what to do with this @rui?
+ %    \begin{itemize}
+ %      \item Ehmm... strange... we need to improve the approach then. Thoughts?
+ %    \end{itemize}
   \item [!] \textit{Fig 4, although it looks impressive, I am not sure how to read the figure} - what 
   should we do @rui?
     \begin{itemize}
@@ -1520,11 +1533,11 @@ Please, pay more attention to the cases with !.
     \begin{itemize}
       \item We need to discuss this... I think this related to the next point. 
     \end{itemize}  
-  \item \textit{authors write "...important to write maintainable code to support the production
-  of more secure software...". Relationship is not clear nor is it backed by some evidence} -> 
-  Improve this.
-  \item Drop the word patch. Security patches are not patches. Refactorings is perfective
-  or preventive maintenance, whereas patching a vulnerability is corrective maintenance.
+  % \item \textit{authors write "...important to write maintainable code to support the production
+  % of more secure software...". Relationship is not clear nor is it backed by some evidence} ->
+  % Improve this.
+  % \item Drop the word patch. Security patches are not patches. Refactorings is perfective
+  % or preventive maintenance, whereas patching a vulnerability is corrective maintenance.
   \item Discuss better the fact of not using other important aspects for the baseline such as the
   size of the changed method and complexity by metrics. Soften the part where it says we should
   have gone beyond size.
@@ -1533,10 +1546,10 @@ Please, pay more attention to the cases with !.
   corresponding statistical test that supports this statement, even the swarm and box plotz itself 
   clearly tell a different story. So, authors may rethink this statement or better explain how they 
   come to this conclusion.} -> We are overselling here. Improve it.
-  \item \textit{Authors state that they assume for the Pontas dataset that the last commit related 
-  to patching being the actual patch while the parent of the first patch-related commit is assumed 
-  to be the vulnerable version. However, nothing is said whether this assumption holds all the time. 
-  So, how did authors validate their assumption? This is missing, but should be added.} - Improve this.
+  % \item \textit{Authors state that they assume for the Pontas dataset that the last commit related
+  % to patching being the actual patch while the parent of the first patch-related commit is assumed
+  % to be the vulnerable version. However, nothing is said whether this assumption holds all the time.
+  % So, how did authors validate their assumption? This is missing, but should be added.} - Improve this.
   \item \textit{In Section 3-C, for computing and comparing the maintainability, only security commits  
   (and parent commit) are mentioned. Did you apply the same method also the the regular changes that 
   you use to compare with security commits? Please make this clear, currently this is ignored in the 
