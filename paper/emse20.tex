@@ -1382,35 +1382,32 @@ secure code without hindering the maintainability of their projects. But there a
 still concerns that need to be addressed and that this study brings awareness for:
 %
 \\\textit{\textbf{Tools for Patch Risk Assessment:}}
-	Design debt of one guideline can lead
-	to severe impacts on the software 
-	quality~\cite{10.1145/1985362.1985366}. 
-	Thus, tools like Better Code Hub and static analysis (e.g., 
-	SonarQube, Codacy, ESLint, Infer, and more) should be leveraged 
+	Design debt of one guideline can lead to severe impacts on the 
+	software quality~\cite{10.1145/1985362.1985366}. Some software 
+	producers consider security as a first class citizen while others 
+	do not. As mentioned in previous work, security it is very important and should bee considered as a default feature~\cite{10.1145/2489828.2489830,kurilova2014wyvern,mcgraw2004software}. However, the lack of experts or awareness to the ease of producing vulnerable software leads companies to ship low quality software. Providing automated tools to developers assess the risk of their patches it is important to help companies shipping software of higuer quality. Tools like Better Code Hub and static analysis (e.g., 
+	SonarQube, Codacy, ESLint, Infer, and more) can be leveraged 
 	to assess the risk of patching vulnerabilities---alongside pull
 	requests/code reviews. Static code analysis may be daunting due 
 	to the number of rules and different effects
 	on maintainability. BCH claims to use the top-$10$ of the guidelines
-	with the highest effect on maintainability. Yet, static analysis 
+	with the highest effects on maintainability. Yet, static analysis 
 	can be used to complement the BCH analysis by introducing
-	the capability of vulnerability detection and support the prediction/prevention of the risk of hindering maintainability while patching.
+	the capability of vulnerability detection and support the prediction/prevention of the risk of a patch of hindering maintainability.
 %
 \\\textit{\textbf{Computer Science Curricula Needs to be Updated:}}
 	Computer Science curricula is not yet prepared to properly educate students for maintainable security. 
-	    Students should be exposed to this problem to gain experience with it. Curricula should focus on producing 
-	    secure and maintainable code and alert to the trade-off between both.
+	    Students should be exposed to this problem to gain experience with it. Curricula should focus on the production of 
+	    secure and maintainable code and alert to the trade-off between both. These matters should be discussed and presented to students in software engineering courses.
 	Universities should also encourage students to use code quality analysis tools such as BCH or similar ones. These tools have a great potential to make
 	students aware of maintainability issues and beginner mistakes (e.g.,
-	coding practices violation). Thus, students and future developers can 
-	put more work into improving their code maintainability and avoiding the risk
-	of introducing new vulnerabilities while patching older ones.
+	coding practices violation).
 %	
-\\\textit{\textbf{Secure Programming Languages Wanted:}} Programming Languages 
-	should provide new design patterns to easily implement security weaknesses 
+\\\textit{\textbf{More Secure Programming Languages Wanted:}} Programming Languages 
+	should provide new design patterns to easily patch security weaknesses 
 	without endangering maintainability.
-	Ultimately, new programming languages, both secure and maintainable by design,
-	may be designed to help developers be highly productive when writing and
-	maintaining secure applications. One example is the need for designing new
+	Ultimately, new programming languages, both secure and maintainable by design, such as Wyvern~\cite{10.1145/2489828.2489830,kurilova2014wyvern}, 
+	should be designed to help developers be less vulnerability prone when writing and maintaining secure applications. One example is the need for designing new
 	authorization mechanisms since these are one of the most complex security
 	features to implement.
 % 
@@ -1533,29 +1530,29 @@ expand our methodology with other software quality properties;
 validate these findings with closed/private
 software; and, expand this analysis to other quality standards.
 
-\section{Plan A}
-
-Please, pay more attention to the cases with !.
-
-\begin{itemize}
+% \section{Plan A}
+%
+% Please, pay more attention to the cases with !.
+%
+% \begin{itemize}
 	% \item How this is a problem or has an impact to the software project?
 	%   What is the message to developers? (clarify)
-	\item Implications: Discuss that depending on the project, maybe security 
-  is a first class citizen and should be fixed above all. Don't 
-  just state that patch risk assessment should take maintainability into account. 
-  Saying that security should be a priority requires maybe a user study
-  as evidence (check if the literature available is not enough).
-  \item Implications: Review the secure programming languages implication. Check 
-  if the idea of fully secure exists. The idea should be more secure, not
-  fully secure.
-  \item [!] Implications: \textit{I am not sure how the computer science curricula got mentioned 
-    from a motivation. I don't think vulnerabilities are been introduced, its 
-    more that they get exposed. In this case, the implication does not make 
-    much sense from a practical point of view.} -> Why not? Shouldn't 
-    maintainable security be introduced in the computer science curricula since
-    we have evidence that developers might not following good practices while
-    patching? If they learn it in college and are aware of it in their jobs
-    won't they be better prepared?
+	% \item Implications: Discuss that depending on the project, maybe security
+	%   is a first class citizen and should be fixed above all. Don't
+	%   just state that patch risk assessment should take maintainability into account.
+	%   Saying that security should be a priority requires maybe a user study
+	%   as evidence (check if the literature available is not enough).
+	%   \item Implications: Review the secure programming languages implication. Check
+	%   if the idea of fully secure exists. The idea should be more secure, not
+	%   fully secure.
+  % \item [!] Implications: \textit{I am not sure how the computer science curricula got mentioned
+  %   from a motivation. I don't think vulnerabilities are been introduced, its
+  %   more that they get exposed. In this case, the implication does not make
+  %   much sense from a practical point of view.} -> Why not? Shouldn't
+  %   maintainable security be introduced in the computer science curricula since
+  %   we have evidence that developers might not following good practices while
+  %   patching? If they learn it in college and are aware of it in their jobs
+  %   won't they be better prepared?
   % \item [!] \textit{It did take me several readings to understand the paper, especially the approach} -
  %  what to do with this @rui?
  %    \begin{itemize}
@@ -1611,7 +1608,7 @@ Please, pay more attention to the cases with !.
   % did not contain contextualization. For example, “negative cases” can seem a bit ambiguous when
   % referencing the relationship between the impact with guidelines.} -> Improve this.
 
-\end{itemize}
+% \end{itemize}
 
 % \section{Plan B}
 %
