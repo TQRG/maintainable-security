@@ -514,7 +514,7 @@ are performed versus when they are not}.
 %
 
 In this section, we discuss the methodology used to measure
-the impact of security patches on the maintainbility of open-source
+the impact of security patches on the maintainability of open-source
 software. The methodology comprises the following steps, as 
 illustrated in Figure~\ref{fig:met}.
 %
@@ -1061,7 +1061,7 @@ presented the mean ($\overline{x}$) and median (M) of the
 maintainability difference and the p-value resulting from the Paired 
 Wilcoxon signed-rank test. $M(v)$ is not a guideline but rather the 
 average impact of all guidelines. Each point of the plot represents 
-the impact of a security patch on software maintainbility. Red, 
+the impact of a security patch on software maintainability. Red, 
 means the impact was negative, i.e., the patch harmed 
 maintainability. Yellow, means the patch did not have any kind of 
 impact on maintainability. Green, means the impact was positive, i.e., the patch improver software maintainability.
@@ -1072,11 +1072,12 @@ impact on maintainability. Green, means the impact was positive, i.e., the patch
   	\includegraphics[width=0.9\textwidth]{figures/main_per_guideline.pdf}
     \end{adjustwidth}
 	
-  	\caption{Impact of the security patches per guideline. For each 
-	guideline, $3$ types of impact in the software maintainability 
-	are presented: negative, maintainability decreases (red); none, 
-	maintainability remains the same (yellow); and, positive, 
-	maintainability increases (green). For instance, in the 
+  	\caption{Impact of the security patches per guideline and overall mean, $M(v)$. 
+	Each point of the plot represents the impact of a security patch on software 
+	maintainability. Red, means the impact was negative, i.e., the patch 
+	harmed maintainability. Yellow, means the patch did not have any 
+	kind of impact on maintainability. Green, means the impact was 
+	positive, i.e., the patch improver software maintainability. For instance, in the 
 	\emph{Write Short Units of Code} guideline, $38.29\%$ of 
 	security patches harmed software maitainabilitty; $23.53\%$ of 
 	security patches had no impact on maintainability; and, 
@@ -1143,7 +1144,7 @@ on software maintainability guidelines, this is not reflected in the
 average impact of all guidelines ($M(v)$) as we can see in 
 Figure~\ref{fig:guidelines}. Remember that each point of the plot 
 represents the impact of a security patch on software 
-maintainbility. Red, means the impact was negative, i.e., the patch 
+maintainability. Red, means the impact was negative, i.e., the patch 
 harmed maintainability. Yellow, means the patch did not have any 
 kind of impact on maintainability. Green, means the impact was 
 positive, i.e., the patch improver software maintainability.
@@ -1323,7 +1324,8 @@ that may need more attention from developers/researchers.
 \\\textit{\textbf{RQ3: What is the impact of security changes versus regular 
 changes on the maintainability of open-source software?}}
 
-The impact of security and baseline changes on software maintainability is presented in Figure~\ref{fig:secvsreg}.  
+The impact of security and baseline changes on software maintainability 
+is presented in Figure~\ref{fig:secvsreg}.  
 We have seen, previously, a deterioration on software maintainability 
 when patching vulnerabilities: $41.9\%$ ($406$) suffered a 
 negative impact, $38.7\%$ ($375$) remained the same and $19.4\%$ 
@@ -1354,11 +1356,11 @@ We presume that this phenomenon lead
 to the significant number of cases where there is no impact
 on the software maintainability.
 
-\textbf{Summary:} Security-related commits are expected to harm software maintainability. 
-In contrast, one cannot say the same about
-regular changes, in which \textbf{no significant differences are observed}. Thus, we
-urge the importance of adopting maintainability practices while applying
-security patches.
+\textbf{Summary:} Security-related commits are expected to harm software 
+maintainability. In contrast, one cannot say the same about
+regular changes, in which \textbf{no significant differences are observed}. 
+Thus, we urge the importance of adopting maintainability practices while 
+applying security patches.
 
 %
 % For both types of changes, there is a negative impact
@@ -1385,7 +1387,13 @@ still concerns that need to be addressed and that this study brings awareness fo
 	Design debt of one guideline can lead to severe impacts on the 
 	software quality~\cite{10.1145/1985362.1985366}. Some software 
 	producers consider security as a first class citizen while others 
-	do not. As mentioned in previous work, security it is very important and should bee considered as a default feature~\cite{10.1145/2489828.2489830,kurilova2014wyvern,mcgraw2004software}. However, the lack of experts or awareness to the ease of producing vulnerable software leads companies to ship low quality software. Providing automated tools to developers assess the risk of their patches it is important to help companies shipping software of higuer quality. Tools like Better Code Hub and static analysis (e.g., 
+	do not. As mentioned in previous work, security it is very important 
+	and should bee considered as a default feature~\cite{10.1145/2489828.2489830,kurilova2014wyvern,mcgraw2004software}. 
+	However, the lack of experts or awareness to the ease of producing 
+	vulnerable software leads companies to ship low quality software. 
+	Providing automated tools to developers assess the risk of their 
+	patches it is important to help companies shipping software of higuer quality. 
+	Tools like Better Code Hub and static analysis (e.g., 
 	SonarQube, Codacy, ESLint, Infer, and more) can be leveraged 
 	to assess the risk of patching vulnerabilities---alongside pull
 	requests/code reviews. Static code analysis may be daunting due 
@@ -1393,23 +1401,29 @@ still concerns that need to be addressed and that this study brings awareness fo
 	on maintainability. BCH claims to use the top-$10$ of the guidelines
 	with the highest effects on maintainability. Yet, static analysis 
 	can be used to complement the BCH analysis by introducing
-	the capability of vulnerability detection and support the prediction/prevention of the risk of a patch of hindering maintainability.
+	the capability of vulnerability detection and support the prediction 
+	and prevention of the risk of a patch of hindering maintainability.
 %
 \\\textit{\textbf{Computer Science Curricula Needs to be Updated:}}
-	Computer Science curricula is not yet prepared to properly educate students for maintainable security. 
-	    Students should be exposed to this problem to gain experience with it. Curricula should focus on the production of 
-	    secure and maintainable code and alert to the trade-off between both. These matters should be discussed and presented to students in software engineering courses.
-	Universities should also encourage students to use code quality analysis tools such as BCH or similar ones. These tools have a great potential to make
-	students aware of maintainability issues and beginner mistakes (e.g.,
-	coding practices violation).
+	Computer Science curricula is not yet prepared to properly educate 
+	students for maintainable security. Students should be exposed to 
+	this problem to gain experience with it. Curricula should focus on 
+	the production of secure and maintainable code and alert to the 
+	trade-off between both. These matters should be discussed and 
+	presented to students in software engineering courses.
+	Universities should also encourage students to use code quality 
+	analysis tools such as BCH or similar ones. These tools have a 
+	great potential to make students aware of maintainability issues 
+	and beginner mistakes (e.g., coding practices violation).
 %	
-\\\textit{\textbf{More Secure Programming Languages Wanted:}} Programming Languages 
-	should provide new design patterns to easily patch security weaknesses 
-	without endangering maintainability.
-	Ultimately, new programming languages, both secure and maintainable by design, such as Wyvern~\cite{10.1145/2489828.2489830,kurilova2014wyvern}, 
-	should be designed to help developers be less vulnerability prone when writing and maintaining secure applications. One example is the need for designing new
-	authorization mechanisms since these are one of the most complex security
-	features to implement.
+\\\textit{\textbf{More Secure Programming Languages Wanted:}} Programming 
+	Languages should provide new design patterns to easily patch security weaknesses 
+	without endangering maintainability. Ultimately, new programming languages, 
+	both secure and maintainable by design, such as Wyvern~\cite{10.1145/2489828.2489830,kurilova2014wyvern}, 
+	should be designed to help developers be less vulnerability prone when 
+	writing and maintaining secure applications. One example is the need for 
+	designing new authorization mechanisms since these are one of the most 
+	complex security features to implement.
 % 
 % \\\textit{\textbf{Poor Coding Practices Documentation:}}
 %   \Rui{too generic?}
