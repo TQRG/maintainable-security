@@ -188,7 +188,7 @@ codebases when patching vulnerabilities. This paper evaluates the
 impact of patches to improve security on the maintainability of 
 open-source software. Maintainability is measured based on the 
 Better Code Hub’s model of 10 guidelines using a dataset including 
-1335 security-related commits. Results show evidence of a trade-off 
+1300 security-related commits. Results show evidence of a trade-off 
 between security and maintainability, i.e., developers may be 
 hindering software maintainability. The implications of our study 
 are that changes to codebases while patching vulnerabilities need to 
@@ -287,7 +287,7 @@ reasons: BCH integrates a broad number of code metrics; and,
 code metrics were empirically validated in previous 
 work~\cite{Bijlsma:2012:FIR:2317098.2317124,8530041,8919169,8785997}.
 
-From a methodological perspective, we leveraged a dataset of $1335$ 
+From a methodological perspective, we leveraged a dataset of $1300$ 
 security patches collected from open-source software. We calculate 
 software maintainability before and after the patch to measure its 
 impact. This empirical study presents evidence that changes applied 
@@ -391,17 +391,16 @@ several times it may lead to an unbounded memory growth on the
 server and, eventually, lead to a DoS attack through memory 
 exhaustion. 
 
-The code changes performed to patch the vulnerability were:
-
-\ref{lst:func1} The \texttt{sk\_OCSP\_RESPID\_pop\_free} function 
-removes any memory allocated to the OCSP response IDs 
-(OCSP$\_$RESPIDs) from a previous handshake to prevent unbounded 
-memory growth - which was not being performed before.
+The code changes performed to patch the CVE-$2016$-$6304$ vulnerability are 
+presented in Listing~\ref{lst:vuln}. The \texttt{sk\_OCSP\_RESPID\_pop\_free} function 
+(\ref{lst:func1}) removes any memory allocated to the OCSP response IDs 
+(\texttt{OCSP\_RESPID}s) from a previous handshake to prevent unbounded 
+memory growth---which was not being performed before.
 After releasing the unbounded memory, the logic condition in 
 \ref{lst:func3} was shifted to \ref{lst:func2} which is responsible 
 for handling the application when no OCSP response IDS are 
-allocated. Now, instead of performing it after the packages 
-processing, it does it previously.
+allocated. After the patch, in the new version of the software, the condition is checked before the package processing 
+instead of after. Thereby, the system avoids the increase of unbounded memory (and, a potential DoS attack).
 
 Patching this vulnerability seems a rudimentary task. Yet,
 a considerable amount of changes were performed in the codebase 
@@ -471,7 +470,7 @@ maintainability of open-source software}. Our suspicion is that
 developers tend to introduce technical debt in their software when 
 patching the codebases to address a security flaw because they tend 
 to choose the easiest path to solve it. To address it, we compute 
-the maintainability of $1335$ commits using the \emph{Better Code Hub} tool. 
+the maintainability of $1300$ commits using the \emph{Better Code Hub} tool. 
 
 \textit{\textbf{RQ2: Which weaknesses are more likely to
 affect open-source software maintainability?}} There are security 
@@ -527,7 +526,7 @@ illustrated in Figure~\ref{fig:met}.
 	Extract relevant data (e.g., owner and name of
 	the repository, sha key of the vulnerable version, sha key of 	
 	the fixed version and codebases) from the combined dataset 	
-	containing $1335$ security patches collected from open-source 	
+	containing $1300$ security patches collected from open-source 	
 	software available on GitHub.
 %
 	\item A baseline of regular commits was randomly collected from 
@@ -556,23 +555,26 @@ illustrated in Figure~\ref{fig:met}.
 \subsection{Datasets}
 %
 
-We use a combined dataset of security vulnerabilities which is 
-the outcome of mining and manually inspecting a total of $265$ 
-GitHub projects for both datasets. Reis and Abreu 
+We use a combined dataset of $1330$ security patches which is 
+the outcome of mining and manually inspecting a total of $312$ 
+GitHub projects. The combined dataset integrates two different
+works: SecBench~\cite{Reis:2017:IJSSE} and Ponta et al.~\cite{10.1109/MSR.2019.00064}.
+
+Reis and Abreu 
 ($2017$) mined open-source software aiming at the extraction of 
-real---created by developers---samples of security vulnerabilities 
+real---created by developers---patches of security vulnerabilities 
 to test and assess the performance of static analysis 
 tools~\cite{Reis:2017:IJSSE} since using hand-seeded test cases or 
 mutations can lead to misleading assessments of the capabilities of 
 the tools~\cite{just2014mutants}. The study yielded a dataset of 
-$711$ test cases for $16$ different security vulnerability types. 
-Some of the vulnerability types are based on the OWASP Top $10$ of 
+$676$ patches for $16$ different security vulnerability types, dubbed as SecBench. 
+The vulnerability types are based on the OWASP Top $10$ of 
 $2013$~\cite{oswap:2013} and OWASP Top $10$ of 
 $2017$~\cite{oswap:2017}. Each test case of the dataset is a 
-triplet: the commit before the patching, the commit responsible
-for the patching, and the snippets of code that differ from one 
-version to another (typically, called \textit{diffs})---where one 
-can easily review the code used to fix the security flaw. 
+triplet: the commit before the patching (\emph{sha-p}), the commit responsible
+for the patching (\emph{sha}), and the snippets of code that differ from one 
+version to another (typically, called \emph{diffs})---where one 
+can easily review the code used to fix the vulnerability. 
 %
 
 Ponta et al. ($2019$) tracked the \url{pivotal.io} website for 
@@ -596,16 +598,16 @@ first commit (oldest commit) as the vulnerable version
 
 In this study, we focus on computing the maintainability of the 
 commits before and after the security patching to evaluate if its 
-impact was positive, negative or none. The $1335$ patches in the 
+impact was positive, negative or none. The $1300$ patches in the 
 dataset were run against the BCH toolset to calculate their 
-maintainability reports. However, there are patches discarded from 
-our study due to limitations of BCH: in particular, lack of
-language support and project size. The final dataset used in this 
-paper comprises $969$ security patches. $867$ of these patches are 
-identified with Common Weakness Enumeration IDs (CWE) where $62.1\%$ 
-were scraped from the National Vulnerability Dataset (NVD) and the 
-remaining $37.9\%$ were manually classified following the 
-\emph{Research Concepts} CWE's list.
+maintainability reports. Due to the limitations of BCH, in particular, 
+lack of language support and project size, we had
+to clean the dataset and select the most relevant and compatible projects
+with BCH. The final dataset used in this 
+paper comprises $969$ security patches from $260$ projects. We used the 
+Common Weakness Enumeration (CWE) taxonomy to classify each vulnerability. For instance,  the \texttt{Fix CVE-2014-1608: mc\_issue\_attachment\_get SQL injection} (\texttt{00b4c17}\footnote{CVE-$2014$-$1608$ details available at \url{https://github.com/mantisbt/mantisbt/commit/00b4c17088fa56594d85fe46b6c6057bb3421102} (Accessed on \today)}) is a \emph{CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')}\footnote{CWE-$89$ details available at \url{https://cwe.mitre.org/data/definitions/89.html} (Accessed on \today)} according to the CWE taxonomy.
+We were able to classify a total of $866$ patches using the CWE taxonomy
+where the CWEs for $536$ patches were automatically scraped from the National Vulnerability Dataset (NVD); while for the other $330$ patches, the CWEs were manually chosen by the authors following the \emph{Research Concepts} CWE's list.
 
 % In Table~\ref{tab:patterns}, the most prevailing categories are presented. To satisfy the Wilcoxon test size requirement, types of vulnerabilities
 % with less than $20$ instances were merged in a bigger group named \textit{Miscellaneous}.
@@ -742,9 +744,8 @@ of security patches with regular commits on maintainability.
 We analyze the maintainability of regular commits (i.e., commits not 
 related to security patches) and use them as a baseline.
 The baseline dataset is generated from the security commits dataset. 
-As for security patches, for each regular fix or refatoring, we need 
-a the commit performing the regular change (sha-reg) and version of 
-the software before the change (sha-reg-p). For each security patch, 
+As for the security patches, for each regular fix or refatoring, we also need the commit performing the regular change (\emph{sha-reg}) and version of 
+the software before the change (\emph{sha-reg-p}). For each security patch, 
 a \emph{diff} with an approximate size was fetched to a regular 
 change. Due to the complexity of some patches, it was not possible 
 to find patches with the exact number of added and deleted lines. 
@@ -769,6 +770,8 @@ that differences in maintainability are not a consequence of
 characteristics of different projects.
 
 \subsection{Maintainability Analysis}
+
+
 
 In this research, we follow a very similar methodology to the one 
 presented in previous work on the maintainability of energy-oriented 
@@ -795,20 +798,7 @@ thresholds\footnote{Check the answer to \emph{How can I adjust the
 threshold for passing/not passing a guideline?} at
 \url{https://bettercodehub.com/docs/faq} (Accessed on \today{})}.
 
-\begin{figure}[h]
- 	\centering 	
-	\includegraphics[width=0.9\textwidth]{figures/bch_report.png}
- 	\caption{Maintainability report of OpenSSL's CVE-$2016$-$6304$ 
-	vulnerability patch for the guideline \emph{Write Simple Units 
-	of Code} provided by \emph{Better Code Hub}. This version of 
-	OpenSSL does not comply with the guideline in the example since 
-	the bars do not reach the threshold points. This example only 
-	complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean 
-	Code}).}
-	\label{fig:bchrep}
-\end{figure}
-
-\begin{table}[H]
+\begin{table}[h]
 \centering
 \scriptsize
 	\caption{Guidelines to produce maintainable code.}
@@ -864,13 +854,25 @@ identifier names) \\
 \label{tab:guidelines}
 \end{table}
 
-
 Figure~\ref{fig:bchrep} shows an example of the report provided by BCH 
 for a project after finishing its evaluation. The example
 refers to the OpenSSL CVE-$2016$-$6304$ vulnerability patch---
 as described by Section~\ref{sec:motivation}. This version of 
 OpenSSL only complies with $1$ out of $10$ guidelines: \emph{Write 
 Clean Code}.
+
+\begin{figure}[h]
+ 	\centering 	
+	\includegraphics[width=0.8\textwidth]{figures/bch_report.png}
+ 	\caption{Maintainability report of OpenSSL's CVE-$2016$-$6304$ 
+	vulnerability patch for the guideline \emph{Write Simple Units 
+	of Code} provided by \emph{Better Code Hub}. This version of 
+	OpenSSL does not comply with the guideline in the example since 
+	the bars do not reach the threshold points. This example only 
+	complies with $\sfrac{1}{10}$ guidelines (\emph{Write Clean 
+	Code}).}
+	\label{fig:bchrep}
+\end{figure}
 
 SIG defines \emph{Units} as the smallest groups of code that can be 
 maintained and executed independently~\cite{Visser:2016:OREILLY} 
@@ -893,6 +895,8 @@ thresholds for each severity level. If the green mark is somewhere
 in the green bar it means it is compliant with a low level of
 severity.
 
+
+
 Aiming to analyze the impact of security patches, we use BCH to compute the maintainability of two different 
 versions of the project (cf. Figure~\ref{fig:commit}):
 
@@ -903,7 +907,14 @@ versions of the project (cf. Figure~\ref{fig:commit}):
 	after the patch (\emph{sha});
 \end{itemize}
 
-The same approach is used analyze the impact of regular 
+\begin{figure}[h]
+ 	\centering 	
+	\includegraphics[width=0.5\linewidth]{figures/commit.pdf}
+ 	\caption{Maintainability difference for security commits.}
+	\label{fig:commit}
+\end{figure}
+
+The same approach is used to analyze the impact of regular 
 changes. Security patches can be performed through one commit, 
 several consecutive commits, or commit(s) interleaved with more 
 programming activities (floss-refactorings). This study considers 
@@ -913,13 +924,6 @@ inspected these cases and $23$ floss-refactorings were identified
 and disregarded since it would not be fair to measure the 
 maintainability of these cases where other programming activities 
 are involved.
-
-\begin{figure}[h]
- 	\centering 	
-	\includegraphics[width=0.6\linewidth]{figures/commit.pdf}
- 	\caption{Maintainability difference for security commits.}
-	\label{fig:commit}
-\end{figure}
 
 For projects with large codebases, the results retrieved for 
 \emph{Keep Your Codebase Small} were not viable because they 
@@ -1027,15 +1031,15 @@ incorporates the cases where maintainability is different from
 zero~\cite{10.2307/2282543}. The Wilcoxon test requires a 
 distribution size of at least $20$ instances. To understand the 
 effect-size, as advocated by the Common-language effect 
-sizes\cite{graw:1992}, we compute the mean difference, the median of 
-the difference, and the percentage of cases that reduce maintainability.
+sizes, we compute the mean difference, the median of 
+the difference, and the percentage of cases that reduce maintainability~\cite{graw:1992}.
 %
 
 \section{Results \& Discussion}\label{sec:results}
 
 This study evaluates a final total of $969$ security and baseline 
 commits from $260$ distinct open-source projects. This section 
-reports/discusses the results for each research question.
+reports and discusses the results for each research question.
 %
 
 \textit{\textbf{RQ1: What is the impact of security patches on the
@@ -1050,7 +1054,7 @@ different impact on the guidelines/metrics used to measure software
 maintainability. Figure~\ref{fig:guidelines} shows the impact of 
 security patches on each guideline individually and the average 
 impact on all guidelines together ($M(v)$). Under each guideline, it 
-is stated the metric used to the calculations. For instance, for the 
+is stated the metric used for the calculations. For instance, for the 
 \emph{Write Short Units of Code} guideline, the metric used is 
 \emph{Unit Size}. Table~\ref{tab:guidelines} describes in more 
 detail the metrics behind the guidelines. For each type of 
@@ -1088,7 +1092,7 @@ the patch improver software maintainability.
  \end{figure}
  
  \begin{figure}[htp]
-  	\centering 	 	\includegraphics[width=0.7\textwidth]{figures/main_per_severity.pdf}
+  	\centering 	 	\includegraphics[width=0.65\textwidth]{figures/main_per_severity.pdf}
   	\caption{Maintainability difference by vulnerability severity.}
  	\label{fig:severity}
  \end{figure}
@@ -1157,7 +1161,10 @@ explained by guidelines with higher concentrations of negative
 cases with higher amplitudes, such as \emph{Write Short Units of 
 Code}, \emph{Write Simple Units of Code} and \emph{Separate Concerns 
 in Modules}---more red points on the left, being $0$ the reference point.
-
+The resulting p-value of the Paired Wilcoxon signed-rank test for $M(v)$ 
+is $0.044$ (cf. Figure~\ref{fig:guidelines}). Since the p-value is 
+below the significance level of $0.05$, we argue that security patches 
+may have a negative impact on the maintainability of open-source software.
 
 
 \textbf{Severity:} Some of the vulnerabilities are identified with 
@@ -1174,7 +1181,7 @@ vulnerabilities hinder more the maintainability of software than
 a considerable negative impact on software maintainability---between 
 $20\%$ and $50\%$. Statistical significance was retrieved only for 
 \emph{Low} severity vulnerabilities, i.e., \emph{Low} severity 
-vulnerabilities may have a less negative impact on software maintainability than the 
+vulnerabilities may have more cases where software maintainability was improved than the 
 other severity levels. However, results should not be disregarded 
 because they seem to confirm the 
 assumption that higher severity vulnerabilities patches may have a 
@@ -1220,8 +1227,8 @@ impact on maintainability ($50.9\%$ and $46.5\%$, respectively). But overall
 languages have a considerable amount of cases that negatively impact maintainability---between $35\%$ to $50\%$---which 
 confirms the need for better/more secure programming languages. 
 Statistical significance was only retrieved for the \texttt{C/C++} 
-(p-value = $2.24$x$10^{-05}$), \texttt{Ruby} (p-value = $0.041$) and \texttt{PHP} 
-(p-value = $0.048$) languages. Yet, data reports very interesting hints on the impact 
+($p = 2.24$x$10^{-05}$), \texttt{Ruby} ($p = 0.041$) and \texttt{PHP} 
+($p = 0.048$) languages. Yet, data reports very interesting hints on the impact 
 of programming languages on security patches.
 
 We expected the negative impact for programming languages on
@@ -1239,28 +1246,22 @@ policies for code standards. % For
 % \url{https://www.php-fig.org/psr/psr-2/} (Accessed on \today{})} that is a coding style guide for \texttt{PHP}.
 
 
-
-\textbf{Summary:} Results show that developers may have a 
-hard time following the guidelines and, consequently, hinder 
-software maintainability while patching vulnerabilities; and, that different levels of 
+\textbf{Summary:} Results show that developers may have a
+hard time following the guidelines and, consequently, hinder
+software maintainability while patching vulnerabilities; and, that different levels of
 attention should be paid to each guideline. For instance,
 \emph{Write Simple Units of Code} and \emph{Write Short Units of Code}
-are the most affected ones. No statistical significance was retrieved
-for \emph{Separate Concerns in Modules}. 
-The resulting p-value of the Paired Wilcoxon signed-rank test for $M(v)$ in Figure~\ref{fig:guidelines}
-is $0.044$. Since the p-value is 
-below the significance level of $0.05$, we argue that \textbf{security patches 
-may have a negative impact on the maintainability of open-source software}; and, 
-that tools such as BCH should be integrated into the CI/CD pipelines
-to help developers evaluate the risk of patches of hindering software maintainability---alongside 
-Pull Requests/Code Reviews. We also conclude that different severity 
-vulnerabilities may need different levels of attention and better and more secure 
-programming languages are needed.
+are the most affected ones. No statistical significance was observed
+for \emph{Separate Concerns in Modules}.
+As shown in Figure~\ref{fig:guidelines}, there is statistical significance ($p=0.044 < 0.05$) to support our findings: \textbf{security patches
+may have a negative impact on the maintainability of open-source software}. Therefore, tools such as BCH should be integrated into the CI/CD pipelines
+to help developers evaluate the risk of patches of hindering software maintainability---alongside
+Pull Requests/Code Reviews. Different severity
+vulnerabilities may need different levels of attention---high/medium vulnerabilities need more attention (cf. Figure~\ref{fig:severity}). However, statistical significance was only observed for low severity vulnerabilities. Better and more secure programming languages are needed. We observed statistical significance for \emph{C/C++}, \emph{Ruby} and \emph{PHP} that support that security patches in those languages may hinder software maintainability (cf. Figure~\ref{fig:lang_main}).
 %
 
 \textit{\textbf{RQ2: Which weaknesses are more likely to
 affect open-source software maintainability?}}
-
 In \emph{RQ2}, we report/discuss the impact of security patches on
 software maintainability per weakness. We use the weakness definition
 and taxonomy proposed by the \emph{Common Weakness Enumeration} (cf. Section~\ref{sec:motivation}).
@@ -1314,17 +1315,19 @@ Lifetime (CWE-401)} can also be the cause of Denial-of-Service attacks and
 difficult to patch since it usually requires to add complexity to the program (cf. Section~\ref{sec:motivation}). 
 
 
-\textbf{Summary:} \emph{Improper Input Validation (CWE-20)}, \emph{Information Exposure 
-(CWE-200)}, \emph{Missing Release of Memory after Effective 
-Lifetime (CWE-401)} and \emph{Path Traversal (CWE-22)} seem to be the \textbf{most likely 
-weaknesses to affect software maintainability}. No statistical evidence was retrieved. 
-However, results should not be disregarded because they hint on how 
-the maintainability is impacted per weakness which highlights the weaknesses
-that may need more attention from developers/researchers. 
-%
-\\\textit{\textbf{RQ3: What is the impact of security changes versus regular 
-changes on the maintainability of open-source software?}}
+\textbf{Summary:}
+Although results did not yield statistical significance, we show preliminary evidence that researchers and developers ought to pay more attention to maintainability when fixing the following types of weaknesses: \emph{Improper Input Validation (CWE-20)}, \emph{Information Exposure
+(CWE-200)}, \emph{Missing Release of Memory after Effective
+Lifetime (CWE-401)} and \emph{Path Traversal (CWE-22)}.
 
+% No statistical evidence was observed.
+% However, results should not be disregarded because they hint on how
+% the maintainability is impacted per weakness which highlights the weaknesses
+% that may need more attention from developers/researchers.
+%
+
+\textit{\textbf{RQ3: What is the impact of security changes versus regular 
+changes on the maintainability of open-source software?}}
 The impact of security and baseline changes on software maintainability 
 is presented in Figure~\ref{fig:secvsreg}.  
 We have seen, previously, a deterioration on software maintainability 
@@ -1345,9 +1348,8 @@ maintainability.
 	\label{fig:secvsreg}
 \end{figure}
 
-Results show that regular changes typically have a less negative impact
-on the software maintainability of open-source software.   
-However, we manually inspected a considerable amount of cases from
+Results show that regular changes are less prone to hinder the software maintainability of open-source software.   
+We manually inspected a considerable amount of cases from
 the distribution of the regular changes where maintainability 
 increases and found that identifying regular commits as similar in 
 size as the security-related commit is limiting the type of regular 
@@ -1442,15 +1444,15 @@ still concerns that need to be addressed and that this study brings awareness fo
 This section presents the potential threats to validity of this study.
 %
 
-\textit{\textbf{Construct Validity:}} The formula was inferred based 
+\textit{\textbf{Construct Validity:}} The formula to calculate the maintainability value ($M(v)$) was inferred based 
 on the BCH's reports. The high amount of different projects and backgrounds 
 may require other maintainability standards. However, BCH does use a 
 representative benchmark of closed and open-source software projects to compute 
 the thresholds for each maintainability guideline~\cite{Visser:2016:OREILLY,Baggen2012}.
 Maintainability is computed as the mean of all guidelines. Different software versions 
 (vulnerable/fixed) of one vulnerability may have the same overall score
-and still be affected by different guidelines.
-%
+and still be affected by different guidelines. Therefore, we provide
+an analysis per guideline and our results are all available on figshare for future reproductions and deeper analysis. 
 
 \textit{\textbf{Internal Validity:}} The security patches dataset provided by previous
 work~\cite{Reis:2017:IJSSE} was collected based on the messages of GitHub
@@ -1459,12 +1461,17 @@ patching vulnerabilities. This approach discards patches that were
 not explicit in commits messages. We assume that patches were performed 
 using a single-commit or several sequentially. The 
 perspective that a 
-developer may perform a patch quickly and later 
+developer may quickly perform a patch and later 
 proceed to the refactor is not considered. We assume 
 that all patches were only performed once. Depending 
 on the impact of the vulnerability in the system, some 
-vulnerabilities may have more urgency to be fixed than 
-others. Baseline commits are retrieved randomly from 
+vulnerabilities may have more urgency to be patched than 
+others. For instance, a vulnerability performing a Denial-of-Service attack
+which usually brings entire systems down may be more urgent to patch than a 
+cross-site scripting vulnerability which usually does not have impact
+on the systems execution but rather on the data accessibility.
+
+Baseline commits are retrieved randomly from 
 the same project of the security patch.
 This approach softens the differences
 that may result from the characteristics of each project. However,
@@ -1476,12 +1483,11 @@ alleviate random irregularities in the maintainability differences of the
 baseline. 
 %
 
-\textit{\textbf{External Validity:}} We use a dataset that only comprises patches of open-source software.
-However, the methodology requires to access data that is not publicly available.
-Thus, our findings may not extend to non-open source software. Different programming 
+\textit{\textbf{External Validity:}} The BCH tool uses private and open-source data to determine the thresholds for each guideline. We only analyze patches of open-source software.
+Thus, our findings may not extend to private/non-open source software. Different programming 
 languages may require different coding practices to address software safety. The 
 dataset comprises more commits in Java, i.e., the dataset may not be representative 
-of the population regarding programming languages. Our approach does not consider 
+of the population regarding programming languages. For both datasets, we a manual validation of the message of the commits was performed. Only commits in English were considered. Thus, our approach does not consider 
 patches in any other language but English.
 
 \section{Related Work}\label{sec:rw}
@@ -1682,7 +1688,6 @@ software; and, expand this analysis to other quality standards.
 %   as the maintainability impact. It is not clear how software written a more security-focused language would
 %   inherently be more maintainable (it assumes the flaw is the language and not the person).
 % \end{itemize}
-\pagebreak
  
 \bibliographystyle{spmpsci}
 \bibliography{emse20}   % name your BibTeX data base
