@@ -33,7 +33,7 @@ pages={30-39},
 keywords={software maintenance;software quality;practical model;maintainability measurement;software system;technical quality;source code;ISO 9126 model;software product quality;maintainability index;IT management consultancy activities;Software quality;Software maintenance;ISO standards;Communication system software;Software systems;Software testing;IEC standards;Software standards;Communications technology;Software measurement}, 
 doi={10.1109/QUATIC.2007.8}, 
 ISSN={}, 
-month={Sep.},}
+month={Sep.}}
 
 @article{slaughter1998evaluating,
   title={Evaluating the cost of software quality},
@@ -415,6 +415,25 @@ month={June},}
  ISSN={1534-5351},
  month={April},}
 
+
+@inproceedings{10.1145/1774088.1774504,
+author = {Chowdhury, Istehad and Zulkernine, Mohammad},
+title = {Can Complexity, Coupling, and Cohesion Metrics Be Used as Early Indicators of Vulnerabilities?},
+year = {2010},
+isbn = {9781605586397},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/1774088.1774504},
+doi = {10.1145/1774088.1774504},
+abstract = {It is difficult to detect vulnerabilities until they manifest themselves as security failures in the operational stage of software, because the security concerns are not addressed or known sufficiently early during software development. Complexity, coupling, and cohesion (CCC) related software metrics can be measured during the earlier phases of software development. If empirical relationships can be discovered between CCC metrics and vulnerabilities, these metrics could aid software developers to take proactive actions against potential vulnerabilities in software. In this paper, we conduct an extensive case study on Mozilla Firefox to provide empirical evidence on how vulnerabilities are related to complexity, coupling, and cohesion. We find that CCC metrics are correlated to vulnerabilities at a statistically significant level. We further examine the correlations to determine which level (design or code) of CCC metrics are better indicators of vulnerabilities. We also observe that the correlation patterns are stable across multiple releases of the software. These observations show that CCC metrics can be dependably used as early indicators of vulnerabilities in software.},
+booktitle = {Proceedings of the 2010 ACM Symposium on Applied Computing},
+pages = {1963–1969},
+numpages = {7},
+keywords = {software security, empirical study, complexity, software metrics, vulnerability, cohesion, coupling, security},
+location = {Sierre, Switzerland},
+series = {SAC '10}
+}
+
  @InProceedings{10.1007/978-3-642-35267-6-18,
  author="Heged{\H{u}}s, P{\'e}ter
  and B{\'a}n, D{\'e}nes
@@ -455,6 +474,13 @@ keywords={organisational aspects;software maintenance;maintainability evolution;
 doi={10.1109/IWSM-Mensura.2016.014}, 
 ISSN={}, 
 month={Oct},}
+
+@book{schneier2006beyond,
+  title={Beyond fear: Thinking sensibly about security in an uncertain world},
+  author={Schneier, Bruce},
+  year={2006},
+  publisher={Springer Science \& Business Media}
+}
 
 @INPROCEEDINGS{7194582, 
 author={K. {Yskout} and R. {Scandariato} and W. {Joosen}}, 
@@ -500,7 +526,16 @@ month={Sep.},}
  keywords = {security education, security engineering, security jobs, software engineering courses and curricula},
 } 
 
-
+@article{mcgraw2004software,
+  title={Software security},
+  author={McGraw, Gary},
+  journal={IEEE Security \& Privacy},
+  volume={2},
+  number={2},
+  pages={80--83},
+  year={2004},
+  publisher={IEEE}
+}
 
  @INPROCEEDINGS{8530041,
  author={I. Malavolta and R. Verdecchia and B. Filipovic and M. Bruntink and P. Lago},
@@ -514,8 +549,32 @@ month={Sep.},}
  doi={10.1109/ICSME.2018.00042},
  ISSN={2576-3148},
  month={Sep.},}
+ 
+ @inproceedings{10.1145/2489828.2489830,
+ author = {Nistor, Ligia and Kurilova, Darya and Balzer, Stephanie and Chung, Benjamin and Potanin, Alex and Aldrich, Jonathan},
+ title = {Wyvern: A Simple, Typed, and Pure Object-Oriented Language},
+ year = {2013},
+ isbn = {9781450320467},
+ publisher = {Association for Computing Machinery},
+ address = {New York, NY, USA},
+ url = {https://doi.org/10.1145/2489828.2489830},
+ doi = {10.1145/2489828.2489830},
+ abstract = {The simplest and purest practical object-oriented language designs today are seen in dynamically-typed languages, such as Smalltalk and Self. Static types, however, have potential benefits for productivity, security, and reasoning about programs. In this paper, we describe the design of Wyvern, a statically typed, pure object-oriented language that attempts to retain much of the simplicity and expressiveness of these iconic designs.Our goals lead us to combine pure object-oriented and functional abstractions in a simple, typed setting. We present a foundational object-based language that we believe to be as close as one can get to simple typed lambda calculus while keeping object-orientation. We show how this foundational language can be translated to the typed lambda calculus via standard encodings. We then define a simple extension to this language that introduces classes and show that classes are no more than sugar for the foundational object-based language. Our future intention is to demonstrate that modules and other object-oriented features can be added to our language as not more than such syntactical extensions while keeping the object-oriented core as pure as possible.The design of Wyvern closely follows both historical and modern ideas about the essence of object-orientation, suggesting a new way to think about a minimal, practical, typed core language for objects.},
+ booktitle = {Proceedings of the 5th Workshop on MechAnisms for SPEcialization, Generalization and InHerItance},
+ pages = {9–16},
+ numpages = {8},
+ keywords = {first-class classes, object-oriented, static type checking},
+ location = {Montpellier, France},
+ series = {MASPEGHI '13}
+ }
 
-
+@inproceedings{kurilova2014wyvern,
+  title={Wyvern: Impacting software security via programming language design},
+  author={Kurilova, Darya and Potanin, Alex and Aldrich, Jonathan},
+  booktitle={Proceedings of the 5th Workshop on Evaluation and Usability of Programming Languages and Tools},
+  pages={57--58},
+  year={2014}
+}
 
  @article{HEGEDUS2018313,
  title = "Empirical evaluation of software maintainability based on a manually validated refactoring dataset",
@@ -568,6 +627,17 @@ month={Sep.},}
    author={McGraw, Kenneth O. and Wong, S. P.},
    year={1992},
    doi={doi:10.1037/0033-2909.111.2.361}
+ }
+ 
+ @article{shin2010evaluating,
+   title={Evaluating complexity, code churn, and developer activity metrics as indicators of software vulnerabilities},
+   author={Shin, Yonghee and Meneely, Andrew and Williams, Laurie and Osborne, Jason A},
+   journal={IEEE transactions on software engineering},
+   volume={37},
+   number={6},
+   pages={772--787},
+   year={2010},
+   publisher={IEEE}
  }
 
  @article{10.2307/2282543,
