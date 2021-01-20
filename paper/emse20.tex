@@ -213,7 +213,8 @@ and security. Security is an essential non-functional requirement
 during the development of software systems. In $2011$, the 
 International Organization for Standardization (ISO) issued an 
 update for software product quality ISO/IEC 25010 considering 
-\emph{Security} as one of the main software product quality characteristics~\cite{iso:2011}. However, there is still 
+\emph{Security} as one of the main software product quality 
+characteristics~\cite{iso:2011}. However, there is still 
 a considerable amount of vulnerabilities being discovered and fixed, 
 almost weekly, as disclosed by the Zero Day Initiative 
 website\footnote{Zero Day Initiative website available at 
@@ -221,15 +222,13 @@ website\footnote{Zero Day Initiative website available at
 (Accessed on \today{})}. 
 
 Researchers found a correlation between the presence of 
-vulnerabilities on software and code 
-complexity~\cite{shin2010evaluating,10.1145/1774088.1774504}. 
+vulnerabilities on software and code complexity~\cite{shin2010evaluating,10.1145/1774088.1774504}. 
 Security experts claim that complexity hides bugs that may result in 
-security 
-vulnerabilities~\cite{mcgraw2004software,schneier2006beyond}. In 
+security vulnerabilities~\cite{mcgraw2004software,schneier2006beyond}. In 
 practice, an attacker only needs to find one way into the system 
 while a defender needs to find and mitigate all the security issues. 
 Complex code is difficult to understand, maintain and 
-test~\cite{1702388}. Thus, the developer's task gets harder as the 
+test~\cite{1702388}. Thus, the task of a developer gets harder as the 
 codebase grows in size and complexity. But the risk can be minimized 
 by writing clean and maintainable code. 
 
@@ -251,41 +250,58 @@ is important to write maintainable code to support the production of
 more secure software---maintainable code is less complex and, 
 consequently, less prone to
 vulnerabilities~\cite{shin2010evaluating,10.1145/1774088.1774504})---
-and, prevent the introduction of new vulnerabilities.
+and, prevent the introduction of new vulnerabilities. 
 % Unmaintainable code is hard to test, analyze and re-use. Therefore,
 % it is important to write maintainable code to support the production
 % of more secure software and prevent
 % the introduction of new vulnerabilities in the code bases.
 %
-Novel tools have been built to automatically detect software 
-vulnerabilities (e.g., FindBugs, Infer and more). Despite these 
-efforts, improving software security is not a trivial task and 
+Static analysis tools (SATs) have been built to automatically detect software 
+vulnerabilities (e.g., FindBugs, Infer and more). Developers
+use those tools to locate the issues in the code. However,
+while performing the patches to those issues, SATs are not 
+capable of providing information on the quality of the patch.
+Improving software security is not a trivial task and 
 requires implementing patches that might affect software 
-maintainability. Our suspicion is that some of these patches may 
+maintainability. Our hypothesis is that some of these patches may 
 have a negative impact on the software maintainability and, 
 possibly, even be the cause of the introduction of new 
 vulnerabilities---harming software reliability and introducing 
-technical debt. Therefore, in this paper, we present an empirical 
-study on the impact of patches of vulnerabilities on software 
-maintenance across open-source software.
+technical debt. Research found that $34\%$ of the security patches 
+performed introduce new problems and $52\%$ are incomplete and do not 
+fully secure systems~\cite{10.1145/3133956.3134072}. Therefore, in this paper, 
+we present an empirical study on the impact of patches of 
+vulnerabilities on software maintenance across open-source software.
+We arguee that tools that assess these type of metrics may
+complement SATs with valuable information to understand and
+address better the issue.
 
 As ISO does not provide any specific guidelines/formulas to 
 calculate maintainability, we resort to Software Improvement Group 
-(SIG)'s web-based source code analysis service Better Code Hub (BCH) 
+(SIG\footnote{SIG's website: 
+\url{https://www.sig.eu/} (Accessed on \today{})})'s web-based source 
+code analysis service Better Code Hub (BCH)\footnote{BCH's 
+website: \url{https://bettercodehub.com/} (Accessed on \today{})}  
 to compute the software compliance with a set of $10$ 
 guidelines/metrics to produce quality software based in ISO/IEC 
-$25010$~\cite{Visser:2016:OREILLY}. There are other well-known 
+$25010$~\cite{Visser:2016:OREILLY}. SIG 
+has been helping business and technology leaders drive their organizational 
+objectives by fundamentally improving the health and security of 
+their software applications for more than 20 years. Their 
+models are scientically proven~\cite{5609747,6113040,baggen2012} and certified.
+
+There are other well-known 
 standards and models that have been proposed to increase software 
 security: Common Criteria~\cite{common:2009} which received
 negative criticism regarding the costs associated and poor technical 
 evaluation; the OWASP Application Security Verification 
-Criteria~\cite{oswap:2009} which is focused only on web 
+Standard (ASVS)~\cite{oswap:2009} which is focused only on web 
 applications, and a model proposed by Xu et al. ($2013$)
 ~\cite{6616351} for rating software security (arguably, it was one 
 of the first steps taken by SIG to introduce security on their 
 maintainability model). Nevertheless, our study uses BCH to provide 
 an assessment of maintainability in software for the following 
-reasons: BCH integrates a broad number of code metrics; and, 
+reasons: BCH integrates a total of $10$ different code metrics; and, 
 code metrics were empirically validated in previous 
 work~\cite{Bijlsma:2012:FIR:2317098.2317124,8530041,8919169,8785997}.
 
@@ -294,7 +310,7 @@ security patches collected from open-source software. We calculate
 software maintainability before and after the patch to measure its 
 impact. This empirical study presents evidence that changes applied 
 in the codebases to patch vulnerabilities affect code 
-maintainability. Results also hint that developers 
+maintainability. Results also suggest that developers 
 should pay different levels of attention to different severity 
 levels and classes of weaknesses when patching vulnerabilities. We 
 also show that patches in programming languages such as, 
@@ -323,7 +339,7 @@ This research performs the following main contributions:
 	\item An empirical study on the impact of security patches on 
 	software maintainability (per guideline, severity, weakness and 
 	programming language).
-	\item A replication package with all scripts and data created to 
+	\item A replication package with the scripts and data created to 
 	perform the empirical evaluation, for reproducibility. Available 
 	online: \url{https://figshare.com/s/4861207064900dfb3372}.
 \end{itemize}
@@ -348,15 +364,15 @@ elaborates on future work.
 
 \section{Motivation and Research Questions}\label{sec:motivation}
 %
-Due to time-to-market pressure and the lack of security 
-expertise~\cite{8077802}, code-related security flaws are generally 
-detected \textit{after the fact}, i.e., when hackers exploit them. 
-Patching these issues is usually done by modifying the codebase. 
-However, these patches may have a negative impact on software 
-maintenance (e.g., developers might follow the quickest solution to 
-fix the problem but not necessarily the most elegant and performant 
-one). Thus, we want to understand how security patches impact
-software maintainability. 
+% Due to time-to-market pressure and the lack of security 
+% expertise~\cite{8077802}, code-related security flaws are generally 
+% detected \textit{after the fact}, i.e., when hackers exploit them. 
+% Patching these issues is usually done by modifying the codebase. 
+% However, these patches may have a negative impact on software 
+% maintenance (e.g., developers might follow the quickest solution to 
+% fix the problem but not necessarily the most elegant and performant 
+% one). Thus, we want to understand how security patches impact
+% software maintainability. 
 
 As an example, consider the patch of the TLS state machine protocol 
 implementation in OpenSSL\footnoteref{openssl} to address a memory 
@@ -1450,7 +1466,7 @@ This section presents the potential threats to validity of this study.
 on the BCH's reports. The high amount of different projects and backgrounds 
 may require other maintainability standards. However, BCH does use a 
 representative benchmark of closed and open-source software projects to compute 
-the thresholds for each maintainability guideline~\cite{Visser:2016:OREILLY,Baggen2012}.
+the thresholds for each maintainability guideline~\cite{Visser:2016:OREILLY,baggen2012}.
 Maintainability is computed as the mean of all guidelines. Different software versions 
 (vulnerable/fixed) of one vulnerability may have the same overall score
 and still be affected by different guidelines. Therefore, we provide
