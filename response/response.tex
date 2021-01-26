@@ -161,11 +161,23 @@ The model created by Marco focus on measuring maintainability of fine-grained
 changes using 5 of the same guidelines we already use. The SIG-MM model in 
 Marco's paper is the model behind Better Code Hub. 
 
-We added Marco's work to the related work. 
+We mention Marco's work in our related work:
+\begin{quote}
+    Recent work,
+proposed a new maintainability model to 
+measure fine-grained code changes by adapting/extending the BCH model[diBiase2019].
+The present work uses the same model (SIG-MM), considers more guidelines and focuses 
+solely on evaluating the impact of security patches on software maintainability.
+\end{quote}
 
 [Cruz2019] Luis Cruz, Rui Abreu, John Grundy, Li Li, Xin Xia. 
 Do Energy-oriented Changes Hinder Maintainability?. International 
 Conference on Software Maintenance and Evolution (ICSME) in 2019.
+
+[diBiase2019] M. di Biase and A. Rastogi and M. Bruntink and A. van 
+Deursen. The Delta Maintainability Model: Measuring Maintainability 
+of Fine-Grained Code Changes. IEEE/ACM International Conference 
+on Technical Debt (TechDebt) in 2019.
 
 
 \begin{revcomment}[1.3]
@@ -187,13 +199,6 @@ guidelines/metrics. We arguee that these guidelines/metrics
 can in the future complement static analysis tools 
 by assiting developers with more information on the 
 risks associated with their patches.
-
-SonarQube uses 4 metrics of the set of metrics we are using and 
-also rates maintainability. In Section 3 (\textit{Why Bettter Code Hub?}), 
-we compare the results between BCH and SonarQube. However, 
-we arguee that BCH performs a more complete analysis.
-
-
 
 \begin{revcomment}[1.4]
 
@@ -391,15 +396,63 @@ benchmarking for improving software maintainability. Software Quality Journal in
     \begin{itemize}
         \item Page 7, line 4 - I don't think "resemble" is the word you are looking for - but I don't 
         know what you are trying to say so I can't make a suggestion.
+    \end{itemize}
+\end{revcomment}
+
+\Us Thank you for raising this issue. In the sentence ``The codebases that resemble to the commits of our datasets 
+are collected before the analysis performed by BCH.'', we mean that the codebases of each commit in 
+our dataset were analyzed by BCH. We improved the text for:
+
+\begin{quote}
+    BCH evaluates the codebase available in the default branch of a GitHub project. 
+  We created a tool that pulls the codebase of each commit of our dataset 
+  to a new branch; it sets the new branch as the default branch; it runs 
+  the BCH analysis in the codebase; and, finally saves the BCH metrics
+  results.
+\end{quote}
+
+\begin{revcomment}[2.9]
+    Section 3\\
+    \begin{itemize}
         \item Please explain your repeatable methodology to "clean the dataset and select the most relevant and 
         compatible projects" (page 8, line 14) that brings the patches from 1282 to 969.  From 969 to 866 patches - 
         you just could not classify?  Please explain.
     \end{itemize}
 \end{revcomment}
 
-\Us
+\Us As explained in comment $2.6$, the $1282$ commits refer only to the Ponta et al. dataset (a total of $624$ 
+patches). In total, we analyzed $1300$ patches. However, BCH as some limitations such as
+analyzing projects with very large codebases and was uncapable to analyze some patches. In addition,
+we also detected floss-refactorings which we decided not to consider. All of this is explained
+in more detail later in Section 3.4. 
 
-\begin{revcomment}[2.9]
+\begin{quote}
+    Security patches can be performed through one commit, 
+several consecutive commits, or commit(s) interleaved with more 
+programming activities (floss-refactoring). This study considers 
+mainly single-commit patches. Yet, a small percentage of data points 
+had more than one commit involved in the patch. We manually 
+inspected these cases and $23$ floss-refactorings were identified 
+and disregarded since it would not be fair to measure the 
+maintainability of these cases where other programming activities 
+are involved.
+
+For projects with large codebases, the results retrieved for 
+\emph{Keep Your Codebase Small} were not viable because they 
+retrieved values above the limit set by BCH ($20$ Person-years). The 
+\emph{Automated Tests} guideline was also not considered since the 
+tool does not contemplate two of the most important techniques to 
+security testing: vulnerability scanning and penetration testing. 
+Instead, it only contemplates unit testing. Due to BCH limitations, 
+we detected a few data points that retrieved incorrect overall 
+calculations. Those data points were disregarded from the study.
+\end{quote}
+
+Those are the cases that were tossed from the initial $1300$ patches. 
+
+Regarding the second question, thank you for pointing out ... (still working on this)
+
+\begin{revcomment}[2.10]
     Section 3\\
     \begin{itemize}
         \item Page 8, line 33 "regular commit" - pick baseline or regular (or non-security) commits and use it always.  
@@ -408,24 +461,7 @@ benchmarking for improving software maintainability. Software Quality Journal in
     \end{itemize}
 \end{revcomment}
 
-\Us
-
-\begin{revcomment}[2.10]
-    Section 3\\
-    \begin{itemize}
-        \item Section 3.2 is confusing enough that I'm not sure of the analysis - 
-        I will need to review the revision that you would submit to gain confidence.  
-        Are you saying you want your non-security commits (regular commits) to be about 
-        the same size as a given security commit so you are using this criteria to choose 
-        your regular commits?  Justify this reasoning and make the methodology clear.  
-        I would have expected that you randomly collected 1300 non-security commits to compare 
-        with the 1300 security commits. Why constrain to make them be of "similar" size?  
-        Why not allow the characteristics of regular versus security commits to be what 
-        they are without such curating?
-    \end{itemize}
-\end{revcomment}
-
-\Us
+\Us Yes, for each security commit we collected a random regular change from the same project.
 
 \begin{revcomment}[2.11]
     Section 3\\
@@ -442,7 +478,11 @@ benchmarking for improving software maintainability. Software Quality Journal in
     \end{itemize}
 \end{revcomment}
 
-\Us
+\Us Yes, we are looking for regular changes with the same size as security commits. We 
+have collected a baseline of random changes only (no size restrictions) in the past and 
+performed the same evaluation. We now present the results for both baselines: \textit{size-baseline}, where we consider
+size appproximation; and, \textit{random-baseline}, where we consider all the regular
+changes characteristics.
 
 \begin{revcomment}[2.12]
     Section 3\\
@@ -458,23 +498,7 @@ benchmarking for improving software maintainability. Software Quality Journal in
     \end{itemize}
 \end{revcomment}
 
-\Us
-
-\begin{revcomment}[2.13]
-    Section 3\\
-    \begin{itemize}
-        \item Since SIG seems to be "just another consulting organization" - I'd like 
-        to see about the acceptance of the 10 guidelines in the software engineering 
-        discipline.  I would guess you could find peer-reviewed references to support 
-        these guidelines, or even books by Martin Fowler.   That has more credibility 
-        than the reference by the SIG consulting group. For example on Page 9, line 42 
-        you cite McCabe Complexity --  that has more credibility than a consulting 
-        organizations guidelines that they use to make money on their tool.  Tell us more 
-        about the BCH data experience since that is your comparison point for compliance.
-    \end{itemize}
-\end{revcomment}
-
-\Us
+\Us (I'll do this in the end.)
 
 \begin{revcomment}[2.13]
     Section 3\\
@@ -488,7 +512,7 @@ benchmarking for improving software maintainability. Software Quality Journal in
     \end{itemize}
 \end{revcomment}
 
-\Us
+\Us 
 
 \begin{revcomment}[2.14]
     Section 3\\
@@ -499,7 +523,7 @@ benchmarking for improving software maintainability. Software Quality Journal in
     \end{itemize}
 \end{revcomment}
 
-\Us
+\Us working on this
 
 \begin{revcomment}[2.15]
     Section 3\\
@@ -508,7 +532,7 @@ benchmarking for improving software maintainability. Software Quality Journal in
     \end{itemize}
 \end{revcomment}
 
-\Us until here
+\Us Due to BCH limitations, $308$ data points were disregarded.
 
 \begin{revcomment}[2.16]
     Section 4\\
@@ -548,7 +572,7 @@ benchmarking for improving software maintainability. Software Quality Journal in
 
 \Us
 
-\begin{revcomment}[2.18]
+\begin{revcomment}[2.19]
     Section 4\\
     \begin{itemize}
         \item Page 20, Line 42 - how many is "a considerable number of cases"?  
@@ -557,7 +581,7 @@ benchmarking for improving software maintainability. Software Quality Journal in
 
 \Us
 
-\begin{revcomment}[2.18]
+\begin{revcomment}[2.20]
     Section 4\\
     \begin{itemize}
         \item Page 20, Line 45 - it seems choosing commits of similar size 
@@ -568,7 +592,7 @@ benchmarking for improving software maintainability. Software Quality Journal in
 
 \Us
 
-\begin{revcomment}[2.19]
+\begin{revcomment}[2.21]
     Section 4\\
     \begin{itemize}
         \item RQ3 is answered to succinctly and with too little 
@@ -580,7 +604,7 @@ benchmarking for improving software maintainability. Software Quality Journal in
 \Us
 
 
-\begin{revcomment}[2.20]
+\begin{revcomment}[2.22]
     Section 5\\
     \begin{itemize}
         \item Line 32 - since RQ3 was not convincing, 
@@ -591,7 +615,7 @@ benchmarking for improving software maintainability. Software Quality Journal in
 
 \Us
 
-\begin{revcomment}[2.20]
+\begin{revcomment}[2.23]
     Section 6\\
     \begin{itemize}
         \item It might not be a threat - but I feel the curation 
@@ -624,7 +648,9 @@ benchmarking for improving software maintainability. Software Quality Journal in
 
 \end{revcomment}
 
-\Us 
+\Us We kindly thank you the reviewer for the comments. We added a sub Section to 
+the paper called \textit{Why Better Code Hub?}. We compare BCH with other tools
+that perform code analysis and motivate why we find BCH to be the best fit for us.
 
 \begin{revcomment}[3.2]
 
