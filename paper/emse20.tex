@@ -249,8 +249,9 @@ mitigation needs to be fast and efficient. Therefore, it
 is important to write maintainable code to support the production of 
 more secure software---maintainable code is less complex and, 
 consequently, less prone to
-vulnerabilities~\cite{shin2010evaluating,10.1145/1774088.1774504})---
+vulnerabilities~\cite{shin2010evaluating,10.1145/1774088.1774504}---
 and, prevent the introduction of new vulnerabilities. 
+
 % Unmaintainable code is hard to test, analyze and re-use. Therefore,
 % it is important to write maintainable code to support the production
 % of more secure software and prevent
@@ -273,8 +274,8 @@ fully secure systems~\cite{10.1145/3133956.3134072}. Therefore, in this paper,
 we present an empirical study on the impact of patches of 
 vulnerabilities on software maintenance across open-source software.
 We arguee that tools that assess these type of metrics may
-complement SATs with valuable information to understand and
-address better the issue.
+complement SATs with valuable information to help the developer
+understand better the risk of its patch.
 
 As ISO does not provide any specific guidelines/formulas to 
 calculate maintainability, we resort to Software Improvement Group 
@@ -288,7 +289,7 @@ $25010$~\cite{Visser:2016:OREILLY}. SIG
 has been helping business and technology leaders drive their organizational 
 objectives by fundamentally improving the health and security of 
 their software applications for more than 20 years. Their 
-models are scientically proven~\cite{5609747,6113040,baggen2012} and certified.
+models are scientifically proven and certified~\cite{5609747,6113040,baggen2012}.
 
 There are other well-known 
 standards and models that have been proposed to increase software 
@@ -363,7 +364,7 @@ Section~\ref{sec:conclusions} concludes the main findings and
 elaborates on future work.
 
 \section{Motivation and Research Questions}\label{sec:motivation}
-%
+% Rev 2 says it is redundant 
 % Due to time-to-market pressure and the lack of security 
 % expertise~\cite{8077802}, code-related security flaws are generally 
 % detected \textit{after the fact}, i.e., when hackers exploit them. 
@@ -378,9 +379,9 @@ As an example, consider the patch of the TLS state machine protocol
 implementation in OpenSSL\footnoteref{openssl} to address a memory 
 leak flaw found in the way how OpenSSL handled TLS status request 
 extension data during session renegotiation, and where a malicious 
-client could cause a Denial-of-Service (DoS) attack via large OCSP 
-Status Request extensions when OCSP stapling support was enabled. 
-Online Certificate Status Procotol (OCSP) stapling, formally known 
+client could cause a Denial-of-Service (DoS) attack via large Online 
+Certificate Status Procotol (OCSP) Status Request extensions when 
+OCSP stapling support was enabled. OCSP stapling, formally known 
 as the TLS Certificate Status Request extension, is a standard for 
 checking the revocation status of certificates. 
 
@@ -417,15 +418,17 @@ memory growth---which was not being performed before.
 After releasing the unbounded memory, the logic condition in 
 \ref{lst:func3} was shifted to \ref{lst:func2} which is responsible 
 for handling the application when no OCSP response IDS are 
-allocated. After the patch, in the new version of the software, the condition is checked before the package processing 
-instead of after. Thereby, the system avoids the increase of unbounded memory (and, a potential DoS attack).
+allocated. After the patch, in the new version of the software, the 
+condition is checked before the package processing 
+instead of after. Thereby, the system avoids the increase of 
+unbounded memory (and, a potential DoS attack).
 
 Patching this vulnerability seems a rudimentary task. Yet,
 a considerable amount of changes were performed in the codebase 
 which yielded to a negative impact on software maintainability.
 While patching, the developer introduced $6$ new lines in a method 
 already with a large number of lines of code and introduced more 
-complexity to the code with new branch points which disrupt two of 
+complexity to the code with $2$ new branch points which disrupt two of 
 the guidelines proposed by the Software Improvement Group 
 (SIG) for building maintainable software~\cite{Visser:2016:OREILLY}: 
 \emph{Write Short Units of Code} and \emph{Write Simple Units of 
@@ -506,7 +509,7 @@ attention}. The taxonomy of security patterns used to answer this
 question is the one provided by the Common Weakness Enumeration
 (CWE). \emph{Weakness}, according to the Common Weakness Enumeration 
 (CWE) glossary, is a type of code-flaw that could contribute to the 
-introduction of vulnerabilities within that product. Maintainability 
+introduction of vulnerabilities within that product. In this study, maintainability 
 is measured separately for each weakness.
 %
 \setcounter{lstannotation}{0}
@@ -540,6 +543,9 @@ illustrated in Figure~\ref{fig:met}.
 	the activities of developers addressing security-oriented 
 	patches~\cite{Reis:2017:IJSSE,10.1109/MSR.2019.00064}.
 %
+\item After combining both datasets, we removed the duplicates
+and filtered out every floss-refactoring.
+%
 	\item
 	Extract relevant data (e.g., owner and name of
 	the repository, sha key of the vulnerable version, sha key of 	
@@ -547,7 +553,8 @@ illustrated in Figure~\ref{fig:met}.
 	containing $1300$ security patches collected from open-source 	
 	software available on GitHub.
 %
-	\item A baseline of regular commits was randomly collected from 
+  \item A baseline of regular commits was randomly collected (i.e., for 
+  each security commit a random commit from the same project was selected) from 
 	the list of projects of the final dataset to evaluate the impact 
 	of regular commits on the maintainability of open-source 
 	software.
@@ -557,15 +564,20 @@ illustrated in Figure~\ref{fig:met}.
   code analysis service \emph{Better Code Hub} (BCH)\footnote{BCH's 
   website: \url{https://bettercodehub.com/} (Accessed on \today{})} 
   to quantify maintainability for both security and regular commits. 
-  The codebases that resemble to the commits of our datasets are 
-  collected before the analysis performed by BCH.
+  BCH evaluates the codebase available in the default branch of a GitHub project. 
+  We created a tool that pulls the codebase of each commit of our dataset 
+  to a new branch; it sets the new branch as the default branch; it runs 
+  the BCH analysis in the codebase; and, finally saves the BCH metrics
+  results.
 \end{enumerate}
 %
 \begin{figure}[h]
 	\centering 	
-    \begin{adjustwidth}{0.5cm}{-1cm}  
-	\includegraphics[width=0.9\textwidth]{figures/methodology.pdf}
- 	\caption{Study Methodology}
+    \begin{adjustwidth}{-0.5cm}{-0.5cm}  
+      \vspace{-2.5cm} 
+	\includegraphics[width=1.1\textwidth]{figures/methodology.pdf}
+  \vspace{-3cm} 
+  \caption{Study Methodology}
 	\label{fig:met}
 	 \end{adjustwidth}
 \end{figure}
@@ -573,7 +585,7 @@ illustrated in Figure~\ref{fig:met}.
 \subsection{Datasets}
 %
 
-We use a combined dataset of $1330$ security patches which is 
+We use a combined dataset of $1300$ security patches which is 
 the outcome of mining and manually inspecting a total of $312$ 
 GitHub projects. The combined dataset integrates two different
 works: SecBench~\cite{Reis:2017:IJSSE} and Ponta et al.~\cite{10.1109/MSR.2019.00064}.
@@ -602,8 +614,8 @@ the patch on the National Vulnerability Database (NVD) website.
 However, $70\%$ of the vulnerabilities did not have any references 
 to commits. Thus, the authors used their expertise to locate the 
 commits in the repositories. This technique yielded a dataset of 
-$624$ patches~\cite{10.1109/MSR.2019.00064}. The original dataset 
-contains $1282$ commits. One patch can have multiple commits 
+$624$ patches~\cite{10.1109/MSR.2019.00064} and $1282$ commits. 
+One patch can have multiple commits 
 assigned. To fit the dataset in our methodology, we located the 
 first and last commits used to patch the vulnerability. For these 
 cases, we used the GitHub API to retrieve automatically the dates of 
@@ -617,15 +629,23 @@ first commit (oldest commit) as the vulnerable version
 In this study, we focus on computing the maintainability of the 
 commits before and after the security patching to evaluate if its 
 impact was positive, negative or none. The $1300$ patches in the 
-dataset were run against the BCH toolset to calculate their 
+dataset were analyzed using the BCH toolset to calculate their 
 maintainability reports. Due to the limitations of BCH, in particular, 
 lack of language support and project size, we had
 to clean the dataset and select the most relevant and compatible projects
 with BCH. The final dataset used in this 
 paper comprises $969$ security patches from $260$ projects. We used the 
-Common Weakness Enumeration (CWE) taxonomy to classify each vulnerability. For instance,  the \texttt{Fix CVE-2014-1608: mc\_issue\_attachment\_get SQL injection} (\texttt{00b4c17}\footnote{CVE-$2014$-$1608$ details available at \url{https://github.com/mantisbt/mantisbt/commit/00b4c17088fa56594d85fe46b6c6057bb3421102} (Accessed on \today)}) is a \emph{CWE-89: Improper Neutralization of Special Elements used in an SQL Command ('SQL Injection')}\footnote{CWE-$89$ details available at \url{https://cwe.mitre.org/data/definitions/89.html} (Accessed on \today)} according to the CWE taxonomy.
+Common Weakness Enumeration (CWE) taxonomy to classify each vulnerability. 
+For instance,  the \texttt{Fix CVE-2014-1608: mc\_issue\_attachment\_get SQL injection} 
+(\texttt{00b4c17}\footnote{CVE-$2014$-$1608$ details available at 
+\url{https://github.com/mantisbt/mantisbt/commit/00b4c17088fa56594d85fe46b6c6057bb3421102} 
+(Accessed on \today)}) is a \emph{CWE-89: Improper Neutralization of Special Elements used 
+in an SQL Command ('SQL Injection')}\footnote{CWE-$89$ details available at \url{https://cwe.mitre.org/data/definitions/89.html} 
+(Accessed on \today)} according to the CWE taxonomy.
 We were able to classify a total of $866$ patches using the CWE taxonomy
-where the CWEs for $536$ patches were automatically scraped from the National Vulnerability Dataset (NVD); while for the other $330$ patches, the CWEs were manually chosen by the authors following the \emph{Research Concepts} CWE's list.
+where the CWEs for $536$ patches were automatically scraped from the National 
+Vulnerability Dataset (NVD); while for the other $330$ patches, the CWEs were manually 
+chosen by the authors following the \emph{Research Concepts} CWE's list.
 
 % In Table~\ref{tab:patterns}, the most prevailing categories are presented. To satisfy the Wilcoxon test size requirement, types of vulnerabilities
 % with less than $20$ instances were merged in a bigger group named \textit{Miscellaneous}.
@@ -786,6 +806,11 @@ $10$ attempts to search for a change with the same size. We
 originate the regular commits from the security commits to ensure 
 that differences in maintainability are not a consequence of 
 characteristics of different projects.
+
+\subsection{Why Bettter Code Hub?}
+
+
+
 
 \subsection{Maintainability Analysis}
 
