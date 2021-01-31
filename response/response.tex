@@ -9,8 +9,7 @@
 
 \usepackage{caption}
 \usepackage{subcaption}
-
-
+\usepackage{hyperref}
 \usepackage{epsfig}
 \usepackage{latexsym}
 \usepackage{url}
@@ -102,19 +101,21 @@ following points, we address the concerns raised by the reviewers.
 package. 
 
 We would like to rebut your concern about Better Code Hub (BCH)'s guidelines not 
-being related to maintainability. First, as mentioend in the paper, BCH checks GitHub 
+being related to maintainability. First, as mentioned in the paper, BCH checks GitHub 
 codebases against 10 engineering guidelines as devised by Software Improvement Group 
-(SIG). SIG has devised these guidelies after many years of experience: analyzing more 
+(SIG). SIG has devised these guidelines after many years of experience: analyzing more 
 than 15 million lines of code every week, SIG maintains the industry’s largest 
 benchmark, containing more than 10 billion lines of code across 200+ technologies; SIG 
-is the only lab in the world certified by TÜViT to issue ISO 25010 certificates.
+is the only lab in the world certified by TÜViT to issue ISO 25010:2011 
+certificates\footnote{Information available here: 
+\url{https://www.softwareimprovementgroup.com/methodologies/iso-iec-25010-2011-standard/}}.
 
 Second, each of the guidelines in isolation is pretty simple to understand, but, when 
 combined with the others, and, when evaluated as a whole, it becomes easy to see why 
 they would comprise the definition of good software. Furthermore, the relation of the 
 guidelines to maintainability is well detailed in the SIG's book ``Building Maintainable 
 Software: Ten Guidelines for Future-Proof Code''
-\footnote{Available here: https://www.softwareimprovementgroup.com/resources/ebook-building-maintainable-software/}.
+\footnote{Available here: \url{https://www.softwareimprovementgroup.com/resources/ebook-building-maintainable-software/}}.
 In fact, the underlying maintainability model for BCH is documented with several
 (non-academic) reports linked at this page:
 \url{https://www.softwareimprovementgroup.com/methodologies/iso-iec-25010-2011-standard/} as 
@@ -128,12 +129,34 @@ Heitlager, Ilja, Tobias Kuipers, and Joost Visser.
 IEEE, 2007.
 \end{verbatim}
 
-BCH's compliance criterion is derived from the requirements for 4 star level maintainability (cf. ISO 25010). 
-The concrete values of the thresholds used in BCH are documented also in our book Building Maintainability 
-Software https://www.softwareimprovementgroup.com/resources/ebook-building-maintainable-software/.
+BCH's compliance criterion is derived from the requirements for 4-star level maintainability (cf. ISO 25010). 
+The concrete values of the thresholds used in BCH are documented also in their book Building Maintainability 
+Software \url{https://www.softwareimprovementgroup.com/resources/ebook-building-maintainable-software/}.
 
-Further, the methodology for arriving at the thresholds is documented in
-the papers you already point out. SIG performs the threshold calibration
+Further, the methodology for arriving at the thresholds is documented in the following 
+literature:
+
+\begin{verbatim}
+    Tiago L. Alves, Christiaan Ypma and Joost Visser. 
+    ``Deriving metric thresholds from benchmark data.'' 
+    IEEE International Conference on Software Maintenance (ICSME 2010). 
+    IEEE, 2010.
+
+    Tiago L. Alves, Jose Pedro Correia and Joost Visser. 
+    ``Benchmark-Based Aggregation of Metrics to Ratings.'' 
+    2011 Joint Conference of the 21st International Workshop on Software 
+    Measurement and the 6th International Conference on Software Process 
+    and Product Measurement. 
+    IEEE, 2011.
+
+    Robert Baggen, Jose Pedro Correia, Katrin Schill and Joost Visser. 
+    ``Standardized code quality benchmarking for improving software maintainability.'' 
+    Software Quality Journal.
+    Springer, 2011.
+
+\end{verbatim}
+
+SIG performs the threshold calibration
 yearly on a proprietary data set to satisfy the requirements of TUViT to
 be a certified measurement model. However, please note that this data set 
 cannot be shared due to non-disclosure agreements between SIG and its 
@@ -153,36 +176,36 @@ work will improve, slowly, but surely.
 
 \textbf{PAREI AQUI.}
 
-We clarified the difference between BCH and static analysis tools in
-the Section 1 (Introduction) and Section 3 (Methodology).
+% We clarified the difference between BCH and static analysis tools in
+% the Section 1 (Introduction) and Section 3 (Methodology).
 
-\begin{quote}
-    Introduction\\
-    ...\\
-    Static analysis tools (SATs) have been built to automatically detect software 
-    vulnerabilities (e.g., FindBugs, Infer and more). Developers
-    use those tools to locate the issues in the code. However,
-    while performing the patches to those issues, SATs are not 
-    capable of providing information on the quality of the patch.
-    Improving software security is not a trivial task and 
-    requires implementing patches that might affect software 
-    maintainability. Our hypothesis is that some of these patches may 
-    have a negative impact on the software maintainability and, 
-    possibly, even be the cause of the introduction of new 
-    vulnerabilities---harming software reliability and introducing 
-    technical debt. Research found that $34\%$ of the security patches 
-    performed introduce new problems and $52\%$ are incomplete and do not 
-    fully secure systems[Li2017]. Therefore, in this paper, 
-    we present an empirical study on the impact of patches of 
-    vulnerabilities on software maintenance across open-source software.
-    We arguee that tools that assess these type of metrics may
-    complement SATs with valuable information to help the developer
-    understand better the risk of its patch.\\
-    ...
-\end{quote}
+% \begin{quote}
+%     Introduction\\
+%     ...\\
+%     Static analysis tools (SATs) have been built to automatically detect software 
+%     vulnerabilities (e.g., FindBugs, Infer and more). Developers
+%     use those tools to locate the issues in the code. However,
+%     while performing the patches to those issues, SATs are not 
+%     capable of providing information on the quality of the patch.
+%     Improving software security is not a trivial task and 
+%     requires implementing patches that might affect software 
+%     maintainability. Our hypothesis is that some of these patches may 
+%     have a negative impact on the software maintainability and, 
+%     possibly, even be the cause of the introduction of new 
+%     vulnerabilities---harming software reliability and introducing 
+%     technical debt. Research found that $34\%$ of the security patches 
+%     performed introduce new problems and $52\%$ are incomplete and do not 
+%     fully secure systems[Li2017]. Therefore, in this paper, 
+%     we present an empirical study on the impact of patches of 
+%     vulnerabilities on software maintenance across open-source software.
+%     We arguee that tools that assess these type of metrics may
+%     complement SATs with valuable information to help the developer
+%     understand better the risk of its patch.\\
+%     ...
+% \end{quote}
 
-[Li2017] F. Li and V. Paxson. A Large-Scale Empirical Study of Security Patches. 
-A Large-Scale Empirical Study of Security Patches in 2017.
+% [Li2017] F. Li and V. Paxson. A Large-Scale Empirical Study of Security Patches. 
+% A Large-Scale Empirical Study of Security Patches in 2017.
 
 \begin{revcomment}[1.2]
 
@@ -198,14 +221,14 @@ A Large-Scale Empirical Study of Security Patches in 2017.
 
 \end{revcomment}
 
-\Us Thank you for suggesting Marco's paper. Our paper uses a model 
+\Us Thank you for suggesting DiBiase's paper. Our paper uses a model 
 for measuring maintainability that was published previously by one of the co-authors
 of this paper [Cruz2019]. The entire methodology and calculations 
-were actually validated by Marco. 
+were actually validated by DiBiase. 
 
 The model created by Marco focus on measuring maintainability of fine-grained 
 changes using 5 of the same guidelines we already use. The SIG-MM model in 
-Marco's paper is the model behind Better Code Hub. 
+DiBiase's paper is the model behind Better Code Hub. 
 
 We mention Marco's work in our related work:
 \begin{quote}
