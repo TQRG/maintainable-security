@@ -94,18 +94,64 @@ following points, we address the concerns raised by the reviewers.
     write better code. Unfortunately, these guidelines are not related 
     to maintainability. Avoiding introducing the issues associated to 
     these guidelines do not imply increasing the maintainability of the 
-    code, since the tools has no possibility to measure "maintainability".
+    code, since the tools has no possibility to measure ``maintainability''.
 
 \end{revcomment}
 
 \Us Thank you for your positive feedback on the paper presentation and replication
-package. BCH is not a static analysis tool instead it checks codebases for 
-compliance with the ten guidelines. The set of guidelines presented in our paper
-is the same published by Software Improvement Group (SIG) in their ebook called
-"Building Maintainable Software: Ten Guidelines for Future-Proof Code"
+package. 
+
+We would like to rebut your concern about Better Code Hub (BCH)'s guidelines not 
+being related to maintainability. First, as mentioend in the paper, BCH checks GitHub 
+codebases against 10 engineering guidelines as devised by Software Improvement Group 
+(SIG). SIG has devised these guidelies after many years of experience: analyzing more 
+than 15 million lines of code every week, SIG maintains the industry’s largest 
+benchmark, containing more than 10 billion lines of code across 200+ technologies; SIG 
+is the only lab in the world certified by TÜViT to issue ISO 25010 certificates.
+
+Second, each of the guidelines in isolation is pretty simple to understand, but, when 
+combined with the others, and, when evaluated as a whole, it becomes easy to see why 
+they would comprise the definition of good software. Furthermore, the relation of the 
+guidelines to maintainability is well detailed in the SIG's book ``Building Maintainable 
+Software: Ten Guidelines for Future-Proof Code''
 \footnote{Available here: https://www.softwareimprovementgroup.com/resources/ebook-building-maintainable-software/}.
-According to the authors, all the guidelines were infered from analyzing
-hundres of real-world systems and measure maintainability.
+In fact, the underlying maintainability model for BCH is documented with several
+(non-academic) reports linked at this page:
+\url{https://www.softwareimprovementgroup.com/methodologies/iso-iec-25010-2011-standard/} as 
+well as validated by the academic community in the following paper:
+
+\begin{verbatim}
+Heitlager, Ilja, Tobias Kuipers, and Joost Visser. 
+``A practical model for measuring maintainability.'' 
+6th international conference on the quality of information and 
+        communications technology (QUATIC 2007). 
+IEEE, 2007.
+\end{verbatim}
+
+BCH's compliance criterion is derived from the requirements for 4 star level maintainability (cf. ISO 25010). 
+The concrete values of the thresholds used in BCH are documented also in our book Building Maintainability 
+Software https://www.softwareimprovementgroup.com/resources/ebook-building-maintainable-software/.
+
+Further, the methodology for arriving at the thresholds is documented in
+the papers you already point out. SIG performs the threshold calibration
+yearly on a proprietary data set to satisfy the requirements of TUViT to
+be a certified measurement model. However, please note that this data set 
+cannot be shared due to non-disclosure agreements between SIG and its 
+clients.
+
+All in all, we argue that BCH's guidelines are a good proxy for building maintainable software. This is 
+backed up by the observations of SIG in the field, as it was told us in personal communications: 
+
+\begin{quote}
+We saw the value of a tool like BCH in helping in writing clean and maintainable code and most importantly, 
+it offers us so much more:
+
+Over time, the guidelines in BCH will become part of your coding standards, and the overall quality of your 
+work will improve, slowly, but surely.
+\end{quote}
+
+
+\textbf{PAREI AQUI.}
 
 We clarified the difference between BCH and static analysis tools in
 the Section 1 (Introduction) and Section 3 (Methodology).
