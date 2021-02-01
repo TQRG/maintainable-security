@@ -639,10 +639,13 @@ For instance,  the \texttt{Fix CVE-2014-1608: mc\_issue\_attachment\_get SQL inj
 (Accessed on \today)}) is a \emph{CWE-89: Improper Neutralization of Special Elements used 
 in an SQL Command ('SQL Injection')}\footnote{CWE-$89$ details available at \url{https://cwe.mitre.org/data/definitions/89.html} 
 (Accessed on \today)} according to the CWE taxonomy.
-We were able to classify a total of $866$ patches \Sofia{not sure why i did not classified all of them}using the CWE taxonomy
-where the CWEs for $536$ patches were automatically scraped from the National 
-Vulnerability Dataset (NVD); while for the other $330$ patches, the CWEs were manually 
-chosen by the authors following the \emph{Research Concepts} CWE's list.
+We were able to classify a total of $906$ patches using the CWE taxonomy:
+the CWE's for $536$ patches were automatically scraped from the National 
+Vulnerability Dataset (NVD); while the other $370$ patches were manually classified by 
+the authors following the \emph{Research Concepts} CWE's list. A total 
+of $63$ patches were not classified because we were not able to map
+the issues to any CWE ID due to the lack of quality information on the 
+problem and solution.
 
 % In Table~\ref{tab:patterns}, the most prevailing categories are presented. To satisfy the Wilcoxon test size requirement, types of vulnerabilities
 % with less than $20$ instances were merged in a bigger group named \textit{Miscellaneous}.
