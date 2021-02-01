@@ -9,7 +9,7 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-### Collect Maintainability (configuration required)
+### Data Analysis
 
 How to collect maintainability results from BCH cache:
 
@@ -18,7 +18,6 @@ source venv/bin/activate
 cd scripts
 python report.py --report export -secdb ../dataset/db_release_security_fixes.csv -regdb ../dataset/db_release_regular_fixes.csv -results ../results -cache maintainability/bch_cache.zip
 ``` 
-### Data Analysis
 
 Comparison between security and regular commits:
 
