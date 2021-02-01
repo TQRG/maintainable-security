@@ -173,9 +173,6 @@ Over time, the guidelines in BCH will become part of your coding standards, and 
 work will improve, slowly, but surely.
 \end{quote}
 
-
-\textbf{PAREI AQUI.}
-
 % We clarified the difference between BCH and static analysis tools in
 % the Section 1 (Introduction) and Section 3 (Methodology).
 
@@ -225,10 +222,10 @@ work will improve, slowly, but surely.
 We evaluate the impact of security patches in software 
 maintainability using an alternative maintainability model [Cruz2019]. 
 
-DiBiase's work was developed in paralell with [Cruz2019]. As
-the outcome of a master thesis, it only considers $5$ of the same 
-guidelines we use. Both models build a new maintainability model
-over the SIG-MM model---the model behind BCH. 
+DiBiase's work was developed in paralell with the one by Cruz et al [Cruz2019]. 
+Both models attempt to measure maintainability, but DiBiase's is not as complete 
+since it only considers $5$ of the same set of guidelines. Both models build a 
+new maintainability model over the SIG-MM model---the model behind BCH. 
 
 Our model was validated by DiBiase in several discussions between 
 the authors of both papers.
@@ -237,7 +234,7 @@ We also mention DiBiase's work in our \textit{Related Work} section:
 \begin{quote}
     Recent work
 proposed a new maintainability model to 
-measure fine-grained code changes by adapting/extending the BCH model[diBiase2019].
+measure fine-grained code changes by adapting/extending the BCH model [diBiase2019].
 The present work uses the same model (SIG-MM), considers more guidelines and focuses 
 solely on evaluating the impact of security patches on software maintainability.
 \end{quote}
@@ -262,12 +259,12 @@ on Technical Debt (TechDebt) in 2019.
 
 \end{revcomment}
 
-\Us Thank your for your comment. In this paper, we do not
-try to use static analysis to detect security issues.
-We have already a dataset of security patches (vulnerable versions
-and non-vulnerable versions) and our goal is to understand what 
-is the impact of those patches on the maintainability
-guidelines/metrics. We arguee that these guidelines/metrics
+\Us Thank your for your comment. Note, however, that the goal of our work it not 
+to use static analysis to detect security issues. We have already a dataset of 
+security patches (pairs of vulnerable versions and non-vulnerable versions) and 
+our objective is to understand what 
+the impact of those patches on the maintainability
+guidelines/metrics is. We argue that these guidelines/metrics
 may in the future complement static analysis tools 
 by assiting developers with more information on the 
 risks associated with their patches.
@@ -282,10 +279,12 @@ risks associated with their patches.
 
 \end{revcomment}
 
-\Us Thank you for your comment. As we explained before, while 
-addressing comment 1.2, both models assess maintainability.
-Delta Maintainability Model is an alternative to our approach 
-and only uses 5 guidelines of the set of guidelines our study considers.
+\Us Thank you for your comment. As we explained before, namely while addressing 
+comment 1.2, both models assess maintainability. However, the Delta Maintainability 
+Model only uses 5 guidelines of the set of guidelines our study considers. Therefore, 
+we consider it to be an alternative to our model, but a weaker one. This has been 
+discussed in the related work section.
+
 
 \begin{revcomment}[1.5]
 
@@ -299,10 +298,7 @@ and only uses 5 guidelines of the set of guidelines our study considers.
 
 \end{revcomment}
 
-
-\Us Thank you for the positive interest on the work. 
-
-We would like to rebut the reviewer concern. As we 
+\Us Thank you for the positive feedback on the work. As we 
 explained before Better Code Hub calculates maintainability metrics.
 Our goal is to measure the impact of security patches on software 
 maintainability and not finding vulnerabilities---vulnerabilities
