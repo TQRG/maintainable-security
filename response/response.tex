@@ -235,7 +235,7 @@ the authors of both papers.
 
 We also mention DiBiase's work in our \textit{Related Work} section:
 \begin{quote}
-    Recent work,
+    Recent work
 proposed a new maintainability model to 
 measure fine-grained code changes by adapting/extending the BCH model[diBiase2019].
 The present work uses the same model (SIG-MM), considers more guidelines and focuses 
@@ -299,7 +299,10 @@ and only uses 5 guidelines of the set of guidelines our study considers.
 
 \end{revcomment}
 
-\Us Thank you for the positive interest on the work. As we 
+
+\Us Thank you for the positive interest on the work. 
+
+We would like to rebut the reviewer concern. As we 
 explained before Better Code Hub calculates maintainability metrics.
 Our goal is to measure the impact of security patches on software 
 maintainability and not finding vulnerabilities---vulnerabilities
@@ -338,11 +341,19 @@ accepted, the package will be available on GitHub.
     
 \end{revcomment}
 
-\Us We thank the reviewer for the suggestions. We addressed
-both of the issues in the abstract. For the later issue, we reported 
-the overall result for maintainability and results
-for the two of the guidelines with more negative impact on software 
-maintainability: software complexity and unit size.
+\Us We thank the reviewer for the suggestions. We replaced ``suspect'' by
+``hypothesize''. For the later issue, we added to the abstract 
+the results for maintainability and results
+for the $2$ guidelines with more negative impact on software 
+maintainability: software complexity and unit size. 
+
+\begin{quote}
+    Results show evidence of a trade-off 
+between security and maintainability for $41.90\%$ of the cases, i.e., developers 
+may hinder software maintainability. Our analysis shows that $38.29\%$ of patches increased
+software complexity and $37.87\%$ of patches increased the percentage 
+of LOCs per unit. 
+\end{quote}
 
 \begin{revcomment}[2.3]
 
@@ -724,8 +735,7 @@ positive---where maintainability increases.
     \end{itemize}
 \end{revcomment}
 
-\Us We agree with the reviewer. We built this baseline following the concerns of
-previous reviewers with our random baseline. Reviewers were afraid that 
+\Us We agree with the reviewer. Previous reviewers were afraid that 
 comparing regular changes with security changes with very different sizes---a scenario 
 that could happen---was unfair. It made sense to us, thus we created this baseline.
 Nevertheless, we also feel that considering size may be limitating the generalizability
