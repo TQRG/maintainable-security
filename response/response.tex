@@ -173,37 +173,6 @@ Over time, the guidelines in BCH will become part of your coding standards, and 
 work will improve, slowly, but surely.
 \end{quote}
 
-% We clarified the difference between BCH and static analysis tools in
-% the Section 1 (Introduction) and Section 3 (Methodology).
-
-% \begin{quote}
-%     Introduction\\
-%     ...\\
-%     Static analysis tools (SATs) have been built to automatically detect software 
-%     vulnerabilities (e.g., FindBugs, Infer and more). Developers
-%     use those tools to locate the issues in the code. However,
-%     while performing the patches to those issues, SATs are not 
-%     capable of providing information on the quality of the patch.
-%     Improving software security is not a trivial task and 
-%     requires implementing patches that might affect software 
-%     maintainability. Our hypothesis is that some of these patches may 
-%     have a negative impact on the software maintainability and, 
-%     possibly, even be the cause of the introduction of new 
-%     vulnerabilities---harming software reliability and introducing 
-%     technical debt. Research found that $34\%$ of the security patches 
-%     performed introduce new problems and $52\%$ are incomplete and do not 
-%     fully secure systems[Li2017]. Therefore, in this paper, 
-%     we present an empirical study on the impact of patches of 
-%     vulnerabilities on software maintenance across open-source software.
-%     We arguee that tools that assess these type of metrics may
-%     complement SATs with valuable information to help the developer
-%     understand better the risk of its patch.\\
-%     ...
-% \end{quote}
-
-% [Li2017] F. Li and V. Paxson. A Large-Scale Empirical Study of Security Patches. 
-% A Large-Scale Empirical Study of Security Patches in 2017.
-
 \begin{revcomment}[1.2]
 
     As far as I know, the company that developed Better Code Hub 
@@ -294,22 +263,45 @@ discussed in the related work section.
 
     My recommendation is to select a specific static analysis tool 
     for security issues and to include a maintainability model to 
-    evaluate the maintenance. 
+    evaluate the maintenance.
 
 \end{revcomment}
 
-\Us Thank you for the positive feedback on the work. As we 
-explained before Better Code Hub calculates maintainability metrics.
-Our goal is to measure the impact of security patches on software 
+\Us Thank you for the positive feedback on the work. 
+
+We would like to rebut your concern on the tools and 
+metrics we are using. As we explained previously, in comment 1.1, 
+BCH checks GitHub codebases against 10 maintainability guidelines 
+as devised by Software Improvement Group (SIG). SIG has devised 
+these guidelines after many years of experience: analyzing more 
+than 15 million lines of code every week, SIG maintains the industry’s largest 
+benchmark, containing more than 10 billion lines of code across 200+ technologies; SIG 
+is the *only* lab in the world certified by TÜViT to issue ISO 25010:2011 
+certificates\footnote{Information available here: 
+\url{https://www.softwareimprovementgroup.com/methodologies/iso-iec-25010-2011-standard/}}
+The guidelines and their relation to maintainability is well 
+detailed in the SIG's book ``Building Maintainable 
+Software: Ten Guidelines for Future-Proof Code''
+\footnote{Available here: \url{https://www.softwareimprovementgroup.com/resources/ebook-building-maintainable-software/}}.
+
+SIG also performs the threshold calibration
+yearly on a proprietary data set to satisfy the requirements of TUViT to
+be a certified measurement model. 
+
+Note, that our goal is to measure the impact of security patches on software 
 maintainability and not finding vulnerabilities---vulnerabilities
-are already located. Thus, for now, 
+are already identified and located. Thus, for now, 
 we do not need to leverage static analysis tools. 
 
-For future research, it would be interesting to 
+For future research, it is indeed interesting to 
 understand how BCH can be fused with a static analysis tool 
 and how the BCH results can help 
 security engineers assess the risk of their patches and guide 
-them on performing better patches. 
+them on performing better patches. But for now we only try
+to understand the impact of security patches on those metrics.
+
+All in all, we arguee that BCH is the right tool and enough
+to perform the current analysis.
 
 \newreviewer{2}
 
@@ -498,7 +490,8 @@ our dataset were analyzed by BCH. We improved the text for:
     Section 3\\
     \begin{itemize}
         \item Please explain your repeatable methodology to "clean the dataset and select the most relevant and 
-        compatible projects" (page 8, line 14) that brings the patches from 1282 to 969.  From 969 to 866 patches - 
+        compatible projects" (page 8, line 14) that brings the patches from 1282 to 969.  
+        \item From 969 to 866 patches - 
         you just could not classify?  Please explain.
     \end{itemize}
 \end{revcomment}
@@ -656,7 +649,8 @@ distinct open-source projects.
     \end{itemize}
 \end{revcomment}
 
-\Us We replaced overall by the number of patches where maintainability increases ($38.7\%$).
+\Us We replaced overall by the number of patches where maintainability 
+increases ($38.7\%$).
 
 \begin{quote}
     Regarding the impact of security patches per guideline, we 
