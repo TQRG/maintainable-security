@@ -580,15 +580,26 @@ changes characteristics.
     Section 3\\
     \begin{itemize}
         \item Page 10, line 49 "mainly single-commit patches" … "small percentage 
-        of data points" - give us the exact numbers for each of these.  Page 11, 
-        line 38 - define "floss refactoring" and justify how these were objectively 
-        and repeatably identified in your set.   You say "these cases" which makes 
+        of data points" - give us the exact numbers for each of these.  
+        \item Page 11, line 38 - define "floss refactoring" and justify how these were objectively 
+        and repeatably identified in your set. You say "these cases" which makes 
         it seems that you were including the set of patches that had more than one 
         commit as your (only) floss candidates.  
     \end{itemize}
 \end{revcomment}
 
-\Us 
+\Us Our dataset integrates $89.3\%$ of single-commit patches and 
+$10.7\%$ of patches involving more than one commit. We replaced 
+line 49 by the following one:
+
+\begin{quote}
+    Only $10.7\%$ of the data points 
+of our dataset involve more than one commits, the other
+$89.3\%$ of the cases are single-commit patches.
+\end{quote}
+
+(working on 2nd item)
+
 
 \begin{revcomment}[2.14]
     Section 3\\
@@ -619,7 +630,13 @@ and project size by BCH, $308$ data points were disregarded.
     \end{itemize}
 \end{revcomment}
 
-\Us
+\Us We mean that our study is an empirical evaluation of $969$ security patches
+and $969$ regular changes. We improved the sentence. 
+
+\begin{quote}
+    This study evaluates a final total of $969$ security patches from $260$ 
+distinct open-source projects. 
+\end{quote}
 
 \begin{revcomment}[2.17]
     Section 4\\
@@ -632,7 +649,13 @@ and project size by BCH, $308$ data points were disregarded.
     \end{itemize}
 \end{revcomment}
 
-\Us
+\Us We replaced overall by the number of patches where maintainability increases ($38.7\%$).
+
+\begin{quote}
+    Regarding the impact of security patches per guideline, we 
+observe that $38.7\%$ of patches have more cases where the impact is 
+positive---where maintainability increases.
+\end{quote}
 
 \begin{revcomment}[2.18]
     Section 4\\
