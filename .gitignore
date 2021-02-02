@@ -1,6 +1,6 @@
 config/*.json
 paper/emse20.pdf
-paper/response.pdf
+response/response.pdf
 *.aux
 *.bbl
 *.blg
