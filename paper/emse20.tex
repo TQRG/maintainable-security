@@ -26,7 +26,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{amsmath,amssymb,amsfonts}
 \usepackage{algorithmic}
-\usepackage{graphicx}
+\usepackage{graphicx,subfigure}
 \usepackage{textcomp}
 \usepackage{booktabs}
 \usepackage{framed}
@@ -1294,7 +1294,7 @@ patching vulnerabilities.
   \subfigure[Maintainability difference by sub-weaknesses of the 
   \textit{Improper Neutralization} Weakness (CWE-707)]{
   \includegraphics[scale=0.4]{figures/main_per_cwe_spec_707.pdf}}\quad\quad
-    \subfigure[Maintainability difference by sub-weaknesses of the 
+  \subfigure[Maintainability difference by sub-weaknesses of the 
 	\textit{Improper Control of a Resource Through its Lifetime} Weakness (CWE-664)]{
 	\includegraphics[scale=0.4]{figures/main_per_cwe_spec_664.pdf}}
     \caption{Maintainability difference per weakness.}
@@ -1329,10 +1329,7 @@ a significant negative impact approximate to $50\%$ on
 maintainability. We suspect that these values are
 the result of project contributions policies (e.g., coding standards). In our dataset, 
 $9$/$10$ projects with more contributors follow strict contribution 
-policies for code standards. % For
-% instance, \texttt{laravel/framework} requires the \texttt{PSR-2
-% Standard}\footnote{PSR-2 Standard available at
-% \url{https://www.php-fig.org/psr/psr-2/} (Accessed on \today{})} that is a coding style guide for \texttt{PHP}.
+policies for code standards. 
 
 
 \textbf{Summary:} Results show that developers may have a
@@ -1414,15 +1411,12 @@ difficult to patch since it usually requires to add complexity to the program (c
 
 
 \textbf{Summary:}
-Although results did not yield statistical significance, we show preliminary evidence that researchers and developers ought to pay more attention to maintainability when fixing the following types of weaknesses: \emph{Improper Input Validation (CWE-20)}, \emph{Information Exposure
+Although results did not yield statistical significance, we show preliminary evidence that 
+researchers and developers ought to pay more attention to maintainability when fixing the 
+following types of weaknesses: \emph{Improper Input Validation (CWE-20)}, \emph{Information Exposure
 (CWE-200)}, \emph{Missing Release of Memory after Effective
 Lifetime (CWE-401)} and \emph{Path Traversal (CWE-22)}.
 
-% No statistical evidence was observed.
-% However, results should not be disregarded because they hint on how
-% the maintainability is impacted per weakness which highlights the weaknesses
-% that may need more attention from developers/researchers.
-%
 
 \textit{\textbf{RQ3: What is the impact of security changes versus regular 
 changes on the maintainability of open-source software?}}
@@ -1440,10 +1434,10 @@ changes has a more positive impact than negative on
 maintainability. 
 
 \begin{figure}[htp]
- 	\centering 	
-	\includegraphics[width=0.7\textwidth]{figures/main_comparison.pdf}
- 	\caption{Maintainability difference for security and baseline patches.}
-	\label{fig:secvsreg}
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/baseline.pdf}
+  \caption{Maintainability difference of security patches versus regular changes.}
+  \label{fig:secvsreg}    
 \end{figure}
 
 Results show that regular changes are less prone to hinder the software maintainability of open-source software.   
@@ -1462,20 +1456,6 @@ maintainability. In contrast, one cannot say the same about
 regular changes, in which \textbf{no significant differences are observed}. 
 Thus, we urge the importance of adopting maintainability practices while 
 applying security patches.
-
-%
-% For both types of changes, there is a negative impact
-% on software maintainability---especially, for security changes.
-% The resulting p-value of the Paired Wilcoxon signed-rank test is $0.300$, i.e.,
-% conclusions regarding the regular changes are not statistically significant.
-% Yet, it is important to note that \emph{patching security vulnerabilities seem
-% to have a more negative impact on the maintainability of open-source software
-% than performing regular changes}.
-% This raises
-% a new trade-off when developers need to patch vulnerabilities on their projects
-% because they might be hindering the software maintainability or even introducing
-% new vulnerabilities.
-
 
 \section{Study Implications}\label{sec:implications}
 %
@@ -1528,14 +1508,6 @@ still concerns that need to be addressed and that this study brings awareness fo
 	writing and maintaining secure applications. One example is the need for 
 	designing new authorization mechanisms since these are one of the most 
 	complex security features to implement.
-% 
-% \\\textit{\textbf{Poor Coding Practices Documentation:}}
-%   \Rui{too generic?}
-% 	Software documentation must be provided to developers with the
-% 	best practices to implement secure and maintainable software. Unmaintainable
-% 	code is difficult to test, analyze and re-use. Software companies must
-% 	do an effort to provide these artifacts to their developers, in order,
-% 	to avoid the introduction of new vulnerabilities while patching older ones.
 
 \section{Threats to Validity}\label{sec:threats}
 %
@@ -1581,11 +1553,13 @@ alleviate random irregularities in the maintainability differences of the
 baseline. 
 %
 
-\textit{\textbf{External Validity:}} The BCH tool uses private and open-source data to determine the thresholds for each guideline. We only analyze patches of open-source software.
+\textit{\textbf{External Validity:}} The BCH tool uses private and open-source data to 
+determine the thresholds for each guideline. We only analyze patches of open-source software.
 Thus, our findings may not extend to private/non-open source software. Different programming 
 languages may require different coding practices to address software safety. The 
 dataset comprises more commits in Java, i.e., the dataset may not be representative 
-of the population regarding programming languages. For both datasets, we a manual validation of the message of the commits was performed. Only commits in English were considered. Thus, our approach does not consider 
+of the population regarding programming languages. For both datasets, we a manual validation 
+of the message of the commits was performed. Only commits in English were considered. Thus, our approach does not consider 
 patches in any other language but English.
 
 \section{Related Work}\label{sec:rw}
@@ -1662,138 +1636,6 @@ commits and how much time does it take to do it;
 expand our methodology with other software quality properties; 
 validate these findings with closed/private
 software; and, expand this analysis to other quality standards.
-
-% \section{Plan A}
-%
-% Please, pay more attention to the cases with !.
-%
-% \begin{itemize}
-	% \item How this is a problem or has an impact to the software project?
-	%   What is the message to developers? (clarify)
-	% \item Implications: Discuss that depending on the project, maybe security
-	%   is a first class citizen and should be fixed above all. Don't
-	%   just state that patch risk assessment should take maintainability into account.
-	%   Saying that security should be a priority requires maybe a user study
-	%   as evidence (check if the literature available is not enough).
-	%   \item Implications: Review the secure programming languages implication. Check
-	%   if the idea of fully secure exists. The idea should be more secure, not
-	%   fully secure.
-  % \item [!] Implications: \textit{I am not sure how the computer science curricula got mentioned
-  %   from a motivation. I don't think vulnerabilities are been introduced, its
-  %   more that they get exposed. In this case, the implication does not make
-  %   much sense from a practical point of view.} -> Why not? Shouldn't
-  %   maintainable security be introduced in the computer science curricula since
-  %   we have evidence that developers might not following good practices while
-  %   patching? If they learn it in college and are aware of it in their jobs
-  %   won't they be better prepared?
-  % \item [!] \textit{It did take me several readings to understand the paper, especially the approach} -
- %  what to do with this @rui?
- %    \begin{itemize}
- %      \item Ehmm... strange... we need to improve the approach then. Thoughts?
- %    \end{itemize}
-  % \item [!] \textit{Fig 4, although it looks impressive, I am not sure how to read the figure} - what
-  % should we do @rui?
-  %   \begin{itemize}
-  %     \item Carefully explain it in the caption?
-  %   \end{itemize}
-  % \item [!] \textit{Fig 5, 6 and 7 are not the best ways to portray your findings. For instance, I am
-  % still not sure how the positive, none and negative metrics are calculated and normalized} - what
-  % is the best way then?
-  %   \begin{itemize}
-  %     \item Strange comment...
-  %   \end{itemize}
-  % \item \textit{Authors carefully highlight the key messages of each research question and answer
-  % all accordingly} - Improve this.
-  % \item [!] T2v: \textit{wrong assumption: patching commit should also be responsible to preserve the
-  % maintainability.... The patching commit is to fix the vulnerability and to put the system is
-  % an error-free, executable state so that the fix can be tested} -> I agree with this for vulnerabilities
-  % that are the result of errors. For example, a bad expection handling, a memory leak that led to
-  % a denial-of-service attack, NPE, etc. However, there are many other vulnerabilities whose
-  % exploits do not have interference on systems execution. So, what to do here? Should we divide
-  % the study by vulnerabilities and their implications on systems? Should we divide it by severity levels?
-  %   \begin{itemize}
-  %     \item We need to discuss this... I think this related to the next point.
-  %   \end{itemize}
-  % \item \textit{authors write "...important to write maintainable code to support the production
-  % of more secure software...". Relationship is not clear nor is it backed by some evidence} ->
-  % Improve this.
-  % \item Drop the word patch. Security patches are not patches. Refactorings is perfective
-  % or preventive maintenance, whereas patching a vulnerability is corrective maintenance.
-  % \item Discuss better the fact of not using other important aspects for the baseline such as the
-  % size of the changed method and complexity by metrics. Soften the part where it says we should
-  % have gone beyond size.
-  % \item \textit{ Figure 4 does not indicate that or support the statement that “patching
-  % vulnerabilities has a very significant number of negative cases for all guidelines”. Besides a
-  % corresponding statistical test that supports this statement, even the swarm and box plotz itself
-  % clearly tell a different story. So, authors may rethink this statement or better explain how they
-  % come to this conclusion.} -> We are overselling here. Improve it.
-  % \item \textit{Authors state that they assume for the Pontas dataset that the last commit related
-  % to patching being the actual patch while the parent of the first patch-related commit is assumed
-  % to be the vulnerable version. However, nothing is said whether this assumption holds all the time.
-  % So, how did authors validate their assumption? This is missing, but should be added.} - Improve this.
-  % \item \textit{In Section 3-C, for computing and comparing the maintainability, only security commits
-  % (and parent commit) are mentioned. Did you apply the same method also the the regular changes that
-  % you use to compare with security commits? Please make this clear, currently this is ignored in the
-  % particular  (sub) section.} - Improve this.
-  % \item \textit{For clarification, the authors explained that they performed a manual investigation
-  % for RQ3. It would be beneficial for more details.} -> Clarify this.
-  % \item \textit{In terms of presentation, the results were a bit difficult to follow at times as they
-  % did not contain contextualization. For example, “negative cases” can seem a bit ambiguous when
-  % referencing the relationship between the impact with guidelines.} -> Improve this.
-
-% \end{itemize}
-
-% \section{Plan B}
-%
-% Baseado nos reviewers, eu acho que para seguir as orientaçoes deles de refletir e fortalecer
-% a nova assumption e as implicaçoes, teriamos de acrescentar ao Plano A, os proximos pontos
-% antes de submeter à ESME.
-%
-% \begin{itemize}
-% \item \textbf{Step 1:} Pegar nos casos em que o impacto na maintainability foi negativa e ver se foram modificados
-% depois e se sim, se houve melhoria da maintainability. -> isto para então resolver a questao da
-% assumption errada.
-% \item \textbf{Step 2:} Se não existir nenhuma alteração, entao talvez entrar em contacto com os developers
-% e perguntar se quando fizeram o patch tiveram em consideração maintainability do projecto. E se não porquê.
-% \item Problemas de baselines e testes acho que nao vale a pena pegar porque vai depender
-% do reviewer (eu acho).
-% \end{itemize}
-%
-% Qual é o plano que acha melhor? Como prosseguir?
-%
-% A discutir, mas acho que por agora era tentar fazer o 1.
-%
-% \section{Later}
-%
-% \begin{itemize}
-% 	\item \textbf{Assumptions:}\textit{authors measure the maintainability directly after the patch. inestad it should look
-%   for multiple follow up commits and how maintainability evolves there, as it is likely that certain
-%   issues are addresses AFTER the patching commit} -> I think we should see if later commits touch on
-%   the patch and measure their maintainability again. Was a less maintainable fix pushed first and then
-%   refactored, or does the code stay less maintainable?
-%   \item \textbf{To back up implications:} \textit{In terms of the push for changes to curricula, I would agree that it is important
-%   to always stress writing high quality code. However, the support by the study is not strong. Given a
-%   majority of patches did not decrease maintainability, it shows that there is a reasonable focus on maintainability.
-%   Similarly, it is important to understand the circumstances when it decreased. As previously mentioned, organizations
-%   like would prioritize getting the system patched faster (especially in the case of a severe vulnerability) over
-%   its maintainability.} -> Work with practioners to understand if they were taking into consideration maintainability?
-%   \item \textbf{Baseline:}\textit{Authors just search for commits of a similar size. There are other important aspects
-%   that are entirely neglected such as size of the changed method or how complex it it (by means of
-%   metrics)} -> Improve baseline.
-%   \item \textbf{Baseline:}\textit{Similarly, the comparison to “regular” commits really compares security patches to
-%   any other type of change. It would have been more meaningful to compared them to specific types of
-%   commits, like bug fixes (e.g., are security fixes less maintainable than bug fixes?).}
-%   \item \textbf{Tests:}\textit{or the chosen statistical test, the hypothesis may be not well chosen as it just checks for
-%   the same distribution of pairs of versions. However, this means if a similar number of pairs have
-%   a negative and a positive impact, the hypothesis holds however, if this is not the case, the statistical
-%   test does not state in which direction the hypothesis is rejected, that is, what eventually is the
-%   alternative hypothesis. But this is necessary to get insights whether maintainability is hampered or not.
-%   Authors may rethink the choice of the hypothesis or even the test itself.} -> What about this?
-%   \item \textbf{Thesis idea (PL):} It is important
-%   to understand the correlation between the severity of the vulnerability and the programming language as well
-%   as the maintainability impact. It is not clear how software written a more security-focused language would
-%   inherently be more maintainable (it assumes the flaw is the language and not the person).
-% \end{itemize}
  
 \bibliographystyle{spmpsci}
 \bibliography{emse20}   % name your BibTeX data base
