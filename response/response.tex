@@ -296,7 +296,7 @@ security engineers assess the risk of their patches and guide
 them on performing better patches. But for now we only try
 to understand the impact of security patches on those metrics.
 
-All in all, we arguee that BCH is the right tool and enough
+All in all, we argue that BCH is appropriate 
 to perform the current analysis.
 
 \newreviewer{2}
@@ -372,7 +372,7 @@ the abstract, Section 1 (\textit{Introduction}) and Section 5 (\textit{Study Imp
 
 \end{revcomment}
 
-\Us Thank you for bringing our attention to this paper. We integrated
+\Us Thank you for bringing our attention to this paper. We now discuss
 this paper in the Related Work section and used it to support some 
 of our claims and findings.
 
@@ -404,7 +404,7 @@ to use regular changes/regular commits instead of baseline and non-security comm
     \end{itemize}
 \end{revcomment}
 
-\Us Thank you for raising this concern. The right number of security patches is $1300$ ($624$ from Ponta et al. and 
+\Us Thank you for raising this issue. The right number of security patches is $1300$ ($624$ from Ponta et al. and 
 $676$ from Secbench). The $1330$ value is a typo, we fixed the issue. Regarding the second point, $1282$ commits is
 the equivalent to the $624$ patches that integrate the Pontas et al. dataset where one patch
 can have multiple commits. The $1282$ commits are referring to the Ponta et al. dataset and 
@@ -522,9 +522,9 @@ calculations. Those data points were disregarded from the study.
 
 Those are the cases that were tossed from the initial $1300$ patches. 
 
-Regarding the second question, thank you for pointing out the issue. 
-While manually inspecting the patches, we were not able to map
-the issues to any CWE ID due to the lack of quality information on the 
+Regarding the second question:
+while manually inspecting the patches, we were not able to map
+the issues to any CWE ID due to the lack of information on the 
 problem and solution. Yet, we manually validated the list again and after discussion 
 we classified more $40$ cases. We also clarified this on the paper:
 
@@ -547,7 +547,8 @@ problem and solution.
     \end{itemize}
 \end{revcomment}
 
-\Us Yes, for each security commit we collected a random regular change from the same project.
+\Us Yes, for each security commit we collected a random regular change from the same project. We have clarified it 
+in the paper. 
 
 \begin{revcomment}[2.11]
     Section 3\\
@@ -636,7 +637,7 @@ floss-refactorings were not being considered.
     \end{itemize}
 \end{revcomment}
 
-\Us Yes, we started with all the guidelines but after analyzing the BCH results 
+\Us We started with all the guidelines but after analyzing the BCH results 
 we found that some of the results of the \emph{Keep Your Codebase Small} guidelines were not viable
 because they retrieved values above the limit set by BCH ($20$ Person-years). We did not want 
 to lose more data points. Thus, we decided to not consider the guideline for all projects.
