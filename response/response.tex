@@ -562,11 +562,28 @@ in the paper.
     \end{itemize}
 \end{revcomment}
 
-\Us Yes, we are looking for regular changes with the same size as security commits. We 
+\Us Yes, we are looking for regular changes with the same size as security commits
+from the same project. However, 
+for some cases, it was difficult to find the exact same size. Thus, we  
+searched for an approximation. Every 10 attempts of failling to get a commit with 
+the same size, we spanned the range size. We clear the methodology in the paper
+in Section 3.2 \textit{(Security Patches vs. Regular Changes)}.
+
+``I would have expected that you randomly collected 1300 non-security commits to compare 
+with the 1300 security commits.'': Although we started with 1300 commits, 
+$331$ cases were tossed due to BCH limitations. In addition, BCH
+takes substantial time to process this amount of cases. 
+Since the comparison is between 
+the final dataset of $969$ patches and the baselines. We produced d
+baselines with the final number of viable results obtained for the security 
+dataset.
+
+We 
 have collected a baseline of random changes only (no size restrictions) in the past and 
 performed the same evaluation. We now present the results for both baselines: \textit{size-baseline}, where we consider
 size appproximation; and, \textit{random-baseline}, where we consider all the regular
 changes characteristics.
+
 
 \begin{revcomment}[2.12]
     Section 3\\
@@ -781,7 +798,7 @@ of vulnerabilities.
     \end{itemize}
 \end{revcomment}
 
-\Us
+\Us Yes, cases with low 
 
 \begin{revcomment}[2.21]
     Section 4\\

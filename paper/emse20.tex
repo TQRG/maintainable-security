@@ -790,41 +790,47 @@ considering random changes and all their characteristics; and,
 \textit{size-baseline}, considering also random changes
 but with the same size as security patches.
 
-\subsubsection{Size-Baseline} 
+\subsubsection{Random-Baseline} 
 
-As for the security patches, for each regular change or refactoring, we also 
+As for the security patches, for each regular change, we also 
 need the commit performing the regular change (\emph{sha-reg}) and version of 
 the software before the change (\emph{sha-reg-p}). For each security patch, a 
-\emph{diff} with an approximate 
-size was fetched to a regular change. Due to the complexity of some patches, it was not possible 
+random commit from the same project is selected (\emph{sha-reg}).
+\emph{sha-reg-p} is the commit performed previous to the 
+regular change, \emph{sha-reg}.
+
+\subsubsection{Size-Baseline} 
+
+For the size-baseline, we also need to obtain the regular change (\emph{sha-reg})
+and the version of the software before the change (\emph{sha-reg-p}). 
+First, the \emph{diff}
+between the security patch and its parent is calculated.
+Then, a random commit/regular change from 
+the same project is selected (\emph{sha-reg}). The 
+\emph{diff} between \emph{sha-reg} and its parent (\emph{sha-reg-p})
+is calculated and compared to the \emph{diff} from the security patch.
+Due to the complexity of some patches, it was not possible 
 to find patches with the exact number of added and deleted lines. 
-Our search uses the security patch \emph{diff} to look for a 
-\emph{diff} of the same size. The algorithm integrates the following 
-steps:
+Thus, we looked for an approximation.
+% The algorithm integrates the following steps:
 
-\begin{enumerate}
-\item Calculates the \emph{diff} between the security patch commit 
-(\emph{sha}) and its parent (\emph{sha-p}).
-\item Selects a random commit from the project (\emph{sha-reg}).
-\item Calculates the \emph{diff} between the random commit (\emph{sha-reg}) 
-and its parent (\emph{sha-reg-p}).
-\item Checks if the size from the regular change has the 
-same/approximated size to the security patch.
-\end{enumerate}
+% \begin{enumerate}
+% \item Calculates the \emph{diff} between the security patch commit 
+% (\emph{sha}) and its parent (\emph{sha-p}).
+% \item Selects a random commit from the project (\emph{sha-reg}).
+% \item Calculates the \emph{diff} between the random commit (\emph{sha-reg}) 
+% and its parent (\emph{sha-reg-p}).
+% \item Checks if the size from the regular change has the 
+% same/approximated size to the security patch.
+% \end{enumerate}
 
-The pair of the random commit and its parent is accepted if the 
+The pair of the regular change (\emph{sha-reg}) and its parent (\emph{sha-reg-p}) is accepted if the 
 \emph{diff} size fits in the range size. This range widens every 
 $10$ attempts to search for a change with the same size. We 
 originate the regular changes from the security commits to ensure 
 that differences in maintainability are not a consequence of 
 characteristics of different projects.
 
-\subsubsection{Random-Baseline} 
-
-As for the security patches, for each regular change or refactoring, we also 
-need the commit performing the regular change (\emph{sha-reg}) and version of 
-the software before the change (\emph{sha-reg-p}). For each security patch, 
-a random commit is selected from the the project (\emph{sha-reg}).
 
 \subsection{Why Bettter Code Hub?}
 
