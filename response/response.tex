@@ -525,7 +525,15 @@ Those are the cases that were tossed from the initial $1300$ patches.
 Regarding the second question:
 while manually inspecting the patches, we were not able to map
 the issue to any CWE with confidence due to the lack of quality
-information on the vulnerability/patch. We clarified this in the paper.
+information on the vulnerability/patch for $103$ patches. 
+We clarified this in the paper.
+
+\begin{quote}
+    A total 
+of $103$ patches were not classified because we were not able to map
+the issue to any CWE with confidence due to the lack of quality
+information on the vulnerability/patch.
+\end{quote}
 
 \begin{revcomment}[2.10]
     Section 3\\
@@ -718,6 +726,41 @@ in a footnote:
     their usual location in code, and when they are introduced in the 
     development life cycle. Available here: 
     \url{https: //cwe.mitre.org/data/definitions/1000.html}
+\end{quote}
+
+In Figure 7a, we present the entire distribution of the $969$ vulnerabilities per
+each node of the 1st-level of the Research Concepts tree.
+Looking at those results, we detected that the percentage of cases for CWE-707 ($30.4\%$) 
+and CWE-664 ($32.8\%$) were considerably higher in the dataset than the rest of CWEs.
+Thus, we decided to look at lower levels of behavior for both CWEs: CWE-707
+results are presented in Figure-7b and CWE-664 results are presented in Figure-7c.
+In Figure-7b, all the CWEs presented are sub levels of the CWE-707. The same
+happens for Figure-7c, but the CWEs are sub levels if the CWE-664.
+
+We added the previous numbers to the paper and clarified that we are considering lower levels
+of vulnerabilities.
+
+\begin{quote}
+    In \emph{RQ2}, we report/discuss the impact of security patches on
+    software maintainability per weakness (CWE). We use the weakness definition
+    and taxonomy proposed by the \emph{Common Weakness Enumeration} (cf. Section 2).
+    Figure 7 shows three different charts. Figure \emph{7-a}, presents
+    the impact of the $969$ patches grouped by the first level weaknesses from
+    the \emph{Research Concepts} list. While the Figures \emph{7-b} and
+    \emph{7-c} present the impact on maintainability for lower levels of 
+    weaknesses for the most prevalent weaknesses in Figure \emph{7-a}:
+    \emph{Improper Neutralization} (CWE-707) 
+    and \emph{Improper Control of a Resource 
+    Through its Lifetime} (CWE-664), respectively.
+    
+    In Figure~7-\emph{a}, there is no clear evidence of the impact on 
+    maintainability per weakness. Yet, it is important to note that
+    overall there is a very considerable number of cases that hinder
+    maintainability---between $30\%$ and $60\%$. The CWE-707 and CWE-664 
+    weaknesses integrate the higher number of cases compared to the remaining 
+    ones: $295$ ($30.4\%$) data points and $318$ ($32.8\%$) data points, respectively. 
+    Thus, we present an analysis of their sub-weaknesses on 
+    Figure~7-\emph{b} and Figure~7-\emph{c}, respectively. 
 \end{quote}
 
 \begin{revcomment}[2.19]

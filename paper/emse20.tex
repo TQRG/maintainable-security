@@ -639,11 +639,11 @@ For instance,  the \texttt{Fix CVE-2014-1608: mc\_issue\_attachment\_get SQL inj
 (Accessed on \today)}) is a \emph{CWE-89: Improper Neutralization of Special Elements used 
 in an SQL Command ('SQL Injection')}\footnote{CWE-$89$ details available at \url{https://cwe.mitre.org/data/definitions/89.html} 
 (Accessed on \today)} according to the CWE taxonomy.
-We were able to classify a total of $906$ patches using the CWE taxonomy:
+We were able to classify a total of $866$ patches using the CWE taxonomy:
 the CWE's for $536$ patches were automatically scraped from the National 
 Vulnerability Dataset (NVD); while the other $370$ patches were manually classified by 
 the authors following the \emph{Research Concepts} CWE's list\footnote{Research Concepts list available at \url{https://cwe.mitre.org/data/definitions/1000.html}}. A total 
-of $63$ patches were not classified because we were not able to map
+of $103$ patches were not classified because we were not able to map
 the issue to any CWE with confidence due to the lack of quality
 information on the vulnerability/patch.
 
@@ -1348,29 +1348,31 @@ affect open-source software maintainability?}}
 In \emph{RQ2}, we report/discuss the impact of security patches on
 software maintainability per weakness (CWE). We use the weakness definition
 and taxonomy proposed by the \emph{Common Weakness Enumeration} (cf. Section~\ref{sec:motivation}).
-Figure~\ref{fig:pat} shows three different charts: \emph{(\ref{fig:pat}-a)}, shows
-the impact of all patches grouped using the first-level weaknesses from
-the \emph{Research Concepts}~\footnote{Research Concepts 
+Figure~\ref{fig:pat} shows three different charts. Figure \emph{\ref{fig:pat}-a}, presents
+the impact of the $969$ patches grouped by the first level weaknesses from
+the \emph{Research Concepts}\footnote{Research Concepts 
  is a tree-view provided by the Common Weakness Enumeration (CWE) website 
  that intends to facilitate research into weaknesses. It is organized 
  according to 
  abstractions of behaviors instead of how they can be detected, 
  their usual location in code, and when they are introduced in the 
- development life cycle. Available here: \url{https://cwe.mitre.org/data/definitions/1000.html}
-} list on CWE; and, \emph{(\ref{fig:pat}-b)} and  
-\emph{(\ref{fig:pat}-c)} present the impact on maintainability per sub-weakness of two 
-weaknesses from \emph{(\ref{fig:pat}-a)}: \emph{Improper Neutralization} (CWE-707) and 
-\emph{Improper Control of a Resource 
+ development life cycle. The list is available here: \url{https://cwe.mitre.org/data/definitions/1000.html}
+} list. While the Figures \emph{\ref{fig:pat}-b} and
+\emph{\ref{fig:pat}-c} present the impact on maintainability for lower levels of 
+weaknesses for the most prevalent weaknesses in Figure \emph{\ref{fig:pat}-a}:
+\emph{Improper Neutralization} (CWE-707) 
+and \emph{Improper Control of a Resource 
 Through its Lifetime} (CWE-664), respectively.
 
 In Figure~\ref{fig:pat}-\emph{a}, there is no clear evidence of the impact on 
 maintainability per weakness. Yet, it is important to note that
 overall there is a very considerable number of cases that hinder
-maintainability---between $30\%$ and $60\%$.
-The CWE-707 ($295$) and CWE-664 ($318$) 
+maintainability---between $30\%$ and $60\%$. The CWE-707 and CWE-664 
 weaknesses integrate the higher number of cases compared to the remaining 
-ones. Thus, we present an analysis of their sub-weaknesses on 
+ones: $295$ ($30.4\%$) data points and $318$ ($32.8\%$) data points, respectively. 
+Thus, we present an analysis of their sub-weaknesses on 
 Figure~\ref{fig:pat}-\emph{b} and Figure~\ref{fig:pat}-\emph{c}, respectively. 
+
 Results shows that patching vulnerabilities may hinder 
 the maintainability of open-source software in $4$ different sub-weaknesses: 
 \emph{Improper Input Validation (CWE-20)}, \emph{Information Exposure 
