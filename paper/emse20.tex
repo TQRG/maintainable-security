@@ -586,16 +586,16 @@ illustrated in Figure~\ref{fig:met}.
 We use a combined dataset of $1300$ security patches which is 
 the outcome of mining and manually inspecting a total of $312$ 
 GitHub projects. The combined dataset integrates two different
-works: SECBENCH~\cite{reis2017secbench,Reis:2017:IJSSE} and Ponta et al.~\cite{10.1109/MSR.2019.00064}.
+works: Secbench~\cite{reis2017secbench,Reis:2017:IJSSE} and Ponta et al.~\cite{10.1109/MSR.2019.00064}.
 
-Reis and Abreu 
-($2017$) mined open-source software aiming at the extraction of 
+\textbf{Reis and Abreu 
+($2017$)} mined open-source software aiming at the extraction of 
 real---created by developers---patches of security vulnerabilities 
 to test and assess the performance of static analysis 
 tools~\cite{reis2017secbench,Reis:2017:IJSSE} since using hand-seeded test cases or 
 mutations can lead to misleading assessments of the capabilities of 
 the tools~\cite{just2014mutants}. The study yielded a dataset of 
-$676$ patches for $16$ different security vulnerability types, dubbed as SECBENCH. 
+$676$ patches for $16$ different security vulnerability types, dubbed as Secbench. 
 The vulnerability types are based on the OWASP Top $10$ of 
 $2013$~\cite{oswap:2013} and OWASP Top $10$ of 
 $2017$~\cite{oswap:2017}. Each test case of the dataset is a 
@@ -603,8 +603,8 @@ triplet: the commit before the patching (\emph{sha-p}), the commit responsible
 for the patching (\emph{sha}), and the snippets of code that differ from one 
 version to another (typically, called \emph{diffs})---where one 
 can easily review the code used to fix the vulnerability. 
-%
-Ponta et al. ($2019$) tracked the \url{pivotal.io} website for 
+
+\textbf{Ponta et al. ($2019$)} tracked the \url{pivotal.io} website for 
 vulnerabilities from $2014$ to $2019$. For each new vulnerability, 
 the authors manually searched for references to commits involved in 
 the patch on the National Vulnerability Database (NVD) website. 
@@ -642,7 +642,7 @@ in an SQL Command ('SQL Injection')}\footnote{CWE-$89$ details available at \url
 We were able to classify a total of $906$ patches using the CWE taxonomy:
 the CWE's for $536$ patches were automatically scraped from the National 
 Vulnerability Dataset (NVD); while the other $370$ patches were manually classified by 
-the authors following the \emph{Research Concepts} CWE's list. A total 
+the authors following the \emph{Research Concepts} CWE's list\footnote{Research Concepts list available at \url{https://cwe.mitre.org/data/definitions/1000.html}}. A total 
 of $63$ patches were not classified because we were not able to map
 the issue to any CWE with confidence due to the lack of quality
 information on the vulnerability/patch.
@@ -1346,11 +1346,18 @@ vulnerabilities may need different levels of attention---high/medium vulnerabili
 \textit{\textbf{RQ2: Which weaknesses are more likely to
 affect open-source software maintainability?}}
 In \emph{RQ2}, we report/discuss the impact of security patches on
-software maintainability per weakness. We use the weakness definition
+software maintainability per weakness (CWE). We use the weakness definition
 and taxonomy proposed by the \emph{Common Weakness Enumeration} (cf. Section~\ref{sec:motivation}).
 Figure~\ref{fig:pat} shows three different charts: \emph{(\ref{fig:pat}-a)}, shows
 the impact of all patches grouped using the first-level weaknesses from
-the \emph{Research Concepts} list on CWE; and, \emph{(\ref{fig:pat}-b)} and  
+the \emph{Research Concepts}~\footnote{Research Concepts 
+ is a tree-view provided by the Common Weakness Enumeration (CWE) website 
+ that intends to facilitate research into weaknesses. It is organized 
+ according to 
+ abstractions of behaviors instead of how they can be detected, 
+ their usual location in code, and when they are introduced in the 
+ development life cycle. Available here: \url{https://cwe.mitre.org/data/definitions/1000.html}
+} list on CWE; and, \emph{(\ref{fig:pat}-b)} and  
 \emph{(\ref{fig:pat}-c)} present the impact on maintainability per sub-weakness of two 
 weaknesses from \emph{(\ref{fig:pat}-a)}: \emph{Improper Neutralization} (CWE-707) and 
 \emph{Improper Control of a Resource 
