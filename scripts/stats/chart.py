@@ -41,40 +41,46 @@ def save_report(path, name):
     plt.tight_layout()
     plt.savefig('{}/{}'.format(path, name))
 
-def main_comparison_chart(reports, df_sec, df_reg):   
+def main_comparison_chart(reports, dfs):   
         
-        test = pd.concat((tests.hypothesis_test(df_reg['diff'], 'reg'), 
-                            tests.hypothesis_test(df_sec['diff'], 'sec')),
+        df_sec, df_rand_reg, df_size_reg = dfs['security'], dfs['random'], dfs['size']
+
+        test = pd.concat((tests.hypothesis_test(df_rand_reg['diff'], 'random-reg'), 
+                            tests.hypothesis_test(df_size_reg['diff'], 'size-reg'),
+                            tests.hypothesis_test(df_sec['diff'], 'security')),
                             ignore_index=True)
                         
-        total_sec, total_reg = data.filter_results(df_sec), data.filter_results(df_reg)   
+        total_sec, total_rand_reg, total_size_reg = data.filter_results(df_sec), \
+                                                    data.filter_results(df_rand_reg[pd.notnull(df_rand_reg['diff'])]),  \
+                                                    data.filter_results(df_size_reg)    
         db_size = len(df_sec)  
+        db_rand_size = len(df_rand_reg[pd.notnull(df_rand_reg['diff'])])
 
-        rep = {'neg' : pd.Series([total_reg['neg']/db_size, total_sec['neg']/db_size]),
-                'neg_abs' : pd.Series([total_reg['neg'], total_sec['neg']]),
-                'pos' : pd.Series([total_reg['pos']/db_size, total_sec['pos']/db_size]),
-                'pos_abs' : pd.Series([total_reg['pos'], total_sec['pos']]),
-                'nul' : pd.Series([total_reg['nul']/db_size, total_sec['nul']/db_size]),
-                'nul_abs' : pd.Series([total_reg['nul'], total_sec['nul']]),
-                'type' : pd.Series(['Regular Change','Security Change'])}
+        rep = {'neg' : pd.Series([total_rand_reg['neg']/db_rand_size, total_size_reg['neg']/db_size , total_sec['neg']/db_size]),
+                'neg_abs' : pd.Series([total_rand_reg['neg'],  total_size_reg['neg'], total_sec['neg']]),
+                'pos' : pd.Series([total_rand_reg['pos']/db_rand_size, total_size_reg['pos']/db_size , total_sec['pos']/db_size]),
+                'pos_abs' : pd.Series([total_rand_reg['pos'],  total_size_reg['pos'], total_sec['pos']]),
+                'nul' : pd.Series([total_rand_reg['nul']/db_rand_size, total_size_reg['nul']/db_size , total_sec['nul']/db_size]),
+                'nul_abs' : pd.Series([total_rand_reg['nul'],  total_size_reg['nul'], total_sec['nul']]),
+                'type' : pd.Series(['Regular Change\n(Random Baseline)', 'Regular Change\n(Size Baseline)', 'Security Change'])}
         
-        df, idx, fig, ax = config_report(rep, len(rep['type']), 7, 6, 111)
+        df, idx, fig, ax = config_report(rep, len(rep['type']), 7, 5, 111)
         
         set_bars(df, idx)
-        set_ticks(df, idx, 9) 
+        set_ticks(df, idx, fontsize=12) 
         
         plt.subplots_adjust(left=0.2, right=0.85, top=0.9, bottom=0.1)
-        plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.07), fancybox=True, ncol=3, fontsize=8)
+        plt.legend(loc='upper center', bbox_to_anchor=(0.5, 1.1), fancybox=True, ncol=3, fontsize=11)
 
-        y = 1.2
+        y = 2.2
         for i, r in test[::-1].iterrows():
             p = format_p_value(r['pvalue'])
             box_text = '$\overline{x}$='+ '{:.{}f}'.format(r['mean'], 2) + '\nM=' + '{:.{}f}'.format(r['med'], 2) + '\np' + p
             ax.text(0.4, y, box_text , bbox={'facecolor':'white', 'alpha':0.8, 'pad':4}, fontsize=10)
             y -= 1.1
         
-        save_report(reports, 'main_comparison.pdf')
-        test.join(df).to_csv(reports+'/comparison_stats_report.csv', index=False)
+        save_report(reports, 'baseline.pdf')
+        test.join(df).to_csv(reports+'/baseline_stats_report.csv', index=False)
 
 def main_per_cwe_spec_chart(reports, cwe, df, wilcoxon = True):
     
