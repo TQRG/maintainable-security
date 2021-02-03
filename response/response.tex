@@ -787,7 +787,9 @@ of vulnerabilities.
     \end{itemize}
 \end{revcomment}
 
-\Us
+\Us In total, we inspected around $25$ cases whose maintainability difference/
+impact was zero to understand what was leading to a higher number of cases with no impact.
+
 
 \begin{revcomment}[2.20]
     Section 4\\
@@ -798,7 +800,18 @@ of vulnerabilities.
     \end{itemize}
 \end{revcomment}
 
-\Us Yes, cases with low 
+\Us As we described in comment $2.19$, we manually inspected $25$ cases.
+Many of those cases were changes of small size (< $10$ LOCs) where
+refactorings were usually improving names of variables, functions, cases of type
+conversion, etc. Changes that have no impact on the metrics we are 
+evaluating. 
+
+Our concern by presenting a total random baseline 
+was that comparing regular changes with security changes with very different sizes---a scenario 
+that could happen---was unfair. Thus, we chose to create this baseline.
+However, we also curated a total random baseline in the past and we now 
+present both baselines in the paper. 
+
 
 \begin{revcomment}[2.21]
     Section 4\\
@@ -862,7 +875,7 @@ baseline and completed the work by presenting now two baselines (size-baseline a
 
 \end{revcomment}
 
-\Us We kindly thank you the reviewer for the comments. We added a sub Section to 
+\Us We kindly thank the reviewer for the comments. We added a sub Section to 
 the paper called \textit{Why Better Code Hub?}. We compare BCH with other tools
 that perform code analysis and motivate why we find BCH to be the best fit for us.
 
