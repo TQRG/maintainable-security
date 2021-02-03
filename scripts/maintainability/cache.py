@@ -56,6 +56,9 @@ class Cache():
     
     def set_data(self, cache):
         self._data = cache
+    
+    def set_storage_path(self, path):
+        self.storage_path = path
 
     def get_value(self, key):
         """Return value for given key."""
