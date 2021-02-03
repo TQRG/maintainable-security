@@ -19,14 +19,7 @@ def merge_cache(cache, output):
         merged_cache = merged_cache.merge_cache(cache)
 
     merged_cache.set_storage_path(output)
-    print(merged_cache.storage_path)
     merged_cache.save_data()
-    # json_filename = change_extension(output, '.json')
-    # print(json_filename)
-    # datas = json.dumps(merged_cache)
-    # with ZipFile(output, 'w', compression=ZIP_DEFLATED) as myzip:
-    #     myzip.writestr(json_filename, datas)
-
 
 
 if __name__ == "__main__":
