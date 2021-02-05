@@ -299,6 +299,8 @@ to understand the impact of security patches on those metrics.
 All in all, we argue that BCH is appropriate 
 to perform the current analysis.
 
+\pagebreak
+
 \newreviewer{2}
 
 \begin{revcomment}[2.1]
@@ -790,7 +792,6 @@ of vulnerabilities.
 \Us In total, we inspected around $25$ cases whose maintainability difference/
 impact was zero to understand what was leading to a higher number of cases with no impact.
 
-
 \begin{revcomment}[2.20]
     Section 4\\
     \begin{itemize}
@@ -801,7 +802,7 @@ impact was zero to understand what was leading to a higher number of cases with 
 \end{revcomment}
 
 \Us As we described in comment $2.19$, we manually inspected $25$ cases.
-Many of those cases were changes of small size (< $10$ LOCs) where
+Many of those cases were changes of small size ($< 10$ LOCs) where
 refactorings were usually improving names of variables, functions, cases of type
 conversion, etc. Changes that have no impact on the metrics we are 
 evaluating. 
@@ -853,6 +854,8 @@ Nevertheless, we also feel that considering size may be limitating the generaliz
 of the characteristics of regular changes. Thus, we added to RQ3 our initial random 
 baseline and completed the work by presenting now two baselines (size-baseline and random-baseline). 
 
+\pagebreak
+
 \newreviewer{3}
 
 \begin{revcomment}[3.1]
@@ -875,9 +878,61 @@ baseline and completed the work by presenting now two baselines (size-baseline a
 
 \end{revcomment}
 
-\Us We kindly thank the reviewer for the comments. We added a sub Section to 
-the paper called \textit{Why Better Code Hub?}. We compare BCH with other tools
-that perform code analysis and motivate why we find BCH to be the best fit for us.
+\Us We kindly thank the reviewer for the comments. 
+
+As mentioned in the paper, BCH checks GitHub codebases against $10$ engineering 
+guidelines as devised by Software Improvement Group (SIG). SIG has devised 
+these guidelines after many years of experience: analyzing more than $15$ million 
+lines of code every week, SIG maintains the industry’s largest 
+benchmark, containing more than $10$ billion lines of code across $200$+ 
+technologies; SIG is the only lab in the world certified by TÜViT to issue ISO 25010:2011
+certificates for Trusted Product Maintainability\footnote{Information available here: 
+\url{https://www.softwareimprovementgroup.com/methodologies/iso-iec-25010-2011-standard/}}.
+
+Each of the guidelines in isolation is pretty simple to understand, but, when 
+combined with the others, and, when evaluated as a whole, it becomes easy to see why 
+they would comprise the definition of good software. Furthermore, the relation of the entire set of
+guidelines to maintainability is well detailed in the SIG's book ``Building Maintainable 
+Software: Ten Guidelines for Future-Proof Code''
+\footnote{Available here: 
+\url{https://www.softwareimprovementgroup.com/resources/ebook-building-maintainable-software/}}.
+
+In this study, to clarify, we only focus on measuring software maintainability, we do not focus 
+on vulnerability detection or measuring security. Instead, we want to understand how software 
+maintainability is impacted by security patches. However, as we explained before, BCH is 
+based on the ISO 25010 which considers \emph{Security} as one of the main software product quality 
+characteristics since $2011$.
+
+There are other tools that measure the same metrics such as as Kiuwan; or, even 
+provide a model to calculate maintainability such as SonarCloud. However, we argue
+that BCH is a better tool for the following reasons:
+
+\begin{itemize}
+    \item Kiuwan measures 4 guidelines from the total set of $10$
+    guidelines that BCH measures for maintainability: Complexity, Duplicated 
+    Code, Size and Coupling\footnote{List available here: \url{https://www.kiuwan.com/docs/display/K5/Metrics}}. 
+    We did not find the full description of those metrics anywhere. In constrant, 
+    SIG provides a full description of the guidelines/metrics behind better code
+    hub plus their relation with maintainability on the book and several scientific papers. 
+    \item SonarCloud measures 5 guidelines from the total set of $10$
+    guidelines that BCH measures for maintainability: Complexity, Duplication, 
+    Issues, Size and Tests\footnote{List available here: \url{https://sonarcloud.io/documentation/user-guide/metric-definitions/}}. 
+    The tool rates maintainability with a letter based on the technical 
+    debt ratio which is calculated as the ratio between the cost to develop 
+    the software and the cost to fix it. But no information is provided 
+    on how the remediation cost and developmet cost are calculated. 
+    Better Code Hub contemplates a larger set of maintainability metrics 
+    and our formula for maintainability is based on metrics that are 
+    fully described.  
+\end{itemize}
+
+We do not know codify and did find the tool anywhere in static analysis tools 
+collections or even through organic search at Google.  
+
+We added a Section to 
+the paper called \textit{Why Better Code Hub?} where we motivate the Better Code Hub tool and 
+compare it with Kiuwan and SonarCloud.
+
 
 \begin{revcomment}[3.2]
 
@@ -888,7 +943,54 @@ that perform code analysis and motivate why we find BCH to be the best fit for u
 
 \end{revcomment}
 
-\Us
+\Us 
+
+In fact, the underlying maintainability model for BCH is documented with several
+(non-academic) reports linked at this page:
+\url{https://www.softwareimprovementgroup.com/methodologies/iso-iec-25010-2011-standard/} as 
+well as validated by the academic community in the following paper:
+
+\begin{verbatim}
+    Heitlager, Ilja, Tobias Kuipers, and Joost Visser. 
+    ``A practical model for measuring maintainability.'' 
+    6th international conference on the quality of information and 
+    communications technology (QUATIC 2007). 
+    IEEE, 2007.
+\end{verbatim}
+
+BCH's compliance criterion is derived from the requirements for 4-star level maintainability (cf. ISO 25010). 
+The concrete values of the thresholds used in BCH are documented also in their book Building Maintainability 
+Software: \url{https://www.softwareimprovementgroup.com/resources/ebook-building-maintainable-software/}.
+
+Further, the methodology for arriving at the thresholds is documented in the following 
+literature:
+
+\begin{verbatim}
+    Tiago L. Alves, Christiaan Ypma and Joost Visser. 
+    ``Deriving metric thresholds from benchmark data.'' 
+    IEEE International Conference on Software Maintenance (ICSME 2010). 
+    IEEE, 2010.
+
+    Tiago L. Alves, Jose Pedro Correia and Joost Visser. 
+    ``Benchmark-Based Aggregation of Metrics to Ratings.'' 
+    2011 Joint Conference of the 21st International Workshop on Software 
+    Measurement and the 6th International Conference on Software Process 
+    and Product Measurement. 
+    IEEE, 2011.
+
+    Robert Baggen, Jose Pedro Correia, Katrin Schill and Joost Visser. 
+    ``Standardized code quality benchmarking for improving software maintainability.'' 
+    Software Quality Journal.
+    Springer, 2011.
+
+\end{verbatim}
+
+SIG performs the threshold calibration
+yearly on a proprietary data set to satisfy the requirements of TUViT to
+be a certified measurement model. However, please note that this data set 
+cannot be shared due to non-disclosure agreements between SIG and its 
+clients.
+
 
 \begin{revcomment}[3.3]
 
@@ -899,7 +1001,7 @@ that perform code analysis and motivate why we find BCH to be the best fit for u
 
 \end{revcomment}
 
-\Us
+\Us 
 
 
 \end{document}
