@@ -943,54 +943,59 @@ compare it with Kiuwan and SonarCloud.
 
 \end{revcomment}
 
-\Us 
-
-In fact, the underlying maintainability model for BCH is documented with several
-(non-academic) reports linked at this page:
-\url{https://www.softwareimprovementgroup.com/methodologies/iso-iec-25010-2011-standard/} as 
-well as validated by the academic community in the following paper:
+\Us In our work, we follow the same methodology as the previous work 
+mentioned bellow but instead of measuring
+the impact of energy-oriented changes on software maintainability, 
+we measure the impact of security patches.
 
 \begin{verbatim}
-    Heitlager, Ilja, Tobias Kuipers, and Joost Visser. 
-    ``A practical model for measuring maintainability.'' 
-    6th international conference on the quality of information and 
-    communications technology (QUATIC 2007). 
-    IEEE, 2007.
+    Luis Cruz, Rui Abreu, John Grundy, Li Li and Xin Xia. 
+    ``Do Energy-oriented Changes Hinder Maintainability?.'' 
+    IEEE International Conference on Software Maintenance and 
+    Evolution (ICSME). 
+    IEEE, 2019.
 \end{verbatim}
 
-BCH's compliance criterion is derived from the requirements for 4-star level maintainability (cf. ISO 25010). 
-The concrete values of the thresholds used in BCH are documented also in their book Building Maintainability 
-Software: \url{https://www.softwareimprovementgroup.com/resources/ebook-building-maintainable-software/}.
+Software quality is important because it is ultimately related to 
+the overall cost of developing and maintaining secure and safe software 
+applications. Static analysis tools (SATs) have been built to automatically 
+detect software vulnerabilities. However, these tools only locate 
+the issues in the code and do not provide any assistance or guidance 
+on the impact of the problem (vulnerability) or on the quality of the solution 
+(patch). Improving software security is not a trivial task and 
+requires implementing patches that might affect software 
+maintainability. Many times developers even introduce 
+new vulnerabilies while patching software vulnerabilities
+---harming software reliability and introducing 
+technical debt.
+Research found that $34\%$ of the security patches 
+performed introduce new problems and $52\%$ are incomplete and do not 
+fully secure systems.
 
-Further, the methodology for arriving at the thresholds is documented in the following 
-literature:
+Our hypothesis is that some of these patches may 
+have a negative impact on the software maintainability. With this 
+study, we want to understand which maintainability metrics can guide 
+security engineers on producing patches with better quality---which 
+we evaluate with \textit{\textbf{RQ1: What is the impact of security patches on the
+maintainability of open-source software?}}. In this research 
+question, we present the results by metric, overall score, severity and programming language
+to have a better understanding of the impact of each of these parameters in 
+software maintainability. 
 
-\begin{verbatim}
-    Tiago L. Alves, Christiaan Ypma and Joost Visser. 
-    ``Deriving metric thresholds from benchmark data.'' 
-    IEEE International Conference on Software Maintenance (ICSME 2010). 
-    IEEE, 2010.
+Different weaknesses may require patches with different characteristics. 
+Our hypothesis
+is that security patches for different weaknesses can have different 
+impacts on software maintainability. Thus, we evaluate this in \textit{\textbf{RQ2: Which weaknesses are more likely to
+affect open-source software maintainability?}}. The results can help
+security engineers on prioritizing weaknesses and bring awareness to the 
+ones that need more attention.
 
-    Tiago L. Alves, Jose Pedro Correia and Joost Visser. 
-    ``Benchmark-Based Aggregation of Metrics to Ratings.'' 
-    2011 Joint Conference of the 21st International Workshop on Software 
-    Measurement and the 6th International Conference on Software Process 
-    and Product Measurement. 
-    IEEE, 2011.
-
-    Robert Baggen, Jose Pedro Correia, Katrin Schill and Joost Visser. 
-    ``Standardized code quality benchmarking for improving software maintainability.'' 
-    Software Quality Journal.
-    Springer, 2011.
-
-\end{verbatim}
-
-SIG performs the threshold calibration
-yearly on a proprietary data set to satisfy the requirements of TUViT to
-be a certified measurement model. However, please note that this data set 
-cannot be shared due to non-disclosure agreements between SIG and its 
-clients.
-
+Performing a regular change/refactoring, for instance, to improve the name of 
+a variable or function, is different than performing a security patch.
+Therefore, we created \textit{\textbf{RQ3: What is the impact of security patches versus 
+regular changes on the maintainability of open-source software?}}
+to explore if there is a need to pay more attention to 
+security patches than regular changes during software maintenance tasks.
 
 \begin{revcomment}[3.3]
 
@@ -1001,7 +1006,9 @@ clients.
 
 \end{revcomment}
 
-\Us 
-
+\Us We agree with the reviewer that we should be clear on the lessons 
+learned from this study. We now provide a Section titled as \textit{Lessons Learned} where 
+we describe te best practices we think developers should follow
+when patching vulnerabilities.
 
 \end{document}
