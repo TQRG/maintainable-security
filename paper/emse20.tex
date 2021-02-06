@@ -487,7 +487,7 @@ software.
 maintainability of open-source software?}} Often security flaws 
 require patching code to make software more secure. However, 
 \textbf{there is no evidence yet of how security patches impact the
-maintainability of open-source software}. Our suspicion is that 
+maintainability of open-source software}. Our hypothesis is that 
 developers tend to introduce technical debt in their software when 
 patching the codebases to address a security flaw because they tend 
 to choose the easiest path to solve it. To address it, we compute 
@@ -1468,7 +1468,32 @@ applying security patches.
 
 \section{Lessons Learned}\label{sec:lessons}
 
-Hakuna matata
+\Sofia{WIP} In this section, we summarize the lessons learned and 
+best practices developers should follow to perform 
+quality patches and not avoid hindering software maintainability.
+
+\textit{\textbf{Best Practices:}} There is a set of 
+guidelines which have a higher negative impact in software maintainability.
+While patching security vulnerabilities, developers should 
+take special attention to the size and complexity of their patches
+by designing and implementing solutions that continue to respect the 
+limit bounds of branch points and function sizes that are
+recommended by coding practices. 
+
+avoid adding new parameters to functions; avoid large 
+modules and the amount of code within modules 
+that are explosed to other modules. 
+
+\textit{\textbf{Severity:}} Vulnerabilities of high and
+medium severity should be prioritized in software maintainability. 
+
+\textit{\textbf{Programming Language:}} Developers should 
+pay more attention on patching vulnerabilities in C/C++, Ruby and
+PHP code. 
+
+\textit{\textbf{Types of vulnerabilities:}} 
+
+
 
 \section{Study Implications}\label{sec:implications}
 %
