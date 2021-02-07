@@ -473,8 +473,8 @@ static int ssl_scan_clienthello_tlsext(SSL *s, PACKET *pkt, int *al){
 Software maintainability is designated as the degree to which an 
 application is understood, repaired or enhanced. In this paper, our 
 concern is to study whether, while improving software security, 
-developers are also negatively impacting the maintainability of their
-software applications. This is important because software 
+developers are also hindering software maintainability. This is 
+important because software 
 maintainability is approximately $75\%$ of the cost related to a 
 project. To answer the following three research questions, we use 
 two datasets of security 
@@ -489,9 +489,12 @@ require patching code to make software more secure. However,
 \textbf{there is no evidence yet of how security patches impact the
 maintainability of open-source software}. Our hypothesis is that 
 developers tend to introduce technical debt in their software when 
-patching the codebases to address a security flaw because they tend 
-to choose the easiest path to solve it. To address it, we compute 
-the maintainability of $1300$ commits using the \emph{Better Code Hub} tool. 
+patching software vulnerabilities because they tend to not pay enough 
+attention to the quality of those patches. To address it, 
+we follow the same methodology as previous research~\cite{8919169} and compute 
+the maintainability of $1300$ patches using the \emph{Better Code Hub} tool. 
+We present the maintainability impact by guideline/metric, overall score, 
+severity and programming language.
 
 \textit{\textbf{RQ2: Which weaknesses are more likely to
 affect open-source software maintainability?}} There are security 
@@ -502,7 +505,9 @@ without adding new lines of code/complexity to the code. A typical
 fix for the cross-site scripting vulnerability is presented in 
 Listing~\ref{lst:fix}. The developer added the function 
 \texttt{htmlentities} to escape the data given by the variable
-\texttt{\$\_['file']}. \textbf{Knowing which weaknesses are more 
+\texttt{\$\_['file']}. Our hypothesis
+is that security patches for different weaknesses can have different 
+impacts on software maintainability. \textbf{Understanding which weaknesses are more 
 likely to increase maintainability issues is one step forward to 
 bring awareness to security engineers of what weaknesses need more 
 attention}. The taxonomy of security patterns used to answer this 
@@ -525,7 +530,9 @@ is measured separately for each weakness.
 \textit{\textbf{RQ3: What is the impact of security patches versus 
 regular changes on the maintainability of open-source software?}}
 %
-We also compute the maintainability of random regular commits using 
+Performing a regular change/refactoring, for instance, to improve the name of 
+a variable or function, is different than performing a security patch.
+Therefore, we also computed the maintainability of random regular commits using 
 the \emph{Better Code Hub} tool---baseline. We use them to 
 understand \textbf{how maintainability evolves when security patches 
 are performed versus when they are not}.
