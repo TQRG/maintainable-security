@@ -1562,15 +1562,20 @@ still concerns that need to be addressed and that this study brings awareness fo
 	software quality~\cite{10.1145/1985362.1985366}. Some software 
 	producers consider security as a first class citizen while others 
 	do not. As mentioned in previous work, security it is very important 
-	and should bee considered as a default feature~\cite{10.1145/2489828.2489830,kurilova2014wyvern,mcgraw2004software}. 
-	However, the lack of experts or awareness to the ease of producing 
+	and should be considered as a default feature~\cite{10.1145/2489828.2489830,kurilova2014wyvern,mcgraw2004software}. 
+	However, the lack of experts and awareness to the ease of producing 
 	vulnerable software leads companies to ship low quality software. 
 	Providing automated tools to developers assess the risk of their 
-	patches it is important to help companies shipping software of higher quality. 
-	Tools like Better Code Hub and static analysis (e.g., 
-	SonarQube, Codacy, ESLint, Infer, and more) can be leveraged 
-	to assess the risk of patching vulnerabilities---alongside pull
-	requests/code reviews. Static code analysis may be daunting due 
+  patches it is important to help companies shipping software of higher quality. 
+  Bryan O’Sullivan, VP of Engineering at Facebook, advocated for new computer science
+  risk models to detect vulnerabilities in scale and predict the level of security of the software under production in
+  his talk “‘Challenges in Making Software Work at Scale”’ at FaceTAV’20.
+
+	Tools like Better Code Hub can complement static analysis (e.g., 
+  SonarQube, Codacy, ESLint, Infer, and more) to provide more information 
+  to security engineers on the vulnerabilities per se and the risk of their patches
+  ---alongside pull requests/code reviews.
+  Static code analysis may be daunting due 
 	to the number of rules and different effects
 	on maintainability. BCH claims to use the top-$10$ of the guidelines
 	with the highest effects on maintainability. Yet, static analysis 
