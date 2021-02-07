@@ -601,7 +601,71 @@ changes characteristics.
     \end{itemize}
 \end{revcomment}
 
-\Us (I'll do this in the end.)
+\Us All the guidelines are fully described on their book ``Building Maintainable 
+Software: Ten Guidelines for Future-Proof Code''
+\footnote{Available here: \url{https://www.softwareimprovementgroup.com/resources/ebook-building-maintainable-software/}}.
+
+We found other papers using some of the metrics measured by BCH. But we did not find
+extra theoretical papers explaining metrics in detail as we found for McCabe Complexity.
+However, metrics like Unit Size, Duplication, Unit Interfacing, Volume, Testability
+and Code Smells are well-known metrics in the Software Engineering field. 
+
+We would like to address your concern regarding the credibility of BCH. BCH checks GitHub 
+codebases against 10 engineering guidelines as devised by Software Improvement Group 
+(SIG). SIG has devised these guidelines after many years of experience: analyzing more 
+than 15 million lines of code every week, SIG maintains the industry’s largest 
+benchmark, containing more than 10 billion lines of code across 200+ technologies; SIG 
+is the only lab in the world certified by TÜViT to issue ISO 25010:2011 
+certificates\footnote{Information available here: 
+\url{https://www.softwareimprovementgroup.com/methodologies/iso-iec-25010-2011-standard/}}.
+
+The underlying maintainability model for BCH is documented with several
+(non-academic) reports linked at this page:
+\url{https://www.softwareimprovementgroup.com/methodologies/iso-iec-25010-2011-standard/} as 
+well as validated by the academic community in the following paper:
+
+\begin{verbatim}
+Heitlager, Ilja, Tobias Kuipers, and Joost Visser. 
+``A practical model for measuring maintainability.'' 
+6th international conference on the quality of information and 
+        communications technology (QUATIC 2007). 
+IEEE, 2007.
+\end{verbatim}
+
+BCH's compliance criterion is derived from the requirements for 4-star level maintainability (cf. ISO 25010). 
+The concrete values of the thresholds used in BCH are documented also in their book Building Maintainability 
+Software \url{https://www.softwareimprovementgroup.com/resources/ebook-building-maintainable-software/}.
+
+Further, the methodology for arriving at the thresholds is documented in the following 
+literature:
+
+\begin{verbatim}
+    Tiago L. Alves, Christiaan Ypma and Joost Visser. 
+    ``Deriving metric thresholds from benchmark data.'' 
+    IEEE International Conference on Software Maintenance (ICSME 2010). 
+    IEEE, 2010.
+
+    Tiago L. Alves, Jose Pedro Correia and Joost Visser. 
+    ``Benchmark-Based Aggregation of Metrics to Ratings.'' 
+    2011 Joint Conference of the 21st International Workshop on Software 
+    Measurement and the 6th International Conference on Software Process 
+    and Product Measurement. 
+    IEEE, 2011.
+
+    Robert Baggen, Jose Pedro Correia, Katrin Schill and Joost Visser. 
+    ``Standardized code quality benchmarking for improving software maintainability.'' 
+    Software Quality Journal.
+    Springer, 2011.
+
+\end{verbatim}
+
+SIG performs the threshold calibration
+yearly on a proprietary data set to satisfy the requirements of TUViT to
+be a certified measurement model. However, please note that this data set 
+cannot be shared due to non-disclosure agreements between SIG and its 
+clients. BCH has a free plan available that allows the analysis of public
+projects with a size limit of 100.000 lines of code.
+
 
 \begin{revcomment}[2.13]
     Section 3\\
