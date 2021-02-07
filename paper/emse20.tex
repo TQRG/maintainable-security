@@ -1219,18 +1219,21 @@ encapsulation to hide implementation details and make the system
 more modular.
 
 The \emph{Write Code Once} guideline results show that duplicated 
-code increased in $171$ ($17.7\%$) of the patches. Software systems 
+code increased in $17.7\%$ ($171$/$969$) of the patches. Software systems 
 typically have $9\%$-$17\%$ of cloned code~\cite{5773403}. Previous 
 work showed a correlation between code smells and code
 duplication~\cite{7476787} which may also be reflected in the 
 \emph{Write Clean Code} guideline results. BCH reported new code 
-smells for $145$ ($15.0\%$) patches which according to previous work 
-may harm software security since some of these new code smells may 
-be new vulnerabilities~\cite{8819456}. Thus, while developers 
-tend to ignore patch techniques such as the \emph{Replace Method 
-with Method Object} technique, they may also be introducing new 
-software vulnerabilities and, consequently, harm the market value 
-and economy of companies~\cite{4267025}.
+smells for $15.0\%$ ($145$/$969$) of the patches which according to previous work 
+may be the source of new software vulnerabilities~\cite{8819456,10.1145/3133956.3134072}
+capable of harming the market value and economy of companies~\cite{4267025}.
+Developers should never reuse code by copying and pasting 
+existing code fragments. Instead, they should create a method and call 
+it every time needed. The \emph{Extract Method} refactoring 
+technique solves many duplication problems. This makes spoting and 
+solving the issue faster because you only need to fix the method used
+instead of locating and fixing the issue multiple times.
+Clone detection tools can also help on locating the issues.
 
 \textbf{Overall Score ($M(v)$):} 
 Although overall patching vulnerabilities has a less negative impact
@@ -1468,31 +1471,71 @@ applying security patches.
 
 \section{Lessons Learned}\label{sec:lessons}
 
-\Sofia{WIP} In this section, we summarize the lessons learned and 
+In this section, we summarize the lessons learned and 
 best practices developers should follow to perform 
-quality patches and not avoid hindering software maintainability.
+quality security patches and avoid hindering 
+software maintainability.
 
-\textit{\textbf{Best Practices:}} There is a set of 
-guidelines which have a higher negative impact in software maintainability.
-While patching security vulnerabilities, developers should 
-take special attention to the size and complexity of their patches
-by designing and implementing solutions that continue to respect the 
-limit bounds of branch points and function sizes that are
-recommended by coding practices. 
+\textit{\textbf{Best Practices:}} Developers are not 
+paying attention to some quality aspects of their solutions/patches, 
+as seen in Figure~\ref{fig:guidelines}, ending up harming 
+software maintainability. We argue that developers
+should design and implement solutions that respect the 
+limit bounds of branch points and function/module sizes that are 
+recommended by best practices to avoid increasing the 
+size, complexity and dependencies of their patches.
+Still on respecting bound limits, developers 
+should also consider the limit of $4$ parameters per function---to 
+keep unit interfaces small and easy to use and understand.
+Patterns such as \emph{Introduce Parameter Object} are useful 
+to send information to a new function/class through an object
+and keep the number of parameters small and the information well-organized.
 
-avoid adding new parameters to functions; avoid large 
-modules and the amount of code within modules 
-that are explosed to other modules. 
+Security patches also have a negative impact on the maintenance of 
+software architecture. Maintain the components independence and balance 
+is important to make it easier to find the source code that 
+developers want to patch/improve and to better understand
+how the high-level componenet interact with others. Applying 
+\emph{encapsulation} to hide implementation details and make the system 
+more modular is a step forward to not hinder software architecture maintainability.
 
-\textit{\textbf{Severity:}} Vulnerabilities of high and
-medium severity should be prioritized in software maintainability. 
+According to previous research, there is a correlation between 
+code duplication and code smells~\cite{7476787}---duplicates are a source 
+of regression bugs. BCH reports new code smells
+for $15\%$ of the patches under study which supports previous research---$34\%$ of security patches 
+introduce new problems~\cite{8819456,10.1145/3133956.3134072}. 
+Developers should never reuse code by copying and pasting 
+existing code fragments. Instead, they should create a method and call 
+it every time needed. The \emph{Extract Method} refactoring 
+technique solves many duplication problems. This makes spoting and 
+solving the issue faster because you only need to fix one method instead
+of multiple vulnerabilities. Clone detection tools such as CPD can help 
+on locating duplicates.
 
-\textit{\textbf{Programming Language:}} Developers should 
-pay more attention on patching vulnerabilities in C/C++, Ruby and
-PHP code. 
+\textit{\textbf{Severity:}} Research in the past exhibits proof that developers prioritize
+higher impact vulnerabilities~\cite{10.1145/3133956.3134072}.
+Our study results show that vulnerabilities of high and
+medium severity should be prioritized in software maintainability
+by developers.
 
-\textit{\textbf{Types of vulnerabilities:}} 
+\textit{\textbf{Programming Language:}} In general, our study 
+shows that there is over $35\%$ of patches with negative impact 
+on software maintainability per programming language. Developers implementing code in   
+\texttt{C/C++}, \texttt{Ruby} and \texttt{PHP} should pay extra care 
+to their solutions/patches.
 
+\textit{\textbf{Types of vulnerabilities:}} We tried to understand 
+the impact of different types of vulnerabilities on software maintainability.
+Overall, all the CWEs studied in more depth present a negative impact
+over $30\%$ on software maintainability. 
+\emph{Cross-Site Scripting} (CWE-79) and \emph{Improper 
+Restriction of Operations within the Bounds of a Memory Buffer} (CWE-119) 
+are less prone to have impact on open-source software maintainability.
+Developers should pay special attention to \emph{Improper Input Validation} (CWE-20), 
+\emph{Information Exposure} (CWE-200), \emph{Missing Release of Memory after Effective Lifetime} 
+(CWE-401) and \emph{Path Traversal} (CWE-22). However, 
+more research should be performed to better understand 
+the impact of each guideline on each CWE.
 
 
 \section{Study Implications}\label{sec:implications}
