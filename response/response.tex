@@ -908,25 +908,27 @@ provide a model to calculate maintainability such as SonarCloud. However, we arg
 that BCH is a better tool for the following reasons:
 
 \begin{itemize}
-    \item Kiuwan measures 4 guidelines from the total set of $10$
-    guidelines that BCH measures for maintainability: Complexity, Duplicated 
+    \item Kiuwan measures 4 guidelines that by name appear to be similar to 
+    some of the guidelines measured by BCH: Complexity, Duplicated 
     Code, Size and Coupling\footnote{List available here: \url{https://www.kiuwan.com/docs/display/K5/Metrics}}. 
-    We did not find the full description of those metrics anywhere. In constrant, 
-    SIG provides a full description of the guidelines/metrics behind better code
+    However, we did not find the full description of kiuwan's metrics anywhere. Thus, 
+    we are ensure that the metrics are the same but we are able to conclude that
+    BCH integrates a larger set of metrics.  
+    In contrast, 
+    SIG provides a full description of the $10$ guidelines/metrics behind better code
     hub plus their relation with maintainability on the book and several scientific papers. 
-    \item SonarCloud measures 5 guidelines from the total set of $10$
-    guidelines that BCH measures for maintainability: Complexity, Duplication, 
+    \item SonarCloud measures 5 similar metrics to the ones measured by BCH: Complexity, Duplication, 
     Issues, Size and Tests\footnote{List available here: \url{https://sonarcloud.io/documentation/user-guide/metric-definitions/}}. 
     The tool rates maintainability with a letter based on the technical 
     debt ratio which is calculated as the ratio between the cost to develop 
     the software and the cost to fix it. But no information is provided 
     on how the remediation cost and developmet cost are calculated. 
     Better Code Hub contemplates a larger set of maintainability metrics 
-    and our formula for maintainability is based on metrics that are 
-    fully described.  
+    and our formula for maintainability is not only fully explained in our paper but also 
+    based on metrics that are fully and publicly described.  
 \end{itemize}
 
-We do not know codify and did find the tool anywhere in static analysis tools 
+We do not know codify and did not find the tool anywhere in static analysis tools 
 collections or even through organic search at Google.  
 
 We added a Section to 
@@ -956,23 +958,9 @@ we measure the impact of security patches.
     IEEE, 2019.
 \end{verbatim}
 
-Software quality is important because it is ultimately related to 
-the overall cost of developing and maintaining secure and safe software 
-applications. Static analysis tools (SATs) have been built to automatically 
-detect software vulnerabilities. However, these tools only locate 
-the issues in the code and do not provide any assistance or guidance 
-on the impact of the problem (vulnerability) or on the quality of the solution 
-(patch). Improving software security is not a trivial task and 
+Improving software security is not a trivial task and 
 requires implementing patches that might affect software 
-maintainability. Many times developers even introduce 
-new vulnerabilies while patching software vulnerabilities
----harming software reliability and introducing 
-technical debt.
-Research found that $34\%$ of the security patches 
-performed introduce new problems and $52\%$ are incomplete and do not 
-fully secure systems.
-
-Our hypothesis is that some of these patches may 
+maintainability. Our hypothesis is that some of these patches may 
 have a negative impact on the software maintainability. With this 
 study, we want to understand which maintainability metrics can guide 
 security engineers on producing patches with better quality---which 
@@ -1008,7 +996,7 @@ security patches than regular changes during software maintenance tasks.
 
 \Us We agree with the reviewer that we should be clear on the lessons 
 learned from this study. We now provide a Section titled as \textit{Lessons Learned} where 
-we describe te best practices we think developers should follow
+we describe the best practices we argue developers should follow
 when patching vulnerabilities.
 
 \end{document}
