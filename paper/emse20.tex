@@ -839,30 +839,34 @@ that differences in maintainability are not a consequence of
 characteristics of different projects.
 
 
-\subsection{Why Bettter Code Hub?}
+\subsection{Bettter Code Hub}
 
-SIG---the company behind BCH--has been helping business and technology 
-leaders drive their organizational 
-objectives by fundamentally improving the health and security of 
-their software applications for more than $20$ years. The
-inner-working of their SIG-MM model---which is the one behind BCH---was 
-scientifically proven~\cite{4335232,5609747,6113040,baggen2012}.
-BCH not only considers security on their maintainability model~\cite{6616351}
-but also integrates a total of $10$ different code metrics; and, 
-code metrics were empirically validated in previous 
-work~\cite{Bijlsma:2012:FIR:2317098.2317124,8530041,8919169,8785997}.
+SIG---the company behind BCH---has been helping business and technology 
+leaders drive their organizational objectives by fundamentally improving 
+the health and security of their software applications for more than $20$ years. 
+The inner-workings of their SIG-MM model---the one behind BCH---are 
+scientifically proven and certified~\cite{4335232,5609747,6113040,baggen2012}.
 
-As BCH there are other tools that do the same kind of code analysis.
-Two examples are Kiuwan and SonarCloud. Kiuwan is not free, their 
-inner-workings do not seem to be published anywhere and there is
-no clear list of metrics available---we inspected their datasheet.
-SonarCloud is free but uses only $4$ of the guidelines (duplication,
-size, complexity and code smells) that BCH considers. It also scores 
-maintainability. In the following table, we
-present a brief comparison between BCH and SonarCloud:
+BCH checks GitHub codebases against 10 maintainability 
+guidelines~\cite{Visser:2016:OREILLY} that were empirically 
+validated in previous work~\cite{Bijlsma:2012:FIR:2317098.2317124,8530041,8919169,8785997}.
+SIG has devised these guidelines after many years of experience: analyzing more 
+than 15 million lines of code every week, SIG maintains the industry’s largest 
+benchmark, containing more than 10 billion lines of code across 200+ technologies; SIG 
+is the only lab in the world certified by TÜViT to issue ISO 25010 certificates\footnote{Information available here: 
+\url{https://www.softwareimprovementgroup.com/methodologies/iso-iec-25010-2011-standard/}}.
+BCH's compliance criterion is derived from the requirements for 4-star 
+level maintainability (cf. ISO 25010)~\cite{5609747,6113040,baggen2012,Visser:2016:OREILLY}.
+SIG performs the threshold calibration
+yearly on a proprietary data set to satisfy the requirements of TUViT to
+be a certified measurement model.
 
-\Sofia{Currently building a script to retrieve the SonarCloud results}
-
+As BCH there are other tools that also perform code analysis for similar 
+metrics. Two examples are Kiuwan and SonarCloud. However, Kiuwan does
+not provide the full description of the metrics it measures; and, SonarCloud
+although it provides a way of rating software maintainability, the variables 
+description of their formula are not available. Both analyze less maintainability
+guidelines than BCH and do not have their inner-workings fully and publicly described.
 
 \subsection{Maintainability Analysis}\label{sec:main_analysis}
 
