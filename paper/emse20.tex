@@ -252,31 +252,6 @@ consequently, less prone to
 vulnerabilities~\cite{shin2010evaluating,10.1145/1774088.1774504}---
 and, prevent the introduction of new vulnerabilities. 
 
-% Unmaintainable code is hard to test, analyze and re-use. Therefore,
-% it is important to write maintainable code to support the production
-% of more secure software and prevent
-% the introduction of new vulnerabilities in the code bases.
-%
-Static analysis tools (SATs) have been built to automatically detect software 
-vulnerabilities (e.g., FindBugs, Infer and more). Developers
-use those tools to locate the issues in the code. However,
-while performing the patches to those issues, SATs are not 
-capable of providing information on the quality of the patch.
-Improving software security is not a trivial task and 
-requires implementing patches that might affect software 
-maintainability. Our hypothesis is that some of these patches may 
-have a negative impact on the software maintainability and, 
-possibly, even be the cause of the introduction of new 
-vulnerabilities---harming software reliability and introducing 
-technical debt. Research found that $34\%$ of the security patches 
-performed introduce new problems and $52\%$ are incomplete and do not 
-fully secure systems~\cite{10.1145/3133956.3134072}. Therefore, in this paper, 
-we present an empirical study on the impact of patches of 
-vulnerabilities on software maintenance across open-source software.
-We arguee that tools that assess these type of metrics may
-complement SATs with valuable information to help the developer
-understand better the risk of its patch.
-
 As ISO does not provide any specific guidelines/formulas to 
 calculate maintainability, we resort to Software Improvement Group 
 (SIG\footnote{SIG's website: 
@@ -305,6 +280,26 @@ an assessment of maintainability in software for the following
 reasons: BCH integrates a total of $10$ different code metrics; and, 
 code metrics were empirically validated in previous 
 work~\cite{Bijlsma:2012:FIR:2317098.2317124,8530041,8919169,8785997}.
+
+Static analysis tools (SATs) have been built to automatically detect software 
+vulnerabilities (e.g., FindBugs, Infer and more). Developers
+use those tools to locate the issues in the code. However,
+while performing the patches to those issues, SATs are not 
+capable of providing information on the quality of the patch. 
+Improving software security is not a trivial task and 
+requires implementing patches that might affect software 
+maintainability. Our hypothesis is that some of these patches may 
+have a negative impact on the software maintainability and, 
+possibly, even be the cause of the introduction of new 
+vulnerabilities---harming software reliability and introducing 
+technical debt. Research found that $34\%$ of the security patches 
+performed introduce new problems and $52\%$ are incomplete and do not 
+fully secure systems~\cite{10.1145/3133956.3134072}. Therefore, in this paper, 
+we present an empirical study on the impact of patches of 
+vulnerabilities on software maintenance across open-source software.
+We arguee that tools that assess these type of code metrics may
+complement SATs with valuable information to help the developer
+understand the risk of its patch.
 
 From a methodological perspective, we leveraged a dataset of $1300$ 
 security patches collected from open-source software. We calculate 
@@ -1137,8 +1132,8 @@ maintainability~\cite{graw:1992}.
 
 \section{Results \& Discussion}\label{sec:results}
 
-This study evaluates a final total of $969$ security patches from $260$ 
-distinct open-source projects. This section 
+This study evaluates a total of $969$ security patches 
+from $260$ distinct open-source projects. This section 
 reports and discusses the results for each research question.
 %
 

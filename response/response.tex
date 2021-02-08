@@ -107,12 +107,15 @@ codebases against 10 engineering guidelines as devised by Software Improvement G
 (SIG). These guidelines are the result of many years of experience: analyzing more 
 than 15 million lines of code every week, SIG maintains the industry’s largest 
 benchmark, containing more than 10 billion lines of code across 200+ technologies; SIG 
-is the only lab in the world certified by TÜViT to issue ISO 25010:2011 
+is, according to their website, the only lab in the world certified by TÜViT to issue ISO 25010:2011 
 certificates\footnote{Information available here: 
 \url{https://www.softwareimprovementgroup.com/methodologies/iso-iec-25010-2011-standard/}}.
+TÜViT is an IT Security company. Being certified by TÜViT means 
+that the company checked if BCH respects the ISO 25010 guidelines succesfully.   
+
 
 Second, each of the guidelines in isolation is pretty simple to understand, but, when 
-combined with the others, and, when evaluated as a whole, it becomes easy to see why 
+combined and evaluated as a whole, it becomes easy to see why 
 they would comprise the definition of good software. Furthermore, the relation of the 
 guidelines to maintainability is well detailed in the SIG's book ``Building Maintainable 
 Software: Ten Guidelines for Future-Proof Code''
@@ -134,7 +137,7 @@ BCH's compliance criterion is derived from the requirements for 4-star level mai
 The concrete values of the thresholds used in BCH are documented also in their book Building Maintainability 
 Software \url{https://www.softwareimprovementgroup.com/resources/ebook-building-maintainable-software/}.
 
-Further, the methodology for arriving at the thresholds is documented in the following 
+Further, the methodology used to derive the thresholds is documented in the following 
 literature:
 
 \begin{verbatim}
@@ -173,6 +176,9 @@ it offers us so much more:
 Over time, the guidelines in BCH will become part of your coding standards, and the overall quality of your 
 work will improve, slowly, but surely.
 \end{quote}
+
+We changed the flow of the text and clarified some of these points in the \emph{Introduction} Section. We also 
+added a section motivating Better Code Hub called \emph{Better Code Hub} in Section $3$.
 
 \begin{revcomment}[1.2]
 
@@ -237,7 +243,7 @@ our objective is to understand what
 the impact of those patches on the maintainability
 guidelines/metrics is. We argue that these guidelines/metrics
 may in the future complement static analysis tools 
-by assiting developers with more information on the 
+by assisting developers with more information on the 
 risks associated with their patches.
 
 \begin{revcomment}[1.4]
@@ -253,7 +259,8 @@ risks associated with their patches.
 \Us As we explained before, namely while addressing comment 1.2, both models assess 
 maintainability. However, the Delta Maintainability 
 Model only uses 5 guidelines of the set of guidelines our study considers. Therefore, 
-we consider it to be an alternative to our model, but a weaker one. This has been 
+we consider it to be an alternative to our model. However, it considers
+a smaller set of guidelines than ours. This has been 
 discussed in the related work section.
 
 
@@ -683,7 +690,7 @@ projects with a size limit of 100.000 lines of code.
 
 \Us Our dataset integrates $89.3\%$ of single-commit patches and 
 $10.7\%$ of patches involving more than one commit. We replaced 
-line 49 by the following one:
+line 49 by the following sentence:
 
 \begin{quote}
     Only $10.7\%$ of the data points 
@@ -691,10 +698,13 @@ of our dataset involve more than one commits, the other
 $89.3\%$ of the cases are single-commit patches.
 \end{quote}
 
-We define floss-refactoring before in the paragraph
-as you can see below. Regarding the methodology to detect floss-refactorings, 
-we manually inspected all the cases to ensure that 
-floss-refactorings were not being considered. 
+We define floss-refactoring with the paragraph below. 
+Regarding the methodology to detect floss-refactorings, 
+we manually inspected all the cases to ensure 
+floss-refactorings were not being considered.
+
+
+\textbf{!!! question: it is a common trend to say that we do manual inspections. Reviewers are getting tired of it because some times is not true. Can we add anything here to make this trustworthy?}
 
 \begin{quote}
     The same approach is used to analyze the impact of regular 
@@ -762,8 +772,8 @@ and project size by BCH, $308$ data points were disregarded.
 and $969$ regular changes. We improved the sentence. 
 
 \begin{quote}
-    This study evaluates a final total of $969$ security patches from $260$ 
-distinct open-source projects. 
+    This study evaluates a total of 969 security patches from 
+    260 distinct open-source projects.
 \end{quote}
 
 \begin{revcomment}[2.17]
