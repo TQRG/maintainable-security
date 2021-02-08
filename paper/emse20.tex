@@ -333,7 +333,6 @@ leveraging security principles~\cite{kurilova2014wyvern,10.1145/2489828.2489830}
 This research performs the following main contributions:
 %
 \begin{itemize}
-	\vspace{-0.3em}
   \item Evidence that supports the trade-off between security and 
   maintainability: developers may be hindering software 
   maintainability while patching vulnerabilities.
@@ -354,7 +353,8 @@ protocols. Repository available at
 \url{https://github.com/openssl/openssl} (Accessed on \today{})}; 
 Section~\ref{sec:methodology} describes the methodology used to 
 answer the research questions; Section~\ref{sec:results} presents 
-the results and discusses their implications; 
+the results and discusses their implications; Section~\ref{sec:lessons}
+present the lessons learned of this study;
 Section~\ref{sec:implications} elaborates on the implications
 developers should consider in the future; Section~\ref{sec:threats} 
 enumerates the threats to the validity of this study; 
@@ -1437,24 +1437,29 @@ changes on the maintainability of open-source software?}}
 The impact of security and regular changes on software maintainability 
 is presented in Figure~\ref{fig:secvsreg}. In this section, 
 we present a comparison of security patches with 
-two different baselines of regular changes: \emph{random-baseline},
-a dataset of random regular changes;
-and \emph{size-baseline}, a dataset of  
-regular changes with the same size as security 
-patches. Our hypothesis in this research question is
+two different baselines of regular changes: 
+\emph{size-baseline}, a dataset of  
+random regular changes with the same size as security 
+patches becausecomparing changes with considerable different sizes may be unfair; and, \emph{random-baseline},
+a dataset of random regular changes. Our hypothesis in this research question is
 that \emph{Security patches hinder more software maintainability and 
-need more attention than regular changes}.
+need more attention than regular changes}. 
 
 We have seen, previously, a deterioration on software maintainability 
-when patching vulnerabilities: $41.9\%$ ($406$) suffered a 
-negative impact, $38.7\%$ ($375$) remained the same and $19.4\%$ 
-($188$) increased software maintainability. For regular changes, 
+when patching vulnerabilities: $41.9\%$ ($406$) of patches suffered a 
+negative impact, $38.7\%$ ($375$) of patches remained the same and $19.4\%$ 
+($188$) of patches increased software maintainability. For regular changes,
+when considering the size of the changes (\emph{size-basline}),
 we observe that the maintainability decreases in $27.0\%$ ($262$) 
 and increases in $30.5\%$ ($295$) of the cases. But in contrast to 
 security patches, the maintainability of regular changes remains the 
 same in $42.5\%$ ($412$) of the cases and perform regular
 changes has a more positive impact than negative on  
-maintainability. 
+maintainability. Fully regular changes (\emph{random-baseline}) 
+are less prone to hinder software maintainability than 
+security changes. About $34.4\%$ ($333$) of the regular changes
+have a negative impact on software maintainability compared with 
+the $41.9\%$ of security patches. 
 
 \begin{figure}[htp]
   \centering
@@ -1463,22 +1468,32 @@ maintainability.
   \label{fig:secvsreg}    
 \end{figure}
 
-Results show that regular changes are less prone to hinder the software maintainability of open-source software.   
+Overall, the results for both baselines, show that regular 
+changes are less prone to hinder the software 
+maintainability of open-source software.   
 We manually inspected a considerable amount of cases from
-the distribution of the regular changes where maintainability 
-increases and found that identifying regular commits as similar in 
+the distribution of regular changes that considers size (\emph{size-baseline}), 
+where the impact on maintainability 
+increases, and, found that identifying regular changes with the same 
 size as the security-related commit is limiting the type of regular 
-commits being randomly chosen (e.g, input 
-patches, variables or functions, type conversion, etc).  
+commits being randomly chosen: input 
+patches, variables or functions, type conversion, i.e., changes
+with no impact on the software metrics BCh evaluates.
 We presume that this phenomenon lead
 to the significant number of cases where there is no impact
-on the software maintainability.
+on the software maintainability. On the other hand, 
+identifying regular changes without any restrictions (\emph{random-baseline})
+shows that regular changes have less negative impact 
+on software maintainability compared with security patches
+with statistical significance ($p = 5.34$x$10^{-8}$) and that 
+special attention should be given to security patches.
 
 \textbf{Summary:} Security-related commits are observed to harm software 
-maintainability. In contrast, one cannot say the same about
-regular changes, in which \textbf{no significant differences are observed}. 
+maintainability. While regular changes with no characteristics restrictions 
+show that regular changes are less prone to harm software maintainability.
 Thus, we urge the importance of adopting maintainability practices while 
 applying security patches.
+
 
 \section{Lessons Learned}\label{sec:lessons}
 
