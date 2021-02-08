@@ -348,8 +348,7 @@ protocols. Repository available at
 \url{https://github.com/openssl/openssl} (Accessed on \today{})}; 
 Section~\ref{sec:methodology} describes the methodology used to 
 answer the research questions; Section~\ref{sec:results} presents 
-the results and discusses their implications; Section~\ref{sec:lessons}
-present the lessons learned of this study;
+the results and discusses their implications; 
 Section~\ref{sec:implications} elaborates on the implications
 developers should consider in the future; Section~\ref{sec:threats} 
 enumerates the threats to the validity of this study; 
@@ -780,26 +779,26 @@ information on the vulnerability/patch.
 Previous studies attempted to measure the impact of regular changes 
 on open-source software maintainability~\cite{HEGEDUS2018313}. 
 However, there is no previous work focused on comparing the impact 
-of security patches with regular changes on maintainability---only
+of security patches with regular changes on maintainability, only
 with bug-fixes~\cite{10.1145/3133956.3134072}.
 We analyze the maintainability of regular changes---changes not 
 related to security patches---and, use them as a baseline.
 The baseline dataset is generated from the security commits dataset, i.e.,
-for each security commit in the dataset we collect a random regular
+for each security commit in the dataset, we collect a random regular
 change from the same project. We created two different baselines: 
 \textit{random-baseline},
 considering random changes and all their characteristics; and,
 \textit{size-baseline}, considering also random changes
-but with the same size as security patches.
+but with an approximate size as security patches---we argue 
+that comparing changes with considerable different sizes is unfair.
 
 \subsubsection{Random-Baseline} 
 
-As for the security patches, for each regular change, we also 
+As for the security patches, for each regular change, we  
 need the commit performing the regular change (\emph{sha-reg}) and version of 
 the software before the change (\emph{sha-reg-p}). For each security patch, a 
-random commit from the same project is selected (\emph{sha-reg}).
-\emph{sha-reg-p} is the commit performed previous to the 
-regular change, \emph{sha-reg}.
+random commit from the same project is selected, \emph{sha-reg}.
+The parent of \emph{sha-reg} or the commit performed before \emph{sha-reg} is \emph{sha-reg-p}.
 
 \subsubsection{Size-Baseline} 
 
@@ -1435,7 +1434,8 @@ we present a comparison of security patches with
 two different baselines of regular changes: 
 \emph{size-baseline}, a dataset of  
 random regular changes with the same size as security 
-patches becausecomparing changes with considerable different sizes may be unfair; and, \emph{random-baseline},
+patches---we argue that comparing changes with considerable different 
+sizes may be unfair; and, \emph{random-baseline},
 a dataset of random regular changes. Our hypothesis in this research question is
 that \emph{Security patches hinder more software maintainability and 
 need more attention than regular changes}. 
@@ -1490,14 +1490,16 @@ Thus, we urge the importance of adopting maintainability practices while
 applying security patches.
 
 
-\section{Lessons Learned}\label{sec:lessons}
 
-In this section, we summarize the lessons learned and 
-best practices developers should follow to perform 
-quality security patches and avoid hindering 
-software maintainability.
+\section{Study Implications}\label{sec:implications}
+%
+Our results show evidence that developers may have to reduce maintainability for the 
+sake of security. We argue that developers should be able to patch and produce 
+secure code without hindering the maintainability of their projects. But there are 
+still concerns that need to be addressed and that this study brings awareness for:
+%
 
-\textit{\textbf{Best Practices:}} Developers are not 
+\textit{\textbf{Best Practices to Follow:}} Developers are not 
 paying attention to some quality aspects of their solutions/patches, 
 as seen in Figure~\ref{fig:guidelines}, ending up harming 
 software maintainability. We argue that developers
@@ -1505,20 +1507,20 @@ should design and implement solutions that respect the
 limit bounds of branch points and function/module sizes that are 
 recommended by best practices to avoid increasing the 
 size, complexity and dependencies of their patches.
-Still on respecting bound limits, developers 
-should also consider the limit of $4$ parameters per function---to 
+Developers should also consider the threshold limit 
+for parameters per function---to 
 keep unit interfaces small and easy to use and understand.
 Patterns such as \emph{Introduce Parameter Object} are useful 
 to send information to a new function/class through an object
 and keep the number of parameters small and the information well-organized.
 
 Security patches also have a negative impact on the maintenance of 
-software architecture. Maintain the components independence and balance 
+software architecture. Maintaining the components independence and balance 
 is important to make it easier to find the source code that 
 developers want to patch/improve and to better understand
 how the high-level componenet interact with others. Applying 
 \emph{encapsulation} to hide implementation details and make the system 
-more modular is a step forward to not hinder software architecture maintainability.
+more modular is a step forward not to hinder software architecture maintainability.
 
 According to previous research, there is a correlation between 
 code duplication and code smells~\cite{7476787}---duplicates are a source 
@@ -1533,20 +1535,17 @@ solving the issue faster because you only need to fix one method instead
 of multiple vulnerabilities. Clone detection tools such as CPD can help 
 on locating duplicates.
 
-\textit{\textbf{Severity:}} Research in the past exhibits proof that developers prioritize
+
+\textit{\textbf{Prioritize High and Medium Severity:}} Previous research 
+exhibits proof that developers prioritize
 higher impact vulnerabilities~\cite{10.1145/3133956.3134072}.
-Our study results show that vulnerabilities of high and
-medium severity should be prioritized in software maintainability
+Our study shows that vulnerabilities of high and
+medium severity should be prioritized in software maintainability tasks
 by developers.
 
-\textit{\textbf{Programming Language:}} In general, our study 
-shows that there is over $35\%$ of patches with negative impact 
-on software maintainability per programming language. Developers implementing code in   
-\texttt{C/C++}, \texttt{Ruby} and \texttt{PHP} should pay extra care 
-to their solutions/patches.
-
-\textit{\textbf{Types of vulnerabilities:}} We tried to understand 
-the impact of different types of vulnerabilities on software maintainability.
+\textit{\textbf{Some Types of Vulnerabilities Need More Attention:}} 
+Our study attempted at shedding light at the impact 
+of different types of vulnerabilities on software maintainability.
 Overall, all the CWEs studied in more depth present a negative impact
 over $30\%$ on software maintainability. 
 \emph{Cross-Site Scripting} (CWE-79) and \emph{Improper 
@@ -1558,16 +1557,7 @@ Developers should pay special attention to \emph{Improper Input Validation} (CWE
 more research should be performed to better understand 
 the impact of each guideline on each CWE.
 
-
-\section{Study Implications}\label{sec:implications}
-%
-Our results show evidence that developers may have to reduce maintainability for the 
-sake of security. We argue that developers should be able to patch and produce 
-secure code without hindering the maintainability of their projects. But there are 
-still concerns that need to be addressed and that this study brings awareness for:
-%
-
-\textit{\textbf{Tools for Patch Risk Assessment:}}
+\textit{\textbf{Tools for Patch Risk Assessment Wanted:}}
 	Design debt of one guideline can lead to severe impacts on the 
 	software quality~\cite{10.1145/1985362.1985366}. Some software 
 	producers consider security as a first class citizen while others 
@@ -1607,8 +1597,13 @@ still concerns that need to be addressed and that this study brings awareness fo
 	and beginner mistakes (e.g., coding practices violation).
 %	
 
-\textit{\textbf{More Secure Programming Languages Wanted:}} Programming 
-	Languages should provide new design patterns to easily patch security weaknesses 
+\textit{\textbf{Secure Programming Languages by Design:}} 
+In general, our study 
+shows that there is over $35\%$ of patches with negative impact 
+on software maintainability per programming language. Developers implementing code in   
+\texttt{C/C++}, \texttt{Ruby} and \texttt{PHP} should pay extra care 
+to their solutions/patches. In addition, programming 
+	languages should provide new design patterns to easily patch security weaknesses 
 	without endangering maintainability. Ultimately, new programming languages, 
 	both secure and maintainable by design, such as Wyvern~\cite{10.1145/2489828.2489830,kurilova2014wyvern}, 
 	should be designed to help developers be less vulnerability prone when 
