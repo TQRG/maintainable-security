@@ -790,44 +790,34 @@ change from the same project. We created two different baselines:
 considering random changes and all their characteristics; and,
 \textit{size-baseline}, considering also random changes
 but with an approximate size as security patches---we argue 
-that comparing changes with considerable different sizes is unfair.
+that comparing changes with considerable different sizes may be unfair.
 
 \subsubsection{Random-Baseline} 
 
 As for the security patches, for each regular change, we  
 need the commit performing the regular change (\emph{sha-reg}) and version of 
 the software before the change (\emph{sha-reg-p}). For each security patch, a 
-random commit from the same project is selected, \emph{sha-reg}.
-The parent of \emph{sha-reg} or the commit performed before \emph{sha-reg} is \emph{sha-reg-p}.
+random commit from the same project is selected, \emph{sha-reg}. The parent commit
+of \emph{sha-reg} is the \emph{sha-reg-p}.
 
 \subsubsection{Size-Baseline} 
 
 For the size-baseline, we also need to obtain the regular change (\emph{sha-reg})
 and the version of the software before the change (\emph{sha-reg-p}). 
-First, the \emph{diff}
-between the security patch and its parent is calculated.
-Then, a random commit/regular change from 
-the same project is selected (\emph{sha-reg}). The 
+First, our tool calculates the \emph{diff}
+between the security patch and its parent.
+Second, a random commit/regular change from 
+the same project is selected, \emph{sha-reg}. The 
 \emph{diff} between \emph{sha-reg} and its parent (\emph{sha-reg-p})
-is calculated and compared to the \emph{diff} from the security patch.
+is calculated. Then, the regular change \emph{diff} is compared 
+to the security patch \emph{diff}.
 Due to the complexity of some patches, it was not possible 
-to find patches with the exact number of added and deleted lines. 
+to find patches with the exact same number of added and deleted lines. 
 Thus, we looked for an approximation.
-% The algorithm integrates the following steps:
-
-% \begin{enumerate}
-% \item Calculates the \emph{diff} between the security patch commit 
-% (\emph{sha}) and its parent (\emph{sha-p}).
-% \item Selects a random commit from the project (\emph{sha-reg}).
-% \item Calculates the \emph{diff} between the random commit (\emph{sha-reg}) 
-% and its parent (\emph{sha-reg-p}).
-% \item Checks if the size from the regular change has the 
-% same/approximated size to the security patch.
-% \end{enumerate}
 
 The pair of the regular change (\emph{sha-reg}) and its parent (\emph{sha-reg-p}) is accepted if the 
 \emph{diff} size fits in the range size. This range widens every 
-$10$ attempts to search for a change with the same size. We 
+$10$ attempts to search for a change with an approximate size. We 
 originate the regular changes from the security commits to ensure 
 that differences in maintainability are not a consequence of 
 characteristics of different projects.
@@ -1120,7 +1110,7 @@ has a limitation: it does not consider the groups of commits with a
 zero-difference maintainability. In $1959$, Pratt provided an 
 improvement to the test to solve this issue making the test more 
 robust. Thus, we use a version of the Wilcoxon test that 
-incorporates the cases where maintainability is different from 
+incorporates the cases where maintainability is equal to 
 zero~\cite{10.2307/2282543}. The Wilcoxon test requires a 
 distribution size of at least $20$ instances. To understand the 
 effect-size, as advocated by the Common-language effect 
@@ -1426,7 +1416,7 @@ following types of weaknesses: \emph{Improper Input Validation (CWE-20)}, \emph{
 Lifetime (CWE-401)} and \emph{Path Traversal (CWE-22)}.
 
 
-\textit{\textbf{RQ3: What is the impact of security changes versus regular 
+\textit{\textbf{RQ3: What is the impact of security patches versus regular 
 changes on the maintainability of open-source software?}}
 The impact of security and regular changes on software maintainability 
 is presented in Figure~\ref{fig:secvsreg}. In this section, 
@@ -1436,10 +1426,11 @@ two different baselines of regular changes:
 random regular changes with the same size as security 
 patches---we argue that comparing changes with considerable different 
 sizes may be unfair; and, \emph{random-baseline},
-a dataset of random regular changes. Our hypothesis in this research question is
-that \emph{Security patches hinder more software maintainability and 
-need more attention than regular changes}. 
+a dataset of random regular changes. 
 
+Our hypothesis is
+that \emph{security patches hinder more software maintainability 
+than regular changes}. 
 We have seen, previously, a deterioration on software maintainability 
 when patching vulnerabilities: $41.9\%$ ($406$) of patches suffered a 
 negative impact, $38.7\%$ ($375$) of patches remained the same and $19.4\%$ 
@@ -1450,11 +1441,14 @@ and increases in $30.5\%$ ($295$) of the cases. But in contrast to
 security patches, the maintainability of regular changes remains the 
 same in $42.5\%$ ($412$) of the cases and perform regular
 changes has a more positive impact than negative on  
-maintainability. Fully regular changes (\emph{random-baseline}) 
-are less prone to hinder software maintainability than 
-security changes. About $34.4\%$ ($333$) of the regular changes
-have a negative impact on software maintainability compared with 
-the $41.9\%$ of security patches. 
+maintainability. However, no statistical significance was 
+obtained. Regular changes (\emph{random-baseline}), with no size 
+restrictions, are less prone to hinder software maintainability than 
+security changes. About $34.4\%$ ($333$) of the regular changes 
+have negative impact on software maintainability---less than 
+in the security patches. For the \emph{random-baseline}, 
+statistical significance was retrieved ($p = 5.34$x$10^{-8}$).
+
 
 \begin{figure}[htp]
   \centering
@@ -1473,19 +1467,17 @@ increases, and, found that identifying regular changes with the same
 size as the security-related commit is limiting the type of regular 
 commits being randomly chosen: input 
 patches, variables or functions, type conversion, i.e., changes
-with no impact on the software metrics BCh evaluates.
+with no impact on the software metrics analyzed by BCH.
 We presume that this phenomenon lead
 to the significant number of cases where there is no impact
 on the software maintainability. On the other hand, 
 identifying regular changes without any restrictions (\emph{random-baseline})
 shows that regular changes have less negative impact 
 on software maintainability compared with security patches
-with statistical significance ($p = 5.34$x$10^{-8}$) and that 
-special attention should be given to security patches.
+and that special attention should be given to security patches.
 
 \textbf{Summary:} Security-related commits are observed to harm software 
-maintainability. While regular changes with no characteristics restrictions 
-show that regular changes are less prone to harm software maintainability.
+maintainability, while regular changes are less prone to harm software maintainability.
 Thus, we urge the importance of adopting maintainability practices while 
 applying security patches.
 
@@ -1534,7 +1526,6 @@ technique solves many duplication problems. This makes spoting and
 solving the issue faster because you only need to fix one method instead
 of multiple vulnerabilities. Clone detection tools such as CPD can help 
 on locating duplicates.
-
 
 \textit{\textbf{Prioritize High and Medium Severity:}} Previous research 
 exhibits proof that developers prioritize
