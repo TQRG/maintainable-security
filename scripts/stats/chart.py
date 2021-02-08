@@ -62,7 +62,7 @@ def main_comparison_chart(reports, dfs):
                 'pos_abs' : pd.Series([total_rand_reg['pos'],  total_size_reg['pos'], total_sec['pos']]),
                 'nul' : pd.Series([total_rand_reg['nul']/db_rand_size, total_size_reg['nul']/db_size , total_sec['nul']/db_size]),
                 'nul_abs' : pd.Series([total_rand_reg['nul'],  total_size_reg['nul'], total_sec['nul']]),
-                'type' : pd.Series(['Regular Change\n(Random Baseline)', 'Regular Change\n(Size Baseline)', 'Security Change'])}
+                'type' : pd.Series(['Regular Changes\n(random-baseline)', 'Regular Changes\n(size-baseline)', 'Security Patches'])}
         
         df, idx, fig, ax = config_report(rep, len(rep['type']), 7, 5, 111)
         
