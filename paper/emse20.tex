@@ -1008,16 +1008,24 @@ involve the security patch. These were disregarded to minimize the impact
 of measuring other programming activities rather than solely security patches
 can have in our results. 
 
-For projects with large codebases, the results retrieved for 
-\emph{Keep Your Codebase Small} were not viable because they 
-retrieved values above the limit set by BCH ($20$ Person-years). Thus, 
-we decided to not consider this guideline in our research. The 
+Due to BCH limitations, in particular, lack of language support 
+and project size by BCH, $308$ data points were not analyzed and automatically 
+disregarded from our study. After performing the BCH analysis and 
+performing the maintainability calculations, we found the following 
+limitations regarding two BCH's guidelines:
+
+1) For projects with large codebases, the results calculated for 
+the \emph{Keep Your Codebase Small} guideline were way above the 
+limit set by BCH ($20$ Person-years). We suspect this threshold 
+may not be well calibrated. Thus, we decided not to consider 
+this guideline in our research. 
+
+2) The 
 \emph{Automated Tests} guideline was also not considered since the 
 tool does not contemplate two of the most important techniques to 
 security testing: vulnerability scanning and penetration testing. 
-Instead, it only contemplates unit testing. Due to BCH limitations, 
-we detected $308$ data points that retrieved incorrect overall 
-calculations. Those data points were disregarded from the study.
+Instead, it only contemplates unit testing. 
+
 
 The BCH tool does not compute the final score that our study needs 
 to compare maintainability amongst different project versions. For 
