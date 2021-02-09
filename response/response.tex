@@ -193,25 +193,25 @@ added a section motivating Better Code Hub called \emph{Better Code Hub} in Sect
 
 \end{revcomment}
 
-\Us Thank you for suggesting the DiBiase's paper. 
+\Us Thank you for suggesting the Di Biase et al.'s paper. 
 We evaluate the impact of security patches in software 
 maintainability using an alternative maintainability model [Cruz2019]. 
 
-DiBiase's work was developed in paralell with the one by Cruz et al [Cruz2019]. 
-Both models attempt to measure maintainability, but DiBiase's is not as complete 
+Di Biase et al.'s work was developed in paralell with the one by Cruz et al [Cruz2019]. 
+Both models attempt to measure maintainability, but Di Biase et al.'s is not as complete 
 since it only considers $5$ of the same set of guidelines. Both models build a 
 new maintainability model over the SIG-MM model---the model behind BCH. 
 
 Our model was validated by DiBiase in several discussions between 
 the authors of both papers.
 
-We also mention DiBiase's work in our \textit{Related Work} section:
+We also mention Di Biase et al.'s work in our \textit{Related Work} section:
 \begin{quote}
     Recent work
 proposed a new maintainability model to 
 measure fine-grained code changes by adapting/extending the BCH model [diBiase2019].
-The present work uses the same base model (SIG-MM), considers more guidelines and focuses 
-solely on evaluating the impact of security patches on software maintainability.
+Our work uses the same base model (SIG-MM), but considers a broader set of guidelines. 
+Moreover, we solely focus on evaluating the impact of security patches on software maintainability.
 \end{quote}
 
 [Cruz2019] Luis Cruz, Rui Abreu, John Grundy, Li Li, Xin Xia. 
@@ -398,14 +398,40 @@ the abstract, Section 1 (\textit{Introduction}) and Section 5 (\textit{Study Imp
 
     Intro:\\
     You should check out this paper: 
-    Li, Frank and Paxson, Vern. A large-scale empirical study of security patches.
+    [Li2017] Li, Frank and Paxson, Vern. A large-scale empirical study of security patches.
     ACM SIGSAC Conference on Computer and Communications Security in 2017.
 
 \end{revcomment}
 
 \Us Thank you for bringing our attention to this paper. We now discuss
 this paper in the Related Work section and used it to support some 
-of our claims and findings.
+of our claims and findings. 
+
+We added the following paragraph to Section 7 (\emph{Related Work}):
+
+\begin{quote}
+    Researchers
+performed a large-scale empirical study to understand the characteristics of security patches
+and their differences against bug fixes [Li2017].
+The main findings were that security patches are smaller and less complex compared
+to bug fixes and usually performed at function-level. Our study compares
+the impact of security patches on software maintainability with the impact 
+of regular changes.
+\end{quote}
+
+We added the following information to Section 1 (\emph{Introduction}):
+
+\begin{quote}
+    Our hypothesis is that some of these patches may 
+have a negative impact on the software maintainability and, 
+possibly, even be the cause of the introduction of new 
+vulnerabilities---harming software reliability and introducing 
+technical debt. Research found that $34\%$ of the security patches 
+performed introduce new problems and $52\%$ are incomplete and do not 
+fully secure systems [Li2017].
+\end{quote}
+
+
 
 \begin{revcomment}[2.5]
 

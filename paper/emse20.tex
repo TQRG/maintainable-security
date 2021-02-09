@@ -1502,9 +1502,9 @@ should design and implement solutions that respect the
 limit bounds of branch points and function/module sizes that are 
 recommended by best practices to avoid increasing the 
 size, complexity and dependencies of their patches.
-Developers should also consider the threshold limit 
-for parameters per function---to 
-keep unit interfaces small and easy to use and understand.
+Developers should also keep function parameters below 
+the recommended limit. It helps keep unit interfaces small 
+and easy to use and understand.
 Patterns such as \emph{Introduce Parameter Object} are useful 
 to send information to a new function/class through an object
 and keep the number of parameters small and the information well-organized.
@@ -1670,9 +1670,11 @@ have the potential to change significantly after patches.
 
 Researchers
 performed a large-scale empirical study to understand the characteristics of security patches
-and their differences against security bug fixes~\cite{10.1145/3133956.3134072}.
+and their differences against bug fixes~\cite{10.1145/3133956.3134072}.
 The main findings were that security patches are smaller and less complex compared
-to bug fixes and usually performed at function-level.
+to bug fixes and usually performed at function-level. Our study compares
+the impact of security patches on software maintainability with the impact 
+of regular changes.
 
 Studying the evolution 
 of maintainability issues during the development of Android apps, Malavolta et al. ($2018$)~\cite{8530041}
@@ -1685,8 +1687,8 @@ based on the BCH's guidelines and measured the impact of energy-oriented fixes
 on software maintainability. Recent work
 proposed a new maintainability model to 
 measure fine-grained code changes by adapting/extending the BCH model~\cite{8785997}.
-The present work uses the same base model (SIG-MM), considers more guidelines and focuses 
-solely on evaluating the impact of security patches on software maintainability.
+Our work uses the same base model (SIG-MM), but considers a broader set of guidelines. 
+Moreover, we solely focus on evaluating the impact of security patches on software maintainability.
 
 Researchers investigated the relationship between design patterns and
 maintainability~\cite{10.1007/978-3-642-35267-6-18}. However, other studies show that 
