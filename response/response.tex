@@ -255,7 +255,7 @@ risks associated with their patches.
 
 \end{revcomment}
 
-\Us As we explained above, namely while addressing comment 1.2, both models assess 
+\Us As we explain above, namely while addressing comment 1.2, both models assess 
 maintainability. We consider the Delta Maintainability 
 Model to be an alternative to our model. However, it only uses 5 guidelines of the 
 set of guidelines our study considers. This has been 
@@ -419,8 +419,9 @@ the impact of security patches on software maintainability with the impact
 of regular changes.
 \end{quote}
 
-We added the following information to Section 1 (\emph{Introduction}):
+We also used the paper to suport our research in different Sections of our paper: 
 
+Section 1 (\emph{Introduction})
 \begin{quote}
     Our hypothesis is that some of these patches may 
 have a negative impact on the software maintainability and, 
@@ -431,7 +432,23 @@ performed introduce new problems and $52\%$ are incomplete and do not
 fully secure systems [Li2017].
 \end{quote}
 
+Section 3.2 (\emph{Security Patches vs. Regular Changes})
+\begin{quote}
+    Previous studies attempted to measure the impact of regular changes 
+on open-source software maintainability. 
+However, there is no previous work focused on comparing the impact 
+of security patches with regular changes on maintainability, only
+with bug-fixes [Li2017].
+\end{quote}
 
+Section 5 (\emph{Study Implications})
+\begin{quote}
+    \textit{\textbf{Prioritize High and Medium Severity:}} Previous research 
+exhibits proof that developers prioritize
+higher impact vulnerabilities [Li2017].
+Our study shows that vulnerabilities of high and
+medium severity should be prioritized in software maintainability tasks.
+\end{quote}
 
 \begin{revcomment}[2.5]
 
@@ -466,6 +483,12 @@ $676$ from Secbench). The $1330$ value is a typo, we fixed the issue. Regarding 
 the equivalent to the $624$ patches that integrate the Pontas et al. dataset where one patch
 can have multiple commits. The $1282$ commits are referring to the Ponta et al. dataset and 
 not to the combined dataset.
+
+\begin{quote}
+    We use a combined dataset of $1300$ security patches which is 
+the outcome of mining and manually inspecting a total of $312$ 
+GitHub projects.
+\end{quote}
 
 \begin{revcomment}[2.7]
     Section 3\\
@@ -1173,6 +1196,6 @@ and our hypothesis.
 
 \Us We agree with the reviewer that we should better emphasize the lessons 
 learned and what best practices can be followed by developers to assure better 
-vulnerability patches. We improved these points in Section 5.
+vulnerability patches. We improved the discussion of these points in Section 5.
 
 \end{document}
