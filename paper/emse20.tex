@@ -565,9 +565,9 @@ illustrated in Figure~\ref{fig:met}.
   to quantify maintainability for both security and regular commits. 
   BCH evaluates the codebase available in the default branch of a GitHub project. 
   We created a tool that pulls the codebase of each commit of our dataset 
-  to a new branch; it sets the new branch as the default branch; it runs 
-  the BCH analysis in the codebase; and, finally saves the BCH metrics
-  results.
+  to a new branch; it sets the new branch as the default branch; and, runs 
+  the BCH analysis on the codebase; after the analysis is finished, the tool saves 
+  the BCH metrics results to a cache file.
 \end{enumerate}
 %
 \begin{figure}[h]
