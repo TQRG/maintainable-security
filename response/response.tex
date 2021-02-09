@@ -579,25 +579,29 @@ and was uncapable of analyzing the rest of the $308$ data points. All of this is
 in more detail later in Section 3.4. 
 
 \begin{quote}
-    Security patches can be performed through one commit, 
-several consecutive commits, or commit(s) interleaved with more 
-programming activities (floss-refactoring). This study considers 
-mainly single-commit patches. Yet, a small percentage of data points 
-had more than one commit involved in the patch. We manually 
-inspected these cases and $23$ floss-refactorings were identified 
-and disregarded since it would not be fair to measure the 
-maintainability of these cases where other programming activities 
-are involved.
-
-For projects with large codebases, the results obtained for 
-\emph{Keep Your Codebase Small} were not viable because they 
-retrieved values above the limit set by BCH ($20$ Person-years). The 
-\emph{Automated Tests} guideline was also not considered since the 
-tool does not contemplate two of the most important techniques to 
-security testing: vulnerability scanning and penetration testing. 
-Instead, it only contemplates unit testing. Due to BCH limitations, 
-we detected a few data points that retrieved incorrect overall 
-calculations. Those data points were disregarded from the study.
+    Security patches can be performed through one commit (single-commit); 
+    several consecutive commits (multi-commits); or, commit(s) interleaved with more 
+    programming activities (floss-refactoring). Only $10.7\%$ of the data points 
+    of our dataset involve more than one commit, the other
+    $89.3\%$ of the cases are single-commit patches. We manually 
+    inspected $25.1\%$ ($244$/$969$) of the security patches---$122$ from each dataset---and, 
+    identified a total of $23$ floss-refactorings. Many of these 
+    are patches with many changes where it is hard to understand which parts 
+    involve the security patch. These were disregarded to minimize the impact 
+    of measuring other programming activities rather than solely security patches
+    can have in our results. 
+    
+    For projects with large codebases, the results calculated for 
+    the \emph{Keep Your Codebase Small} guideline were way above the 
+    limit set by BCH ($20$ Person-years). We suspect this threshold 
+    may not be well calibrated. Thus, we decided not to consider 
+    this guideline in our research. The 
+    \emph{Automated Tests} guideline was also not considered since the 
+    tool does not contemplate two of the most important techniques to 
+    security testing: vulnerability scanning and penetration testing. 
+    Instead, it only contemplates unit testing. In total, 
+    we detected $308$ data points suffering from these two limitations. 
+    Those data points were disregarded from the study.
 \end{quote}
 
 Those are the cases that were tossed from the initial $1300$ patches. 
@@ -775,20 +779,23 @@ $89.3\%$ of the cases are single-commit patches.
 
 We define floss-refactoring with the paragraph below. 
 Regarding the methodology to detect floss-refactorings, 
-we manually inspected all the cases to ensure 
-floss-refactorings were not being considered.
+we manually inspected $25.1\%$ ($244$/$969$) of the security 
+patches---$122$ from each dataset---and, 
+identified a total of $23$ floss-refactorings. We clarified 
+this in the paper:
 
 \begin{quote}
-    The same approach is used to analyze the impact of regular 
-    changes. Security patches can be performed through one commit (single-commit); 
+    Security patches can be performed through one commit (single-commit); 
     several consecutive commits (multi-commits); or, commit(s) interleaved with more 
     programming activities (floss-refactoring). Only $10.7\%$ of the data points 
     of our dataset involve more than one commit, the other
     $89.3\%$ of the cases are single-commit patches. We manually 
-    inspected all the cases and identified $23$ floss-refactorings. 
-    These were disregarded since it would not be fair to measure the 
-    maintainability of these cases where other programming activities 
-    are involved.
+    inspected $25.1\%$ ($244$/$969$) of the security patches---$122$ from each dataset---and, 
+    identified a total of $23$ floss-refactorings. Many of these 
+    are patches with many changes where it is hard to understand which parts 
+    involve the security patch. These were disregarded to minimize the impact 
+    of measuring other programming activities rather than solely security patches
+    can have in our results. 
 \end{quote}
 
 
@@ -801,25 +808,37 @@ floss-refactorings were not being considered.
     \end{itemize}
 \end{revcomment}
 
-\Us We started with all the guidelines but after analyzing the BCH results 
-we found that some of the results of the \emph{Keep Your Codebase Small} guidelines were not viable
-because they retrieved values above the limit set by BCH ($20$ Person-years). We did not want 
+\Us We started with all the guidelines but after analyzing the BCH results, 
+we found that some of the results for the \emph{Keep Your Codebase Small} guideline 
+were way above the limit set by BCH ($20$ Person-years). We suspect this threshold 
+may not be well calibrated. Thus, we decided not to consider 
+this guideline in our research. We did not want 
 to lose more data points. Thus, we decided to not consider the guideline for all projects.
 
 We also did not consider the \emph{Automated Tests} guideline because
 this guideline does not contemplate vulnerability scanning and penetration testing
 which are the two most important testing techniques in security. 
 
-We improved the paper in the following text:
+We improved the paper in the following paragraph:
 
 \begin{quote}
-    For projects with large codebases, the results retrieved for 
-\emph{Keep Your Codebase Small} were not viable because they 
-retrieved values above the limit set by BCH ($20$ Person-years). Thus, 
-we decided to not consider this guideline in our research. The 
-\emph{Automated Tests} guideline was also not considered since the 
-tool does not contemplate two of the most important techniques to 
-security testing: vulnerability scanning and penetration testing. 
+    Due to BCH limitations, in particular, lack of language support 
+    and project size by BCH, $308$ data points were not analyzed and automatically 
+    disregarded from our study. After performing the BCH analysis and 
+    performing the maintainability calculations, we found the following 
+    limitations regarding two BCH's guidelines:
+    
+    1) For projects with large codebases, the results calculated for 
+    the \emph{Keep Your Codebase Small} guideline were way above the 
+    limit set by BCH ($20$ Person-years). We suspect this threshold 
+    may not be well calibrated. Thus, we decided not to consider 
+    this guideline in our research. 
+    
+    2) The 
+    \emph{Automated Tests} guideline was also not considered since the 
+    tool does not contemplate two of the most important techniques to 
+    security testing: vulnerability scanning and penetration testing. 
+    Instead, it only contemplates unit testing. 
 \end{quote}
 
 \begin{revcomment}[2.15]
@@ -834,9 +853,9 @@ and project size by BCH, $308$ data points were disregarded.
 We clarified it in the paper (Section 3.4):
 
 \begin{quotation}
-    Due to BCH limitations, 
-we detected $308$ data points that retrieved incorrect overall 
-calculations. Those data points were disregarded from the study.
+    Due to BCH limitations, in particular, lack of language support 
+    and project size by BCH, $308$ data points were not analyzed and automatically 
+    disregarded from our study. 
 \end{quotation}
 
 \begin{revcomment}[2.16]
@@ -1026,7 +1045,7 @@ restriction (\emph{size-baseline}) or no size restriction (\emph{random-baseline
 special attention should be given to maintainable security
 when teaching software maintainability. We improved the analysis 
 provided in Section 4 for the research question 3 (RQ3). We added 
-an extra baseline for comparison with no size restrictions and 
+an extra baseline for comparison with no size restrictions (\emph{random-baseline}) and 
 improved the discussion over our results.
 
 
