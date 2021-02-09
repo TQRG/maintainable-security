@@ -1000,13 +1000,13 @@ Security patches can be performed through one commit (single-commit);
 several consecutive commits (multi-commits); or, commit(s) interleaved with more 
 programming activities (floss-refactoring). Only $10.7\%$ of the data points 
 of our dataset involve more than one commit, the other
-$89.3\%$ of the cases are single-commit patches. We manually 
-inspected $25.1\%$ ($244$/$969$) of the security patches---$122$ from each dataset---and, 
-identified a total of $23$ floss-refactorings. Many of these 
-are patches with many changes where it is hard to understand which parts 
-involve the security patch. These were disregarded to minimize the impact 
-of measuring other programming activities rather than solely security patches
-can have in our results. 
+$89.3\%$ of the cases are single-commit patches. To mitigate the impact of 
+floss-refactorings, we extracted and manually inspected a random sample with 
+$25\%$ of security patches from each dataset. From this sample, we identified 
+$23$ floss-refactorings. Most floss-refactoring patches include many changes 
+making it difficult to understand which parts involve the security patch. 
+Although we suspect that more floss-refactorings may occur, we argue that 
+they occur in a small portion of the data.
 
 Due to BCH limitations, in particular, lack of language support 
 and project size by BCH, $308$ data points were not analyzed and automatically 
