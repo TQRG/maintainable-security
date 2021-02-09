@@ -543,7 +543,7 @@ illustrated in Figure~\ref{fig:met}.
 	\item Combine the datasets from related work that classify
 	the activities of developers addressing security-oriented 
   patches~\cite{reis2017secbench,10.1109/MSR.2019.00064}. The
-  duplicated patches were tossed (only $2$ were found).
+  duplicated patches were tossed.
 %
 	\item
 	Extract relevant data (e.g., owner and name of
@@ -1462,14 +1462,15 @@ statistical significance was retrieved ($p = 5.34$x$10^{-8}$).
 Overall, the results for both baselines, show that regular 
 changes are less prone to hinder the software 
 maintainability of open-source software.   
-We manually inspected a considerable amount of cases from
-the distribution of regular changes that considers size (\emph{size-baseline}), 
-where the impact on maintainability 
-increases, and, found that identifying regular changes with the same 
+However, the \emph{size-baseline} integrates a larger 
+number of cases with no impact on software maintainability. 
+We manually inspected a total of $25$ cases from
+that distribution of regular changes with no impact on maintainability, 
+and, found that identifying regular changes with the same 
 size as the security-related commit is limiting the type of regular 
 commits being randomly chosen: input 
-patches, variables or functions, type conversion, i.e., changes
-with no impact on the software metrics analyzed by BCH.
+patches, variables or functions, type conversion (i.e., changes
+with no impact on the software metrics analyzed by BCH).
 We presume that this phenomenon lead
 to the significant number of cases where there is no impact
 on the software maintainability. On the other hand, 

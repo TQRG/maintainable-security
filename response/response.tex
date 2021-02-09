@@ -113,7 +113,7 @@ certificates for Trusted Product Maintainability\footnote{Information available 
 TÜViT is an IT Security company. Being certified by TÜViT means 
 that the company checked if BCH actually respects and follows the ISO 25010 guidelines.   
 
-Second, each of the guidelines in isolation is pretty simple to understand, but, when 
+Second, each of the guidelines in isolation is easy to understand, but, when 
 combined and evaluated as a whole, it becomes easy to see why 
 they would comprise the definition of good software. Furthermore, the relation of the 
 guidelines to maintainability is well detailed in the SIG's book ``Building Maintainable 
@@ -255,7 +255,7 @@ risks associated with their patches.
 
 \end{revcomment}
 
-\Us As we explained before, namely while addressing comment 1.2, both models assess 
+\Us As we explained above, namely while addressing comment 1.2, both models assess 
 maintainability. We consider the Delta Maintainability 
 Model to be an alternative to our model. However, it only uses 5 guidelines of the 
 set of guidelines our study considers. This has been 
@@ -318,10 +318,31 @@ to perform the current analysis.
 \end{revcomment}
 
 \Us Thank you for your question. The dataset is fully available at 
-\texttt{dataset/db\_release\_security\_fixes.csv} in the figshare package
+\texttt{dataset/db\_security\_changes.csv} in the figshare package
 provided in the contributions of the paper: 
 \url{https://figshare.com/s/4861207064900dfb3372}. If the paper is 
 accepted, the package will be available on GitHub.
+
+This information is described in Section 1 where we present 
+the contributions of our work:
+
+\begin{quote}
+    This research performs the following main contributions:
+
+\begin{itemize}
+  \item Evidence that supports the trade-off between security and 
+  maintainability: developers may be hindering software 
+  maintainability while patching vulnerabilities.
+	\item An empirical study on the impact of security patches on 
+	software maintainability (per guideline, severity, weakness and 
+	programming language).
+	\item A replication package with the scripts and data created to 
+	perform the empirical evaluation, for reproducibility. Available 
+	online: \url{https://figshare.com/s/4861207064900dfb3372}.
+\end{itemize}
+    
+\end{quote}
+
 
 \begin{revcomment}[2.2]
 
@@ -485,7 +506,7 @@ are collected before the analysis performed by BCH.'', we mean that the codebase
 our dataset were analyzed by BCH. We improved the text for:
 
 \begin{quote}
-    BCH evaluates the codebase available in the default branch of a GitHub project. 
+BCH evaluates the codebase available in the default branch of a GitHub project. 
   We created a tool that pulls the codebase of each commit of our dataset 
   to a new branch; it sets the new branch as the default branch; and, runs 
   the BCH analysis on the codebase; after the analysis is finished, the tool saves 
@@ -503,9 +524,10 @@ our dataset were analyzed by BCH. We improved the text for:
 \end{revcomment}
 
 \Us As explained in comment $2.6$, the $1282$ commits refer only to the Ponta et al. dataset (a total of $624$ 
-patches). In total, we analyzed $1300$ patches. However, BCH as some limitations such as
-analyzing projects with very large codebases and was uncapable to analyze some patches. In addition,
-we also detected floss-refactorings which we decided not to consider. All of this is explained
+patches). In total, we analyzed $1300$ patches ($624$ patches from Ponta et al. and $676$ from Secbench). 
+However, our study only considers $969$ patches. We detected a total of $23$ patches with floss-refactorings. 
+In addition, BCH has some limitations, in particular, the lack of language support and project size,
+and was uncapable of analyzing the rest of the $308$ data points. All of this is explained
 in more detail later in Section 3.4. 
 
 \begin{quote}
@@ -556,6 +578,12 @@ information on the vulnerability/patch.
 
 \Us Yes, for each security commit we collected a random regular change from the same project. We have clarified it 
 in the paper. 
+
+\begin{quote}
+    The baseline dataset is generated from the security commits dataset, i.e.,
+for each security commit in the dataset, we collect a random regular
+change from the same project. 
+\end{quote}
 
 \begin{revcomment}[2.11]
     Section 3\\
@@ -755,6 +783,13 @@ security testing: vulnerability scanning and penetration testing.
 
 \Us Due to BCH limitations, in particular, lack of language support 
 and project size by BCH, $308$ data points were disregarded.
+We clarified it in the paper (Section 3.4):
+
+\begin{quotation}
+    Due to BCH limitations, 
+we detected $308$ data points that retrieved incorrect overall 
+calculations. Those data points were disregarded from the study.
+\end{quotation}
 
 \begin{revcomment}[2.16]
     Section 4\\
@@ -862,8 +897,24 @@ of vulnerabilities.
     \end{itemize}
 \end{revcomment}
 
-\Us In total, we inspected around $25$ cases whose maintainability difference/
-impact was zero to understand what was leading to a higher number of cases with no impact.
+\Us In total, we inspected around $25$ regular changes with no impact on software maintainability  
+ to understand what was leading to the higher number of cases. This point
+ was clarified in Section 4, with the following paragraph:
+
+ \begin{quote}
+    Overall, the results for both baselines, show that regular 
+    changes are less prone to hinder the software 
+    maintainability of open-source software.   
+    However, the \emph{size-baseline} integrates a larger 
+    number of cases with no impact on software maintainability. 
+    We manually inspected a total of $25$ cases from
+    that distribution of regular changes with no impact on maintainability, 
+    and, found that identifying regular changes with the same 
+    size as the security-related commit is limiting the type of regular 
+    commits being randomly chosen: input 
+    patches, variables or functions, type conversion (i.e., changes
+    with no impact on the software metrics analyzed by BCH).
+ \end{quote}
 
 \begin{revcomment}[2.20]
     Section 4\\
@@ -912,7 +963,6 @@ found for the \emph{size-baseline} does not change
 the need to pay more attention to security patches 
 in software maintenance tasks.
 
-
 \begin{revcomment}[2.22]
     Section 5\\
     \begin{itemize}
@@ -924,9 +974,13 @@ in software maintenance tasks.
 
 \Us As explained in the previous response, security patches 
 hinder more software maintainability than regular changes with size 
-restriction or no size restriction. Thus, we argue that
+restriction (\emph{size-baseline}) or no size restriction (\emph{random-baseline}). Thus, we argue that
 special attention should be given to maintainable security
-when teaching software maintainability.
+when teaching software maintainability. We improved the analysis 
+provided in Section 4 for the research question 3 (RQ3). We added 
+an extra baseline for comparison with no size restrictions and 
+improved the discussion over our results.
+
 
 \begin{revcomment}[2.23]
     Section 6\\
@@ -980,7 +1034,7 @@ technologies; SIG is the only lab in the world certified by TÜViT to issue ISO 
 certificates for Trusted Product Maintainability\footnote{Information available here: 
 \url{https://www.softwareimprovementgroup.com/methodologies/iso-iec-25010-2011-standard/}}.
 
-Each of the guidelines in isolation is pretty simple to understand, but, when 
+Each of the guidelines in isolation is easy to understand, but, when 
 combined and evaluated as a whole, it becomes easy to see why 
 they would comprise the definition of good software. Furthermore, the relation of the entire set of
 guidelines to maintainability is well detailed in the SIG's book ``Building Maintainable 
@@ -1024,7 +1078,7 @@ We do not know codify and did not find the tool anywhere in static analysis tool
 collections or even through organic search at Google.  
 
 We added a Section to 
-the paper called \textit{Better Code Hub} where we motivate the Better Code Hub tool and 
+the paper called \textit{3.3 Better Code Hub} where we motivate the Better Code Hub tool and 
 compare it with Kiuwan and SonarCloud.
 
 
@@ -1091,9 +1145,8 @@ and our hypothesis.
 
 \end{revcomment}
 
-\Us We agree with the reviewer that we should be clear on the lessons 
-learned from this study. We now provide a Section titled as \textit{Lessons Learned} where 
-we describe the best practices we argue developers should follow
-when patching vulnerabilities.
+\Us We agree with the reviewer that we should better emphasize the lessons 
+learned and what best practices can be followed by developers to assure better 
+vulnerability patches. We improved these points in Section 5.
 
 \end{document}
