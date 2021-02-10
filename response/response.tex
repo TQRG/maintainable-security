@@ -234,7 +234,7 @@ on Technical Debt (TechDebt) in 2019.
 \end{revcomment}
 
 \Us We do not think that the concern of the reviewer is warranted. 
-Note that the goal of our work it not 
+Note that the goal of our work is not 
 to use static analysis to detect security issues. We have already a dataset of 
 security patches (pairs of vulnerable versions and non-vulnerable versions) and 
 our objective is to understand what 
@@ -322,7 +322,7 @@ provided in the contributions of the paper:
 \url{https://figshare.com/s/4861207064900dfb3372}. If the paper is 
 accepted, the package will be available on GitHub.
 
-This information is described in Section 1 where we present 
+This information is also available in Section 1 where we present 
 the contributions of our work:
 
 \begin{quote}
@@ -664,7 +664,7 @@ with the 1300 security commits.'': Although we started with 1300 commits,
 $331$ cases were tossed due to BCH limitations. In addition, BCH
 takes substantial time to process this amount of cases. 
 Since the comparison is between 
-the final dataset of $969$ patches and the baselines. We produced d
+the final dataset of $969$ patches and the baselines, we produced 
 baselines with the final number of viable results obtained for the security 
 dataset.
 
@@ -784,7 +784,7 @@ floss-refactorings, we extracted and manually inspected a random sample with
     $23$ floss-refactorings. Most floss-refactoring patches include many changes 
     making it difficult to understand which parts involve the security patch. 
     Although we suspect that more floss-refactorings may occur, we argue that 
-    they occur in a small portion of the data.We clarified 
+    they occur in a small portion of the data. We clarified 
 this in the paper:
 
 \begin{quote}
@@ -829,7 +829,7 @@ We improved the paper in the following paragraph:
     and project size by BCH, $308$ data points were not analyzed and automatically 
     disregarded from our study. After performing the BCH analysis and 
     the maintainability calculations, we found the following 
-    limitations regarding two BCH's guidelines:
+    limitations regarding two of BCH's guidelines:
     
     1) For projects with large codebases, the results calculated for 
     the \emph{Keep Your Codebase Small} guideline were way above the 
@@ -894,8 +894,8 @@ increases ($38.7\%$).
 
 \begin{quote}
     Regarding the impact of security patches per guideline, we 
-observe that $38.7\%$ of patches have more cases where the impact is 
-positive---where maintainability increases.
+observe that $38.7\%$ of the security patches have positive impact
+on software maintainability.
 \end{quote}
 
 \begin{revcomment}[2.18]
@@ -928,11 +928,11 @@ in a footnote:
 In Figure 7a, we present the entire distribution of the $969$ vulnerabilities per
 each node of the 1st-level of the Research Concepts tree.
 Looking at those results, we detected that the percentage of cases for CWE-707 ($30.4\%$) 
-and CWE-664 ($32.8\%$) were considerably higher in the dataset than the rest of CWEs.
+and CWE-664 ($32.8\%$) were considerably higher in the dataset than the rest of the CWEs.
 Thus, we decided to look at lower levels of behavior for both CWEs: CWE-707
 results are presented in Figure-7b and CWE-664 results are presented in Figure-7c.
 In Figure-7b, all the CWEs presented are sub levels of the CWE-707. The same
-happens for Figure-7c, but the CWEs are sub levels if the CWE-664.
+happens for Figure-7c, but the CWEs are sub levels of the CWE-664.
 
 We added the previous numbers to the paper and clarified that we are considering lower levels
 of vulnerabilities.
