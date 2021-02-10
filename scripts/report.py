@@ -1,6 +1,8 @@
-import maintainability.better_code_hub as bch
-import stats.chart as chart
 import argparse
+from os import listdir
+from os.path import isfile, join
+from math import sqrt
+
 import csv
 import collections
 import pandas as pd
@@ -8,9 +10,12 @@ import numpy as np
 import matplotlib
 import seaborn as sns
 import matplotlib.pyplot as plt
-from math import sqrt
-import pandas as pd
 from collections import OrderedDict
+
+import maintainability.better_code_hub as bch
+import stats.chart as chart
+
+
 
 def main_calculation(df, cache, dataset):
     
@@ -24,7 +29,6 @@ def main_calculation(df, cache, dataset):
         sha_p_key = 'sha-p'
     
     for i, r in df.iterrows():
-                
         if r[sha_key] is np.nan or r[sha_p_key] is np.nan:
             continue
             
@@ -63,20 +67,24 @@ def main_calculation(df, cache, dataset):
     
     return df    
         
-def main_calculation_by_db(db, results, cache, dataset):
+def main_calculation_by_db(db, results, cache, dataset, baseline=""):
     df = pd.read_csv(db)
-    path = '{}/maintainability_release_{}_fixes.csv'.format(results, dataset)
+    if dataset == 'regular':
+        path = '{}/maintainability_release_{}_regular_changes.csv'.format(results, baseline)
+    else:
+        path = '{}/maintainability_release_security_changes.csv'.format(results)
+
     df = main_calculation(df, cache, dataset)
     return df, path
 
-def export(secdb, regdb, results, cache_path):
+def export(secdb, regdb, results, cache_path, baseline):
     
     cache = bch.BCHCache(cache_path)
     
-    df_sec, sec_res_path = main_calculation_by_db(secdb, results, cache, 'security')
-    df_sec.to_csv(sec_res_path, index=False)
+    # df_sec, sec_res_path = main_calculation_by_db(secdb, results, cache, 'security')
+    # df_sec.to_csv(sec_res_path, index=False)
     
-    df_reg, reg_res_path = main_calculation_by_db(regdb, results, cache, 'regular')
+    df_reg, reg_res_path = main_calculation_by_db(regdb, results, cache, 'regular', baseline=baseline)
     df_reg.to_csv(reg_res_path, index=False)
         
 def language(secdb, reports):
@@ -99,16 +107,14 @@ def cwe_spec(secdb, reports, cwe):
     df_sec = pd.read_csv(secdb)
     chart.main_per_cwe_spec_chart(reports, cwe, df_sec)
 
-def comparison(secdb, regdb, reports):
-    df_sec = pd.read_csv(secdb)
-    df_reg = pd.read_csv(regdb)
-    chart.main_comparison_chart(reports, df_sec, df_reg)
+def comparison(results, reports):
+    files = [f for f in listdir(results) if isfile(join(results, f)) and '.csv' in f]
+    dfs = {f.split('_')[2]:pd.read_csv("{}{}".format(results, f)) for f in files}
+    chart.main_comparison_chart(reports, dfs)
     
 def guideline_swarm(secdb, reports):
-    
     df_sec = pd.read_csv(secdb)
     chart.main_guideline_swarm_plot(reports, df_sec)
-       
     
 if __name__ == "__main__":
     
@@ -122,15 +128,19 @@ if __name__ == "__main__":
     parser.add_argument('-regdb', type=str, metavar='file path', help='regular dataset path')    
     parser.add_argument('-cache', type=str, metavar='file path', help='cache path')   
     parser.add_argument('-cwe', type=str, metavar='file path', help='cache path')    
+    parser.add_argument('-baseline', type=str, metavar='baseline name', help='baseline name')    
      
     args = parser.parse_args()
 
     if args.goal == 'export':  
-        if args.secdb != None and args.regdb != None and args.results != None and args.cache != None:
-            export(secdb=args.secdb, regdb=args.regdb, results=args.results, cache_path=args.cache)
+        if args.secdb != None and args.regdb != None \
+            and args.results != None and args.cache != None \
+            and (args.baseline == "random" or args.baseline == "size"):
+            export(secdb=args.secdb, regdb=args.regdb, results=args.results, cache_path=args.cache, baseline=args.baseline)
     elif args.goal == 'comparison':
-        if args.secdb != None and args.regdb != None and args.reports != None:
-            comparison(secdb=args.secdb, regdb=args.regdb, reports=args.reports)
+        if args.results != None \
+            and args.reports != None:
+            comparison(results=args.results, reports=args.reports)
     elif args.goal == 'guideline':
         if args.secdb != None and args.reports != None:
             guideline_swarm(secdb=args.secdb, reports=args.reports)

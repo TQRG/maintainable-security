@@ -9,6 +9,13 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+Merge different caches in `scripts/maintainability/caches/` folder:
+```
+source venv/bin/activate
+cd scripts
+python -m maintainability.merge_cache -cache maintainability/cache -output maintainability/bch_cache.zip
+``` 
+
 ### Data Analysis
 
 How to collect maintainability results from BCH cache:
@@ -16,7 +23,7 @@ How to collect maintainability results from BCH cache:
 ```
 source venv/bin/activate
 cd scripts
-python report.py --report export -secdb ../dataset/db_release_security_fixes.csv -regdb ../dataset/db_release_regular_fixes.csv -results ../results -cache maintainability/bch_cache.zip
+python report.py --report export -secdb ../dataset/db_security_changes.csv -regdb ../dataset/db_regular_changes_random.csv -baseline random -results ../results -cache maintainability/bch_cache.zip
 ``` 
 
 Comparison between security and regular commits:
@@ -24,7 +31,7 @@ Comparison between security and regular commits:
 ```
 source venv/bin/activate
 cd scripts
-python report.py --report comparison -secdb ../results/maintainability_release_security_fixes.csv -regdb ../results/maintainability_release_regular_fixes.csv -reports ../reports
+python report.py --report comparison -results ../results/ -reports ../reports
 ``` 
 
 Get security maintainability report per guideline:
@@ -66,6 +73,9 @@ source venv/bin/activate
 cd scripts
 python report.py --report cwe-spec -secdb ../results/maintainability_release_security_fixes.csv -cwe CWE_664 -reports ../reports
 ``` 
+
+
+
 
 ### Experiments
 
