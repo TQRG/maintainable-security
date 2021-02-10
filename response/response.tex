@@ -9,7 +9,7 @@
 
 \usepackage{caption}
 \usepackage{subcaption}
-\usepackage{hyperref}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
 \usepackage{epsfig}
 \usepackage{latexsym}
 \usepackage{url}
@@ -132,7 +132,7 @@ IEEE, 2007.
 \end{verbatim}
 
 BCH's compliance criterion is derived from the requirements for 4-star level maintainability (cf. ISO 25010). 
-The concrete values of the thresholds used in BCH are documented also in their book Building Maintainability 
+The concrete values of the thresholds used in BCH are also documented in their book Building Maintainability 
 Software \url{https://www.softwareimprovementgroup.com/resources/ebook-building-maintainable-software/}.
 
 Further, the methodology used to derive the thresholds is documented in the following 
@@ -152,7 +152,8 @@ literature:
     IEEE, 2011.
 
     Robert Baggen, Jose Pedro Correia, Katrin Schill and Joost Visser. 
-    ``Standardized code quality benchmarking for improving software maintainability.'' 
+    ``Standardized code quality benchmarking for improving software 
+    maintainability.'' 
     Software Quality Journal.
     Springer, 2011.
 
@@ -1146,7 +1147,7 @@ that BCH is a better tool for the following reasons:
 \end{itemize}
 
 We do not know codify and did not find the tool anywhere in static analysis tools 
-collections or even through organic search at Google.  
+collections or even through an organic search at Google.  
 
 We added a Section to 
 the paper called \textit{3.3 Better Code Hub} where we motivate the Better Code Hub tool and 
@@ -1163,7 +1164,7 @@ compare it with Kiuwan and SonarCloud.
 \end{revcomment}
 
 \Us In our work, we follow the same methodology as the previous work 
-mentioned bellow but instead of measuring
+mentioned below but instead of measuring
 the impact of energy-oriented changes on software maintainability, 
 we measure the impact of security patches.
 
@@ -1192,7 +1193,7 @@ Our hypothesis
 is that security patches for different weaknesses can have different 
 impacts on software maintainability. Thus, we evaluate this in \textit{\textbf{RQ2: Which weaknesses are more likely to
 affect open-source software maintainability?}}. The results can help
-security engineers on prioritizing weaknesses and bring awareness to the 
+security engineers prioritizing weaknesses and bring awareness to the 
 ones that need more attention.
 
 Performing a regular change/refactoring, for instance, to improve the name of 
