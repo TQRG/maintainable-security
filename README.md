@@ -1,6 +1,7 @@
 # security-maintainability
 
-Instal requirements:
+### Installation
+Requirements installation:
 
 ```
 virtualenv --python=python3.7 venv
@@ -8,13 +9,14 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-
 Merge different caches in `scripts/maintainability/caches/` folder:
 ```
 source venv/bin/activate
 cd scripts
 python -m maintainability.merge_cache -cache maintainability/cache -output maintainability/bch_cache.zip
 ``` 
+
+### Data Analysis
 
 How to collect maintainability results from BCH cache:
 
