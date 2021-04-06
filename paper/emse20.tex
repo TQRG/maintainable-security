@@ -139,19 +139,6 @@
 \newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark}
 \makeatother
 
-%
-% \usepackage{mathptmx}      % use Times fonts if available on your TeX system
-%
-% insert here the call for the packages your document requires
-%\usepackage{latexsym}
-% etc.
-%
-% please place your own definitions here and don't use \def but
-% \newcommand{}{}
-%
-% Insert the name of "your journal" with
-% \journalname{myjournal}
-%
 \begin{document}
 
 \title{Fixing Vulnerabilities Potentially Hinders Maintainability}
@@ -182,7 +169,7 @@
 \begin{abstract}
 Security is a requirement of utmost importance to produce 
 high-quality software. However, there is still a considerable amount 
-of vulnerabilities being discovered and fixed, almost weekly. We 
+of vulnerabilities being discovered and fixed almost weekly. We 
 hypothesize that developers affect the maintainability of their 
 codebases when patching vulnerabilities. This paper evaluates the 
 impact of patches to improve security on the maintainability of 
@@ -336,7 +323,7 @@ This research performs the following main contributions:
 	programming language).
 	\item A replication package with the scripts and data created to 
 	perform the empirical evaluation, for reproducibility. Available 
-	online: \url{https://figshare.com/s/4861207064900dfb3372}.
+	online: \url{https://github.com/TQRG/maintainable-security}.
 \end{itemize}
 %
 This paper is structured as follows: Section~\ref{sec:motivation} 
@@ -358,16 +345,6 @@ Section~\ref{sec:conclusions} concludes the main findings and
 elaborates on future work.
 
 \section{Motivation and Research Questions}\label{sec:motivation}
-% Rev 2 says it is redundant 
-% Due to time-to-market pressure and the lack of security 
-% expertise~\cite{8077802}, code-related security flaws are generally 
-% detected \textit{after the fact}, i.e., when hackers exploit them. 
-% Patching these issues is usually done by modifying the codebase. 
-% However, these patches may have a negative impact on software 
-% maintenance (e.g., developers might follow the quickest solution to 
-% fix the problem but not necessarily the most elegant and performant 
-% one). Thus, we want to understand how security patches impact
-% software maintainability. 
 
 As an example, consider the patch of the TLS state machine protocol 
 implementation in OpenSSL\footnoteref{openssl} to address a memory 
