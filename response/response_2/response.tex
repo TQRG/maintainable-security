@@ -1,0 +1,105 @@
+\documentclass[11pt,fleqn]{article}
+
+\usepackage{vmargin}
+\setpapersize{A4}
+\setmarginsrb{2.5cm}{2.5cm}{2.5cm}{2.5cm}%
+{\baselineskip}{2\baselineskip}{baselineskip}{2\baselineskip}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt}
+
+\usepackage{caption}
+\usepackage{subcaption}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+\usepackage{epsfig}
+\usepackage{latexsym}
+\usepackage{url}
+\usepackage{tgheros}
+\renewcommand*\familydefault{\sfdefault}
+
+\newcommand{\eline}{\vspace*{.75\baselineskip}}
+\newcommand{\Referee}[1]{\eline \noindent {\bf Reviewer comment #1:} \\}
+\newcommand{\Us}{\eline \noindent {\bf Response:}\\}
+\newcommand{\TBD}{{\bf To Be Done}}
+\newcommand{\newreviewer}[1]{\section*{Reviewer #1}\vspace*{-1.05\baselineskip}}
+\newcommand{\editor}[1]{\section*{Editor #1}\vspace*{-1.05\baselineskip}}
+
+%\usepackage{tikz}
+\usepackage[skins,breakable]{tcolorbox}
+\tcbset{textmarker/.style={
+%
+skin=enhancedmiddle jigsaw,breakable,parbox=false,before skip=-1mm, after skip=0mm,
+boxrule=0mm,leftrule=2mm,rightrule=2mm,boxsep=0mm,arc=0mm,outer arc=0mm,
+left=2mm,right=2mm,top=2mm,bottom=2mm,toptitle=1mm,bottomtitle=1mm,oversize}}
+
+\newtcolorbox{rcomment}{textmarker,colback=gray!15!white,colframe=gray!80!white}
+
+\newenvironment{revcomment}[1][]
+{\Referee{#1}\begin{rcomment}}
+{\end{rcomment}}
+
+\newenvironment{reveditor}
+{\begin{rcomment}}
+{\end{rcomment}}
+
+\usepackage{todo}
+\usepackage{hyperref}
+
+%customized
+\usepackage{xfrac}
+
+% more lenient line breaking (avoids text protruding into margins)
+\sloppy
+
+\title{\vspace*{-2cm}{\bf Authors' Response to the Review of
+ EMSE-D-20-00300:\\
+ ``Fixing Vulnerabilities Potentially Hinders Maintainability''}}
+
+\author{Sofia Reis, Rui Abreu, Luis Cruz}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\editor{}
+
+\begin{reveditor}
+    Many thanks for submitting your revision to Empirical Software Engineering journal. 
+    All reviewers and I thank you for the effort you have put in preparing the detailed 
+    revision which successfully addresses all points raised earlier. Accordingly, I am happy 
+    to recommend the acceptance of your manuscript to the EiCs. Please note that reviewers 
+    highlight some editing issues, so please clarify Reviewer \#2's points and conduct an 
+    overall proof read in preparing your final proofs.
+
+\end{reveditor}
+
+\Us We thank the editor and reviewers for their valuable feedback and acceptance. In the 
+following, we answer the questions raised by the reviewer 2.
+
+\newreviewer{2}
+
+\begin{revcomment}[2.1]
+    What is meant by "20 person years"?  How would one obtain this measure?
+\end{revcomment}
+
+\Us A person-year is the equivalent to 12 person-months. A person-month is a standard measure of 
+source code volume where the total volume in a codebase is the volume in lines of code
+converted to person-months. BCH uses person-years instead of volume 
+because it facilitates the comparisons of source code volume between technologies
+(different programming languages have different levels of of verbosity). 
+We do not consider this metric on our study. However, according to the "Building
+Maintainable Software" book, 20 person-years of rebuild value 
+is the equivalent to at most 1750000 lines of code in Java.
+
+\begin{revcomment}[2.2]
+
+    The bullet for automated tests.  Can you think of another work 
+    instead of "contemplate"?  I'm not sure of what you are trying to say.
+    
+\end{revcomment}
+
+\Us Thank you for pointing this out. We changed the work for ``consider''.
+This metric only considers unit testing, which is usually not applied for 
+security testing but rather to functionality testing.
+
+\end{document}
