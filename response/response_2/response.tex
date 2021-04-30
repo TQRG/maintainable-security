@@ -83,20 +83,20 @@ following, we answer the questions raised by the reviewer 2.
 \end{revcomment}
 
 \Us A person-year is the equivalent to 12 person-months. A person-month is a standard measure of 
-source code volume where the total volume in a codebase is the volume in lines of code
-converted to person-months. BCH uses person-years instead of volume 
+source code volume. It is the amount
+of source code that one developer with average productivity could write in one
+month. According to the "Building
+Maintainable Software" book, 20 person-years of rebuild value 
+is the equivalent to at most 175000 lines of code in Java. BCH uses person-years instead of volume 
 because it facilitates the comparisons of source code volume between technologies
 (different programming languages have different levels of of verbosity). 
-We do not consider this metric on our study. However, according to the "Building
-Maintainable Software" book, 20 person-years of rebuild value 
-is the equivalent to at most 1750000 lines of code in Java.
 
 \begin{revcomment}[2.2]
     The bullet for automated tests.  Can you think of another work 
     instead of "contemplate"?  I'm not sure of what you are trying to say.
 \end{revcomment}
 
-\Us Thank you for pointing this out. We changed the work for ``consider''.
+\Us Thank you for pointing this out. We changed the work for ``include''.
 This metric only considers unit testing, which is usually not applied for 
 security testing but rather to functionality testing.
 
