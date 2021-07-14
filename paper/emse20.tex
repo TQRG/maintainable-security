@@ -488,7 +488,8 @@ introduction of vulnerabilities within that product. In this study, maintainabil
 is measured separately for each weakness.
 %
 \setcounter{lstannotation}{0}
-\begin{lstlisting}[style={PHPStyle}, caption={Fix provided by \texttt{nextcloud/server} developers to a Cross-Site Scripting vulnerability},label={lst:fix}]
+\begin{lstlisting}[style={PHPStyle}, caption={Fix provided by \texttt{nextcloud/server} 
+  developers to a Cross-Site Scripting vulnerability},label={lst:fix}]
    <p class='hint'>
     <?php
 -   if(isset($_['file'])) echo $_['file']
@@ -771,7 +772,8 @@ that comparing changes with considerably different sizes may be unfair.
 \subsubsection{Random-Baseline} 
 
 As for the security patches, for each regular change, we  
-need the commit performing the regular change (\emph{sha-reg}) and version of the software before the change (\emph{sha-reg-p}). A 
+need the commit performing the regular change (\emph{sha-reg}) and 
+version of the software before the change (\emph{sha-reg-p}). A 
 random commit from the same project is selected for each security patch, \emph{sha-reg}. The parent commit
 of \emph{sha-reg} is the \emph{sha-reg-p}.
 
@@ -1198,7 +1200,8 @@ encapsulation to hide implementation details and make the system
 more modular.
 
 The \emph{Write Code Once} guideline results show that duplicated 
-code increased in $17.7\%$ ($171$/$969$) of the patches. Software systems typically have $9\%$-$17\%$ of cloned code~\cite{5773403}. Previous work showed a correlation between code smells and code
+code increased in $17.7\%$ ($171$/$969$) of the patches. Software systems 
+typically have $9\%$-$17\%$ of cloned code~\cite{5773403}. Previous work showed a correlation between code smells and code
 duplication~\cite{7476787} which may also be reflected in the 
 \emph{Write Clean Code} guideline results. BCH reported new code 
 smells for $15.0\%$ ($145$/$969$) of the patches, which according to previous work, 
@@ -1207,7 +1210,8 @@ capable of harming the market value and economy of companies~\cite{4267025}.
 Developers should never reuse code by copying and pasting 
 existing code fragments. Instead, they should create a method and call 
 it every time needed. The \emph{Extract Method} refactoring 
-technique solves many duplication problems. This makes spotting and solving the issue faster because you only need to fix the method used
+technique solves many duplication problems. This makes spotting and solving 
+the issue faster because you only need to fix the method used
 instead of locating and fixing the issue multiple times.
 Clone detection tools can also help in locating the issues.
 
@@ -1218,8 +1222,10 @@ average impact of all guidelines ($M(v)$) as we can see in
 Figure~\ref{fig:guidelines}. Remember that each point of the plot 
 represents the impact of a security patch on software 
 maintainability. Red means the impact was negative, i.e., the patch 
-harmed maintainability. Yellow means the patch did not have any kind of impact on maintainability. Green means the impact was positive, i.e., the patch improved software maintainability.
-The $M(v)$ plot shows that $406$ ($41.9\%$) cases have a negative impact on software maintainability. While $188$ ($19.4\%$) cases 
+harmed maintainability. Yellow means the patch did not have any kind of 
+impact on maintainability. Green means the impact was positive, i.e., the patch improved software maintainability.
+The $M(v)$ plot shows that $406$ ($41.9\%$) cases have a negative impact 
+on software maintainability. While $188$ ($19.4\%$) cases 
 have no impact at all, and $375$ ($38.7\%$) have a positive impact on 
 software maintainability. The larger number of negative cases may be 
 explained by guidelines with higher concentrations of negative 
@@ -1315,11 +1321,18 @@ attention should be paid to each guideline. For instance,
 \emph{Write Simple Units of Code} and \emph{Write Short Units of Code}
 guidelines are the most affected ones. No statistical significance was observed
 for \emph{Separate Concerns in Modules}.
-As shown in Figure~\ref{fig:guidelines}, there is statistical significance ($p=0.044 < 0.05$) to support our findings: \textbf{security patches
-may have a negative impact on the maintainability of open-source software}. Therefore, tools such as BCH should be integrated into the CI/CD pipelines
+As shown in Figure~\ref{fig:guidelines}, there is statistical significance ($p=0.044 < 0.05$) 
+to support our findings: \textbf{security patches
+may have a negative impact on the maintainability of open-source software}. Therefore, tools 
+such as BCH should be integrated into the CI/CD pipelines
 to help developers evaluate the risk of patches of hindering software maintainability---alongside
 Pull Requests/Code Reviews. Different severity
-vulnerabilities may need different levels of attention---high/medium vulnerabilities need more attention (cf. Figure~\ref{fig:severity}). However, statistical significance was only observed for low severity vulnerabilities. Better and more secure programming languages are needed. We observed statistical significance for \emph{C/C++}, \emph{Ruby} and \emph{PHP} that support that security patches in those languages may hinder software maintainability (cf. Figure~\ref{fig:lang_main}).
+vulnerabilities may need different levels of attention---high/medium 
+vulnerabilities need more attention (cf. Figure~\ref{fig:severity}). However, 
+statistical significance was only observed for low severity vulnerabilities. Better 
+and more secure programming languages are needed. We observed statistical 
+significance for \emph{C/C++}, \emph{Ruby} and \emph{PHP} that support that 
+security patches in those languages may hinder software maintainability (cf. Figure~\ref{fig:lang_main}).
 %
 
 \textit{\textbf{RQ2: Which weaknesses are more likely to
@@ -1347,7 +1360,8 @@ In Figure~\ref{fig:pat}-\emph{a}, there is no clear evidence of the impact on
 maintainability per weakness. Yet, it is important to note that
 overall there is a very considerable number of cases that hinder
 maintainability---between $30\%$ and $60\%$. The CWE-707 and CWE-664 
-weaknesses integrate the higher number of cases compared to the remaining ones: $295$ ($30.4\%$) data points and $318$ ($32.8\%$) data points, respectively. 
+weaknesses integrate the higher number of cases compared to the remaining 
+ones: $295$ ($30.4\%$) data points and $318$ ($32.8\%$) data points, respectively. 
 Thus, we present an analysis of their sub-weaknesses on 
 Figure~\ref{fig:pat}-\emph{b} and Figure~\ref{fig:pat}-\emph{c}, respectively. 
 
@@ -1369,7 +1383,8 @@ cases with no impact on the open-source software maintainability. \emph{SQL Inje
 These patches usually follow the same complexity as the CWE-79 patches.
 However, the three weaknesses have a considerable amount of cases that hinder
 the software maintainability---$32.4\%$, $40.7\%$ and, $41.1\%$, respectively---which
-should not be happening. Typically, CWE-79 vulnerabilities do not need extra lines to be fixed, as shown in Listing~\ref{lst:fix}---one simple 
+should not be happening. Typically, CWE-79 vulnerabilities do not need extra lines 
+to be fixed, as shown in Listing~\ref{lst:fix}---one simple 
 \texttt{escape} function patches the issue. On the same type of fix,
 CWE-199 vulnerabilities may also be fixed without adding new source code
 (e.g., replacing the \texttt{strncpy} function with a more secure one 
@@ -1465,6 +1480,7 @@ sake of security. We argue that developers should be able to patch and produce
 secure code without hindering the maintainability of their projects. But there are 
 still concerns that need to be addressed and that this study brings awareness for:
 %
+
 \textit{\textbf{Follow Best Practices:}} Developers are not 
 paying attention to some quality aspects of their solutions/patches, 
 as seen in Figure~\ref{fig:guidelines}, ending up harming 
@@ -1521,11 +1537,16 @@ more research should be performed to better understand the impact of each guidel
 \textit{\textbf{Tools for Patch Risk Assessment Wanted:}}
   Design debt of one guideline can lead to severe impacts on the 
   software quality~\cite{10.1145/1985362.1985366}. Some software 
-  producers consider security as a first-class citizen while others do not. As mentioned in previous work, security is critical and should be considered as a default feature~\cite{10.1145/2489828.2489830,kurilova2014wyvern,mcgraw2004software}. 
-  However, the lack of experts and awareness of developers for security while producing/patching software leads companies to ship low-quality software. 
-  Providing automated tools to developers to assess the risk of their patches is essential to help companies shipping software of higher quality. 
+  producers consider security as a first-class citizen while others do not. As 
+  mentioned in previous work, security is critical and should be considered as a 
+  default feature~\cite{10.1145/2489828.2489830,kurilova2014wyvern,mcgraw2004software}. 
+  However, the lack of experts and awareness of developers for security while 
+  producing/patching software leads companies to ship low-quality software. 
+  Providing automated tools to developers to assess the risk of their patches is 
+  essential to help companies shipping software of higher quality. 
   Bryan O'Sullivan, VP of Engineering at Facebook, advocated for new computer science
-  risk models to detect vulnerabilities in scale and predict the level of security of the software under production in his talk ```Challenges in Making Software Work at Scale''' at FaceTAV’20.
+  risk models to detect vulnerabilities in scale and predict the level of security 
+  of the software under production in his talk ```Challenges in Making Software Work at Scale''' at FaceTAV’20.
 
   Tools like Better Code Hub can complement static analysis (e.g., 
   SonarQube, Codacy, ESLint, Infer, and more) to provide more informatio
@@ -1535,9 +1556,12 @@ more research should be performed to better understand the impact of each guidel
 This section presents the potential threats to the validity of this study.
 %
 
-\textit{\textbf{Construct Validity:}} The formula to calculate the maintainability value ($M(v)$) was inferred based 
-on the BCH's reports. The high amount of different projects and backgrounds may require other maintainability standards. However, BCH does use a 
-representative benchmark of closed and open-source software projects to compute the thresholds for each maintainability guideline~\cite{Visser:2016:OREILLY,baggen2012}.
+\textit{\textbf{Construct Validity:}} The formula to calculate the 
+maintainability value ($M(v)$) was inferred based 
+on the BCH's reports. The high amount of different projects and backgrounds 
+may require other maintainability standards. However, BCH does use a 
+representative benchmark of closed and open-source software projects to 
+compute the thresholds for each maintainability guideline~\cite{Visser:2016:OREILLY,baggen2012}.
 Maintainability is computed as the mean of all guidelines. Different software versions 
 (vulnerable/fixed) of one vulnerability may have the same overall score
 and still be affected by different guidelines. Therefore, we provide
@@ -1547,8 +1571,12 @@ an analysis per guideline, and our results are all available on GitHub for futur
 work~\cite{Reis:2017:IJSSE} was collected based on the messages of GitHub
 commits produced by project developers to classify the changes performed while 
 patching vulnerabilities. This approach discards patches that were
-not explicit in commits messages. We assume that patches were performed using a single commit or several sequentially. The perspective that a 
-developer may quickly perform a patch and later proceed to the refactor is not considered. We assume that all patches were only performed once. Depending on the impact of the vulnerability in the system, some vulnerabilities may have more urgency to be patched than others. For instance, a vulnerability performing a Denial-of-Service attack
+not explicit in commits messages. We assume that patches were performed using 
+a single commit or several sequentially. The perspective that a 
+developer may quickly perform a patch and later proceed to the refactor is 
+not considered. We assume that all patches were only performed once. Depending 
+on the impact of the vulnerability in the system, some vulnerabilities may have 
+more urgency to be patched than others. For instance, a vulnerability performing a Denial-of-Service attack
 that usually brings entire systems down may be more urgent to patch than a 
 cross-site scripting vulnerability which generally does not have an impact
 on the execution of the system but rather on the data accessibility.
@@ -1568,8 +1596,14 @@ alleviate random irregularities in the maintainability differences of the
 baseline. 
 %
 
-\textit{\textbf{External Validity:}} The BCH tool uses private and open-source data to determine the thresholds for each guideline. We only analyze patches of open-source software.
-Thus, our findings may not extend to private/non-open source software. Different programming languages may require different coding practices to address software safety. The dataset comprises more commits in Java, i.e., the dataset may not be representative of the population regarding programming languages. For both datasets, manual validation of the message of the commits was performed. Only commits in English were considered. Thus, our approach does not consider 
+\textit{\textbf{External Validity:}} The BCH tool uses private and open-source 
+data to determine the thresholds for each guideline. We only analyze patches of open-source software.
+Thus, our findings may not extend to private/non-open source software. 
+Different programming languages may require different coding practices to address 
+software safety. The dataset comprises more commits in Java, i.e., the dataset 
+may not be representative of the population regarding programming languages. 
+For both datasets, manual validation of the message of the commits was performed. 
+Only commits in English were considered. Thus, our approach does not consider 
 patches in any other language but English.
 
 \section{Related Work}\label{sec:rw}
@@ -1586,7 +1620,8 @@ have the potential to change significantly after patches.
 Researchers
 performed a large-scale empirical study to understand the characteristics of security patches
 and their differences against bug fixes~\cite{10.1145/3133956.3134072}.
-The main findings were that security patches are smaller and less complex than bug fixes and are usually performed at the function level. Our study compares
+The main findings were that security patches are smaller and less complex than bug 
+fixes and are usually performed at the function level. Our study compares
 the impact of security patches on software maintainability with the impact 
 of regular changes.
 
@@ -1596,15 +1631,21 @@ discovered that maintainability decreases over time. Palomba et al.
 ($2018$)~\cite{Palomba:2018:DIM:3231288.3231337} exhibits proof that code smells
 should be carefully monitored by programmers since there is a high correlation
 between maintainability aspects and proneness to changes/faults. In 2019, Cruz et 
-al.~\cite{8919169} proposed a formula to calculate maintainability based on the BCH's guidelines and measured the impact of energy-oriented fixes 
+al.~\cite{8919169} proposed a formula to calculate maintainability based on the 
+BCH's guidelines and measured the impact of energy-oriented fixes 
 on software maintainability. Recent work
-proposed a new maintainability model to measure fine-grained code changes by adapting/extending the BCH model~\cite{8785997}.
+proposed a new maintainability model to measure fine-grained code changes by 
+adapting/extending the BCH model~\cite{8785997}.
 Our work uses the same base model (SIG-MM) but considers a broader set of guidelines. 
 Moreover, we solely focus on evaluating the impact of security patches on software maintainability.
 
 Researchers investigated the relationship between design patterns and
-maintainability~\cite{10.1007/978-3-642-35267-6-18}. However, other studies show that the use of design patterns may introduce maintainability issues into
-software~\cite{4493325}. Yskout et. al did not detect if the usage of design patterns has a positive impact but concluded that developers prefer to work with the support of security patterns~\cite{8077802}. The present work studies how security weaknesses influence maintainability for open-source software.
+maintainability~\cite{10.1007/978-3-642-35267-6-18}. However, other studies 
+show that the use of design patterns may introduce maintainability issues into
+software~\cite{4493325}. Yskout et. al did not detect if the usage of design 
+patterns has a positive impact but concluded that developers prefer to work with 
+the support of security patterns~\cite{8077802}. The present work studies how 
+security weaknesses influence maintainability for open-source software.
 
 There are studies that investigated the impact of programming languages on software
 quality~\cite{Ray:2014:LSS:2635868.2635922,Ray:2017:LSP:3144574.3126905}. The first
@@ -1622,9 +1663,14 @@ may have an impact on maintainability.
 
 This work presents an empirical study on the impact of $969$ security
 patches on the maintainability of $260$ open-source projects. We leveraged
-Better Code Hub reports to calculate maintainability based on a model proposed in previous work~\cite{Olivari:2018,8919169}. Results show evidence of a 
-trade-off between security and maintainability, as $41.9\%$ of security patches yielded a negative impact. Hence,
-developers may be hindering software maintainability while patching vulnerabilities. We also observe that some guidelines and programming languages are more likely to be affected than others. The implications of our study are that changes to codebases while patching vulnerabilities need to be performed with extra care; tools
+Better Code Hub reports to calculate maintainability based on a model proposed 
+in previous work~\cite{Olivari:2018,8919169}. Results show evidence of a 
+trade-off between security and maintainability, as $41.9\%$ of security patches 
+yielded a negative impact. Hence,
+developers may be hindering software maintainability while patching vulnerabilities. 
+We also observe that some guidelines and programming languages are more likely to 
+be affected than others. The implications of our study are that changes to codebases 
+while patching vulnerabilities need to be performed with extra care; tools
 for patch risk assessment should be integrated into the CI/CD pipeline; computer science
 curricula need to be updated; and more secure programming languages are necessary.
 
@@ -1635,7 +1681,22 @@ commits and how much time does it take to do it;
 expand our methodology with other software quality properties; 
 validate these findings with closed/private
 software; and, expand this analysis to other quality standards.
- 
+
+\section*{Acknowledgements}
+
+We thank SIG’s Better Code Hub team for all the support as
+well as help in validating our methodology and results; and, Pedro Adão 
+for the invaluable feedback in the early stages of the project.
+
+This work is financed by National Funds through the
+Portuguese funding agency, FCT - Fundação para a Ciência
+e a Tecnologia with reference UIDB/50021/2020, a PhD scholarship 
+(ref. SFRH/BD/143319/2019), the
+SecurityAware Project (ref. CMU/TIC/0064/2019)---also funded
+by the Carnegie Mellon Program---, and
+the FaultLocker Project (ref. PTDC/CCI-COM/29300/2017).
+
+
 \bibliographystyle{spmpsci}
 \bibliography{emse20}   % name your BibTeX data base
 
