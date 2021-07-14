@@ -1,6 +1,6 @@
 # security-maintainability
 
-Paper available here: [https://arxiv.org/abs/2106.03271](https://arxiv.org/abs/2106.03271).
+Pre-print available here: [https://arxiv.org/abs/2106.03271](https://arxiv.org/abs/2106.03271). Published at the Empirical Software Engineering Journal.
 
 ### Installation
 Requirements installation:
